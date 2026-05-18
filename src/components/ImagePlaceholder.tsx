@@ -25,9 +25,14 @@ type Props = {
   priority?: boolean;
 };
 
+// 開発時のみファイル存在チェックと mtime キャッシュバスティングを行う。
+// 本番 (Vercel など) の serverless runtime からは public/ への fs アクセスが
+// できないため、本番では fs を呼ばずに「画像はある」「クエリは付けない」と扱う。
+const IS_DEV = process.env.NODE_ENV === "development";
+
 async function publicFileExists(srcPath: string): Promise<boolean> {
+  if (!IS_DEV) return true;
   try {
-    // srcPath は "/images/foo.png" の形 → "public/images/foo.png" を見る
     const cleaned = srcPath.startsWith("/") ? srcPath.slice(1) : srcPath;
     const abs = path.join(process.cwd(), "public", cleaned);
     await access(abs, fsConstants.F_OK);
@@ -37,15 +42,15 @@ async function publicFileExists(srcPath: string): Promise<boolean> {
   }
 }
 
-// ファイルの mtime (更新時刻) を unix ミリ秒で返す。失敗時は 0。
-// これを ?v= クエリに付けることで、画像を上書きしたら URL が変わり
-// ブラウザ・CDN・Next.js Image Optimizer すべてのキャッシュを破棄できる。
+// ファイルの mtime を unix ミリ秒で返す (開発時のキャッシュバスティング用)。
+// 本番では 0 を返し、Image URL に ?v= を付けない。
 async function publicFileMtime(srcPath: string): Promise<number> {
+  if (!IS_DEV) return 0;
   try {
     const cleaned = srcPath.startsWith("/") ? srcPath.slice(1) : srcPath;
     const abs = path.join(process.cwd(), "public", cleaned);
     const s = await stat(abs);
-    return s.mtimeMs | 0; // 整数化（クエリ文字列を短く）
+    return s.mtimeMs | 0;
   } catch {
     return 0;
   }
