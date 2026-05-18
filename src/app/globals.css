@@ -1,0 +1,1760 @@
+@import "tailwindcss";
+
+/* デザイントークン定義（Tailwind v4 の @theme 形式） */
+@theme inline {
+  /* フォント */
+  --font-sans: var(--font-noto-sans-jp), "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  --font-display: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+
+  /* ブランドカラー */
+  --color-brand-primary: #ff6b00;
+  --color-brand-primary-dark: #e55f00;
+  --color-brand-primary-light: #ffe5d1;
+  --color-brand-accent: #1e73ff;
+  --color-brand-accent-light: #e6f0ff;
+
+  /* サブCTA・補助カラー */
+  --color-cta-secondary: #22c55e;
+  --color-cta-secondary-dark: #16a34a;
+  --color-cta-secondary-bg: #ecfdf5;
+  --color-line-green: #06c755;
+
+  /* アクセント */
+  --color-accent-red: #ff3b3b;
+  --color-accent-yellow: #ffd700;
+  --color-accent-soft-green: #bceab6;
+
+  /* テキスト・背景 */
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #4a4a4a;
+  --color-text-muted: #8a8a8a;
+  --color-border-default: #e5e5e5;
+  --color-bg-form: #fff8e7;
+  --color-bg-subtle: #f7f7f7;
+
+  /* 影 */
+  --shadow-cta: 0 4px 12px rgba(255, 107, 0, 0.3);
+  --shadow-cta-green: 0 4px 12px rgba(34, 197, 94, 0.3);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+html {
+  font-family: var(--font-sans);
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* LP 全体は最大幅480pxの中央寄せ（モバイルファースト） */
+.lp-container {
+  width: 100%;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* CTAボタン共通スタイル */
+.cta-orange {
+  background: var(--color-brand-primary);
+  color: #fff;
+  border-radius: 9999px;
+  padding: 16px 48px;
+  font-weight: 700;
+  font-size: 1.25rem;
+  box-shadow: var(--shadow-cta);
+  transition: background-color 200ms ease;
+}
+.cta-orange:hover {
+  background: var(--color-brand-primary-dark);
+}
+
+.cta-green {
+  background: var(--color-cta-secondary);
+  color: #fff;
+  border-radius: 9999px;
+  padding: 16px 32px;
+  font-weight: 700;
+  font-size: 1.125rem;
+  box-shadow: var(--shadow-cta-green);
+  transition: background-color 200ms ease;
+}
+.cta-green:hover {
+  background: var(--color-cta-secondary-dark);
+}
+
+/* セクション間の波形区切り */
+.section-wave-bottom {
+  position: relative;
+}
+.section-wave-bottom::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: inherit;
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 0 100%);
+}
+
+/* 背景のドット装飾 */
+.bg-dots {
+  background-image: radial-gradient(circle, rgba(255, 107, 0, 0.15) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* ハイライトマーカー（蛍光ペン風） */
+.marker-yellow {
+  background: linear-gradient(transparent 60%, #fff3a3 60%);
+  padding: 0 2px;
+}
+.marker-orange {
+  background: linear-gradient(transparent 60%, #ffe5d1 60%);
+  padding: 0 2px;
+}
+
+/* 番号バッジの立体感 */
+.number-badge {
+  background: linear-gradient(180deg, #ff8533 0%, #ff6b00 100%);
+  box-shadow: 0 4px 0 #b84b00, 0 6px 12px rgba(255, 107, 0, 0.35);
+  color: #fff;
+  font-weight: 900;
+}
+
+/* CTA立体ボタン */
+.btn-3d-orange {
+  position: relative;
+  background: linear-gradient(180deg, #ff8533 0%, #ff6b00 100%);
+  color: #fff;
+  border-radius: 9999px;
+  font-weight: 900;
+  box-shadow: 0 6px 0 #b84b00, 0 10px 24px rgba(255, 107, 0, 0.4);
+  transition: all 150ms ease;
+  overflow: hidden;
+}
+.btn-3d-orange:hover {
+  filter: brightness(1.05);
+}
+.btn-3d-orange:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #b84b00, 0 4px 12px rgba(255, 107, 0, 0.3);
+}
+
+/* CTAボタン: 周期的に走るキラリ反射 */
+.btn-3d-orange::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: shine-sweep 2.8s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes shine-sweep {
+  0% { left: -60%; }
+  60% { left: 120%; }
+  100% { left: 120%; }
+}
+
+/* =====================================================
+   CTA バリアント B: ネオン・ダーク・ハイテク調
+   暗色背景 + ネオンオレンジのアウトライン + 多層グロー
+   ===================================================== */
+.cta-neon {
+  position: relative;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 107, 0, 0.18), transparent 55%),
+    linear-gradient(180deg, #1a1430 0%, #0a0a1f 100%);
+  color: #fff;
+  border-radius: 14px;
+  border: 1.5px solid rgba(255, 138, 51, 0.7);
+  box-shadow:
+    0 0 0 1px rgba(255, 107, 0, 0.25),
+    0 0 18px rgba(255, 107, 0, 0.45),
+    0 0 38px rgba(255, 107, 0, 0.25),
+    0 10px 30px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+.cta-neon:hover {
+  box-shadow:
+    0 0 0 1px rgba(255, 107, 0, 0.4),
+    0 0 28px rgba(255, 107, 0, 0.65),
+    0 0 52px rgba(255, 107, 0, 0.35),
+    0 14px 36px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+.cta-neon:active { transform: translateY(2px); }
+/* 背景に薄い格子テクスチャでテック感を出す */
+.cta-neon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255,138,51,0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,138,51,0.08) 1px, transparent 1px);
+  background-size: 18px 18px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+/* 矢印が連続で点灯するアニメーション */
+.cta-neon-arrows > span {
+  display: inline-block;
+  opacity: 0.25;
+  animation: neon-arrow 1.4s ease-in-out infinite;
+}
+.cta-neon-arrows > span:nth-child(2) { animation-delay: 0.15s; }
+.cta-neon-arrows > span:nth-child(3) { animation-delay: 0.30s; }
+@keyframes neon-arrow {
+  0%, 60%, 100% { opacity: 0.25; text-shadow: none; }
+  30%           { opacity: 1;    text-shadow: 0 0 10px #ff8a33, 0 0 18px #ff6b00; }
+}
+
+/* =====================================================
+   CTA バリアント C: ポップ・手描き吹き出し型
+   白背景 + 太い黒線 + 軽い傾き + スタンプ感
+   ===================================================== */
+.cta-pop {
+  position: relative;
+  background: #fffaf2;
+  color: #1a1a1a;
+  border: 3px solid #1a1a1a;
+  border-radius: 22px;
+  box-shadow: 5px 5px 0 #1a1a1a, 5px 5px 0 4px #ffd24d;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+.cta-pop:hover {
+  transform: translate(-2px, -2px) rotate(-1deg);
+  box-shadow: 7px 7px 0 #1a1a1a, 7px 7px 0 4px #ffd24d;
+}
+.cta-pop:active {
+  transform: translate(3px, 3px) rotate(0);
+  box-shadow: 2px 2px 0 #1a1a1a, 2px 2px 0 4px #ffd24d;
+}
+/* スタンプ風「無料！」バッジ */
+.cta-pop-stamp {
+  position: absolute;
+  top: -14px;
+  right: -10px;
+  background: #ff3b3b;
+  color: #fff;
+  font-weight: 900;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 50%;
+  border: 2px solid #1a1a1a;
+  transform: rotate(12deg);
+  box-shadow: 2px 2px 0 #1a1a1a;
+  line-height: 1;
+  z-index: 5;
+}
+/* 上の吹き出し */
+.cta-pop-bubble {
+  position: relative;
+  display: inline-block;
+  background: #fff;
+  border: 2.5px solid #1a1a1a;
+  border-radius: 18px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 900;
+  margin-bottom: 14px;
+}
+.cta-pop-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-right: 2.5px solid #1a1a1a;
+  border-bottom: 2.5px solid #1a1a1a;
+  rotate: 45deg;
+}
+
+/* =====================================================
+   CTA バリアント D: チケット・特典・期限型
+   切符型 (左右切り欠き) + 折り返しリボン + 破線分割
+   ===================================================== */
+.cta-ticket {
+  position: relative;
+  background:
+    linear-gradient(180deg, #fff7ed 0%, #ffe8c2 100%);
+  border: 2px solid #ff6b00;
+  border-radius: 14px;
+  box-shadow: 0 6px 0 #b84b00, 0 10px 24px rgba(255, 107, 0, 0.25);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+.cta-ticket:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #b84b00, 0 4px 12px rgba(255, 107, 0, 0.2);
+}
+/* 左右の切り欠き (周囲が白前提) */
+.cta-ticket::before,
+.cta-ticket::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border: 2px solid #ff6b00;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+.cta-ticket::before { left: -12px; }
+.cta-ticket::after  { right: -12px; }
+/* 上端の折り返しリボン */
+.cta-ticket-ribbon {
+  position: absolute;
+  top: -14px;
+  left: -10px;
+  background: #ff3b3b;
+  color: #fff;
+  font-weight: 900;
+  font-size: 11px;
+  padding: 6px 14px 6px 12px;
+  letter-spacing: 0.04em;
+  z-index: 4;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.18);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 50%, 100% 100%, 0 100%);
+}
+.cta-ticket-ribbon::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  border: 4px solid transparent;
+  border-top-color: #8a0000;
+  border-right-color: #8a0000;
+}
+/* 縦の破線で「控え」を分ける */
+.cta-ticket-perforation {
+  border-left: 2px dashed rgba(255, 107, 0, 0.6);
+  align-self: stretch;
+  margin: 8px 4px;
+}
+
+/* CTAボタン周辺のパルス（注目誘導） */
+.cta-pulse-ring {
+  position: relative;
+}
+.cta-pulse-ring::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  border: 2px solid rgba(255, 107, 0, 0.45);
+  animation: pulse-ring 1.8s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(1);    opacity: 0.9; }
+  70%  { transform: scale(1.12); opacity: 0;   }
+  100% { transform: scale(1.12); opacity: 0;   }
+}
+
+/* 番号バッジの軽い上下ふわつき */
+.float-soft {
+  animation: float-soft 3.2s ease-in-out infinite;
+}
+@keyframes float-soft {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, -3px); }
+}
+
+/* 背景: 斜めストライプ（既存より柔らかい配色） */
+.bg-stripes-soft {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 107, 0, 0.045) 0,
+    rgba(255, 107, 0, 0.045) 1px,
+    transparent 1px,
+    transparent 14px
+  );
+}
+
+/* 背景: チェッカードット（権威性セクション用） */
+.bg-dots-soft {
+  background-image:
+    radial-gradient(circle, rgba(255, 107, 0, 0.10) 1.5px, transparent 1.6px);
+  background-size: 22px 22px;
+}
+
+/* セクション見出しの英字サブラベル */
+.eyebrow {
+  display: inline-block;
+  font-weight: 900;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  padding: 5px 12px 4px;
+  border-radius: 9999px;
+  line-height: 1;
+}
+.eyebrow-orange {
+  background: var(--color-brand-primary);
+  color: #fff;
+  box-shadow: 0 3px 0 #b84b00;
+}
+.eyebrow-dark {
+  background: var(--color-text-primary);
+  color: #fff;
+  box-shadow: 0 3px 0 #000;
+}
+
+/* 番号バッジ（カード上に乗せる大きい立体ver） */
+.number-badge-lg {
+  background: linear-gradient(180deg, #ff8533 0%, #ff6b00 100%);
+  box-shadow:
+    0 4px 0 #b84b00,
+    0 8px 14px rgba(255, 107, 0, 0.35),
+    inset 0 2px 0 rgba(255, 255, 255, 0.4);
+  color: #fff;
+  font-weight: 900;
+  border: 3px solid #fff;
+}
+
+/* カード間を繋ぐオレンジの縦点線（ステップ感の演出） */
+.step-connector {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 28px;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 107, 0, 0.6) 0,
+    rgba(255, 107, 0, 0.6) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  background-size: 2px 8px;
+  background-repeat: repeat-y;
+}
+
+/* 強調文字: 中央寄せの「＼ メッセージ ／」 */
+.slash-headline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 900;
+  white-space: nowrap; /* 1行強制 (折り返し防止) */
+}
+.slash-headline .slash {
+  color: var(--color-accent-red);
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 900;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* CTAの下に並ぶ「所要時間 15秒・完全無料・登録不要」 */
+.cta-feature-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+/* アイコンを丸い立体オレンジバッジに */
+.cta-feature-pill .cta-feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ff8533 0%, #ff6b00 100%);
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow:
+    0 2px 4px rgba(255, 107, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.cta-feature-pill .cta-feature-icon > svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+/* 数字をブランドカラーに沈める巨大数字（権威性「77万人」用） */
+.huge-number {
+  display: inline-block;
+  background: linear-gradient(180deg, #ff8533 0%, #ff6b00 60%, #e55f00 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-shadow: 0 6px 18px rgba(255, 107, 0, 0.15);
+}
+
+/* ★リストのアイテム背景（黄色グラデの星バッジを引き立てる） */
+.star-bullet {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #ffe27a 0%, #ffd700 100%);
+  box-shadow: 0 2px 0 #b8920a, inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  color: #5a4400;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* セクション切替の上向き三角タブ（背景色の変化を視覚的に滑らかにする） */
+.tab-notch-up {
+  position: relative;
+  margin-top: -1px;
+}
+.tab-notch-up::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 10px solid currentColor;
+}
+
+/* フェードイン（控えめに、初回ビューポート入りで） */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    animation: reveal 600ms ease-out both;
+  }
+}
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+/* =============================================================
+   診断結果LP (/result/[id]) 用のスタイル群
+   既存のオレンジ系トンマナに合わせ、青と緑を補助色として追加。
+   ============================================================= */
+
+/* オレンジ帯ヘッダー: 白文字下線付き「診断結果」 */
+.result-section-banner {
+  background: linear-gradient(180deg, #ff8533 0%, #ff6b00 100%);
+  color: #fff;
+  text-align: center;
+  padding: 18px 16px 20px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+.result-section-banner > span {
+  display: inline-block;
+  border-bottom: 3px solid #fff;
+  padding-bottom: 2px;
+}
+
+/* 青枠ボックス (職種名) */
+.result-job-box {
+  border: 3px solid var(--color-brand-accent);
+  background: var(--color-brand-accent-light);
+  border-radius: 14px;
+  padding: 14px 20px;
+  text-align: center;
+  box-shadow:
+    0 4px 0 rgba(30, 115, 255, 0.18),
+    0 8px 18px rgba(30, 115, 255, 0.12);
+}
+.result-job-box .sub {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--color-brand-accent);
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+}
+.result-job-box .main {
+  display: block;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--color-brand-accent);
+  line-height: 1.2;
+}
+
+/* オレンジ角丸大ボックス (適正年収) */
+.result-salary-box {
+  background: linear-gradient(180deg, #ff8533 0%, #ff6b00 100%);
+  color: #fff;
+  text-align: center;
+  padding: 16px 20px;
+  border-radius: 14px;
+  font-weight: 900;
+  box-shadow:
+    0 6px 0 #b84b00,
+    0 10px 24px rgba(255, 107, 0, 0.35);
+}
+.result-salary-box .label {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+  opacity: 0.95;
+}
+.result-salary-box .value {
+  display: block;
+  font-size: 30px;
+  line-height: 1.1;
+}
+
+/* 可変ブロック共通: 角丸枠の見出し付きカード */
+.result-block-card {
+  background: #fff;
+  border: 2px solid var(--color-border-default);
+  border-radius: 16px;
+  padding: 20px 18px;
+  box-shadow: var(--shadow-card);
+}
+.result-block-heading {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--color-brand-primary);
+  margin-bottom: 10px;
+  padding: 0 6px;
+  background: linear-gradient(transparent 60%, #ffe5d1 60%);
+}
+
+/* 「その他の適職」緑カード (2枚横並び) */
+.result-other-card {
+  position: relative;
+  background: linear-gradient(180deg, #f4ffea 0%, #e2f5d0 100%);
+  border: 2px solid var(--color-cta-secondary);
+  border-radius: 16px;
+  padding: 24px 18px 20px;
+  box-shadow: 0 4px 0 rgba(34, 197, 94, 0.25), 0 10px 20px rgba(34, 197, 94, 0.15);
+  text-align: center;
+}
+.result-other-card::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ffe27a 0%, #ffd700 100%);
+  border: 2px solid var(--color-cta-secondary);
+  box-shadow: 0 2px 0 #b8920a;
+}
+.result-other-card::after {
+  content: "★";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-cta-secondary-dark);
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1;
+}
+.result-other-card .job-name {
+  display: block;
+  margin-top: 12px;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--color-cta-secondary-dark);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.result-other-card .job-desc {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+}
+
+/* =============================================================
+   診断結果LP リッチ版 (祝祭感のあるヒーロー)
+   ============================================================= */
+
+/* Section 1 ヒーロー全体を包む装飾コンテナ — 上品なクリーム単色 */
+.result-hero {
+  position: relative;
+  background: #fffaf2;
+  padding: 16px 16px 36px;
+  overflow: hidden;
+}
+
+/* 「診断結果」見出し — Careerpad 風の大きい飾り文字 */
+.result-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--color-brand-primary);
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  text-shadow: 0 2px 0 rgba(255, 107, 0, 0.08);
+}
+.result-eyebrow .label {
+  position: relative;
+  display: inline-block;
+}
+.result-eyebrow .side-spark {
+  color: #f5b400;
+  font-size: 22px;
+  line-height: 1;
+  opacity: 0.9;
+}
+.result-eyebrow .side-spark.left {
+  transform: translateY(-8px);
+}
+.result-eyebrow .side-spark.right {
+  transform: translateY(8px);
+}
+
+/* 「あなたは」「に向いています。」のコピー — 大きく見やすく */
+.result-lead-copy {
+  text-align: center;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: 0.02em;
+}
+
+/* 職種ボックス — 青のアクセントで上品に */
+.result-job-frame {
+  position: relative;
+  background: #fff;
+  border: 1.5px solid var(--color-brand-accent);
+  border-radius: 14px;
+  padding: 14px 16px 16px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(30, 115, 255, 0.1);
+}
+.result-job-frame .sub {
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--color-brand-accent);
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
+}
+.result-job-frame .main {
+  display: block;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--color-brand-accent);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* 適正年収カード — きらびやかな金〜オレンジグラデ仕上げ + ふわふわ浮遊 */
+.result-salary-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 220, 140, 0.55), transparent 70%),
+    linear-gradient(180deg, #FFFBEF 0%, #FFF1D6 60%, #FFE5BB 100%);
+  border: 2px solid #F5B400;
+  border-radius: 20px;
+  padding: 28px 24px 22px;
+  margin-top: 18px;
+  box-shadow:
+    0 10px 28px rgba(255, 107, 0, 0.22),
+    0 3px 8px rgba(245, 180, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  animation: salary-pulse 1s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes salary-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.04); }
+}
+/* 装飾: 左上の星(固定) */
+.result-salary-card::before {
+  content: "✦";
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  color: #F5B400;
+  font-size: 14px;
+  opacity: 0.85;
+  text-shadow: 0 1px 2px rgba(245, 180, 0, 0.3);
+}
+/* 装飾: 右上の星(固定) */
+.result-salary-card::after {
+  content: "✦";
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  color: #F5B400;
+  font-size: 14px;
+  opacity: 0.85;
+  text-shadow: 0 1px 2px rgba(245, 180, 0, 0.3);
+}
+/* 上部のピル形ラベル */
+.result-salary-card .label {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #FF8533 0%, #FF6B00 100%);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  padding: 6px 18px;
+  border-radius: 9999px;
+  box-shadow:
+    0 4px 10px rgba(255, 107, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  white-space: nowrap;
+}
+/* 金〜オレンジグラデの数値 (シマーは廃止、グラデのみ) */
+.result-salary-card .value {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  background: linear-gradient(180deg, #FFB347 0%, #FF6B00 55%, #E55F00 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* セクション間のアクセント (波線スパークル) */
+.result-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 24px 0 16px;
+  color: var(--color-brand-primary);
+  font-size: 14px;
+  line-height: 1;
+}
+.result-divider::before,
+.result-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0,
+    rgba(255, 107, 0, 0.35) 50%,
+    transparent 100%
+  );
+}
+
+/* 引用カード (持ち味 / アドバイス) */
+.result-quote-card {
+  position: relative;
+  background: #fff;
+  border-radius: 18px;
+  padding: 28px 20px 22px;
+  border: 1.5px solid var(--color-border-default);
+  box-shadow:
+    0 4px 0 rgba(255, 107, 0, 0.08),
+    0 12px 28px rgba(0, 0, 0, 0.06);
+}
+
+/* 統合インサイトブロック (Section 2-4 を 1 枚の白ボックスに) */
+.result-insight-block {
+  background: #fff;
+  border-radius: 20px;
+  border: 1.5px solid rgba(255, 107, 0, 0.25);
+  padding: 28px 20px 30px;
+  box-shadow:
+    0 6px 0 rgba(255, 107, 0, 0.06),
+    0 14px 32px rgba(0, 0, 0, 0.06);
+}
+.result-insight-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 14px;
+  line-height: 1.3;
+}
+.result-insight-en {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-brand-primary);
+  letter-spacing: 0.24em;
+}
+.result-insight-ja {
+  display: block;
+  font-size: 19px;
+  font-weight: 900;
+  color: var(--color-text-primary);
+  letter-spacing: 0.02em;
+}
+.result-insight-text {
+  font-size: 13.5px;
+  line-height: 1.95;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.02em;
+}
+.result-insight-divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0,
+    rgba(255, 107, 0, 0.25) 50%,
+    transparent 100%
+  );
+  margin: 22px 4px;
+}
+
+/* =============================================================
+   /schedule の TimeRex iframe ラッパー
+   ============================================================= */
+.schedule-iframe-frame {
+  background: #fff;
+  border: 1.5px solid rgba(255, 107, 0, 0.2);
+  border-radius: 16px;
+  padding: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+.schedule-iframe-frame iframe {
+  border-radius: 10px;
+  display: block;
+}
+
+/* =============================================================
+   VibesRadar CTA ボタン — Careerpad 風グラデ + 立体ピル
+   ============================================================= */
+.btn-cta-radar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #22c55e 0%, #14b8a6 55%, #06b6d4 100%);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  padding: 22px 28px;
+  border-radius: 9999px;
+  text-decoration: none;
+  box-shadow:
+    0 8px 0 #0f766e,
+    0 20px 30px rgba(13, 148, 136, 0.32),
+    inset 0 2px 0 rgba(255, 255, 255, 0.4);
+  overflow: hidden;
+  transition: filter 0.2s ease, box-shadow 0.2s ease;
+  animation: cta-radar-pulse 1.4s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes cta-radar-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.035); }
+}
+/* 上端のハイライト光 */
+.btn-cta-radar::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 22px;
+  right: 22px;
+  height: 36%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  border-radius: 9999px;
+  pointer-events: none;
+}
+.btn-cta-radar:hover {
+  filter: brightness(1.08);
+  animation-play-state: paused;
+  box-shadow:
+    0 10px 0 #0f766e,
+    0 24px 34px rgba(13, 148, 136, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.45);
+}
+.btn-cta-radar:active {
+  animation-play-state: paused;
+  box-shadow:
+    0 4px 0 #0f766e,
+    0 10px 18px rgba(13, 148, 136, 0.3),
+    inset 0 2px 0 rgba(255, 255, 255, 0.35);
+}
+
+/* =============================================================
+   VibesRadar 特典カード (Section 5 / 9 / 15) — 上品リデザイン版
+   ============================================================= */
+.radar-bonus-card {
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(220, 252, 231, 0.8), transparent 70%),
+    linear-gradient(180deg, #ffffff 0%, #f7fef9 100%);
+  border: 1.5px solid rgba(34, 197, 94, 0.35);
+  border-radius: 24px;
+  padding: 26px 18px 24px;
+  box-shadow:
+    0 8px 0 rgba(34, 197, 94, 0.08),
+    0 18px 40px rgba(34, 197, 94, 0.12);
+}
+
+/* 上部リボン */
+.radar-bonus-ribbon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  padding: 10px 14px;
+  border-radius: 9999px;
+  box-shadow:
+    0 4px 10px rgba(22, 163, 74, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  margin-bottom: 20px;
+}
+.radar-bonus-ribbon strong {
+  font-weight: 900;
+  background: #fff;
+  color: #16a34a;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin: 0 1px;
+}
+.radar-bonus-ribbon .slash {
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* ロゴ中央配置 */
+.radar-bonus-logo {
+  display: flex;
+  justify-content: center;
+  margin: 6px 0 14px;
+}
+
+/* サブコピー */
+.radar-bonus-sub {
+  text-align: center;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin-bottom: 18px;
+}
+.radar-bonus-sub strong {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--color-text-primary);
+  letter-spacing: 0.02em;
+}
+
+/* 価格訴求カード */
+.radar-bonus-pricing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border: 1.5px dashed rgba(34, 197, 94, 0.45);
+  border-radius: 16px;
+  padding: 14px 14px 18px;
+  margin-bottom: 22px;
+}
+.radar-bonus-old {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  color: var(--color-text-muted);
+}
+.radar-bonus-old .label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+.radar-bonus-old .value {
+  position: relative;
+  font-size: 22px;
+  font-weight: 800;
+}
+.radar-bonus-old .value::after {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto 0;
+  height: 2px;
+  background: #dc2626;
+  transform: translateY(-50%) rotate(-6deg);
+}
+.radar-bonus-arrow {
+  font-size: 16px;
+  color: var(--color-cta-secondary);
+  font-weight: 900;
+  line-height: 1;
+}
+.radar-bonus-new {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-top: 2px;
+}
+.radar-bonus-new .badge {
+  display: inline-block;
+  background: linear-gradient(180deg, #ff8533 0%, #ff6b00 100%);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  box-shadow: 0 3px 6px rgba(255, 107, 0, 0.3);
+}
+.radar-bonus-new .value {
+  font-size: 44px;
+  font-weight: 900;
+  line-height: 1;
+  background: linear-gradient(180deg, #ff8533 0%, #ff6b00 60%, #e55f00 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.radar-bonus-new .value .unit {
+  font-size: 18px;
+  margin-left: 2px;
+  background: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.radar-bonus-new .caption {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+/* 特徴 3 つ (縦並び) */
+.radar-bonus-features {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.radar-bonus-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 2px 6px rgba(34, 197, 94, 0.06);
+}
+.radar-bonus-feature .icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  background: linear-gradient(180deg, #ecfdf5 0%, #d1fae5 100%);
+  border-radius: 50%;
+}
+.radar-bonus-feature .body {
+  flex: 1;
+}
+.radar-bonus-feature .title {
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+  margin-bottom: 3px;
+}
+.radar-bonus-feature .desc {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+/* (引用符の装飾は廃止) */
+
+/* 引用カード見出し */
+.result-quote-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.result-quote-heading .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ff8533 0%, #ff6b00 100%);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 900;
+  box-shadow: 0 3px 0 #b84b00, 0 6px 10px rgba(255, 107, 0, 0.3);
+  flex-shrink: 0;
+}
+.result-quote-heading .title {
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--color-text-primary);
+  letter-spacing: 0.02em;
+}
+.result-quote-heading .title-en {
+  display: block;
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--color-brand-primary);
+  letter-spacing: 0.2em;
+  margin-bottom: 2px;
+}
+
+/* 「その他の適職」セクションヘッダー */
+.result-others-heading {
+  text-align: center;
+  margin-bottom: 14px;
+}
+.result-others-heading .en {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--color-brand-primary);
+  letter-spacing: 0.2em;
+  margin-bottom: 4px;
+}
+.result-others-heading .ja {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--color-text-primary);
+}
+.result-others-heading .ja .marker {
+  background: linear-gradient(transparent 62%, #ffe5d1 62%);
+  padding: 0 4px;
+}
+
+/* =============================================================
+   Section 5/9/15: VibesRadar 特典カード (ゴールデンチケット風)
+   ============================================================= */
+
+/* セクション全体ラッパ: 黄金感のあるグラデ背景 */
+.radar-bonus-section {
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 215, 0, 0.18), transparent 65%),
+    linear-gradient(180deg, #fff8e7 0%, #fff 100%);
+  padding: 28px 16px 32px;
+  overflow: hidden;
+}
+
+/* 斜線飾り「＼ 15秒診断を受けた方限定で無料配布 ／」 */
+.radar-bonus-ribbon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--color-text-primary);
+  margin-bottom: 14px;
+}
+.radar-bonus-ribbon .slash {
+  color: var(--color-accent-red);
+  font-size: 26px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* チケット本体 (両端に切り欠き、ゴールド系装飾) */
+.radar-ticket {
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 215, 0, 0.35), transparent 60%),
+    linear-gradient(180deg, #fffbe5 0%, #fff5cc 100%);
+  border: 2.5px solid #f5b400;
+  border-radius: 18px;
+  padding: 22px 18px 20px;
+  box-shadow:
+    0 8px 0 #b58400,
+    0 16px 30px rgba(245, 180, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+/* 左右の切り欠き (チケット感を演出) */
+.radar-ticket::before,
+.radar-ticket::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-bg-subtle);
+  border: 2.5px solid #f5b400;
+  z-index: 2;
+}
+.radar-ticket::before { left: -13px; }
+.radar-ticket::after  { right: -13px; }
+
+/* チケットの上端タグ (LIMITED OFFER) */
+.radar-ticket-tag {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-accent-red);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  padding: 4px 14px;
+  border-radius: 9999px;
+  box-shadow: 0 3px 0 #a82929, 0 6px 10px rgba(255, 59, 59, 0.3);
+}
+
+/* メインコピー */
+.radar-ticket-headline {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  line-height: 1.55;
+}
+.radar-ticket-headline strong {
+  color: var(--color-brand-primary);
+  font-weight: 900;
+}
+
+/* 価格表示: ¥3,300 → ¥0 */
+.radar-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 12px;
+  margin: 14px 0 10px;
+}
+.radar-price-row .old {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--color-accent-red);
+  text-decoration-thickness: 2px;
+}
+.radar-price-row .arrow {
+  color: var(--color-accent-red);
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
+}
+.radar-price-row .new {
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--color-accent-red);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+.radar-price-row .yen { font-size: 22px; margin-right: 2px; }
+
+/* VibesRadar ロゴ風プレースホルダ (Section 5 等で再利用) */
+.radar-logo-pill {
+  display: inline-block;
+  background: linear-gradient(180deg, #1a1a1a 0%, #2c2c2c 100%);
+  color: #fff;
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  padding: 6px 14px 5px;
+  border-radius: 9999px;
+  box-shadow: 0 3px 0 #000;
+}
+.radar-logo-pill .accent { color: #ffd700; }
+
+/* 特徴ミニカード × 3 */
+.radar-features {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+.radar-feature-mini {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #fff;
+  border: 1.5px solid #ffd700;
+  border-radius: 12px;
+  padding: 10px 12px;
+  box-shadow: 0 2px 0 rgba(245, 180, 0, 0.25);
+}
+.radar-feature-mini .icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ffe27a 0%, #ffd700 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  box-shadow: 0 2px 0 #b8920a;
+}
+.radar-feature-mini .text {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  padding-top: 2px;
+}
+.radar-feature-mini .text strong {
+  color: var(--color-brand-primary);
+  font-weight: 900;
+}
+
+/* 緑 CTA ボタン (チケット受け取り) */
+.btn-3d-green {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(180deg, #34d473 0%, #22c55e 100%);
+  color: #fff;
+  border-radius: 9999px;
+  font-weight: 900;
+  font-size: 18px;
+  padding: 16px 28px;
+  width: 100%;
+  max-width: 320px;
+  box-shadow: 0 6px 0 #16a34a, 0 10px 22px rgba(34, 197, 94, 0.4);
+  transition: all 150ms ease;
+  overflow: hidden;
+}
+.btn-3d-green:hover { filter: brightness(1.05); }
+.btn-3d-green:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #16a34a, 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+.btn-3d-green::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: shine-sweep 2.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* =============================================================
+   Section 6: アドバイザー紹介カード
+   ============================================================= */
+.section-eyebrow-block {
+  text-align: center;
+  margin-bottom: 16px;
+}
+.section-eyebrow-block .en {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-brand-primary);
+  letter-spacing: 0.24em;
+  margin-bottom: 4px;
+}
+.section-eyebrow-block .ja {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--color-text-primary);
+  line-height: 1.35;
+}
+.section-eyebrow-block .ja .marker {
+  background: linear-gradient(transparent 62%, #ffe5d1 62%);
+  padding: 0 4px;
+}
+.section-eyebrow-block .sub {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-top: 8px;
+}
+
+.advisor-card {
+  display: flex;
+  gap: 12px;
+  background: #fff;
+  border: 1.5px solid var(--color-border-default);
+  border-radius: 16px;
+  padding: 14px 14px 16px;
+  box-shadow: 0 4px 0 rgba(255, 107, 0, 0.08), 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+.advisor-card + .advisor-card { margin-top: 12px; }
+
+.advisor-photo {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 2.5px solid var(--color-brand-primary);
+  background:
+    radial-gradient(circle at 50% 40%, #ffe5d1, #fff8e7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: var(--color-brand-primary);
+  box-shadow: 0 3px 0 rgba(255, 107, 0, 0.2);
+}
+
+.advisor-info { min-width: 0; flex: 1; }
+.advisor-role {
+  display: inline-block;
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #fff;
+  background: var(--color-brand-primary);
+  padding: 2px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.02em;
+  margin-bottom: 5px;
+}
+.advisor-name {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--color-text-primary);
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+.advisor-name .ruby { font-size: 11px; font-weight: 700; color: var(--color-text-muted); margin-right: 4px; }
+.advisor-catchphrase {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--color-brand-primary);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+.advisor-bio {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  padding-left: 0;
+  margin: 0;
+  list-style: none;
+}
+.advisor-bio li {
+  position: relative;
+  padding-left: 10px;
+  margin-bottom: 2px;
+}
+.advisor-bio li::before {
+  content: "・";
+  position: absolute;
+  left: 0;
+  color: var(--color-brand-primary);
+  font-weight: 900;
+}
+
+/* =============================================================
+   Section 7: 転職成功事例カード
+   ============================================================= */
+.success-case-card {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  border: 1.5px solid var(--color-border-default);
+  padding: 16px 14px 14px;
+  box-shadow: 0 4px 0 rgba(255, 107, 0, 0.08), 0 8px 18px rgba(0, 0, 0, 0.05);
+}
+.success-case-card + .success-case-card { margin-top: 14px; }
+
+.success-case-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.success-case-photo {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2.5px solid var(--color-brand-primary);
+  background: radial-gradient(circle at 50% 40%, #ffe5d1, #fff8e7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: var(--color-brand-primary);
+}
+.success-case-baba {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--color-text-primary);
+}
+.success-case-baba .col { flex: 1; line-height: 1.3; }
+.success-case-baba .label {
+  display: block;
+  font-size: 9.5px;
+  color: var(--color-text-muted);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.success-case-baba .salary {
+  display: block;
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--color-text-primary);
+}
+.success-case-baba .arrow {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--color-brand-primary);
+  line-height: 1;
+}
+.success-case-up {
+  position: absolute;
+  top: -10px;
+  right: -6px;
+  background: linear-gradient(180deg, #ff8533 0%, #ff6b00 100%);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  padding: 5px 10px 4px;
+  border-radius: 9999px;
+  box-shadow: 0 3px 0 #b84b00, 0 6px 10px rgba(255, 107, 0, 0.35);
+  transform: rotate(8deg);
+  white-space: nowrap;
+}
+.success-case-up .big { font-size: 13px; }
+.success-case-meta {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--color-cta-secondary-dark);
+  background: var(--color-cta-secondary-bg);
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+.success-case-body {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+/* =============================================================
+   Section 8: 取り扱い企業 (横スクロール)
+   ============================================================= */
+.partners-headline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--color-text-primary);
+  margin-bottom: 14px;
+}
+.partners-headline .slash {
+  color: var(--color-accent-red);
+  font-size: 26px;
+  line-height: 1;
+}
+
+.partners-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px 16px 12px;
+  margin: 0 -16px;
+  scrollbar-width: none;
+}
+.partners-scroll::-webkit-scrollbar { display: none; }
+.partners-chip {
+  flex: 0 0 auto;
+  background: #fff;
+  border: 1.5px solid var(--color-border-default);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  min-width: 96px;
+  text-align: center;
+}
+
+/* ============================================================
+   診断ページ専用: ピュアホワイト無地
+   背景の装飾はやめ、質問カードの shadow とオレンジアクセントだけで見せる。
+   ============================================================ */
+.diagnosis-bg {
+  background-color: #ffffff;
+}
+
