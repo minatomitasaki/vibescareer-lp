@@ -12,6 +12,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Logo } from "@/components/Logo";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
+import { EntryForm } from "@/components/EntryForm";
 import {
   RESULT_DATA,
   allResultIds,
@@ -83,7 +84,7 @@ export default async function ResultPage({
       <RadarBonusSection variant="tertiary" />
       <FaqSection />
       <LastMessageSection />
-      <FormSection />
+      <FormSection resultId={data.id} />
     </main>
   );
 }
@@ -751,9 +752,10 @@ function LastMessageSection() {
 
 // =============================================================================
 // Section 18: フォーム — 結果LPに内包
-// 注: GAS 連携は未実装。送信は preventDefault のみ。
+// フォーム本体は src/components/EntryForm.tsx (client component) に分離。
+// 送信時に GAS の Web App エンドポイントへ POST → /schedule へ遷移する。
 // =============================================================================
-function FormSection() {
+function FormSection({ resultId }: { resultId: string }) {
   return (
     <section id="form" className="px-4 py-10 bg-bg-form">
       <div className="bg-white rounded-3xl p-5 shadow-md">
@@ -789,180 +791,9 @@ function FormSection() {
           ))}
         </ol>
 
-        {/* 注: GAS 連携は未実装。現状は送信時に /schedule へ GET 遷移するだけ。 */}
-        <form
-          className="mt-6 space-y-4"
-          action="/schedule"
-          method="get"
-        >
-          <Field label="お名前" required>
-            <div className="grid grid-cols-2 gap-2">
-              <input
-                type="text"
-                placeholder="姓"
-                className="w-full border-2 border-border-default rounded-lg px-3 py-2.5 text-[14px] focus:border-brand-primary focus:outline-none bg-white"
-                required
-              />
-              <input
-                type="text"
-                placeholder="名"
-                className="w-full border-2 border-border-default rounded-lg px-3 py-2.5 text-[14px] focus:border-brand-primary focus:outline-none bg-white"
-                required
-              />
-            </div>
-          </Field>
-          <Field
-            label="メールアドレス"
-            required
-            hint="VibesRadarのご案内時に使用します"
-          >
-            <input
-              type="email"
-              className="w-full border-2 border-border-default rounded-lg px-3 py-2.5 text-[14px] focus:border-brand-primary focus:outline-none bg-white"
-              required
-            />
-          </Field>
-          <Field
-            label="電話番号"
-            required
-            hint="VibesRadarのご案内時に使用します"
-          >
-            <input
-              type="tel"
-              className="w-full border-2 border-border-default rounded-lg px-3 py-2.5 text-[14px] focus:border-brand-primary focus:outline-none bg-white"
-              required
-            />
-          </Field>
-          <Field label="希望勤務地" required>
-            <select
-              className="w-full border-2 border-border-default rounded-lg px-3 py-2.5 text-[14px] focus:border-brand-primary focus:outline-none bg-white"
-              required
-              defaultValue=""
-            >
-              <option value="" disabled>
-                選択してください
-              </option>
-              <option>全国どこでも</option>
-              <option>関東(東京・神奈川・千葉・埼玉)</option>
-              <option>関西(大阪・京都・兵庫・奈良)</option>
-              <option>中部・東海(愛知・静岡・岐阜)</option>
-              <option>北海道・東北</option>
-              <option>中国・四国</option>
-              <option>九州・沖縄</option>
-              <option>海外</option>
-              <option>未定・相談したい</option>
-            </select>
-          </Field>
-          <Field label="希望転職時期" required>
-            <select
-              className="w-full border-2 border-border-default rounded-lg px-3 py-2.5 text-[14px] focus:border-brand-primary focus:outline-none bg-white"
-              required
-              defaultValue=""
-            >
-              <option value="" disabled>
-                選択してください
-              </option>
-              <option>すぐにでも転職したい</option>
-              <option>3ヶ月以内</option>
-              <option>半年以内</option>
-              <option>1年以内</option>
-              <option>まだ決めていない</option>
-            </select>
-          </Field>
-          <Field label="生年月日" required>
-            <input
-              type="date"
-              className="w-full border-2 border-border-default rounded-lg px-3 py-2.5 text-[14px] focus:border-brand-primary focus:outline-none bg-white"
-              required
-            />
-          </Field>
-          <Field label="最終学歴" required>
-            <select
-              className="w-full border-2 border-border-default rounded-lg px-3 py-2.5 text-[14px] focus:border-brand-primary focus:outline-none bg-white"
-              required
-              defaultValue=""
-            >
-              <option value="" disabled>
-                選択してください
-              </option>
-              <option value="high_school">高卒</option>
-              <option value="junior_college">短大卒</option>
-              <option value="vocational">専門学校卒</option>
-              <option value="university">大学卒</option>
-              <option value="graduate">大学院卒</option>
-              <option value="other">その他</option>
-            </select>
-          </Field>
-          <Field label="学校名" required>
-            <input
-              type="text"
-              placeholder="例:○○大学"
-              className="w-full border-2 border-border-default rounded-lg px-3 py-2.5 text-[14px] focus:border-brand-primary focus:outline-none bg-white"
-              required
-            />
-          </Field>
-          <Field label="専攻学科" required>
-            <input
-              type="text"
-              placeholder="例:経済学部 経営学科"
-              className="w-full border-2 border-border-default rounded-lg px-3 py-2.5 text-[14px] focus:border-brand-primary focus:outline-none bg-white"
-              required
-            />
-          </Field>
-          <label className="flex items-start gap-2 text-[12px] text-text-secondary leading-[1.6]">
-            <input type="checkbox" className="mt-0.5" required />
-            <span>
-              <a href="/privacy" className="text-brand-primary underline">
-                個人情報取扱方針
-              </a>
-              に同意する
-            </span>
-          </label>
-          <button
-            type="submit"
-            className="btn-3d-orange group w-full text-center text-[18px] py-4 inline-flex items-center justify-center gap-2"
-          >
-            <span className="relative z-10">次へ進む</span>
-            <span className="relative z-10 inline-block transition-transform group-hover:translate-x-1">
-              ▶
-            </span>
-          </button>
-        </form>
+        <EntryForm resultId={resultId} />
       </div>
     </section>
-  );
-}
-
-function Field({
-  label,
-  required,
-  hint,
-  children,
-}: {
-  label: string;
-  required?: boolean;
-  hint?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <div className="flex items-center justify-between gap-2 mb-1.5">
-        <span className="inline-flex items-center gap-2 text-[13px] font-bold text-text-primary">
-          {label}
-          {required && (
-            <span className="bg-accent-red text-white text-[10px] font-black px-1.5 py-0.5 rounded">
-              必須
-            </span>
-          )}
-        </span>
-        {hint && (
-          <span className="text-[10.5px] text-text-muted text-right leading-tight">
-            {hint}
-          </span>
-        )}
-      </div>
-      {children}
-    </div>
   );
 }
 
