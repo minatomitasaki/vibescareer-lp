@@ -953,11 +953,14 @@ body {
   border-radius: 16px;
   padding: 8px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-  overflow: hidden;
+  /* TimeRex widget の幅が広いとき、はみ出さず横スクロールで対応 */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .schedule-iframe-frame iframe {
   border-radius: 10px;
   display: block;
+  max-width: 100%;
 }
 
 /* =============================================================

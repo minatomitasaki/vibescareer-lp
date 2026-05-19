@@ -21,42 +21,45 @@ export const metadata: Metadata = {
 
 export default function SchedulePage() {
   return (
-    <main className="lp-container bg-white">
-      {/* ヘッダー */}
-      <header className="relative px-4 py-3 flex items-center justify-start bg-white">
-        <Logo width={160} height={44} priority />
-        <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-primary/60 to-transparent" />
-      </header>
+    <main className="min-h-screen bg-white">
+      {/* ヘッダー + 見出しは LP と同じ 480px 幅で中央寄せ */}
+      <div className="lp-container">
+        <header className="relative px-4 py-3 flex items-center justify-start bg-white">
+          <Logo width={160} height={44} priority />
+          <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-primary/60 to-transparent" />
+        </header>
 
-      {/* ページ見出し */}
-      <section className="px-4 pt-8 pb-4">
-        <div className="section-eyebrow-block">
-          <span className="en">SCHEDULE</span>
-          <h1 className="ja text-[20px]">
-            初回カウンセリングの<br />
-            <span className="marker">日程調整</span>
-          </h1>
+        <section className="px-4 pt-8 pb-4">
+          <div className="section-eyebrow-block">
+            <span className="en">SCHEDULE</span>
+            <h1 className="ja text-[20px]">
+              初回カウンセリングの<br />
+              <span className="marker">日程調整</span>
+            </h1>
+          </div>
+
+          <p className="mt-4 text-center text-[13.5px] leading-[1.95] text-text-secondary">
+            大変ご好評いただいており、リスケジュールが難しいため
+            <br />
+            <strong className="text-brand-primary">
+              確実に参加できる日程
+            </strong>
+            を選択ください。
+          </p>
+        </section>
+      </div>
+
+      {/* TimeRex widget はカレンダーが横長になるため、コンテナを広めに */}
+      <section className="pb-10">
+        <div className="max-w-[960px] mx-auto px-3">
+          <div className="schedule-iframe-frame">
+            <TimerexEmbed url={TIMEREX_EMBED_URL} />
+          </div>
+
+          <p className="mt-3 text-center text-[11px] text-text-muted">
+            ※ 予約完了後、ご登録のメールアドレス宛に VibesRadar 受検 URL をお送りします。
+          </p>
         </div>
-
-        <p className="mt-4 text-center text-[13.5px] leading-[1.95] text-text-secondary">
-          大変ご好評いただいており、リスケジュールが難しいため
-          <br />
-          <strong className="text-brand-primary">
-            確実に参加できる日程
-          </strong>
-          を選択ください。
-        </p>
-      </section>
-
-      {/* TimeRex 予約ウィジェット (公式 JS embed) */}
-      <section className="px-4 pb-10">
-        <div className="schedule-iframe-frame">
-          <TimerexEmbed url={TIMEREX_EMBED_URL} />
-        </div>
-
-        <p className="mt-3 text-center text-[11px] text-text-muted">
-          ※ 予約完了後、ご登録のメールアドレス宛に VibesRadar 受検 URL をお送りします。
-        </p>
       </section>
     </main>
   );
