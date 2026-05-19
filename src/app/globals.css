@@ -1037,6 +1037,68 @@ body {
 }
 
 /* =============================================================
+   入口LP 用 CTA ボタン — btn-cta-radar と同じ構造でカラーだけオレンジ
+   ============================================================= */
+.btn-cta-radar-orange {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #ff8533 0%, #ff6b00 55%, #e55f00 100%);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  padding: 22px 28px;
+  border-radius: 9999px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(229, 95, 0, 0.22);
+  transition: filter 0.2s ease, box-shadow 0.2s ease;
+  animation: cta-radar-pulse 1.4s ease-in-out infinite;
+  will-change: transform;
+}
+/* 内側上端の控えめな光沢 (gloss) */
+.btn-cta-radar-orange::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 22px;
+  right: 22px;
+  height: 30%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.32) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  border-radius: 9999px;
+  pointer-events: none;
+}
+/* 波動リング (オレンジ) */
+.btn-cta-radar-orange::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  border: 2px solid rgba(255, 107, 0, 0.55);
+  animation: cta-radar-ring 1.8s ease-out infinite;
+  pointer-events: none;
+}
+.btn-cta-radar-orange:hover {
+  filter: brightness(1.06);
+  animation-play-state: paused;
+  box-shadow: 0 6px 16px rgba(229, 95, 0, 0.3);
+}
+.btn-cta-radar-orange:active {
+  animation-play-state: paused;
+  box-shadow: 0 2px 6px rgba(229, 95, 0, 0.24);
+}
+.btn-cta-radar-orange:hover::after,
+.btn-cta-radar-orange:active::after {
+  animation-play-state: paused;
+}
+
+/* =============================================================
    VibesRadar 特典カード (Section 5 / 9 / 15) — 上品リデザイン版
    ============================================================= */
 .radar-bonus-card {

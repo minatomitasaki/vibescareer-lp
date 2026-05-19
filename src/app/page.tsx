@@ -133,16 +133,16 @@ function CtaButton({
           <span className="slash">／</span>
         </div>
       )}
-      {/* 上の「いますぐ無料で」ピル (緑系で診断結果LP の CTA と統一) */}
-      <div className="relative bg-white border-2 border-[#14b8a6] rounded-full px-5 py-1.5 text-[12px] font-black text-[#14b8a6] mb-[-14px] z-10 shadow-md">
+      {/* 上の「いますぐ無料で」ピル (ブランドオレンジ) */}
+      <div className="relative bg-white border-2 border-brand-primary rounded-full px-5 py-1.5 text-[12px] font-black text-brand-primary mb-[-14px] z-10 shadow-md">
         いますぐ無料で
         {/* 下向き三角の小さな矢印 (ピルからボタンへ繋がる印象) */}
-        <span className="absolute -bottom-[7px] left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-r-2 border-b-2 border-[#14b8a6] rotate-45" />
+        <span className="absolute -bottom-[7px] left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-r-2 border-b-2 border-brand-primary rotate-45" />
       </div>
-      {/* メインCTAボタン (診断結果LP の btn-cta-radar と統一) */}
+      {/* メインCTAボタン (btn-cta-radar と同構造、色はブランドオレンジ) */}
       <Link
         href="/diagnosis"
-        className="btn-cta-radar group w-full max-w-[300px] text-center inline-flex items-center justify-center gap-2"
+        className="btn-cta-radar-orange group w-full max-w-[300px] text-center"
       >
         <span className="relative z-10">診断START！</span>
         <span className="relative z-10 inline-block transition-transform group-hover:translate-x-1">
