@@ -1813,4 +1813,92 @@ export const IMAGES = [
     ].join("\n"),
   },
 
+  // -------------------------------------------------------------------------
+  // 転職成功事例 4 件 (Section 7) - 年収アップ インフォグラフィック画像
+  // BEFORE/AFTER の職種・年収と +XX 万円 UP バッジを 1 枚に統合したリッチ装飾画像。
+  // カード内で大きく表示するメインのビジュアル。
+  // gpt-image-2 の日本語精度は完璧でないため、生成後に文字化けが発生したら
+  // 再生成 or プロンプト調整が必要。
+  // -------------------------------------------------------------------------
+
+  // case1: 電力会社 (¥420万) → 広告代理店 (¥600万) +180万UP
+  {
+    file: "success-case-1-salary.png",
+    size: "1536x1024",
+    quality: "high",
+    prompt: [
+      "Modern flat-design infographic, horizontal aspect ratio 1536x1024, for a Japanese career-change service landing page.",
+      "Theme: dramatic BEFORE→AFTER salary improvement with an upward growth feel.",
+      "LAYOUT (top section): Two rounded rectangle boxes side by side with a bold orange arrow between them.",
+      "- LEFT BOX (BEFORE): muted grey background (#ECEFF1) with rounded corners. Contains 3 lines of Japanese text stacked: 'BEFORE' (small caps, grey), '電力会社' (medium, dark grey), '年収 ¥420万' (large, bold, dark text).",
+      "- CENTER: large vibrant orange right-pointing arrow (▶) with a soft glow effect, indicating transition.",
+      "- RIGHT BOX (AFTER): vibrant orange gradient background (from #ff8533 to #ff6b00), rounded corners, slightly larger than BEFORE, with a soft drop shadow. Contains 3 lines of WHITE Japanese text stacked: 'AFTER' (small caps), '広告代理店' (medium), '年収 ¥600万' (large, bold).",
+      "LAYOUT (bottom section): A wide ribbon-style banner spanning the full width, with a bold orange gradient background (#ff8533 → #ff6b00), glossy 3D effect, and a strong drop shadow. Contains in WHITE bold text: '年収 +180万円 UP ↗' with a large upward arrow icon at the end.",
+      "Background: subtle warm cream (#FFFAF5) with a very faint upward trending line chart graphic in pale orange.",
+      "Style: Clean, modern, sharp typography, high-end recruitment ad polish. Like Japanese transit poster ads for career services.",
+      "CRITICAL TEXT ACCURACY: The Japanese characters must be PERFECTLY accurate — '電力会社', '広告代理店', '年収', '万', '円', 'UP', 'BEFORE', 'AFTER'. The numbers 420, 600, 180 must be exact. No misspellings, no random characters.",
+      "STRICT: No watermark, no logo, no human figures, no realistic photo elements. Pure flat infographic design.",
+    ].join("\n"),
+  },
+
+  // case2: 市役所公務員 (¥420万) → 通販マーケター (¥600万) +180万UP
+  {
+    file: "success-case-2-salary.png",
+    size: "1536x1024",
+    quality: "high",
+    prompt: [
+      "Modern flat-design infographic, horizontal aspect ratio 1536x1024, for a Japanese career-change service landing page.",
+      "Theme: dramatic BEFORE→AFTER salary improvement.",
+      "LAYOUT (top section): Two rounded rectangle boxes side by side with a bold orange arrow between them.",
+      "- LEFT BOX (BEFORE): muted grey (#ECEFF1), rounded. Contains stacked Japanese text: 'BEFORE' (small), '市役所公務員' (medium), '年収 ¥420万' (large bold).",
+      "- CENTER: large vibrant orange right-pointing arrow (▶) with a soft glow.",
+      "- RIGHT BOX (AFTER): vibrant orange gradient (#ff8533 → #ff6b00), slightly larger, drop shadow. WHITE text stacked: 'AFTER', '通販マーケター', '年収 ¥600万'.",
+      "LAYOUT (bottom): Wide ribbon banner, orange gradient, glossy 3D, drop shadow. WHITE bold text: '年収 +180万円 UP ↗' with a large upward arrow.",
+      "Background: warm cream (#FFFAF5) with faint upward trend line.",
+      "Style: clean modern flat infographic.",
+      "CRITICAL TEXT ACCURACY: Japanese characters must be exact — '市役所公務員', '通販マーケター', '年収', '万', '円', 'UP', 'BEFORE', 'AFTER'. Numbers: 420, 600, 180.",
+      "STRICT: No watermark, no logo, no humans, no photo elements. Flat infographic.",
+    ].join("\n"),
+  },
+
+  // case3: 新聞記者 (¥420万) → セールスライター (¥600万) +180万UP
+  {
+    file: "success-case-3-salary.png",
+    size: "1536x1024",
+    quality: "high",
+    prompt: [
+      "Modern flat-design infographic, horizontal aspect ratio 1536x1024, for a Japanese career-change service landing page.",
+      "Theme: dramatic BEFORE→AFTER salary improvement.",
+      "LAYOUT (top section): Two rounded rectangle boxes side by side with a bold orange arrow between them.",
+      "- LEFT BOX (BEFORE): muted grey (#ECEFF1), rounded. Stacked: 'BEFORE', '新聞記者', '年収 ¥420万'.",
+      "- CENTER: large vibrant orange right-pointing arrow (▶) with glow.",
+      "- RIGHT BOX (AFTER): vibrant orange gradient (#ff8533 → #ff6b00), drop shadow, slightly larger. WHITE text: 'AFTER', 'セールスライター', '年収 ¥600万'.",
+      "LAYOUT (bottom): Wide ribbon banner, orange gradient, glossy 3D, drop shadow. WHITE bold text: '年収 +180万円 UP ↗' with upward arrow.",
+      "Background: warm cream (#FFFAF5) with faint upward trend line.",
+      "Style: clean modern flat infographic.",
+      "CRITICAL TEXT ACCURACY: Japanese characters exact — '新聞記者', 'セールスライター', '年収', '万', '円', 'UP', 'BEFORE', 'AFTER'. Numbers: 420, 600, 180.",
+      "STRICT: No watermark, no logo, no humans, no photo elements. Flat infographic.",
+    ].join("\n"),
+  },
+
+  // case4: 空港免税店 (¥420万) → 新規事業開発 (¥600万) +180万UP
+  {
+    file: "success-case-4-salary.png",
+    size: "1536x1024",
+    quality: "high",
+    prompt: [
+      "Modern flat-design infographic, horizontal aspect ratio 1536x1024, for a Japanese career-change service landing page.",
+      "Theme: dramatic BEFORE→AFTER salary improvement.",
+      "LAYOUT (top section): Two rounded rectangle boxes side by side with a bold orange arrow between them.",
+      "- LEFT BOX (BEFORE): muted grey (#ECEFF1), rounded. Stacked: 'BEFORE', '空港免税店', '年収 ¥420万'.",
+      "- CENTER: large vibrant orange right-pointing arrow (▶) with glow.",
+      "- RIGHT BOX (AFTER): vibrant orange gradient (#ff8533 → #ff6b00), drop shadow, slightly larger. WHITE text: 'AFTER', '新規事業開発', '年収 ¥600万'.",
+      "LAYOUT (bottom): Wide ribbon banner, orange gradient, glossy 3D, drop shadow. WHITE bold text: '年収 +180万円 UP ↗' with upward arrow.",
+      "Background: warm cream (#FFFAF5) with faint upward trend line.",
+      "Style: clean modern flat infographic.",
+      "CRITICAL TEXT ACCURACY: Japanese characters exact — '空港免税店', '新規事業開発', '年収', '万', '円', 'UP', 'BEFORE', 'AFTER'. Numbers: 420, 600, 180.",
+      "STRICT: No watermark, no logo, no humans, no photo elements. Flat infographic.",
+    ].join("\n"),
+  },
+
 ];

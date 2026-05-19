@@ -352,41 +352,16 @@ function SuccessCaseCard({ caseData }: { caseData: SuccessCase }) {
         </span>
       </div>
 
-      {/* BEFORE / AFTER の 2 列ボックス */}
-      <div className="success-case-ba">
-        <div className="success-case-ba-col before">
-          <span className="success-case-ba-label">BEFORE</span>
-          <span className="success-case-ba-job">{caseData.beforeCompany}</span>
-          <span className="success-case-ba-salary">
-            <span className="prefix">年収</span>
-            <span className="currency">¥</span>
-            <span className="amount">{caseData.beforeAmount}</span>
-            <span className="suffix">万</span>
-          </span>
-        </div>
-        <span className="success-case-ba-arrow" aria-hidden>
-          ▶
-        </span>
-        <div className="success-case-ba-col after">
-          <span className="success-case-ba-label">AFTER</span>
-          <span className="success-case-ba-job">{caseData.afterCompany}</span>
-          <span className="success-case-ba-salary">
-            <span className="prefix">年収</span>
-            <span className="currency">¥</span>
-            <span className="amount">{caseData.afterAmount}</span>
-            <span className="suffix">万</span>
-          </span>
-        </div>
-      </div>
-
-      {/* +XX万円UP バッジ */}
-      <div className="success-case-up-badge">
-        <span className="label">年収</span>
-        <span className="plus">+</span>
-        <span className="amount">{caseData.salaryUpAmount}</span>
-        <span className="unit">万円</span>
-        <span className="up">UP</span>
-        <span className="arrow" aria-hidden>↗</span>
+      {/* BEFORE→AFTER + UP バッジを 1 枚に統合したインフォグラフィック画像 */}
+      <div className="success-case-salary-infographic">
+        <ImagePlaceholder
+          src={caseData.salaryInfographic}
+          label={`Section 7: ${caseData.name} の年収アップ ${caseData.beforeCompany} ¥${caseData.beforeAmount}万 → ${caseData.afterCompany} ¥${caseData.afterAmount}万 (+${caseData.salaryUpAmount}万UP)`}
+          alt={`${caseData.beforeCompany} 年収¥${caseData.beforeAmount}万 から ${caseData.afterCompany} 年収¥${caseData.afterAmount}万 へ。+${caseData.salaryUpAmount}万円UP。`}
+          width={1536}
+          height={864}
+          className="w-full h-auto block"
+        />
       </div>
 
       {/* タイトル */}
