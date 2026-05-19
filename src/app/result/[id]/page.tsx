@@ -336,30 +336,54 @@ function SuccessCasesSection() {
 
 function SuccessCaseCard({ caseData }: { caseData: SuccessCase }) {
   return (
-    <div className="success-case-card">
-      <span className="success-case-up">
-        年収<br />
-        <span className="big">+{caseData.salaryUp}</span>
-      </span>
-      <div className="success-case-head">
-        <div className="success-case-photo" aria-hidden>👤</div>
-        <div className="success-case-baba">
-          <div className="col">
-            <span className="label">BEFORE</span>
-            <span className="text-[10px] text-text-muted">{caseData.beforeCompany}</span>
-            <span className="salary">{caseData.beforeSalary}</span>
-          </div>
-          <span className="arrow">→</span>
-          <div className="col">
-            <span className="label">AFTER</span>
-            <span className="text-[10px] text-text-muted">{caseData.afterCompany}</span>
-            <span className="salary text-brand-primary">{caseData.afterSalary}</span>
-          </div>
+    <article className="success-case-card">
+      {/* 上部: 大きな写真 + 名前・年齢オーバーレイ */}
+      <div className="success-case-photo-wrap">
+        <ImagePlaceholder
+          src={caseData.photo}
+          label={`Section 7: ${caseData.name} (${caseData.age}歳) 写真`}
+          alt={`${caseData.name} (${caseData.age}歳) のカウンセリングシーン`}
+          width={1024}
+          height={640}
+          className="success-case-photo-img"
+        />
+        <span className="success-case-name-tag">
+          {caseData.name}（{caseData.age}歳）
+        </span>
+      </div>
+
+      {/* BEFORE / AFTER の 2 列ボックス */}
+      <div className="success-case-ba">
+        <div className="success-case-ba-col before">
+          <span className="success-case-ba-label">BEFORE</span>
+          <span className="success-case-ba-job">{caseData.beforeCompany}</span>
+          <span className="success-case-ba-salary">
+            年収{caseData.beforeSalary}
+          </span>
+        </div>
+        <span className="success-case-ba-arrow" aria-hidden>
+          ▶
+        </span>
+        <div className="success-case-ba-col after">
+          <span className="success-case-ba-label">AFTER</span>
+          <span className="success-case-ba-job">{caseData.afterCompany}</span>
+          <span className="success-case-ba-salary">
+            年収{caseData.afterSalary}
+          </span>
         </div>
       </div>
-      <span className="success-case-meta">内定 {caseData.offers}</span>
+
+      {/* +XX万円UP バッジ */}
+      <div className="success-case-up-badge">
+        年収 +{caseData.salaryUp}円 UP ↗
+      </div>
+
+      {/* タイトル */}
+      <h3 className="success-case-title">{caseData.title}</h3>
+
+      {/* 本文 */}
       <p className="success-case-body">{caseData.body}</p>
-    </div>
+    </article>
   );
 }
 

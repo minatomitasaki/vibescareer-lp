@@ -1738,4 +1738,79 @@ export const IMAGES = [
     ].join("\n"),
   },
 
+  // -------------------------------------------------------------------------
+  // 転職成功事例 4 件 (Section 7) - フォトリアル editorial style
+  // 16:10 アスペクト (1536x1024) でカード上部にトリミング表示。
+  // 競合 LP 参考: 主人公 1 名 + アドバイザーの肩 (背面 / ボケ) という相談シーン構図。
+  // 表情は前向きで穏やか、転職活動を終えた充実感を匂わせる。
+  // -------------------------------------------------------------------------
+
+  // case1: Aさん (28歳 男性) / 電力会社 → 広告代理店
+  {
+    file: "success-case-1.png",
+    size: "1536x1024",
+    quality: "high",
+    prompt: [
+      "PHOTOREALISTIC editorial-style professional photograph, horizontal 1536x1024.",
+      "Subject: a Japanese man in his late 20s, formerly an electric utility company employee now transitioning to a creative role at an advertising agency.",
+      "- Neat short black hair, clean shave, smart-casual style (charcoal slim-fit blazer over a soft white knit). Confident, calm expression with a slight gentle smile.",
+      "- He occupies the left 2/3 of the frame, sitting at a wooden cafe table, facing toward a career counselor whose shoulder and back-of-head appear softly blurred at the right edge of the frame.",
+      "- Lighting: warm natural daylight from a large window on the right, soft glow on the main subject's face. Healthy realistic skin tones.",
+      "- Background: modern cozy Japanese cafe / counseling lounge with soft bokeh, light wood textures, a hint of green plants, very warm cream / beige tones.",
+      "- Camera feel: 35mm lens, shallow depth of field, sharp focus on the man's face, gentle bokeh elsewhere.",
+      "STRICT: No text, no watermark, no logo, no UI overlay, no caption. Photographic, not illustration. Two people visible at most (main subject + counselor's back).",
+    ].join("\n"),
+  },
+
+  // case2: Bさん (26歳 女性) / 市役所公務員 → 通販マーケター
+  {
+    file: "success-case-2.png",
+    size: "1536x1024",
+    quality: "high",
+    prompt: [
+      "PHOTOREALISTIC editorial-style professional photograph, horizontal 1536x1024.",
+      "Subject: a Japanese woman in her mid-20s, formerly a city-hall public servant now transitioning to a digital marketing role at an e-commerce company.",
+      "- Shoulder-length dark brown hair with a soft natural wave, subtle minimal makeup. Wearing a cream-colored knit blouse with a soft beige cardigan. Warm, optimistic expression with a small open smile.",
+      "- She occupies the left 2/3 of the frame, sitting at a wooden cafe table, facing toward a career counselor whose shoulder and back-of-head appear softly blurred at the right edge.",
+      "- Lighting: warm natural daylight from a large window on the right, soft glow on her face. Healthy realistic skin tones.",
+      "- Background: modern cozy Japanese cafe / counseling lounge with soft bokeh, light wood textures, hint of greenery, cream / beige tones.",
+      "- Camera feel: 35mm lens, shallow depth of field, sharp focus on her face, gentle bokeh elsewhere.",
+      "STRICT: No text, no watermark, no logo, no UI overlay. Photographic, not illustration. Two people visible at most.",
+    ].join("\n"),
+  },
+
+  // case3: Cさん (27歳 男性) / 新聞記者 → セールスライター
+  {
+    file: "success-case-3.png",
+    size: "1536x1024",
+    quality: "high",
+    prompt: [
+      "PHOTOREALISTIC editorial-style professional photograph, horizontal 1536x1024.",
+      "Subject: a Japanese man in his late 20s, formerly a newspaper journalist now transitioning to a sales copywriter role at a digital marketing firm.",
+      "- Slightly tousled short black hair, clean shave, smart-casual style (navy blazer over a light blue oxford shirt, no tie). Thoughtful, intelligent expression with a soft gentle smile.",
+      "- He occupies the left 2/3 of the frame, sitting at a wooden cafe table, facing toward a career counselor whose shoulder appears softly blurred at the right edge.",
+      "- Lighting: warm natural daylight from a large window on the right, soft glow on his face.",
+      "- Background: modern cozy Japanese cafe / counseling lounge with soft bokeh, light wood textures, hint of greenery, cream / beige tones.",
+      "- Camera feel: 35mm lens, shallow depth of field, sharp focus on his face, gentle bokeh elsewhere.",
+      "STRICT: No text, no watermark, no logo, no UI overlay. Photographic, not illustration. Two people visible at most.",
+    ].join("\n"),
+  },
+
+  // case4: Dさん (29歳 女性) / 空港免税店 → 新規事業開発
+  {
+    file: "success-case-4.png",
+    size: "1536x1024",
+    quality: "high",
+    prompt: [
+      "PHOTOREALISTIC editorial-style professional photograph, horizontal 1536x1024.",
+      "Subject: a Japanese woman in her late 20s, formerly a duty-free shop staff at an international airport now transitioning to a new-business development role at a growth-stage company.",
+      "- Sleek straight shoulder-length dark hair, refined minimal makeup. Wearing a soft camel turtleneck under a tailored beige blazer. Composed, confident expression with a subtle smile.",
+      "- She occupies the left 2/3 of the frame, sitting at a wooden cafe table, facing toward a career counselor whose shoulder appears softly blurred at the right edge.",
+      "- Lighting: warm natural daylight from a large window on the right, soft glow on her face.",
+      "- Background: modern cozy Japanese cafe / counseling lounge with soft bokeh, light wood textures, hint of greenery, cream / beige tones.",
+      "- Camera feel: 35mm lens, shallow depth of field, sharp focus on her face, gentle bokeh elsewhere.",
+      "STRICT: No text, no watermark, no logo, no UI overlay. Photographic, not illustration. Two people visible at most.",
+    ].join("\n"),
+  },
+
 ];

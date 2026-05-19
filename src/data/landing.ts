@@ -92,6 +92,13 @@ export const ADVISORS: Advisor[] = [
 // -----------------------------------------------------------------------------
 export type SuccessCase = {
   id: string;
+  /** 仮名 (本番で実名 or 仮名に差し替え予定) */
+  name: string;
+  age: number;
+  /** AI 生成 or 実写人物の写真パス。public/images 配下 */
+  photo: string;
+  /** 太字タイトル: "内定X社! ○○から△△へ" */
+  title: string;
   beforeCompany: string;
   beforeSalary: string;
   afterCompany: string;
@@ -104,6 +111,10 @@ export type SuccessCase = {
 export const SUCCESS_CASES: SuccessCase[] = [
   {
     id: "case1",
+    name: "Aさん",
+    age: 28,
+    photo: "/images/success-case-1.png",
+    title: "内定3社! 電力会社から広告代理店プランナーへ",
     beforeCompany: "電力会社",
     beforeSalary: "¥420 万",
     afterCompany: "広告代理店",
@@ -115,6 +126,10 @@ export const SUCCESS_CASES: SuccessCase[] = [
   },
   {
     id: "case2",
+    name: "Bさん",
+    age: 26,
+    photo: "/images/success-case-2.png",
+    title: "内定4社! 市役所公務員から通販マーケターへ未経験挑戦",
     beforeCompany: "市役所公務員",
     beforeSalary: "¥420 万",
     afterCompany: "通販マーケター",
@@ -126,6 +141,10 @@ export const SUCCESS_CASES: SuccessCase[] = [
   },
   {
     id: "case3",
+    name: "Cさん",
+    age: 27,
+    photo: "/images/success-case-3.png",
+    title: "内定3社! 新聞記者からセールスライターへ転身",
     beforeCompany: "新聞記者",
     beforeSalary: "¥420 万",
     afterCompany: "セールスライター",
@@ -138,6 +157,10 @@ export const SUCCESS_CASES: SuccessCase[] = [
   },
   {
     id: "case4",
+    name: "Dさん",
+    age: 29,
+    photo: "/images/success-case-4.png",
+    title: "内定3社! 免税店スタッフから新規事業開発へ",
     beforeCompany: "空港免税店",
     beforeSalary: "¥420 万",
     afterCompany: "新規事業開発",

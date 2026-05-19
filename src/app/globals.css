@@ -1731,97 +1731,141 @@ body {
 }
 
 /* =============================================================
-   Section 7: 転職成功事例カード
+   Section 7: 転職成功事例カード (競合 LP 参考のリッチ版)
+   構成: 上部写真 + 名前タグ / BEFORE-AFTER 2 列 / +XX UP バッジ /
+        タイトル / 本文 を 1 カードに縦積み
    ============================================================= */
 .success-case-card {
   position: relative;
   background: #fff;
-  border-radius: 16px;
-  border: 1.5px solid var(--color-border-default);
-  padding: 16px 14px 14px;
+  border-radius: 20px;
+  border: 2px solid color-mix(in srgb, var(--color-brand-primary) 18%, white);
+  overflow: hidden;
   box-shadow: 0 4px 0 rgba(255, 107, 0, 0.08), 0 8px 18px rgba(0, 0, 0, 0.05);
 }
-.success-case-card + .success-case-card { margin-top: 14px; }
+.success-case-card + .success-case-card { margin-top: 18px; }
 
-.success-case-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
+/* 上部: 写真エリア (16:10 アスペクト) */
+.success-case-photo-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: var(--color-bg-subtle);
+  overflow: hidden;
 }
-.success-case-photo {
-  flex-shrink: 0;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: 2.5px solid var(--color-brand-primary);
-  background: radial-gradient(circle at 50% 40%, #ffe5d1, #fff8e7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  color: var(--color-brand-primary);
-}
-.success-case-baba {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--color-text-primary);
-}
-.success-case-baba .col { flex: 1; line-height: 1.3; }
-.success-case-baba .label {
+.success-case-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  font-size: 9.5px;
-  color: var(--color-text-muted);
+}
+/* 名前・年齢タグ (写真左下にオーバーレイ) */
+.success-case-name-tag {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  padding: 4px 12px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
-.success-case-baba .salary {
-  display: block;
-  font-size: 13px;
+
+/* BEFORE / AFTER の 2 列ボックス */
+.success-case-ba {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  gap: 8px;
+  padding: 14px 12px 10px;
+}
+.success-case-ba-col {
+  border-radius: 12px;
+  padding: 12px 8px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.success-case-ba-col.before {
+  background: #ECEFF1;
+}
+.success-case-ba-col.after {
+  background: color-mix(in srgb, var(--color-brand-primary) 13%, white);
+  border: 1.5px solid color-mix(in srgb, var(--color-brand-primary) 30%, white);
+}
+.success-case-ba-label {
+  font-size: 10.5px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+}
+.success-case-ba-col.after .success-case-ba-label {
+  color: var(--color-brand-primary);
+}
+.success-case-ba-job {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  font-weight: 700;
+  margin-top: 2px;
+}
+.success-case-ba-salary {
+  font-size: 14.5px;
   font-weight: 900;
   color: var(--color-text-primary);
+  margin-top: 2px;
 }
-.success-case-baba .arrow {
-  font-size: 18px;
-  font-weight: 900;
+.success-case-ba-col.after .success-case-ba-salary {
   color: var(--color-brand-primary);
+}
+.success-case-ba-arrow {
+  align-self: center;
+  color: var(--color-brand-primary);
+  font-size: 14px;
+  font-weight: 900;
   line-height: 1;
 }
-.success-case-up {
-  position: absolute;
-  top: -10px;
-  right: -6px;
-  background: linear-gradient(180deg, #ff8533 0%, #ff6b00 100%);
-  color: #fff;
-  font-size: 10px;
+
+/* +XX万円UP バッジ (カード幅いっぱい) */
+.success-case-up-badge {
+  display: block;
+  margin: 0 12px 14px;
+  text-align: center;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-brand-primary) 14%, white) 0%,
+    color-mix(in srgb, var(--color-brand-primary) 24%, white) 100%
+  );
+  color: var(--color-brand-primary);
+  font-size: 13px;
   font-weight: 900;
-  padding: 5px 10px 4px;
-  border-radius: 9999px;
-  box-shadow: 0 3px 0 #b84b00, 0 6px 10px rgba(255, 107, 0, 0.35);
-  transform: rotate(8deg);
-  white-space: nowrap;
+  padding: 7px 10px;
+  border-radius: 10px;
+  letter-spacing: 0.04em;
 }
-.success-case-up .big { font-size: 13px; }
-.success-case-meta {
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 800;
-  color: var(--color-cta-secondary-dark);
-  background: var(--color-cta-secondary-bg);
-  padding: 2px 8px;
-  border-radius: 6px;
-  margin-bottom: 8px;
+
+/* 太字タイトル */
+.success-case-title {
+  padding: 0 16px 10px;
+  font-size: 14.5px;
+  font-weight: 900;
+  line-height: 1.65;
+  color: var(--color-text-primary);
+  letter-spacing: 0.01em;
 }
+
+/* 本文 */
 .success-case-body {
-  font-size: 12px;
-  font-weight: 600;
+  padding: 0 16px 18px;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.95;
   color: var(--color-text-secondary);
-  line-height: 1.7;
+  white-space: pre-line;
 }
 
 /* =============================================================
