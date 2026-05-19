@@ -408,15 +408,14 @@ function PartnersSection() {
 
 // =============================================================================
 // Section 10: 悩み訴求
-// 見出し + 悩み顔ビジュアル + 悩みカード × 4
+// 見出し + 4 つの悩みカード (1 枚画像) + 悩み顔ビジュアル
+//
+// 4 件の悩み (画像 result-concerns-cards.png に焼き込み済み):
+// - CASE.01: 今の会社が自分に合っているとは思えない。やりがいを感じられない。
+// - CASE.02: このまま今の仕事を続けていても、成長できるイメージが持てない。
+// - CASE.03: 頑張りや成績に見合うだけの評価や年収が欲しい。
+// - CASE.04: もっと自分本来の力を発揮できる会社で働きたい。
 // =============================================================================
-const CONCERNS = [
-  "今の会社が自分に合っているとは思えない。やりがいを感じられない。",
-  "このまま今の仕事を続けていても、成長できるイメージが持てない。",
-  "頑張りや成績に見合うだけの評価や年収が欲しい。",
-  "もっと自分本来の力を発揮できる会社で働きたい。",
-];
-
 function ConcernsSection() {
   return (
     <section className="px-4 py-10 bg-bg-subtle">
@@ -428,8 +427,20 @@ function ConcernsSection() {
         </h2>
       </div>
 
-      {/* ビジュアル: 男女の悩み顔 (IMAGE2.0 生成) */}
-      <div className="mt-2 flex justify-center">
+      {/* 4 つの悩みカード (1 枚画像) */}
+      <div className="mt-4 flex justify-center">
+        <ImagePlaceholder
+          src="/images/result-concerns-cards.png"
+          label="Section 10: 4つの悩みカード"
+          alt="よくある転職の悩み 4 ケース: 今の会社が自分に合っているか / 成長できるイメージが持てない / 評価や年収が見合わない / 自分の力を発揮できる会社で働きたい"
+          width={1024}
+          height={1536}
+          className="w-full h-auto max-w-[420px]"
+        />
+      </div>
+
+      {/* 男女の悩み顔ビジュアル */}
+      <div className="mt-6 flex justify-center">
         <ImagePlaceholder
           src="/images/result-concerns-faces.png"
           label="Section 10: 悩み訴求イメージ"
@@ -440,23 +451,6 @@ function ConcernsSection() {
           className="w-full h-auto max-w-[320px]"
         />
       </div>
-
-      {/* 悩みカード × 4 */}
-      <ul className="mt-6 space-y-3">
-        {CONCERNS.map((c, i) => (
-          <li
-            key={i}
-            className="relative bg-white rounded-2xl border-2 border-brand-primary/20 pl-14 pr-4 py-3.5 shadow-[0_2px_8px_rgba(255,107,0,0.06)]"
-          >
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-brand-primary text-white text-[14px] font-black flex items-center justify-center shadow-md">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <p className="text-[13.5px] leading-[1.7] text-text-secondary font-bold">
-              {c}
-            </p>
-          </li>
-        ))}
-      </ul>
     </section>
   );
 }
@@ -812,32 +806,106 @@ function FormSection({ resultId }: { resultId: string }) {
   return (
     <section id="form" className="px-4 py-10 bg-bg-form">
       <div className="bg-white rounded-3xl p-5 shadow-md">
-        <ImagePlaceholder
-          src="/images/form-ticket-banner.png"
-          label="フォーム見出し: プレゼントチケット"
-          alt="VibesRadarの無料チケットをプレゼント"
-          width={1536}
-          height={1024}
-          rounded
-          className="w-full h-auto"
-        />
+        <div className="text-center py-1">
+          <p className="text-[13px] font-bold text-text-secondary leading-[1.85]">
+            カンタン申し込み＆カウンセリング予約で
+          </p>
+          <p className="mt-2.5 text-[22px] font-black leading-[1.45] text-text-primary">
+            <span className="text-brand-primary">VibesRadar</span>の
+            <span className="relative inline-block">
+              <span aria-hidden className="absolute inset-x-0 bottom-[1px] h-[9px] bg-brand-primary/15 rounded-[1px]" />
+              <span className="relative">無料チケット</span>
+            </span>
+            を
+          </p>
+          <p className="mt-1 text-[24px] font-black text-brand-primary tracking-wide">
+            プレゼント！
+          </p>
+        </div>
 
-        <ol className="mt-6 space-y-2.5">
+        <ol className="mt-6 grid grid-cols-3 divide-x divide-brand-primary/20">
           {[
-            { step: 1, icon: "📱", text: "下記フォームから必要情報を入力" },
-            { step: 2, icon: "📅", text: "ご希望の日時で初回カウンセリング日程を調整" },
-            { step: 3, icon: "🎫", text: "VibesRadarの受検チケットを送信" },
+            {
+              step: 1,
+              text: "下のフォームから情報を入力",
+              icon: (
+                <svg
+                  width={28}
+                  height={28}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
+                  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+                  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                  <path d="M12 11h4" />
+                  <path d="M12 16h4" />
+                  <path d="M8 11h.01" />
+                  <path d="M8 16h.01" />
+                </svg>
+              ),
+            },
+            {
+              step: 2,
+              text: "ご希望の日時で日程を調整",
+              icon: (
+                <svg
+                  width={28}
+                  height={28}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
+                  <path d="M8 2v4" />
+                  <path d="M16 2v4" />
+                  <rect width="18" height="18" x="3" y="4" rx="2" />
+                  <path d="M3 10h18" />
+                  <path d="m9 16 2 2 4-4" />
+                </svg>
+              ),
+            },
+            {
+              step: 3,
+              text: "VibesRadarの受検チケット送信",
+              icon: (
+                <svg
+                  width={28}
+                  height={28}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
+                  <path d="M2 9a3 3 0 1 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 1 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
+                  <path d="M13 5v2" />
+                  <path d="M13 11v2" />
+                  <path d="M13 17v2" />
+                </svg>
+              ),
+            },
           ].map((s) => (
             <li
               key={s.step}
-              className="flex items-center gap-3 bg-bg-subtle rounded-xl px-3 py-2.5"
+              className="px-2 flex flex-col items-center text-center"
             >
-              <span className="w-10 h-10 flex-shrink-0 rounded-full bg-brand-primary text-white font-black flex flex-col items-center justify-center leading-none">
-                <span className="text-[8px] tracking-wider">STEP</span>
-                <span className="text-[13px] mt-0.5">{s.step}</span>
+              <span className="text-[10.5px] font-black text-brand-primary tracking-[0.05em] underline underline-offset-[3px] decoration-1">
+                STEP.{String(s.step).padStart(2, "0")}
               </span>
-              <span className="text-[22px]">{s.icon}</span>
-              <p className="text-[12.5px] font-bold text-text-primary leading-[1.5]">
+              <span className="mt-3 w-[58px] h-[58px] rounded-[14px] bg-gradient-to-br from-brand-primary to-[#FF9A4D] shadow-[0_4px_10px_-2px_rgba(255,107,0,0.35)] flex items-center justify-center text-white">
+                {s.icon}
+              </span>
+              <p className="mt-3 text-[11px] font-bold text-text-primary leading-[1.55]">
                 {s.text}
               </p>
             </li>

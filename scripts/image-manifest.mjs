@@ -1919,15 +1919,16 @@ export const IMAGES = [
   },
 
   // -------------------------------------------------------------------------
-  // フォームセクション見出し: プレゼントチケット バナー (派手 + 立体感)
-  // 横長 1536x1024。ゴールドアクセント、3D ライティング、強いシャドウで高級感×インパクト。
+  // [廃止] フォームセクション見出しのチケットバナー画像。
+  // page.tsx 内の HTML/CSS 実装に戻したため画像生成不要。プロンプト履歴は git log を参照。
   // -------------------------------------------------------------------------
-  {
-    file: "form-ticket-banner.png",
-    size: "1536x1024",
-    quality: "high",
-    prompt: [
-      "A glossy, dimensional, premium 3D-rendered-look coupon ticket banner illustration, horizontal aspect ratio 1536x1024, for the form section of a Japanese career-change service landing page. The image will sit inside a white rounded card on a smartphone LP. The overall feel should be EYE-CATCHING, PREMIUM, VIBRANT, and DIMENSIONAL — like a VIP gold voucher or a high-end gift certificate. NOT flat, NOT subtle, NOT childish — make it POP.",
+  // {
+  //   file: "form-ticket-banner.png",
+  //   size: "1536x1024",
+  //   quality: "high",
+  //   prompt: [...],
+  // },
+  /*
       "",
       "============================================================",
       "OVERALL COMPOSITION:",
@@ -2022,6 +2023,42 @@ export const IMAGES = [
       "- Keep the style ILLUSTRATIVE (not photorealistic). Think premium 3D-flat illustration / vector with dimensional shading.",
       "",
       "STRICT: NO watermark, NO logo, NO signature, NO human characters, NO faces, NO hands, NO real-photo elements. The vibe is PREMIUM and CELEBRATORY, like winning a special gift — bold, dimensional, and confidently designed.",
+    ].join("\n"),
+  },
+  */
+
+  // -------------------------------------------------------------------------
+  // Section 10: 悩み訴求の 4 カードを 1 枚にまとめたインフォグラフィック
+  // 参考デザイン: CASE.01〜04 のラベル + オレンジ下線 + 日本語の悩み文
+  // -------------------------------------------------------------------------
+  {
+    file: "result-concerns-cards.png",
+    size: "1024x1536",
+    quality: "high",
+    prompt: [
+      "Modern flat-design infographic illustration, vertical aspect ratio 1024x1536, for a Japanese career-change service landing page targeting young professionals.",
+      "Theme: 4 common career concerns presented as 4 stylized white cards in a 2×2 grid (2 columns, 2 rows).",
+      "",
+      "LAYOUT:",
+      "- 4 rounded white cards arranged in a 2×2 grid with generous spacing between them.",
+      "- Each card has a soft drop shadow and a subtle thin warm-orange (#ff6b00) top accent border.",
+      "- TOP of each card: a label in BOLD VIBRANT ORANGE (#ff6b00), Roman/Latin characters only (NOT katakana): 'CASE.01', 'CASE.02', 'CASE.03', 'CASE.04' respectively.",
+      "- DIRECTLY BELOW the label: a short horizontal orange (#ff6b00) underline.",
+      "- BELOW the underline: the Japanese concern text, in dark grey/black bold sans-serif typography, neatly wrapped over 2-3 lines, centered.",
+      "",
+      "THE 4 JAPANESE CONCERNS (must be PERFECTLY accurate, no misspellings):",
+      "- CASE.01 (top-left): 今の会社が自分に合っているとは思えない。やりがいを感じられない。",
+      "- CASE.02 (top-right): このまま今の仕事を続けていても、成長できるイメージが持てない。",
+      "- CASE.03 (bottom-left): 頑張りや成績に見合うだけの評価や年収が欲しい。",
+      "- CASE.04 (bottom-right): もっと自分本来の力を発揮できる会社で働きたい。",
+      "",
+      "BACKGROUND: warm cream (#FFFAF5) with very subtle warm-orange decorative dots / soft geometric shapes in the corners (low opacity, decorative only).",
+      "",
+      "STYLE: clean modern Japanese commercial infographic, sharp typography, vibrant orange (#ff6b00) accents for CASE labels and underlines, dark text for the concerns. Like a high-end Japanese recruitment service magazine ad.",
+      "",
+      "CRITICAL TEXT ACCURACY: All Japanese characters must be PERFECTLY accurate, no misspellings, no random characters, no garbled kanji. Specifically verify: '今の会社', '自分に合っている', 'やりがい', '感じられない', 'このまま', '今の仕事を続けていても', '成長できるイメージが持てない', '頑張りや成績', '評価や年収', '欲しい', 'もっと自分本来の力', '発揮できる会社で働きたい'. The 'CASE.01', 'CASE.02', 'CASE.03', 'CASE.04' labels must be in Latin alphabet exactly with the period and digit.",
+      "",
+      "STRICT: No watermark, no logo, no human figures, no photo elements, no other text beyond the 4 cards' content. Pure flat infographic design.",
     ].join("\n"),
   },
 
