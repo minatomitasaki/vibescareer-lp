@@ -8,6 +8,7 @@
 // TIMEREX_EMBED_URL を差し替えて運用。
 import type { Metadata } from "next";
 import { Logo } from "@/components/Logo";
+import { TimerexEmbed } from "@/components/TimerexEmbed";
 
 const TIMEREX_EMBED_URL =
   "https://timerex.net/s/minato_mitasaki_7fd9/fb6f1caa";
@@ -47,17 +48,10 @@ export default function SchedulePage() {
         </p>
       </section>
 
-      {/* TimeRex 予約ウィジェット (iframe 埋め込み) */}
+      {/* TimeRex 予約ウィジェット (公式 JS embed) */}
       <section className="px-4 pb-10">
         <div className="schedule-iframe-frame">
-          <iframe
-            src={TIMEREX_EMBED_URL}
-            title="VibesCareer 初回カウンセリング日程調整"
-            className="w-full"
-            style={{ height: 720, border: 0 }}
-            loading="lazy"
-            allow="clipboard-write"
-          />
+          <TimerexEmbed url={TIMEREX_EMBED_URL} />
         </div>
 
         <p className="mt-3 text-center text-[11px] text-text-muted">
