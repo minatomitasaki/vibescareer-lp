@@ -463,8 +463,8 @@ function ConcernsSection() {
         </h2>
       </div>
 
-      {/* 4 つの悩みカード */}
-      <ul className="mt-6 grid gap-3">
+      {/* 4 つの悩みカード (2×2 グリッド) */}
+      <ul className="mt-6 grid grid-cols-2 gap-3">
         {CONCERNS.map((c, i) => (
           <li key={i} className="concern-card">
             <div className="concern-case-label">

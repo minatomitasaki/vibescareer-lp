@@ -192,7 +192,7 @@ export function EntryForm({ resultId }: { resultId: string }) {
       <button
         type="submit"
         disabled={submitting}
-        className="btn-3d-orange group w-full text-center text-[18px] py-4 inline-flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+        className="btn-cta-radar-orange group w-full disabled:opacity-60 disabled:cursor-not-allowed"
       >
         <span className="relative z-10">
           {submitting ? "送信中…" : "次へ進む"}
