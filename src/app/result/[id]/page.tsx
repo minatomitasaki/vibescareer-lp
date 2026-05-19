@@ -9,6 +9,7 @@
 // Phase 1: 可変ブロック (Section 1-4)
 // 残りの Section 5-18 は後続フェーズで追加。
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Logo } from "@/components/Logo";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
@@ -264,10 +265,16 @@ function AdvisorsSection() {
 function AdvisorCard({ advisor }: { advisor: Advisor }) {
   return (
     <article className="advisor-card">
-      {/* 青グラデのヘッダー帯: 顔写真 + 役職 + 名前 */}
+      {/* オレンジグラデのヘッダー帯: 顔写真 + 役職 + 名前 */}
       <header className="advisor-card-head">
-        <div className="advisor-photo" aria-hidden>
-          👤
+        <div className="advisor-photo">
+          <Image
+            src={`/images/advisor-${advisor.id}.png`}
+            alt={`${advisor.name}の肖像`}
+            width={200}
+            height={200}
+            className="advisor-photo-img"
+          />
         </div>
         <div className="advisor-name-block">
           <span className="advisor-role">{advisor.role}</span>

@@ -1637,18 +1637,19 @@ body {
 
 .advisor-photo {
   flex-shrink: 0;
-  width: 80px;
-  height: 80px;
+  width: 88px;
+  height: 88px;
   border-radius: 50%;
   border: 3px solid #fff;
-  background:
-    radial-gradient(circle at 50% 40%, #ffe5d1, #fff8e7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  color: var(--color-brand-primary);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.22);
+}
+.advisor-photo .advisor-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
   box-shadow: 0 3px 0 rgba(255, 107, 0, 0.2);
 }
 
