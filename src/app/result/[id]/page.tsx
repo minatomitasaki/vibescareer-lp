@@ -408,14 +408,50 @@ function PartnersSection() {
 
 // =============================================================================
 // Section 10: 悩み訴求
-// 見出し + 4 つの悩みカード (1 枚画像) + 悩み顔ビジュアル
-//
-// 4 件の悩み (画像 result-concerns-cards.png に焼き込み済み):
-// - CASE.01: 今の会社が自分に合っているとは思えない。やりがいを感じられない。
-// - CASE.02: このまま今の仕事を続けていても、成長できるイメージが持てない。
-// - CASE.03: 頑張りや成績に見合うだけの評価や年収が欲しい。
-// - CASE.04: もっと自分本来の力を発揮できる会社で働きたい。
+// 見出し + CASE.01〜04 形式の 4 カード + 中央の悩み顔ビジュアル
+// 参考: tarushiru.jp/career01 の同セクション構成。CASE ラベル + 下線 + 太字本文。
 // =============================================================================
+type Concern = {
+  /** 悩み本文。<strong> で強調したい語をマークアップ可能 */
+  body: React.ReactNode;
+};
+
+const CONCERNS: Concern[] = [
+  {
+    body: (
+      <>
+        今の会社が<strong>自分に合っているとは思えない</strong>。
+        <strong>やりがいを感じられない</strong>。
+      </>
+    ),
+  },
+  {
+    body: (
+      <>
+        このまま今の仕事を続けていても、
+        <strong>成長できるイメージが持てない</strong>。
+      </>
+    ),
+  },
+  {
+    body: (
+      <>
+        頑張りや成績に見合うだけの
+        <strong>評価や年収が欲しい</strong>。
+      </>
+    ),
+  },
+  {
+    body: (
+      <>
+        もっと
+        <strong>自分本来の力を発揮できる会社</strong>
+        で働きたい。
+      </>
+    ),
+  },
+];
+
 function ConcernsSection() {
   return (
     <section className="px-4 py-10 bg-bg-subtle">
@@ -427,20 +463,20 @@ function ConcernsSection() {
         </h2>
       </div>
 
-      {/* 4 つの悩みカード (1 枚画像) */}
-      <div className="mt-4 flex justify-center">
-        <ImagePlaceholder
-          src="/images/result-concerns-cards.png"
-          label="Section 10: 4つの悩みカード"
-          alt="よくある転職の悩み 4 ケース: 今の会社が自分に合っているか / 成長できるイメージが持てない / 評価や年収が見合わない / 自分の力を発揮できる会社で働きたい"
-          width={1024}
-          height={1536}
-          className="w-full h-auto max-w-[420px]"
-        />
-      </div>
+      {/* 4 つの悩みカード */}
+      <ul className="mt-6 grid gap-3">
+        {CONCERNS.map((c, i) => (
+          <li key={i} className="concern-card">
+            <div className="concern-case-label">
+              CASE.{String(i + 1).padStart(2, "0")}
+            </div>
+            <p className="concern-text">{c.body}</p>
+          </li>
+        ))}
+      </ul>
 
-      {/* 男女の悩み顔ビジュアル */}
-      <div className="mt-6 flex justify-center">
+      {/* 男女の悩み顔ビジュアル (4 カードの下) */}
+      <div className="mt-8 flex justify-center">
         <ImagePlaceholder
           src="/images/result-concerns-faces.png"
           label="Section 10: 悩み訴求イメージ"
@@ -448,7 +484,7 @@ function ConcernsSection() {
           width={1024}
           height={1024}
           rounded
-          className="w-full h-auto max-w-[320px]"
+          className="w-full h-auto max-w-[340px]"
         />
       </div>
     </section>

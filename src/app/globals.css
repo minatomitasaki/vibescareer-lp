@@ -1808,6 +1808,37 @@ body {
 }
 
 /* =============================================================
+   Section 10: 悩み訴求カード (CASE.XX 形式)
+   ============================================================= */
+.concern-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px 18px 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+.concern-case-label {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--color-brand-primary);
+  letter-spacing: 0.06em;
+  padding-bottom: 5px;
+  margin-bottom: 14px;
+  border-bottom: 2.5px solid var(--color-brand-primary);
+}
+.concern-text {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.85;
+  color: var(--color-text-primary);
+}
+.concern-text strong {
+  font-weight: 900;
+}
+
+/* =============================================================
    Section 8: 取り扱い企業 (横スクロール)
    ============================================================= */
 .partners-headline {
