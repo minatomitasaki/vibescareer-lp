@@ -19,6 +19,10 @@ export async function GET(request: Request) {
   const date = searchParams.get("date");
 
   // デバッグ用: process.env の各キーが見えているか (値は返さない)
+  // GOOGLE_ で始まるキー名を全列挙して、タイポ / 別プロジェクト登録を炙り出す。
+  const googleKeys = Object.keys(process.env)
+    .filter((k) => k.toUpperCase().startsWith("GOOGLE"))
+    .sort();
   const envCheck = {
     hasClientId: !!process.env.GOOGLE_OAUTH_CLIENT_ID,
     clientIdLength: process.env.GOOGLE_OAUTH_CLIENT_ID?.length ?? 0,
@@ -30,6 +34,8 @@ export async function GET(request: Request) {
     calendarIdValue: process.env.GOOGLE_CALENDAR_ID ?? null,
     vercelEnv: process.env.VERCEL_ENV ?? null,
     nodeEnv: process.env.NODE_ENV ?? null,
+    googleKeys, // GOOGLE_* で始まる全キー名 (値は含めない)
+    googleKeysCount: googleKeys.length,
   };
 
   // ?debug=env なら env 情報だけ返して終了
