@@ -29,11 +29,23 @@ export async function GET(request: Request) {
     const { timeMin, timeMax } = dayBoundsJst(date);
     const busy = await getBusyRanges(timeMin, timeMax);
     const slots = buildAvailableSlots(date, busy);
-    return NextResponse.json({ date, slots });
+    return NextResponse.json({ date, slots, _debug: { busyCount: busy.length, timeMin, timeMax } });
   } catch (err) {
     console.error("[api/calendar/slots] failed", err);
+    // 一時的にエラー詳細を返す (原因切り分け用、原因判明後に汎用メッセージに戻す)
+    const detail =
+      err && typeof err === "object" && "message" in err
+        ? String((err as { message?: unknown }).message)
+        : String(err);
+    const code =
+      err && typeof err === "object" && "code" in err
+        ? String((err as { code?: unknown }).code)
+        : undefined;
     return NextResponse.json(
-      { error: "空き時間の取得に失敗しました。時間を置いて再度お試しください。" },
+      {
+        error: "空き時間の取得に失敗しました。",
+        _debug: { detail, code },
+      },
       { status: 500 },
     );
   }
