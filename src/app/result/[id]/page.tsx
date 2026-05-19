@@ -263,22 +263,40 @@ function AdvisorsSection() {
 
 function AdvisorCard({ advisor }: { advisor: Advisor }) {
   return (
-    <div className="advisor-card">
-      {/* 顔写真プレースホルダ (本番は画像差し替え) */}
-      <div className="advisor-photo" aria-hidden>
-        👤
+    <article className="advisor-card">
+      {/* 青グラデのヘッダー帯: 顔写真 + 役職 + 名前 */}
+      <header className="advisor-card-head">
+        <div className="advisor-photo" aria-hidden>
+          👤
+        </div>
+        <div className="advisor-name-block">
+          <span className="advisor-role">{advisor.role}</span>
+          <p className="advisor-name">{advisor.name}</p>
+        </div>
+      </header>
+
+      {/* 本文 */}
+      <div className="advisor-card-body">
+        <h3 className="advisor-catchphrase">
+          <span className="advisor-catch-bar" aria-hidden />
+          <span>{advisor.catchphrase}</span>
+        </h3>
+
+        <div className="advisor-bio-box">
+          <p className="advisor-bio-label">経歴</p>
+          <ul className="advisor-bio-list">
+            {advisor.bio.map((line, i) => (
+              <li key={i}>
+                <span className="advisor-bio-bullet" aria-hidden>
+                  ▶
+                </span>
+                <span>{line}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-      <div className="advisor-info">
-        <span className="advisor-role">{advisor.role}</span>
-        <p className="advisor-name">{advisor.name}</p>
-        <p className="advisor-catchphrase">「{advisor.catchphrase}」</p>
-        <ul className="advisor-bio">
-          {advisor.bio.map((line, i) => (
-            <li key={i}>{line}</li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    </article>
   );
 }
 
