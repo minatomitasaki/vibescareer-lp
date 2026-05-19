@@ -980,10 +980,8 @@ body {
   padding: 22px 28px;
   border-radius: 9999px;
   text-decoration: none;
-  box-shadow:
-    0 8px 0 #0f766e,
-    0 20px 30px rgba(13, 148, 136, 0.32),
-    inset 0 2px 0 rgba(255, 255, 255, 0.4);
+  /* 平面寄り: 立体ベゼル影と内側ハイライトを廃止、軽い落下影だけに */
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.18);
   overflow: hidden;
   transition: filter 0.2s ease, box-shadow 0.2s ease;
   animation: cta-radar-pulse 1.4s ease-in-out infinite;
@@ -993,36 +991,14 @@ body {
   0%, 100% { transform: scale(1); }
   50%      { transform: scale(1.035); }
 }
-/* 上端のハイライト光 */
-.btn-cta-radar::before {
-  content: "";
-  position: absolute;
-  top: 6px;
-  left: 22px;
-  right: 22px;
-  height: 36%;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.45) 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  border-radius: 9999px;
-  pointer-events: none;
-}
 .btn-cta-radar:hover {
-  filter: brightness(1.08);
+  filter: brightness(1.06);
   animation-play-state: paused;
-  box-shadow:
-    0 10px 0 #0f766e,
-    0 24px 34px rgba(13, 148, 136, 0.4),
-    inset 0 2px 0 rgba(255, 255, 255, 0.45);
+  box-shadow: 0 6px 16px rgba(13, 148, 136, 0.24);
 }
 .btn-cta-radar:active {
   animation-play-state: paused;
-  box-shadow:
-    0 4px 0 #0f766e,
-    0 10px 18px rgba(13, 148, 136, 0.3),
-    inset 0 2px 0 rgba(255, 255, 255, 0.35);
+  box-shadow: 0 2px 6px rgba(13, 148, 136, 0.2);
 }
 
 /* =============================================================
