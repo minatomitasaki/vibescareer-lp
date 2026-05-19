@@ -10,7 +10,14 @@
 
 import { google, type calendar_v3 } from "googleapis";
 
-const SCOPE = "https://www.googleapis.com/auth/calendar.events";
+// 必要スコープ:
+// - calendar.events  : events.insert (予定作成 + Meet 自動付与)
+// - calendar.readonly: freebusy.query (空き時間取得)
+// freebusy は events スコープに含まれないため、両方必要。
+const SCOPE = [
+  "https://www.googleapis.com/auth/calendar.events",
+  "https://www.googleapis.com/auth/calendar.readonly",
+].join(" ");
 export const TIME_ZONE = "Asia/Tokyo";
 
 function getEnv(key: string): string {

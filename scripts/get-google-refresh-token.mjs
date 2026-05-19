@@ -29,7 +29,13 @@ const ENV_FILE = path.join(PROJECT_ROOT, ".env.local");
 
 const REDIRECT_PORT = 53682;
 const REDIRECT_URI = `http://localhost:${REDIRECT_PORT}/oauth/callback`;
-const SCOPES = ["https://www.googleapis.com/auth/calendar.events"];
+// 必要スコープ:
+// - calendar.events  : events.insert (予定作成 + Meet 自動付与)
+// - calendar.readonly: freebusy.query (空き時間取得)
+const SCOPES = [
+  "https://www.googleapis.com/auth/calendar.events",
+  "https://www.googleapis.com/auth/calendar.readonly",
+];
 
 async function loadDotEnv(filePath) {
   try {
