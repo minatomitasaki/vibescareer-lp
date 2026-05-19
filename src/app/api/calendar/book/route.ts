@@ -122,12 +122,15 @@ export async function POST(request: Request) {
   }
 
   // GAS にもログ送信 (失敗してもユーザーには成功で返す: best-effort)
+  // stage: "booking_confirmed" を付けて、フォーム送信時 ("form_submitted") と
+  // 区別できるようにする (GAS 側で stage 列を見れば離脱者と区別可能)。
   try {
     await fetch(GAS_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify({
         ...formData,
+        stage: "booking_confirmed",
         bookingStartISO: startISO,
         bookingEndISO: endISO,
         bookingMeetUrl: created.meetUrl ?? "",

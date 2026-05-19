@@ -27,8 +27,12 @@ export function EntryForm({ resultId }: { resultId: string }) {
     setSubmitting(true);
 
     const fd = new FormData(event.currentTarget);
+    // stage: GAS 側で「フォーム送信のみで離脱」と「予約完了」を区別するためのフラグ。
+    // - "form_submitted": ここで送信される (このフォームを送信した時点)
+    // - "booking_confirmed": /api/calendar/book で送信される (予約成立時)
     const payload = {
       resultId,
+      stage: "form_submitted" as const,
       lastName: String(fd.get("lastName") ?? ""),
       firstName: String(fd.get("firstName") ?? ""),
       email: String(fd.get("email") ?? ""),
