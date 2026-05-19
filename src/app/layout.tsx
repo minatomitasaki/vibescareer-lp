@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_JP, Inter } from "next/font/google";
+import { Noto_Sans_JP, Inter, Shippori_Mincho } from "next/font/google";
 import "./globals.css";
 
 const notoSansJP = Noto_Sans_JP({
@@ -17,6 +17,14 @@ const inter = Inter({
   display: "swap",
 });
 
+// セリフ/キャッチコピー用の明朝体 (アドバイザーのセリフなど特別な場面で使用)
+const shipporiMincho = Shippori_Mincho({
+  variable: "--font-shippori-mincho",
+  subsets: ["latin"],
+  weight: ["500", "700", "800"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "適職・適正年収 15秒診断 | VibesCareer",
   description:
@@ -29,7 +37,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={`${notoSansJP.variable} ${inter.variable}`}>
+    <html
+      lang="ja"
+      className={`${notoSansJP.variable} ${inter.variable} ${shipporiMincho.variable}`}
+    >
       <body className="min-h-screen bg-white">{children}</body>
     </html>
   );

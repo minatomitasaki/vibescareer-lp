@@ -74,18 +74,6 @@ export const ADVISORS: Advisor[] = [
     ],
   },
   {
-    id: "yamauchi",
-    role: "M&A 事業責任者",
-    name: "山内 那津子",
-    // 仮テキスト・要差し替え (HANDOFF.md 残課題)
-    catchphrase: "（仮）あなたの理想のキャリアを実現するため全力で伴走します。",
-    bio: [
-      "（仮）有名大学卒",
-      "（仮）外資系金融でキャリア",
-      "（仮）オーガニックグループ M&A 事業の責任者",
-    ],
-  },
-  {
     id: "furusawa",
     role: "ORGANIC GROUP 事業責任者",
     name: "古澤 真波人",

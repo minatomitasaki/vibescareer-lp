@@ -5,6 +5,7 @@
   /* フォント */
   --font-sans: var(--font-noto-sans-jp), "Hiragino Sans", "Yu Gothic UI", sans-serif;
   --font-display: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  --font-serif: var(--font-shippori-mincho), "Hiragino Mincho ProN", "Yu Mincho", serif;
 
   /* ブランドカラー */
   --color-brand-primary: #ff6b00;
@@ -1624,13 +1625,13 @@ body {
 }
 .advisor-card + .advisor-card { margin-top: 16px; }
 
-/* 青グラデのヘッダー帯 */
+/* オレンジグラデのヘッダー帯 */
 .advisor-card-head {
   display: flex;
   align-items: center;
   gap: 16px;
   padding: 18px 20px 20px;
-  background: linear-gradient(135deg, #4d8eff 0%, #1e73ff 55%, #1453cc 100%);
+  background: linear-gradient(135deg, #ff8533 0%, #ff6b00 55%, #e55f00 100%);
   color: #fff;
 }
 
@@ -1673,27 +1674,29 @@ body {
   padding: 18px 20px 22px;
 }
 
-/* キャッチコピー(青縦線 + 太字) */
+/* キャッチコピー(オレンジ縦線 + 明朝体でかっこよく) */
 .advisor-catchphrase {
   display: flex;
   align-items: stretch;
-  gap: 10px;
-  font-size: 15.5px;
-  font-weight: 900;
+  gap: 12px;
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 700;
   color: var(--color-text-primary);
-  line-height: 1.55;
-  margin-bottom: 14px;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
 }
 .advisor-catch-bar {
   flex-shrink: 0;
   width: 4px;
   border-radius: 2px;
-  background: var(--color-brand-accent);
+  background: var(--color-brand-primary);
 }
 
-/* 経歴ボックス(ライトブルー背景) */
+/* 経歴ボックス(ライトオレンジ背景) */
 .advisor-bio-box {
-  background: var(--color-brand-accent-light);
+  background: var(--color-brand-primary-light);
   border-radius: 12px;
   padding: 14px 16px;
 }
@@ -1721,7 +1724,7 @@ body {
 }
 .advisor-bio-bullet {
   flex-shrink: 0;
-  color: var(--color-brand-accent);
+  color: var(--color-brand-primary);
   font-size: 10px;
   line-height: 1.85;
 }
