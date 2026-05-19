@@ -18,9 +18,28 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const date = searchParams.get("date");
 
+  // デバッグ用: process.env の各キーが見えているか (値は返さない)
+  const envCheck = {
+    hasClientId: !!process.env.GOOGLE_OAUTH_CLIENT_ID,
+    clientIdLength: process.env.GOOGLE_OAUTH_CLIENT_ID?.length ?? 0,
+    hasClientSecret: !!process.env.GOOGLE_OAUTH_CLIENT_SECRET,
+    clientSecretLength: process.env.GOOGLE_OAUTH_CLIENT_SECRET?.length ?? 0,
+    hasRefreshToken: !!process.env.GOOGLE_OAUTH_REFRESH_TOKEN,
+    refreshTokenLength: process.env.GOOGLE_OAUTH_REFRESH_TOKEN?.length ?? 0,
+    hasCalendarId: !!process.env.GOOGLE_CALENDAR_ID,
+    calendarIdValue: process.env.GOOGLE_CALENDAR_ID ?? null,
+    vercelEnv: process.env.VERCEL_ENV ?? null,
+    nodeEnv: process.env.NODE_ENV ?? null,
+  };
+
+  // ?debug=env なら env 情報だけ返して終了
+  if (searchParams.get("debug") === "env") {
+    return NextResponse.json({ envCheck });
+  }
+
   if (!date || !DATE_REGEX.test(date)) {
     return NextResponse.json(
-      { error: "date クエリは YYYY-MM-DD 形式で指定してください" },
+      { error: "date クエリは YYYY-MM-DD 形式で指定してください", envCheck },
       { status: 400 },
     );
   }
@@ -44,7 +63,7 @@ export async function GET(request: Request) {
     return NextResponse.json(
       {
         error: "空き時間の取得に失敗しました。",
-        _debug: { detail, code },
+        _debug: { detail, code, envCheck },
       },
       { status: 500 },
     );
