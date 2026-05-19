@@ -385,7 +385,7 @@ function PartnersSection() {
           <span className="slash">＼</span>
           <span>
             紹介企業は、
-            <span className="text-brand-primary">10,000社以上！</span>
+            <span className="text-brand-primary text-[30px] inline-block align-baseline">10,000社以上！</span>
           </span>
           <span className="slash">／</span>
         </div>
