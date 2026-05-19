@@ -1024,17 +1024,10 @@ body {
 }
 .btn-cta-radar:hover {
   filter: brightness(1.06);
-  animation-play-state: paused;
   box-shadow: 0 6px 16px rgba(13, 148, 136, 0.24);
 }
 .btn-cta-radar:active {
-  animation-play-state: paused;
   box-shadow: 0 2px 6px rgba(13, 148, 136, 0.2);
-}
-/* hover/active 時はリングも止める */
-.btn-cta-radar:hover::after,
-.btn-cta-radar:active::after {
-  animation-play-state: paused;
 }
 
 /* =============================================================
@@ -1087,16 +1080,10 @@ body {
 }
 .btn-cta-radar-orange:hover {
   filter: brightness(1.06);
-  animation-play-state: paused;
   box-shadow: 0 6px 16px rgba(229, 95, 0, 0.3);
 }
 .btn-cta-radar-orange:active {
-  animation-play-state: paused;
   box-shadow: 0 2px 6px rgba(229, 95, 0, 0.24);
-}
-.btn-cta-radar-orange:hover::after,
-.btn-cta-radar-orange:active::after {
-  animation-play-state: paused;
 }
 
 /* =============================================================

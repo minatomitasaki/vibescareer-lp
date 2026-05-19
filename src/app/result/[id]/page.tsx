@@ -457,7 +457,7 @@ const CONCERNS: Concern[] = [
 
 function ConcernsSection() {
   return (
-    <section className="px-4 py-10 bg-bg-subtle">
+    <section className="px-4 py-10 bg-white">
       <div className="section-eyebrow-block">
         <span className="en">CONCERNS</span>
         <h2 className="ja">
