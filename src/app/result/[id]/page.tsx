@@ -757,11 +757,11 @@ function LastMessageSection() {
         <ImagePlaceholder
           src="/images/result-last-message.png"
           label="Section 17: ラストメッセージイメージ"
-          alt="山頂から朝焼けを見下ろすビジネスパーソン"
-          width={1024}
-          height={1536}
+          alt="分かれ道に立ち、朝焼け方向を見つめる若手ビジネスパーソンの後ろ姿"
+          width={1536}
+          height={1024}
           rounded
-          className="w-full h-auto max-w-[320px]"
+          className="w-full h-auto"
         />
       </div>
 

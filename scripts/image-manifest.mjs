@@ -697,73 +697,11 @@ export const IMAGES = [
   },
 
   // -------------------------------------------------------------------------
-  // 診断結果LP (/result/[id]) Section 17「ラストメッセージ — 山頂から見下ろす若手」
-  // 縦長で印象的に。希望の朝焼け感、達成・展望のメタファー。
+  // 診断結果LP (/result/[id]) Section 17「ラストメッセージ — 分かれ道に立つ若手」
+  // 横長 3:2。後ろ姿の若手が二股に分かれた道の前に立ち、右の明るい朝焼け方向を見つめる。
   // -------------------------------------------------------------------------
   {
     file: "result-last-message.png",
-    size: "1024x1536",
-    quality: "high",
-    references: ["section3-full.png"],
-    prompt: [
-      "You are given ONE reference image:",
-      "",
-      "  image[0] = section3-full.png — STYLE TARGET. Replicate its 2D vector style EXACTLY: thin uniform black pen-line outlines (~1.5 px), flat color fills with light cel-shading. NO 3D, NO photorealism, NO anime/manga.",
-      "",
-      "Produce a single vertical 2:3 image (1024×1536) as the closing visual for a Japanese career LP.",
-      "",
-      "Content:",
-      "  - A young Japanese business person (BACK VIEW, can be either gender) stands at the peak of a mountain silhouette in the lower-center of the image, gazing outward toward a sunrise horizon. Briefcase optional at their side. Suit silhouette is dark charcoal with simple flat shading.",
-      "  - Below the figure: a stylized 2D mountain silhouette ridge in flat warm-orange gradient (#FF8533 top → #D85A00 base), with a few smaller adjacent peaks fading toward the horizon.",
-      "  - Above: a wide warm-orange sunrise sky with a soft circular sun glow (cream/white center fading to warm orange #FF7A33). A handful of small sparkles (✦) and a few line-only birds drift in the sky.",
-      "  - At the very peak, a small flag pole with an orange triangular pennant pointing right.",
-      "  - Color palette: warm orange #FF6B00 to #FFAA66 gradient sky, cream highlights, dark charcoal line work and figure silhouette.",
-      "  - Mood: hopeful, ambitious, calm — the moment of \"having climbed and looking ahead\".",
-      "",
-      "STRICT: NO text, NO English letters, NO logos in the image.",
-      "STRICT: must match image[0]'s 2D vector style.",
-    ].join("\n"),
-  },
-
-  // -------------------------------------------------------------------------
-  // Section 17 ラストメッセージ 横長バリアント (登り始め / 分かれ道 / 石段)
-  // 後ろ姿で「これから挑戦する側」を表現。1536x1024 横長。3 案から採用変種を選ぶ。
-  // -------------------------------------------------------------------------
-
-  // --- Pattern A: 山道の登り口 (登り始め) ---
-  {
-    file: "result-last-message-a.png",
-    size: "1536x1024",
-    quality: "high",
-    references: ["section3-full.png"],
-    prompt: [
-      "You are given ONE reference image:",
-      "",
-      "  image[0] = section3-full.png — STYLE TARGET. Replicate its 2D vector style EXACTLY: thin uniform black pen-line outlines (~1.5 px), flat color fills with light cel-shading. NO 3D, NO photorealism, NO anime/manga.",
-      "",
-      "Produce a single HORIZONTAL 3:2 image (1536×1024) as the closing visual for a Japanese career LP. Theme: \"the journey begins\".",
-      "",
-      "============================================================",
-      "COMPOSITION — START OF THE CLIMB:",
-      "============================================================",
-      "- A young Japanese business person, STRICTLY BACK VIEW (viewer sees only the BACK OF THEIR HEAD AND SHOULDERS — face MUST NOT be visible, no facial features at all). Gender-neutral. Standing in the LEFT-CENTER foreground, small scale (~30% of frame height). Slight upward gaze posture (head tilted slightly up). Suit silhouette is dark charcoal (#1A1A1A) with simple flat shading. A small briefcase optional at their side.",
-      "- A winding trail / path starts from the figure's feet and gently curves up and toward the right, leading into the distance and up the mountain. Path color: warm cream (#F5E6D0) with thin charcoal edge lines.",
-      "- A LARGE stylized 2D mountain silhouette dominates the right 2/3 of the frame, in flat warm-orange gradient (#FF8533 top → #D85A00 base). One or two smaller peaks recede behind it.",
-      "- Above: a wide warm-orange sunrise sky with a soft circular sun glow rising behind the mountain's right shoulder (cream/white center fading to warm orange #FF7A33). A handful of small sparkles (✦) and 2-3 simple line-only birds.",
-      "- Optional: 1-2 small flat-shaded shrubs or rocks near the trail base for grounding.",
-      "",
-      "COLOR PALETTE: warm orange #FF6B00 to #FFAA66 gradient sky, cream highlights #FFEFE0, dark charcoal #1A1A1A line work and figure silhouette, warm cream #F5E6D0 path.",
-      "MOOD: \"the journey is about to begin\" — hopeful, ambitious, calm, looking forward to the climb ahead.",
-      "",
-      "STRICT: figure MUST be back view only — NO face, NO eyes, NO mouth visible.",
-      "STRICT: NO text, NO English letters, NO logos, NO watermarks.",
-      "STRICT: must match image[0]'s 2D vector style.",
-    ].join("\n"),
-  },
-
-  // --- Pattern B: 分かれ道 ---
-  {
-    file: "result-last-message-b.png",
     size: "1536x1024",
     quality: "high",
     references: ["section3-full.png"],
@@ -787,37 +725,6 @@ export const IMAGES = [
       "",
       "COLOR PALETTE: warm orange #FF6B00 to #FFAA66 gradient sky on the right, muted cream-grey on the left, dark charcoal #1A1A1A line work and figure silhouette.",
       "MOOD: \"contemplating the right choice\" — thoughtful, hopeful, with one direction clearly more promising than the other.",
-      "",
-      "STRICT: figure MUST be back view only — NO face, NO eyes, NO mouth visible.",
-      "STRICT: NO text, NO English letters, NO logos, NO watermarks.",
-      "STRICT: must match image[0]'s 2D vector style.",
-    ].join("\n"),
-  },
-
-  // --- Pattern C: 石段を見上げる ---
-  {
-    file: "result-last-message-c.png",
-    size: "1536x1024",
-    quality: "high",
-    references: ["section3-full.png"],
-    prompt: [
-      "You are given ONE reference image:",
-      "",
-      "  image[0] = section3-full.png — STYLE TARGET. Replicate its 2D vector style EXACTLY: thin uniform black pen-line outlines (~1.5 px), flat color fills with light cel-shading. NO 3D, NO photorealism, NO anime/manga.",
-      "",
-      "Produce a single HORIZONTAL 3:2 image (1536×1024) as the closing visual for a Japanese career LP. Theme: \"the first step of a long climb\".",
-      "",
-      "============================================================",
-      "COMPOSITION — LOOKING UP A RISING STAIRWAY:",
-      "============================================================",
-      "- A young Japanese business person, STRICTLY BACK VIEW (viewer sees only the BACK OF THEIR HEAD AND SHOULDERS — face MUST NOT be visible, no facial features at all). Gender-neutral. Standing in the LEFT-CENTER foreground, small scale (~30% of frame height), at the BASE of a rising stepped path. Head clearly tilted upward, gazing UP toward the top. Suit silhouette is dark charcoal (#1A1A1A) with simple flat shading.",
-      "- A stepped trail / stone staircase rises diagonally from the figure's feet up to the upper-right of the frame. About 8-12 visible steps, each in warm cream (#F5E6D0) with thin charcoal outlines. The staircase narrows in perspective as it ascends.",
-      "- Background: a series of gentle hill silhouettes in flat warm-orange gradient (#FF8533 to #D85A00) layered behind the staircase, suggesting altitude and depth.",
-      "- At the TOP of the staircase (upper right area): a bright warm sunrise sun glow rising behind a low ridge (cream/white center fading to warm orange #FF7A33). A handful of small sparkles (✦) and 2 simple line-only birds drift in the warm sky.",
-      "- Optional: small tufts of flat-shaded grass beside the lower steps for grounding.",
-      "",
-      "COLOR PALETTE: warm orange #FF6B00 to #FFAA66 gradient sky, cream highlights #FFEFE0, dark charcoal #1A1A1A line work and figure silhouette, warm cream #F5E6D0 steps.",
-      "MOOD: \"determined first step\" — quiet resolve, hopeful, ready to climb step by step.",
       "",
       "STRICT: figure MUST be back view only — NO face, NO eyes, NO mouth visible.",
       "STRICT: NO text, NO English letters, NO logos, NO watermarks.",
@@ -1845,54 +1752,61 @@ export const IMAGES = [
   // 表情は前向きで穏やか、転職活動を終えた充実感を匂わせる。
   // -------------------------------------------------------------------------
 
-  // case1: Aさん (28歳 男性) / 電力会社 → 広告代理店
+  // case1: Aさん (28歳 男性) / 広告代理店プランナーとして実際に働いているシーン
   {
     file: "success-case-1.png",
     size: "1536x1024",
     quality: "high",
     prompt: [
-      "PHOTOREALISTIC editorial-style professional photograph, horizontal 1536x1024.",
-      "Subject: a Japanese man in his late 20s, formerly an electric utility company employee now transitioning to a creative role at an advertising agency.",
-      "- Neat short black hair, clean shave, smart-casual style (charcoal slim-fit blazer over a soft white knit). Confident, calm expression with a slight gentle smile.",
-      "- He occupies the left 2/3 of the frame, sitting at a wooden cafe table, facing toward a career counselor whose shoulder and back-of-head appear softly blurred at the right edge of the frame.",
-      "- Lighting: warm natural daylight from a large window on the right, soft glow on the main subject's face. Healthy realistic skin tones.",
-      "- Background: modern cozy Japanese cafe / counseling lounge with soft bokeh, light wood textures, a hint of green plants, very warm cream / beige tones.",
-      "- Camera feel: 35mm lens, shallow depth of field, sharp focus on the man's face, gentle bokeh elsewhere.",
-      "STRICT: No text, no watermark, no logo, no UI overlay, no caption. Photographic, not illustration. Two people visible at most (main subject + counselor's back).",
+      "PHOTOREALISTIC editorial-style professional photograph, horizontal 1536x1024. Magazine-quality, like a Vogue Business / Wired Japan / Forbes Japan editorial portrait of a young professional.",
+      "Subject: A Japanese man in his late 20s (28 years old), a creative planner working at a modern Tokyo advertising agency.",
+      "- Neat short black hair, clean shave, modern smart-casual style: navy slim-fit blazer over a crisp white t-shirt, or alternatively a soft beige open-collar shirt. Confident, energetic expression with a soft natural smile, looking like he genuinely enjoys his creative work.",
+      "- He is naturally engaged in his work — reviewing campaign storyboards or paper sketches on his desk, glancing at his MacBook, OR turning slightly toward the camera with a confident soft smile (environmental portrait style).",
+      "- Setting: a modern Tokyo advertising agency office — open-plan creative space with whitewashed walls or exposed concrete, large windows pouring in natural light, design boards / mood boards / colorful Post-its softly visible on a wall in the background, modern wooden desks with a MacBook and notebooks, a few green plants for warmth.",
+      "- Lighting: warm natural daylight from a large window, soft directional shadows, healthy realistic skin tones, very slight film-like grain.",
+      "- Camera/lens: 35mm or 50mm prime lens, shallow depth of field, sharp focus on his face, gentle bokeh on the office background.",
+      "- Composition: subject occupies the left 2/3 of the frame, environmental portrait, plenty of breathing room.",
+      "- Color palette: warm cream / beige / soft orange accents subtly visible in the office background, tying into the brand's warm orange tone.",
+      "STRICT: NOT illustration, NOT 3D render, NOT anime, NOT cartoon, NOT painting. Pure photographic editorial style — looks like a real human photographed by a professional photographer with a high-end camera. No text, no watermark, no logo, no UI overlay, no caption. ONE Japanese man only, no other visible people in frame. Natural realistic human anatomy: correct number of fingers, realistic eyes, natural facial proportions.",
     ].join("\n"),
   },
 
-  // case2: Bさん (26歳 女性) / 市役所公務員 → 通販マーケター
+  // case2: Bさん (26歳 男性) / Webマーケターとして実際に働いているシーン
   {
     file: "success-case-2.png",
     size: "1536x1024",
     quality: "high",
     prompt: [
-      "PHOTOREALISTIC editorial-style professional photograph, horizontal 1536x1024.",
-      "Subject: a Japanese woman in her mid-20s, formerly a city-hall public servant now transitioning to a digital marketing role at an e-commerce company.",
-      "- Shoulder-length dark brown hair with a soft natural wave, subtle minimal makeup. Wearing a cream-colored knit blouse with a soft beige cardigan. Warm, optimistic expression with a small open smile.",
-      "- She occupies the left 2/3 of the frame, sitting at a wooden cafe table, facing toward a career counselor whose shoulder and back-of-head appear softly blurred at the right edge.",
-      "- Lighting: warm natural daylight from a large window on the right, soft glow on her face. Healthy realistic skin tones.",
-      "- Background: modern cozy Japanese cafe / counseling lounge with soft bokeh, light wood textures, hint of greenery, cream / beige tones.",
-      "- Camera feel: 35mm lens, shallow depth of field, sharp focus on her face, gentle bokeh elsewhere.",
-      "STRICT: No text, no watermark, no logo, no UI overlay. Photographic, not illustration. Two people visible at most.",
+      "PHOTOREALISTIC editorial-style professional photograph, horizontal 1536x1024. Magazine-quality, like a Wired Japan / Forbes Japan editorial portrait of a young professional.",
+      "Subject: A Japanese man in his mid-20s (26 years old), a digital / web marketer working at a modern Tokyo e-commerce or digital marketing company.",
+      "- Neat short black hair, modern casual styling: heather grey crew-neck t-shirt under an open chambray shirt, OR a relaxed charcoal hoodie. Friendly, curious expression with a soft natural smile, looks data-savvy and analytical but approachable.",
+      "- He is naturally engaged in his work — looking at a website analytics dashboard / colorful charts on a large monitor, OR scrolling through metrics on his laptop, OR turning slightly toward the camera with a soft confident smile.",
+      "- Setting: a modern Japanese web marketing / digital agency office — minimal Scandinavian-style interior, ash wood desks with dual monitors showing colorful analytics dashboards and web design mockups, a wireless mechanical keyboard, a glass coffee cup, a few green plants, soft warm pendant lights, whitewashed walls.",
+      "- Lighting: warm natural daylight from a large window, soft directional shadows, healthy realistic skin tones, very slight film-like grain.",
+      "- Camera/lens: 35mm or 50mm prime lens, shallow depth of field, sharp focus on his face, gentle bokeh on the office background.",
+      "- Composition: subject occupies the left 2/3 of the frame, environmental portrait.",
+      "- Color palette: warm cream / beige / soft orange accents subtly in the office background, tying into the brand's warm orange tone.",
+      "STRICT: NOT illustration, NOT 3D render, NOT anime, NOT cartoon. Pure photographic editorial style. No text, no watermark, no logo. ONE Japanese man only, no other visible people. Natural realistic human anatomy: correct number of fingers, realistic eyes.",
     ].join("\n"),
   },
 
-  // case3: Cさん (27歳 男性) / 新聞記者 → セールスライター
+  // case3: Cさん (27歳 女性) / セールスライターとして実際に働いているシーン
   {
     file: "success-case-3.png",
     size: "1536x1024",
     quality: "high",
     prompt: [
-      "PHOTOREALISTIC editorial-style professional photograph, horizontal 1536x1024.",
-      "Subject: a Japanese man in his late 20s, formerly a newspaper journalist now transitioning to a sales copywriter role at a digital marketing firm.",
-      "- Slightly tousled short black hair, clean shave, smart-casual style (navy blazer over a light blue oxford shirt, no tie). Thoughtful, intelligent expression with a soft gentle smile.",
-      "- He occupies the left 2/3 of the frame, sitting at a wooden cafe table, facing toward a career counselor whose shoulder appears softly blurred at the right edge.",
-      "- Lighting: warm natural daylight from a large window on the right, soft glow on his face.",
-      "- Background: modern cozy Japanese cafe / counseling lounge with soft bokeh, light wood textures, hint of greenery, cream / beige tones.",
-      "- Camera feel: 35mm lens, shallow depth of field, sharp focus on his face, gentle bokeh elsewhere.",
-      "STRICT: No text, no watermark, no logo, no UI overlay. Photographic, not illustration. Two people visible at most.",
+      "PHOTOREALISTIC editorial-style professional photograph, horizontal 1536x1024. Magazine-quality, like a Wired Japan / Forbes Japan editorial portrait of a young professional.",
+      "Subject: A Japanese woman in her late 20s (27 years old), a sales copywriter working at a modern Tokyo digital marketing / content agency.",
+      "- Shoulder-length dark brown hair with a soft natural wave, subtle minimal makeup. Thoughtful, intelligent expression with a soft gentle smile, looks creative and well-read.",
+      "- Modern smart-casual style: a soft cream knit sweater, OR a relaxed beige open-collar blouse layered under a tailored navy cardigan. Polished but creative.",
+      "- She is naturally engaged in her work — writing copy in a leather notebook with a fountain pen, typing thoughtfully on her laptop, OR turning toward the camera with a soft confident smile (environmental portrait style).",
+      "- Setting: a modern Japanese content / copywriting agency office — bright Scandinavian-style interior, light ash wood desks with a MacBook, a stack of magazines / sample brochures with appealing typography (no readable text), a glass of latte, a leather notebook, a fountain pen, a few green plants, whitewashed walls or exposed brick.",
+      "- Lighting: warm natural daylight from a large window, soft directional shadows, healthy realistic skin tones, very slight film-like grain.",
+      "- Camera/lens: 35mm or 50mm prime lens, shallow depth of field, sharp focus on her face, gentle bokeh on the office background.",
+      "- Composition: subject occupies the left 2/3 of the frame, environmental portrait.",
+      "- Color palette: warm cream / beige / soft orange accents subtly in the office background, tying into the brand's warm orange tone.",
+      "STRICT: NOT illustration, NOT 3D render, NOT anime, NOT cartoon. Pure photographic editorial style. No readable text, no watermark, no logo. ONE Japanese woman only, no other visible people. Natural realistic human anatomy: correct number of fingers, realistic eyes.",
     ].join("\n"),
   },
 
