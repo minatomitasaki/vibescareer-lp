@@ -53,7 +53,10 @@ export default function SchedulePage() {
       <section className="pb-10">
         <div className="max-w-[960px] mx-auto px-3">
           <div className="schedule-iframe-frame">
-            <TimerexEmbed url={TIMEREX_EMBED_URL} />
+            <TimerexEmbed
+              url={TIMEREX_EMBED_URL}
+              onBookingCompleteRedirect="/thanks"
+            />
           </div>
 
           <p className="mt-3 text-center text-[11px] text-text-muted">
