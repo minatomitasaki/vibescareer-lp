@@ -1631,7 +1631,7 @@ body {
   align-items: center;
   gap: 16px;
   padding: 18px 20px 20px;
-  background: linear-gradient(135deg, #ff8533 0%, #ff6b00 100%);
+  background: linear-gradient(135deg, #ffd9b3 0%, #ff8533 55%, #ff6b00 100%);
   color: #fff;
 }
 
