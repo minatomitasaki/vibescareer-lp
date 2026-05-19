@@ -980,9 +980,8 @@ body {
   padding: 22px 28px;
   border-radius: 9999px;
   text-decoration: none;
-  /* 平面寄り: 立体ベゼル影と内側ハイライトを廃止、軽い落下影だけに */
+  /* 平面寄り + 軽い落下影 */
   box-shadow: 0 4px 12px rgba(13, 148, 136, 0.18);
-  overflow: hidden;
   transition: filter 0.2s ease, box-shadow 0.2s ease;
   animation: cta-radar-pulse 1.4s ease-in-out infinite;
   will-change: transform;
@@ -990,6 +989,37 @@ body {
 @keyframes cta-radar-pulse {
   0%, 100% { transform: scale(1); }
   50%      { transform: scale(1.035); }
+}
+/* 内側上端の控えめな光沢 (gloss) */
+.btn-cta-radar::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 22px;
+  right: 22px;
+  height: 30%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.32) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  border-radius: 9999px;
+  pointer-events: none;
+}
+/* 波動リング (入口LP の cta-pulse-ring と同じ仕組み・色だけ緑系) */
+.btn-cta-radar::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  border: 2px solid rgba(20, 184, 166, 0.55);
+  animation: cta-radar-ring 1.8s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes cta-radar-ring {
+  0%   { transform: scale(1);    opacity: 0.9; }
+  70%  { transform: scale(1.14); opacity: 0;   }
+  100% { transform: scale(1.14); opacity: 0;   }
 }
 .btn-cta-radar:hover {
   filter: brightness(1.06);
@@ -999,6 +1029,11 @@ body {
 .btn-cta-radar:active {
   animation-play-state: paused;
   box-shadow: 0 2px 6px rgba(13, 148, 136, 0.2);
+}
+/* hover/active 時はリングも止める */
+.btn-cta-radar:hover::after,
+.btn-cta-radar:active::after {
+  animation-play-state: paused;
 }
 
 /* =============================================================
