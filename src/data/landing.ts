@@ -180,17 +180,23 @@ export const SUCCESS_CASES: SuccessCase[] = [
 ];
 
 // -----------------------------------------------------------------------------
-// 取り扱い企業 (Section 8) — 5,000 社以上、代表ロゴ群
-// 本番では実ロゴ画像に差し替え。Phase 2 ではテキストプレースホルダで一旦表示。
+// 取り扱い企業 (Section 8) — 紹介企業ロゴ群
+// 各企業の公式ロゴを public/images 配下に配置して 2 列グリッドで表示する。
 // -----------------------------------------------------------------------------
-export const PARTNER_COMPANIES = [
-  "Timee",
-  "MEDLEY",
-  "Speee",
-  "AnyMind",
-  "楽ラクス",
-  "パーソルキャリア",
-  "シェアフル",
-  "M&A総合研究所",
-  "X Mile",
-] as const;
+export type PartnerLogo = {
+  name: string;
+  file: string;
+};
+
+export const PARTNER_LOGOS: PartnerLogo[] = [
+  { name: "BizReach", file: "/images/partner-logo-bizreach.png" },
+  { name: "Speee", file: "/images/partner-logo-speee.png" },
+  { name: "Sansan", file: "/images/partner-logo-sansan.svg" },
+  { name: "Leverages", file: "/images/partner-logo-leverages.svg" },
+  { name: "DYM", file: "/images/partner-logo-dym.svg" },
+  { name: "FLUX", file: "/images/partner-logo-flux.svg" },
+  { name: "kaonavi", file: "/images/partner-logo-kaonavi.svg" },
+  { name: "UPSIDER", file: "/images/partner-logo-upsider.svg" },
+  { name: "ASSIGN", file: "/images/partner-logo-assign.svg" },
+  { name: "Nahato", file: "/images/partner-logo-nahato.png" },
+];

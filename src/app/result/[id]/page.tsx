@@ -22,7 +22,7 @@ import {
 } from "@/data/results";
 import {
   ADVISORS,
-  PARTNER_COMPANIES,
+  PARTNER_LOGOS,
   SUCCESS_CASES,
   type Advisor,
   type SuccessCase,
@@ -392,16 +392,19 @@ function PartnersSection() {
         <span className="sub">あなたに適した職場が、必ず見つかる</span>
       </div>
 
-      <div className="partners-scroll">
-        {PARTNER_COMPANIES.map((name) => (
-          <div key={name} className="partners-chip">
-            {name}
-          </div>
+      <ul className="partners-logos-grid">
+        {PARTNER_LOGOS.map((logo) => (
+          <li key={logo.name} className="partners-logo-cell">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={logo.file}
+              alt={`${logo.name} ロゴ`}
+              className="partners-logo-img"
+              loading="lazy"
+            />
+          </li>
         ))}
-      </div>
-      <p className="text-center text-[10px] text-text-muted mt-4">
-        ※ ロゴは本番差し替え予定
-      </p>
+      </ul>
     </section>
   );
 }
