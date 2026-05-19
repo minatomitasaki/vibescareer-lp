@@ -9,7 +9,8 @@
 import type { Metadata } from "next";
 import { Logo } from "@/components/Logo";
 
-const TIMEREX_EMBED_URL = "https://timerex.net/s/placeholder_team/placeholder_event";
+const TIMEREX_EMBED_URL =
+  "https://timerex.net/s/minato_mitasaki_7fd9/fb6f1caa";
 
 export const metadata: Metadata = {
   title: "初回カウンセリング日程調整 | VibesCareer",
