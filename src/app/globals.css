@@ -1625,14 +1625,14 @@ body {
 }
 .advisor-card + .advisor-card { margin-top: 16px; }
 
-/* オレンジグラデのヘッダー帯 — FV (#fffaf2) に揃えた淡いトーン */
+/* オレンジグラデのヘッダー帯 — FV 「診断結果」文字色 (#ff6b00) に揃えた濃さ */
 .advisor-card-head {
   display: flex;
   align-items: center;
   gap: 16px;
   padding: 18px 20px 20px;
-  background: linear-gradient(135deg, #ffeacf 0%, #ffc99a 100%);
-  color: var(--color-text-primary);
+  background: linear-gradient(135deg, #ff8533 0%, #ff6b00 100%);
+  color: #fff;
 }
 
 .advisor-photo {
@@ -1640,10 +1640,10 @@ body {
   width: 88px;
   height: 88px;
   border-radius: 50%;
-  border: 3px solid var(--color-brand-primary);
+  border: 3px solid #fff;
   background: #fff;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(255, 107, 0, 0.18);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.22);
 }
 .advisor-photo .advisor-photo-img {
   width: 100%;
@@ -1656,15 +1656,15 @@ body {
 .advisor-role {
   display: block;
   font-size: 12.5px;
-  font-weight: 800;
-  color: var(--color-brand-primary);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
   letter-spacing: 0.02em;
   margin-bottom: 2px;
 }
 .advisor-name {
   font-size: 22px;
   font-weight: 900;
-  color: var(--color-text-primary);
+  color: #fff;
   line-height: 1.25;
   letter-spacing: 0.04em;
 }
