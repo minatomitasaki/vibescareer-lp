@@ -62,6 +62,8 @@ export async function notifyBookingToSlack(
     `*学校名:* ${p.school || "(未入力)"}`,
     `*専攻学科:* ${p.major || "(未入力)"}`,
     `*Meet:* ${p.meetUrl ?? "(自動付与失敗)"}`,
+    "─────────────",
+    "📊 <https://docs.google.com/spreadsheets/d/1n0r6uED1J7PFeNhC5PQqqt5RWNEHBCHRuPIrhmLf9SQ/edit?gid=0#gid=0|申込ログシートを開く>",
   ];
 
   try {
