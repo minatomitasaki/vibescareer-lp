@@ -726,6 +726,106 @@ export const IMAGES = [
   },
 
   // -------------------------------------------------------------------------
+  // Section 17 ラストメッセージ 横長バリアント (登り始め / 分かれ道 / 石段)
+  // 後ろ姿で「これから挑戦する側」を表現。1536x1024 横長。3 案から採用変種を選ぶ。
+  // -------------------------------------------------------------------------
+
+  // --- Pattern A: 山道の登り口 (登り始め) ---
+  {
+    file: "result-last-message-a.png",
+    size: "1536x1024",
+    quality: "high",
+    references: ["section3-full.png"],
+    prompt: [
+      "You are given ONE reference image:",
+      "",
+      "  image[0] = section3-full.png — STYLE TARGET. Replicate its 2D vector style EXACTLY: thin uniform black pen-line outlines (~1.5 px), flat color fills with light cel-shading. NO 3D, NO photorealism, NO anime/manga.",
+      "",
+      "Produce a single HORIZONTAL 3:2 image (1536×1024) as the closing visual for a Japanese career LP. Theme: \"the journey begins\".",
+      "",
+      "============================================================",
+      "COMPOSITION — START OF THE CLIMB:",
+      "============================================================",
+      "- A young Japanese business person, STRICTLY BACK VIEW (viewer sees only the BACK OF THEIR HEAD AND SHOULDERS — face MUST NOT be visible, no facial features at all). Gender-neutral. Standing in the LEFT-CENTER foreground, small scale (~30% of frame height). Slight upward gaze posture (head tilted slightly up). Suit silhouette is dark charcoal (#1A1A1A) with simple flat shading. A small briefcase optional at their side.",
+      "- A winding trail / path starts from the figure's feet and gently curves up and toward the right, leading into the distance and up the mountain. Path color: warm cream (#F5E6D0) with thin charcoal edge lines.",
+      "- A LARGE stylized 2D mountain silhouette dominates the right 2/3 of the frame, in flat warm-orange gradient (#FF8533 top → #D85A00 base). One or two smaller peaks recede behind it.",
+      "- Above: a wide warm-orange sunrise sky with a soft circular sun glow rising behind the mountain's right shoulder (cream/white center fading to warm orange #FF7A33). A handful of small sparkles (✦) and 2-3 simple line-only birds.",
+      "- Optional: 1-2 small flat-shaded shrubs or rocks near the trail base for grounding.",
+      "",
+      "COLOR PALETTE: warm orange #FF6B00 to #FFAA66 gradient sky, cream highlights #FFEFE0, dark charcoal #1A1A1A line work and figure silhouette, warm cream #F5E6D0 path.",
+      "MOOD: \"the journey is about to begin\" — hopeful, ambitious, calm, looking forward to the climb ahead.",
+      "",
+      "STRICT: figure MUST be back view only — NO face, NO eyes, NO mouth visible.",
+      "STRICT: NO text, NO English letters, NO logos, NO watermarks.",
+      "STRICT: must match image[0]'s 2D vector style.",
+    ].join("\n"),
+  },
+
+  // --- Pattern B: 分かれ道 ---
+  {
+    file: "result-last-message-b.png",
+    size: "1536x1024",
+    quality: "high",
+    references: ["section3-full.png"],
+    prompt: [
+      "You are given ONE reference image:",
+      "",
+      "  image[0] = section3-full.png — STYLE TARGET. Replicate its 2D vector style EXACTLY: thin uniform black pen-line outlines (~1.5 px), flat color fills with light cel-shading. NO 3D, NO photorealism, NO anime/manga.",
+      "",
+      "Produce a single HORIZONTAL 3:2 image (1536×1024) as the closing visual for a Japanese career LP. Theme: \"the moment of choice\".",
+      "",
+      "============================================================",
+      "COMPOSITION — A FORK IN THE PATH:",
+      "============================================================",
+      "- A young Japanese business person, STRICTLY BACK VIEW (viewer sees only the BACK OF THEIR HEAD AND SHOULDERS — face MUST NOT be visible, no facial features at all). Gender-neutral. Standing in the CENTER foreground, small-to-medium scale (~35% of frame height). Suit silhouette is dark charcoal (#1A1A1A) with simple flat shading.",
+      "- Directly ahead of the figure, the path FORKS into TWO trails that diverge into the middle distance:",
+      "    - LEFT path: bends downward-left and fades into cooler, muted grey-orange tones — the \"unclear / common\" route.",
+      "    - RIGHT path: rises gently up-and-right toward a bright warm orange sunrise — the \"hopeful\" route, clearly more luminous.",
+      "- Path color: warm cream (#F5E6D0) with thin charcoal edge lines. Both forks visibly cream but the right one catches more orange light.",
+      "- Background: gentle rolling hill silhouettes in flat warm-orange gradient (#FF8533 to #D85A00), more saturated on the right side, more muted on the left.",
+      "- Above: warm sunrise sky concentrated on the right with a soft circular sun glow (cream/white center fading to warm orange #FF7A33). Left side of the sky is paler cream. A few small sparkles (✦) and 2 simple line-only birds in the right portion of the sky.",
+      "",
+      "COLOR PALETTE: warm orange #FF6B00 to #FFAA66 gradient sky on the right, muted cream-grey on the left, dark charcoal #1A1A1A line work and figure silhouette.",
+      "MOOD: \"contemplating the right choice\" — thoughtful, hopeful, with one direction clearly more promising than the other.",
+      "",
+      "STRICT: figure MUST be back view only — NO face, NO eyes, NO mouth visible.",
+      "STRICT: NO text, NO English letters, NO logos, NO watermarks.",
+      "STRICT: must match image[0]'s 2D vector style.",
+    ].join("\n"),
+  },
+
+  // --- Pattern C: 石段を見上げる ---
+  {
+    file: "result-last-message-c.png",
+    size: "1536x1024",
+    quality: "high",
+    references: ["section3-full.png"],
+    prompt: [
+      "You are given ONE reference image:",
+      "",
+      "  image[0] = section3-full.png — STYLE TARGET. Replicate its 2D vector style EXACTLY: thin uniform black pen-line outlines (~1.5 px), flat color fills with light cel-shading. NO 3D, NO photorealism, NO anime/manga.",
+      "",
+      "Produce a single HORIZONTAL 3:2 image (1536×1024) as the closing visual for a Japanese career LP. Theme: \"the first step of a long climb\".",
+      "",
+      "============================================================",
+      "COMPOSITION — LOOKING UP A RISING STAIRWAY:",
+      "============================================================",
+      "- A young Japanese business person, STRICTLY BACK VIEW (viewer sees only the BACK OF THEIR HEAD AND SHOULDERS — face MUST NOT be visible, no facial features at all). Gender-neutral. Standing in the LEFT-CENTER foreground, small scale (~30% of frame height), at the BASE of a rising stepped path. Head clearly tilted upward, gazing UP toward the top. Suit silhouette is dark charcoal (#1A1A1A) with simple flat shading.",
+      "- A stepped trail / stone staircase rises diagonally from the figure's feet up to the upper-right of the frame. About 8-12 visible steps, each in warm cream (#F5E6D0) with thin charcoal outlines. The staircase narrows in perspective as it ascends.",
+      "- Background: a series of gentle hill silhouettes in flat warm-orange gradient (#FF8533 to #D85A00) layered behind the staircase, suggesting altitude and depth.",
+      "- At the TOP of the staircase (upper right area): a bright warm sunrise sun glow rising behind a low ridge (cream/white center fading to warm orange #FF7A33). A handful of small sparkles (✦) and 2 simple line-only birds drift in the warm sky.",
+      "- Optional: small tufts of flat-shaded grass beside the lower steps for grounding.",
+      "",
+      "COLOR PALETTE: warm orange #FF6B00 to #FFAA66 gradient sky, cream highlights #FFEFE0, dark charcoal #1A1A1A line work and figure silhouette, warm cream #F5E6D0 steps.",
+      "MOOD: \"determined first step\" — quiet resolve, hopeful, ready to climb step by step.",
+      "",
+      "STRICT: figure MUST be back view only — NO face, NO eyes, NO mouth visible.",
+      "STRICT: NO text, NO English letters, NO logos, NO watermarks.",
+      "STRICT: must match image[0]'s 2D vector style.",
+    ].join("\n"),
+  },
+
+  // -------------------------------------------------------------------------
   // 診断ページ (/diagnosis) のヘッダー帯ビジュアル
   // 人物なし。チェックシート + ペンを中心に、診断・テスト感を演出する装飾的アイコン群。
   //
@@ -1821,7 +1921,7 @@ export const IMAGES = [
   // 再生成 or プロンプト調整が必要。
   // -------------------------------------------------------------------------
 
-  // case1: 電力会社 (¥420万) → 広告代理店 (¥600万) +180万UP
+  // case1: 電力会社 (420万円) → 広告代理店 (600万円) +180万円UP
   {
     file: "success-case-1-salary.png",
     size: "1536x1024",
@@ -1830,18 +1930,18 @@ export const IMAGES = [
       "Modern flat-design infographic, horizontal aspect ratio 1536x1024, for a Japanese career-change service landing page.",
       "Theme: dramatic BEFORE→AFTER salary improvement with an upward growth feel.",
       "LAYOUT (top section): Two rounded rectangle boxes side by side with a bold orange arrow between them.",
-      "- LEFT BOX (BEFORE): muted grey background (#ECEFF1) with rounded corners. Contains 3 lines of Japanese text stacked: 'BEFORE' (small caps, grey), '電力会社' (medium, dark grey), '年収 ¥420万' (large, bold, dark text).",
+      "- LEFT BOX (BEFORE): muted grey background (#ECEFF1) with rounded corners. Contains 3 lines of Japanese text stacked: 'BEFORE' (small caps, grey), '電力会社' (medium, dark grey), '年収 420万円' (large, bold, dark text).",
       "- CENTER: large vibrant orange right-pointing arrow (▶) with a soft glow effect, indicating transition.",
-      "- RIGHT BOX (AFTER): vibrant orange gradient background (from #ff8533 to #ff6b00), rounded corners, slightly larger than BEFORE, with a soft drop shadow. Contains 3 lines of WHITE Japanese text stacked: 'AFTER' (small caps), '広告代理店' (medium), '年収 ¥600万' (large, bold).",
+      "- RIGHT BOX (AFTER): vibrant orange gradient background (from #ff8533 to #ff6b00), rounded corners, slightly larger than BEFORE, with a soft drop shadow. Contains 3 lines of WHITE Japanese text stacked: 'AFTER' (small caps), '広告代理店' (medium), '年収 600万円' (large, bold).",
       "LAYOUT (bottom section): A wide ribbon-style banner spanning the full width, with a bold orange gradient background (#ff8533 → #ff6b00), glossy 3D effect, and a strong drop shadow. Contains in WHITE bold text: '年収 +180万円 UP ↗' with a large upward arrow icon at the end.",
       "Background: subtle warm cream (#FFFAF5) with a very faint upward trending line chart graphic in pale orange.",
       "Style: Clean, modern, sharp typography, high-end recruitment ad polish. Like Japanese transit poster ads for career services.",
-      "CRITICAL TEXT ACCURACY: The Japanese characters must be PERFECTLY accurate — '電力会社', '広告代理店', '年収', '万', '円', 'UP', 'BEFORE', 'AFTER'. The numbers 420, 600, 180 must be exact. No misspellings, no random characters.",
-      "STRICT: No watermark, no logo, no human figures, no realistic photo elements. Pure flat infographic design.",
+      "CRITICAL TEXT ACCURACY: The Japanese characters must be PERFECTLY accurate — '電力会社', '広告代理店', '年収', '万円', 'UP', 'BEFORE', 'AFTER'. The numbers 420, 600, 180 must be exact. The yen mark '¥' MUST NOT appear anywhere — use '万円' as the currency unit instead. No misspellings, no random characters.",
+      "STRICT: No watermark, no logo, no human figures, no realistic photo elements, NO '¥' symbol anywhere. Pure flat infographic design.",
     ].join("\n"),
   },
 
-  // case2: 市役所公務員 (¥420万) → 通販マーケター (¥600万) +180万UP
+  // case2: 市役所公務員 (380万円) → Webマーケター (480万円) +100万円UP
   {
     file: "success-case-2-salary.png",
     size: "1536x1024",
@@ -1850,18 +1950,18 @@ export const IMAGES = [
       "Modern flat-design infographic, horizontal aspect ratio 1536x1024, for a Japanese career-change service landing page.",
       "Theme: dramatic BEFORE→AFTER salary improvement.",
       "LAYOUT (top section): Two rounded rectangle boxes side by side with a bold orange arrow between them.",
-      "- LEFT BOX (BEFORE): muted grey (#ECEFF1), rounded. Contains stacked Japanese text: 'BEFORE' (small), '市役所公務員' (medium), '年収 ¥420万' (large bold).",
+      "- LEFT BOX (BEFORE): muted grey (#ECEFF1), rounded. Contains stacked Japanese text: 'BEFORE' (small), '市役所公務員' (medium), '年収 380万円' (large bold).",
       "- CENTER: large vibrant orange right-pointing arrow (▶) with a soft glow.",
-      "- RIGHT BOX (AFTER): vibrant orange gradient (#ff8533 → #ff6b00), slightly larger, drop shadow. WHITE text stacked: 'AFTER', '通販マーケター', '年収 ¥600万'.",
-      "LAYOUT (bottom): Wide ribbon banner, orange gradient, glossy 3D, drop shadow. WHITE bold text: '年収 +180万円 UP ↗' with a large upward arrow.",
+      "- RIGHT BOX (AFTER): vibrant orange gradient (#ff8533 → #ff6b00), slightly larger, drop shadow. WHITE text stacked: 'AFTER', 'Webマーケター', '年収 480万円'.",
+      "LAYOUT (bottom): Wide ribbon banner, orange gradient, glossy 3D, drop shadow. WHITE bold text: '年収 +100万円 UP ↗' with a large upward arrow.",
       "Background: warm cream (#FFFAF5) with faint upward trend line.",
       "Style: clean modern flat infographic.",
-      "CRITICAL TEXT ACCURACY: Japanese characters must be exact — '市役所公務員', '通販マーケター', '年収', '万', '円', 'UP', 'BEFORE', 'AFTER'. Numbers: 420, 600, 180.",
-      "STRICT: No watermark, no logo, no humans, no photo elements. Flat infographic.",
+      "CRITICAL TEXT ACCURACY: Japanese characters must be exact — '市役所公務員', 'Webマーケター', '年収', '万円', 'UP', 'BEFORE', 'AFTER'. Numbers: 380, 480, 100. The yen mark '¥' MUST NOT appear anywhere — use '万円' as the currency unit instead.",
+      "STRICT: No watermark, no logo, no humans, no photo elements, NO '¥' symbol anywhere. Flat infographic.",
     ].join("\n"),
   },
 
-  // case3: 新聞記者 (¥420万) → セールスライター (¥600万) +180万UP
+  // case3: 新聞記者 (400万円) → セールスライター (470万円) +70万円UP
   {
     file: "success-case-3-salary.png",
     size: "1536x1024",
@@ -1870,18 +1970,18 @@ export const IMAGES = [
       "Modern flat-design infographic, horizontal aspect ratio 1536x1024, for a Japanese career-change service landing page.",
       "Theme: dramatic BEFORE→AFTER salary improvement.",
       "LAYOUT (top section): Two rounded rectangle boxes side by side with a bold orange arrow between them.",
-      "- LEFT BOX (BEFORE): muted grey (#ECEFF1), rounded. Stacked: 'BEFORE', '新聞記者', '年収 ¥420万'.",
+      "- LEFT BOX (BEFORE): muted grey (#ECEFF1), rounded. Stacked: 'BEFORE', '新聞記者', '年収 400万円'.",
       "- CENTER: large vibrant orange right-pointing arrow (▶) with glow.",
-      "- RIGHT BOX (AFTER): vibrant orange gradient (#ff8533 → #ff6b00), drop shadow, slightly larger. WHITE text: 'AFTER', 'セールスライター', '年収 ¥600万'.",
-      "LAYOUT (bottom): Wide ribbon banner, orange gradient, glossy 3D, drop shadow. WHITE bold text: '年収 +180万円 UP ↗' with upward arrow.",
+      "- RIGHT BOX (AFTER): vibrant orange gradient (#ff8533 → #ff6b00), drop shadow, slightly larger. WHITE text: 'AFTER', 'セールスライター', '年収 470万円'.",
+      "LAYOUT (bottom): Wide ribbon banner, orange gradient, glossy 3D, drop shadow. WHITE bold text: '年収 +70万円 UP ↗' with upward arrow.",
       "Background: warm cream (#FFFAF5) with faint upward trend line.",
       "Style: clean modern flat infographic.",
-      "CRITICAL TEXT ACCURACY: Japanese characters exact — '新聞記者', 'セールスライター', '年収', '万', '円', 'UP', 'BEFORE', 'AFTER'. Numbers: 420, 600, 180.",
-      "STRICT: No watermark, no logo, no humans, no photo elements. Flat infographic.",
+      "CRITICAL TEXT ACCURACY: Japanese characters exact — '新聞記者', 'セールスライター', '年収', '万円', 'UP', 'BEFORE', 'AFTER'. Numbers: 400, 470, 70. The yen mark '¥' MUST NOT appear anywhere — use '万円' as the currency unit instead.",
+      "STRICT: No watermark, no logo, no humans, no photo elements, NO '¥' symbol anywhere. Flat infographic.",
     ].join("\n"),
   },
 
-  // case4: 空港免税店 (¥420万) → 新規事業開発 (¥600万) +180万UP
+  // case4: 空港免税店 (370万円) → 新規事業開発 (450万円) +80万円UP
   {
     file: "success-case-4-salary.png",
     size: "1536x1024",
@@ -1890,14 +1990,14 @@ export const IMAGES = [
       "Modern flat-design infographic, horizontal aspect ratio 1536x1024, for a Japanese career-change service landing page.",
       "Theme: dramatic BEFORE→AFTER salary improvement.",
       "LAYOUT (top section): Two rounded rectangle boxes side by side with a bold orange arrow between them.",
-      "- LEFT BOX (BEFORE): muted grey (#ECEFF1), rounded. Stacked: 'BEFORE', '空港免税店', '年収 ¥420万'.",
+      "- LEFT BOX (BEFORE): muted grey (#ECEFF1), rounded. Stacked: 'BEFORE', '空港免税店', '年収 370万円'.",
       "- CENTER: large vibrant orange right-pointing arrow (▶) with glow.",
-      "- RIGHT BOX (AFTER): vibrant orange gradient (#ff8533 → #ff6b00), drop shadow, slightly larger. WHITE text: 'AFTER', '新規事業開発', '年収 ¥600万'.",
-      "LAYOUT (bottom): Wide ribbon banner, orange gradient, glossy 3D, drop shadow. WHITE bold text: '年収 +180万円 UP ↗' with upward arrow.",
+      "- RIGHT BOX (AFTER): vibrant orange gradient (#ff8533 → #ff6b00), drop shadow, slightly larger. WHITE text: 'AFTER', '新規事業開発', '年収 450万円'.",
+      "LAYOUT (bottom): Wide ribbon banner, orange gradient, glossy 3D, drop shadow. WHITE bold text: '年収 +80万円 UP ↗' with upward arrow.",
       "Background: warm cream (#FFFAF5) with faint upward trend line.",
       "Style: clean modern flat infographic.",
-      "CRITICAL TEXT ACCURACY: Japanese characters exact — '空港免税店', '新規事業開発', '年収', '万', '円', 'UP', 'BEFORE', 'AFTER'. Numbers: 420, 600, 180.",
-      "STRICT: No watermark, no logo, no humans, no photo elements. Flat infographic.",
+      "CRITICAL TEXT ACCURACY: Japanese characters exact — '空港免税店', '新規事業開発', '年収', '万円', 'UP', 'BEFORE', 'AFTER'. Numbers: 370, 450, 80. The yen mark '¥' MUST NOT appear anywhere — use '万円' as the currency unit instead.",
+      "STRICT: No watermark, no logo, no humans, no photo elements, NO '¥' symbol anywhere. Flat infographic.",
     ].join("\n"),
   },
 
