@@ -20,6 +20,7 @@ import {
   createCounselingEvent,
   getBusyRanges,
 } from "@/lib/google-calendar";
+import { notifyBookingToSlack } from "@/lib/slack-notify";
 
 export const dynamic = "force-dynamic";
 
@@ -140,6 +141,24 @@ export async function POST(request: Request) {
   } catch (err) {
     console.warn("[api/calendar/book] GAS forward failed (non-fatal)", err);
   }
+
+  // Slack 通知 (best-effort: 失敗しても予約成立は妨げない)
+  await notifyBookingToSlack({
+    lastName: formData.lastName ?? "",
+    firstName: formData.firstName ?? "",
+    email: formData.email ?? "",
+    phone: formData.phone ?? "",
+    location: formData.location ?? "",
+    timing: formData.timing ?? "",
+    birthdate: formData.birthdate ?? "",
+    education: formData.education ?? "",
+    school: formData.school ?? "",
+    major: formData.major ?? "",
+    resultId: formData.resultId ?? "",
+    startISO,
+    endISO,
+    meetUrl: created.meetUrl,
+  });
 
   return NextResponse.json({
     ok: true,
