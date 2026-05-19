@@ -8,10 +8,7 @@
 // TIMEREX_EMBED_URL を差し替えて運用。
 import type { Metadata } from "next";
 import { Logo } from "@/components/Logo";
-import { TimerexEmbed } from "@/components/TimerexEmbed";
-
-const TIMEREX_EMBED_URL =
-  "https://timerex.net/s/minato_mitasaki_7fd9/fb6f1caa";
+import { SchedulePicker } from "@/components/SchedulePicker";
 
 export const metadata: Metadata = {
   title: "初回カウンセリング日程調整 | VibesCareer",
@@ -49,21 +46,17 @@ export default function SchedulePage() {
         </section>
       </div>
 
-      {/* TimeRex widget はカレンダーが横長になるため、コンテナを広めに */}
-      <section className="pb-10">
-        <div className="max-w-[960px] mx-auto px-3">
-          <div className="schedule-iframe-frame">
-            <TimerexEmbed
-              url={TIMEREX_EMBED_URL}
-              onBookingCompleteRedirect="/thanks"
-            />
-          </div>
-
-          <p className="mt-3 text-center text-[11px] text-text-muted">
-            ※ 予約完了後、ご登録のメールアドレス宛に VibesRadar 受検 URL をお送りします。
+      {/* 自前のカレンダー予約 (Google Calendar 直接連携) */}
+      <div className="lp-container">
+        <section className="px-4 pb-10">
+          <SchedulePicker />
+          <p className="mt-4 text-center text-[11px] text-text-muted">
+            ※ 予約完了後、ご登録のメールアドレス宛に VibesRadar 受検 URL と
+            <br />
+            Google Meet のリンクをお送りします。
           </p>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
   );
 }

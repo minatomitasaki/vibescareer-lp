@@ -5,7 +5,7 @@
   /* フォント */
   --font-sans: var(--font-noto-sans-jp), "Hiragino Sans", "Yu Gothic UI", sans-serif;
   --font-display: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
-  --font-serif: var(--font-shippori-mincho), "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-serif: var(--font-serif-jp), "Hiragino Mincho ProN", "Yu Mincho", serif;
 
   /* ブランドカラー */
   --color-brand-primary: #ff6b00;

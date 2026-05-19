@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_JP, Inter, Shippori_Mincho } from "next/font/google";
+import { Noto_Sans_JP, Inter, Noto_Serif_JP } from "next/font/google";
 import "./globals.css";
 
 const notoSansJP = Noto_Sans_JP({
@@ -18,10 +18,10 @@ const inter = Inter({
 });
 
 // セリフ/キャッチコピー用の明朝体 (アドバイザーのセリフなど特別な場面で使用)
-const shipporiMincho = Shippori_Mincho({
-  variable: "--font-shippori-mincho",
+const notoSerifJP = Noto_Serif_JP({
+  variable: "--font-serif-jp",
   subsets: ["latin"],
-  weight: ["500", "700", "800"],
+  weight: ["500", "700", "900"],
   display: "swap",
 });
 
@@ -39,7 +39,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${notoSansJP.variable} ${inter.variable} ${shipporiMincho.variable}`}
+      className={`${notoSansJP.variable} ${inter.variable} ${notoSerifJP.variable}`}
     >
       <body className="min-h-screen bg-white">{children}</body>
     </html>

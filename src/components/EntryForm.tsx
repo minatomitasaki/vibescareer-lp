@@ -41,6 +41,13 @@ export function EntryForm({ resultId }: { resultId: string }) {
       major: String(fd.get("major") ?? ""),
     };
 
+    // /schedule ページが SchedulePicker から再利用できるように sessionStorage に保存
+    try {
+      sessionStorage.setItem("vc:entry", JSON.stringify(payload));
+    } catch {
+      /* ignore: storage が使えない環境でも遷移は続ける */
+    }
+
     try {
       await fetch(GAS_ENDPOINT, {
         method: "POST",
