@@ -100,10 +100,12 @@ export type SuccessCase = {
   /** 太字タイトル: "内定X社! ○○から△△へ" */
   title: string;
   beforeCompany: string;
-  beforeSalary: string;
+  /** 年収 (万円単位の数値)。表示は ¥XXX万 形式で組み立てる */
+  beforeAmount: number;
   afterCompany: string;
-  afterSalary: string;
-  salaryUp: string; // 例: "180万"
+  afterAmount: number;
+  /** 年収差額 (万円単位の数値)。+XXX万円UP バッジに使う */
+  salaryUpAmount: number;
   offers: string; // 例: "3 社"
   body: string;
 };
@@ -116,10 +118,10 @@ export const SUCCESS_CASES: SuccessCase[] = [
     photo: "/images/success-case-1.png",
     title: "内定3社! 電力会社から広告代理店プランナーへ",
     beforeCompany: "電力会社",
-    beforeSalary: "¥420 万",
+    beforeAmount: 420,
     afterCompany: "広告代理店",
-    afterSalary: "¥600 万",
-    salaryUp: "180万",
+    afterAmount: 600,
+    salaryUpAmount: 180,
     offers: "3 社",
     body:
       "他社の転職支援サービスでは、同業種での転職ばかりを紹介する中、VibesCareer のアドバイザーさんは私の意思をくみ取って、未経験職種への挑戦を支援してくれました。その結果、第一志望の企業から内定を獲得。本当にやりたかった仕事ができて、毎日充実しています。",
@@ -131,10 +133,10 @@ export const SUCCESS_CASES: SuccessCase[] = [
     photo: "/images/success-case-2.png",
     title: "内定4社! 市役所公務員から通販マーケターへ未経験挑戦",
     beforeCompany: "市役所公務員",
-    beforeSalary: "¥420 万",
+    beforeAmount: 420,
     afterCompany: "通販マーケター",
-    afterSalary: "¥600 万",
-    salaryUp: "180万",
+    afterAmount: 600,
+    salaryUpAmount: 180,
     offers: "4 社",
     body:
       "社会人3年目で2社目。「今の会社に長くいたくない。でも次は？」と焦る中、VibesCareer 代表の渡邉さんに支援いただきました。求人を紹介するだけで終わるサービスが多い中、ここでは自分の強みやポテンシャルを見極めながら、最適な転職先を提案いただけました。面接対策も的確で、未経験ながらもマーケターとしての素質をアピールできた結果、無事内定。本当に感謝しています。",
@@ -146,10 +148,10 @@ export const SUCCESS_CASES: SuccessCase[] = [
     photo: "/images/success-case-3.png",
     title: "内定3社! 新聞記者からセールスライターへ転身",
     beforeCompany: "新聞記者",
-    beforeSalary: "¥420 万",
+    beforeAmount: 420,
     afterCompany: "セールスライター",
-    afterSalary: "¥600 万",
-    salaryUp: "180万",
+    afterAmount: 600,
+    salaryUpAmount: 180,
     offers: "3 社",
     // 仮テキスト・要差し替え (HANDOFF.md 残課題)
     body:
@@ -162,10 +164,10 @@ export const SUCCESS_CASES: SuccessCase[] = [
     photo: "/images/success-case-4.png",
     title: "内定3社! 免税店スタッフから新規事業開発へ",
     beforeCompany: "空港免税店",
-    beforeSalary: "¥420 万",
+    beforeAmount: 420,
     afterCompany: "新規事業開発",
-    afterSalary: "¥600 万",
-    salaryUp: "180万",
+    afterAmount: 600,
+    salaryUpAmount: 180,
     offers: "3 社",
     // 仮テキスト・要差し替え (HANDOFF.md 残課題)
     body:

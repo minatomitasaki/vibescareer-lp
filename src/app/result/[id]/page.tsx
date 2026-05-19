@@ -358,7 +358,10 @@ function SuccessCaseCard({ caseData }: { caseData: SuccessCase }) {
           <span className="success-case-ba-label">BEFORE</span>
           <span className="success-case-ba-job">{caseData.beforeCompany}</span>
           <span className="success-case-ba-salary">
-            年収{caseData.beforeSalary}
+            <span className="prefix">年収</span>
+            <span className="currency">¥</span>
+            <span className="amount">{caseData.beforeAmount}</span>
+            <span className="suffix">万</span>
           </span>
         </div>
         <span className="success-case-ba-arrow" aria-hidden>
@@ -368,14 +371,22 @@ function SuccessCaseCard({ caseData }: { caseData: SuccessCase }) {
           <span className="success-case-ba-label">AFTER</span>
           <span className="success-case-ba-job">{caseData.afterCompany}</span>
           <span className="success-case-ba-salary">
-            年収{caseData.afterSalary}
+            <span className="prefix">年収</span>
+            <span className="currency">¥</span>
+            <span className="amount">{caseData.afterAmount}</span>
+            <span className="suffix">万</span>
           </span>
         </div>
       </div>
 
       {/* +XX万円UP バッジ */}
       <div className="success-case-up-badge">
-        年収 +{caseData.salaryUp}円 UP ↗
+        <span className="label">年収</span>
+        <span className="plus">+</span>
+        <span className="amount">{caseData.salaryUpAmount}</span>
+        <span className="unit">万円</span>
+        <span className="up">UP</span>
+        <span className="arrow" aria-hidden>↗</span>
       </div>
 
       {/* タイトル */}
