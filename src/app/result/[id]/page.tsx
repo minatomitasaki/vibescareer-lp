@@ -812,15 +812,15 @@ function FormSection({ resultId }: { resultId: string }) {
   return (
     <section id="form" className="px-4 py-10 bg-bg-form">
       <div className="bg-white rounded-3xl p-5 shadow-md">
-        <p className="text-center text-[14px] font-black text-text-primary leading-[1.7]">
-          カンタン申し込み＆<br />
-          カウンセリング予約で<br />
-          <span className="text-brand-primary text-[16px]">
-            VibesRadarの無料チケット
-          </span>
-          を<br />
-          プレゼント！
-        </p>
+        <ImagePlaceholder
+          src="/images/form-ticket-banner.png"
+          label="フォーム見出し: プレゼントチケット"
+          alt="VibesRadarの無料チケットをプレゼント"
+          width={1536}
+          height={1024}
+          rounded
+          className="w-full h-auto"
+        />
 
         <ol className="mt-6 space-y-2.5">
           {[

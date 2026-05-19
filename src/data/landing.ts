@@ -115,8 +115,8 @@ export type SuccessCase = {
 export const SUCCESS_CASES: SuccessCase[] = [
   {
     id: "case1",
-    name: "Aさん",
-    age: 28,
+    name: "Yさん",
+    age: 25,
     photo: "/images/success-case-1.png",
     salaryInfographic: "/images/success-case-1-salary.png",
     title: "内定3社! 電力会社から広告代理店プランナーへ",
@@ -131,8 +131,8 @@ export const SUCCESS_CASES: SuccessCase[] = [
   },
   {
     id: "case2",
-    name: "Bさん",
-    age: 26,
+    name: "Dさん",
+    age: 24,
     photo: "/images/success-case-2.png",
     salaryInfographic: "/images/success-case-2-salary.png",
     title: "内定4社! 市役所公務員から Web マーケターへ未経験挑戦",
@@ -147,8 +147,8 @@ export const SUCCESS_CASES: SuccessCase[] = [
   },
   {
     id: "case3",
-    name: "Cさん",
-    age: 27,
+    name: "Nさん",
+    age: 24,
     photo: "/images/success-case-3.png",
     salaryInfographic: "/images/success-case-3-salary.png",
     title: "内定3社! 新聞記者からセールスライターへ転身",
@@ -164,8 +164,8 @@ export const SUCCESS_CASES: SuccessCase[] = [
   },
   {
     id: "case4",
-    name: "Dさん",
-    age: 29,
+    name: "Eさん",
+    age: 26,
     photo: "/images/success-case-4.png",
     salaryInfographic: "/images/success-case-4-salary.png",
     title: "内定3社! 免税店スタッフから新規事業開発へ",
