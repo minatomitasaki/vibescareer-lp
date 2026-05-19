@@ -206,7 +206,9 @@ function RadarBonusSection({
   variant: "primary" | "secondary" | "tertiary";
 }) {
   return (
-    <section className="px-4 pt-8 pb-10 bg-white">
+    // 画像と CTA を 1 つの CTA セクションとして、画像の背景色 (#ECFDF3) と
+    // 同じミント緑で section 全体を塗って白い間隙を消す。
+    <section className="px-4 pt-8 pb-10 bg-[#ECFDF3]">
       <div className="flex justify-center">
         <ImagePlaceholder
           src="/images/result-radar-bonus.png"
@@ -214,11 +216,10 @@ function RadarBonusSection({
           alt="15秒診断を受けた方限定で無料配布。VibesRadar の無料チケット ¥3,300 → ¥0。次世代型パーソナルWeb診断で 8 つのポテンシャルタイプ・全 48 項目・ネガティブアラート 5 つを可視化。"
           width={1024}
           height={1536}
-          rounded
           className="w-full h-auto max-w-[480px] block"
         />
       </div>
-      <div className="mt-5 flex justify-center px-2">
+      <div className="mt-2 flex justify-center px-2">
         <Link
           href="#form"
           className="btn-cta-radar group w-full max-w-[420px]"

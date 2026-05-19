@@ -111,10 +111,11 @@ function ImageSection({
 // =====================================================
 // 共通: CTA ボタン
 // trustLine: ボタンの上に「＼ メッセージ ／」 を表示するための文字列
-// withPulse: ボタン周辺に注目誘導のパルスリングを出す
+// withPulse: 旧 props (cta-pulse-ring 用) — 現在は btn-cta-radar が
+//   内蔵のリングアニメーションを持つため未使用 (後方互換のためだけ残す)
 // =====================================================
 function CtaButton({
-  withPulse = false,
+  withPulse: _withPulse = false,
   trustLine,
 }: {
   withPulse?: boolean;
@@ -132,25 +133,22 @@ function CtaButton({
           <span className="slash">／</span>
         </div>
       )}
-      {/* 上の「いますぐ無料で」ピル */}
-      <div className="relative bg-white border-2 border-brand-primary rounded-full px-5 py-1.5 text-[12px] font-black text-brand-primary mb-[-14px] z-10 shadow-md">
+      {/* 上の「いますぐ無料で」ピル (緑系で診断結果LP の CTA と統一) */}
+      <div className="relative bg-white border-2 border-[#14b8a6] rounded-full px-5 py-1.5 text-[12px] font-black text-[#14b8a6] mb-[-14px] z-10 shadow-md">
         いますぐ無料で
-        {/* 下向き三角の小さな矢印（ピルからボタンへ繋がる印象） */}
-        <span className="absolute -bottom-[7px] left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-r-2 border-b-2 border-brand-primary rotate-45" />
+        {/* 下向き三角の小さな矢印 (ピルからボタンへ繋がる印象) */}
+        <span className="absolute -bottom-[7px] left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-r-2 border-b-2 border-[#14b8a6] rotate-45" />
       </div>
-      {/* メインCTAボタン */}
-      <div className={withPulse ? "cta-pulse-ring" : undefined}>
-        <Link
-          href="/diagnosis"
-          className="btn-3d-orange group relative w-[300px] text-center text-[22px] py-5 inline-flex items-center justify-center gap-2"
-        >
-          <span className="relative z-10">診断START！</span>
-          <span className="relative z-10 inline-block transition-transform group-hover:translate-x-1">
-            ▶
-          </span>
-          <span className="absolute top-1.5 left-8 right-8 h-2 bg-white/40 rounded-full blur-[2px] z-[1]" />
-        </Link>
-      </div>
+      {/* メインCTAボタン (診断結果LP の btn-cta-radar と統一) */}
+      <Link
+        href="/diagnosis"
+        className="btn-cta-radar group w-full max-w-[300px] text-center inline-flex items-center justify-center gap-2"
+      >
+        <span className="relative z-10">診断START！</span>
+        <span className="relative z-10 inline-block transition-transform group-hover:translate-x-1">
+          ▶
+        </span>
+      </Link>
       {/* 補助テキスト（丸い立体オレンジバッジ + アイコン + ダークテキスト） */}
       <div className="flex items-center justify-center gap-x-3.5 gap-y-2 mt-5 flex-wrap px-2">
         <CtaFeaturePill icon="clock">15秒で完了</CtaFeaturePill>
