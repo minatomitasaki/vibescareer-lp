@@ -503,16 +503,15 @@ function ConcernsSection() {
         ))}
       </ul>
 
-      {/* 男女の悩み顔ビジュアル (4 カードの下) */}
-      <div className="mt-8 flex justify-center">
+      {/* 男女の悩み顔ビジュアル (4 カードの下、余白を詰める) */}
+      <div className="mt-2 flex justify-center">
         <ImagePlaceholder
           src="/images/result-concerns-faces.png"
           label="Section 10: 悩み訴求イメージ"
           alt="若手ビジネスパーソンが転職について悩んでいる様子"
           width={1024}
           height={1024}
-          rounded
-          className="w-full h-auto max-w-[340px]"
+          className="w-full h-auto max-w-[360px]"
         />
       </div>
     </section>
