@@ -1884,10 +1884,10 @@ body {
   will-change: transform;
 }
 .partners-marquee-left {
-  animation: partners-marquee-left 26s linear infinite;
+  animation: partners-marquee-left 18s linear infinite;
 }
 .partners-marquee-right {
-  animation: partners-marquee-right 30s linear infinite;
+  animation: partners-marquee-right 22s linear infinite;
 }
 @keyframes partners-marquee-left {
   from { transform: translateX(0); }
