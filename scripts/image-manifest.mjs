@@ -578,7 +578,7 @@ export const IMAGES = [
   // -------------------------------------------------------------------------
   {
     file: "result-concerns-faces.png",
-    size: "1024x1024",
+    size: "1536x1024",
     quality: "high",
     references: ["section3-full.png"],
     prompt: [
@@ -586,7 +586,7 @@ export const IMAGES = [
       "",
       "  image[0] = section3-full.png — STYLE TARGET. Replicate its 2D vector style EXACTLY: thin uniform black pen-line outlines (~1.5 px), flat color fills with light cel-shading. NO 3D, NO CGI, NO photorealism, NO anime/manga.",
       "",
-      "Produce a single square 1:1 image (1024×1024) for a Japanese career LP section titled 「こんな悩みをよく相談されます」.",
+      "Produce a single horizontal 3:2 image (1536×1024) for a Japanese career LP section titled 「こんな悩みをよく相談されます」.",
       "",
       "Content / Composition:",
       "  - TWO young Japanese business characters in their late 20s, seated close together side by side, with a modern silver/grey LAPTOP open between them. Show upper body + arms + the laptop as the visual anchor.",

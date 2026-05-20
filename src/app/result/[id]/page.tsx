@@ -509,9 +509,9 @@ function ConcernsSection() {
           src="/images/result-concerns-faces.png"
           label="Section 10: 悩み訴求イメージ"
           alt="若手ビジネスパーソンが転職について悩んでいる様子"
-          width={1024}
+          width={1536}
           height={1024}
-          className="w-full h-auto max-w-[360px]"
+          className="w-full h-auto max-w-[440px]"
         />
       </div>
     </section>
