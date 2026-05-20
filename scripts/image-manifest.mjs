@@ -2314,4 +2314,50 @@ export const IMAGES = [
     ].join("\n"),
   },
 
+  // -------------------------------------------------------------------------
+  // Section 13: 「VibesCareerとは？」セクション全体の背景装飾画像
+  // 薄オレンジのグラデと装飾要素 (ドット / 波形 / キラキラ) を含む縦長画像。
+  // CSS で background-image として section 全体に適用する想定。
+  // 中央縦帯は装飾を控えめにして、前景テキスト/カードの可読性を確保。
+  // -------------------------------------------------------------------------
+  {
+    file: "result-service-bg.png",
+    size: "1024x1536",
+    quality: "high",
+    prompt: [
+      "Soft warm decorative background pattern, vertical 1024x1536, for a Japanese career-change service LP 'About Us' section.",
+      "",
+      "CONCEPT: A subtle, airy decorative background featuring soft warm cream tones with playful decorative elements. The decorations should feel light, modern, and inviting — not overwhelming. This is meant to sit BEHIND foreground text and cards, so it must not compete with them.",
+      "",
+      "BASE: A gentle vertical gradient from pale cream (#FFFAF2) at the top, to almost-white (#FFFEFB) in the middle, back to pale cream (#FFFAF2) at the bottom. Very subtle, like soft paper.",
+      "",
+      "DECORATIVE ELEMENTS (scattered organically along the LEFT and RIGHT edges only — keep the CENTER 60% width mostly clean):",
+      "  - 10-14 soft round dots in warm orange tones (#FFD9B3, #FFCBA0, #FFC093), varying sizes from 6px to 36px, varying opacity from 30% to 70%",
+      "  - 2-3 thin curving wave / arc lines in pale orange (#FFB380), suggesting gentle movement",
+      "  - 4-6 small confetti-style sparkle marks (✦ or ✧ or + shapes) in soft orange (#FFA666)",
+      "  - 1-2 large abstract organic blob shapes in very pale peach (#FFEFE0) as soft background accents near the corners",
+      "",
+      "DISTRIBUTION:",
+      "  - Concentrate decorations along the LEFT EDGE (left 20% of canvas) and the RIGHT EDGE (right 20% of canvas)",
+      "  - Distribute vertically across the full height — some at top, some in middle, some at bottom",
+      "  - The CENTER 60% of the canvas width should be MOSTLY CLEAN (only very faint, low-opacity elements if any) so foreground content remains readable",
+      "",
+      "STYLE:",
+      "  - Flat 2D modern Japanese graphic design",
+      "  - Light, airy, optimistic vibe",
+      "  - All decoration elements have LOW CONTRAST against the cream base — visible but never competing with foreground text",
+      "  - Smooth, no harsh edges",
+      "",
+      "COLOR PALETTE (strictly):",
+      "  - Base gradient: pale cream (#FFFAF2) to almost-white (#FFFEFB)",
+      "  - Dots / sparkles / lines: warm orange family (#FFD9B3, #FFCBA0, #FFC093, #FFB380, #FFA666)",
+      "  - Blobs: very pale peach (#FFEFE0)",
+      "  - AVOID blue, navy, cyan, teal, green, purple, red entirely",
+      "",
+      "STRICT: NO text, NO logos, NO English letters, NO Japanese characters anywhere. NO human figures. NO photo elements. NO illustration of objects (no laptops, no buildings, no faces). Pure abstract decorative pattern.",
+      "STRICT: warm orange / cream palette only. NO cool tones.",
+      "STRICT: Center vertical strip (roughly 60% width) MUST remain mostly clean — only faint or no decorations there.",
+    ].join("\n"),
+  },
+
 ];

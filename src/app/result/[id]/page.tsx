@@ -568,18 +568,18 @@ function CausesSection() {
 }
 
 // =============================================================================
-// Section 12: 意気込みコピー — 左にコピー (HTML/CSS) + 右にビジネスウーマンのイラスト
+// Section 12: 意気込みコピー — 横長 1 枚画像 (左に吹き出し+ヒーロー文字、右に女性)
 // =============================================================================
 function DeterminationSection() {
   return (
     <section className="bg-white">
       <div className="w-full max-w-[440px] mx-auto">
         <ImagePlaceholder
-          src="/images/result-determination-illustration.png"
-          label="Section 12: 意気込みコピー (FVスタイル・テキスト込み)"
+          src="/images/result-determination-b.png"
+          label="Section 12: 意気込みコピー (パターンB)"
           alt="我々、VibesCareer（バイブスキャリア）にすべてお任せください。あなたの転職を成功させてみせます。"
-          width={1024}
-          height={1536}
+          width={1536}
+          height={1024}
           className="w-full h-auto block"
         />
       </div>
