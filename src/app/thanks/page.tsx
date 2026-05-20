@@ -188,32 +188,73 @@ export default function ThanksPage() {
       </section>
 
       {/* LINE 登録 CTA */}
-      <section className="px-4 pb-12">
-        <div className="bg-white rounded-3xl border-2 border-line-green/40 p-5 shadow-md">
-          <div className="text-center">
-            <p className="inline-block bg-bg-subtle rounded-full px-3 py-1 text-[11.5px] font-bold text-text-secondary mb-3">
-              不明点や質問はいつでも気軽にご相談ください!
-            </p>
-            <p className="text-[13.5px] leading-[1.85] text-text-secondary">
-              VibesCareer 代表・渡邉との
-              <br />
-              <strong className="text-text-primary">&quot;直通 LINE&quot;</strong> を公開しています。
-              <br />
-              LINE 登録いただいた方より<strong>優先的に対応</strong>しますので、
-              <br />
-              ぜひこの機会にご登録ください。
-            </p>
+      <section className="px-4 pb-12 thanks-line-section">
+        <div className="section-eyebrow-block mb-4">
+          <span className="en">DIRECT LINE</span>
+          <h2 className="ja text-[20px]">
+            代表との<span className="marker">直通 LINE</span>
+          </h2>
+          <span className="sub">
+            登録された方には優先対応いたします
+          </span>
+        </div>
+
+        <div className="thanks-line-card">
+          {/* 優先対応バッジ */}
+          <span className="thanks-priority-badge" aria-hidden>
+            ★ PRIORITY
+          </span>
+
+          {/* 代表アバター + フキダシ */}
+          <div className="flex items-start gap-3">
+            <div className="thanks-line-avatar">
+              <Image
+                src="/images/advisor-watanabe.png"
+                alt="VibesCareer 代表・渡邉"
+                width={72}
+                height={72}
+                className="object-cover w-full h-full"
+              />
+            </div>
+            <div className="thanks-line-bubble">
+              <p className="text-[12.5px] font-bold text-text-primary leading-[1.6]">
+                VibesCareer 代表・渡邉
+              </p>
+              <p className="text-[13px] leading-[1.8] text-text-secondary mt-1">
+                不明点や進路の相談、いつでも
+                <br />
+                気軽にメッセージしてください！
+              </p>
+            </div>
           </div>
 
+          {/* 説明 */}
+          <p className="mt-4 text-[12.5px] leading-[1.85] text-text-secondary text-center">
+            LINE 登録いただいた方より
+            <strong className="text-brand-primary">優先的に対応</strong>します。
+            <br />
+            ぜひこの機会にご登録ください。
+          </p>
+
+          {/* LINE ボタン (pulse アニメ付き) */}
           <a
             href={LINE_REGISTER_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-5 flex items-center justify-center gap-2 w-full bg-line-green text-white text-[18px] font-black py-4 rounded-full shadow-md hover:brightness-105 active:translate-y-[1px] transition"
+            className="thanks-line-btn group"
           >
-            <span aria-hidden>💬</span>
-            LINE 登録はこちら
+            <span className="thanks-line-btn-icon" aria-hidden>
+              <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                <path d="M12 3C6.477 3 2 6.59 2 11c0 2.557 1.512 4.83 3.86 6.281-.143.527-.916 3.213-1.05 3.74-.16.642.234.633.49.46.2-.135 3.184-2.165 4.47-3.04.722.103 1.466.157 2.23.157 5.523 0 10-3.59 10-8s-4.477-8-10-8Zm-3.39 9.66h-2.07c-.297 0-.54-.24-.54-.54V8.9c0-.299.243-.54.54-.54.296 0 .54.241.54.54v2.68h1.53c.297 0 .54.24.54.54 0 .299-.243.54-.54.54Zm2.07-.54c0 .299-.243.54-.54.54-.296 0-.54-.241-.54-.54V8.9c0-.299.244-.54.54-.54.297 0 .54.241.54.54v3.22Zm5.18 0c0 .232-.149.439-.369.515-.058.02-.119.025-.18.025-.166 0-.327-.077-.428-.214l-2.14-2.918v2.591c0 .299-.244.54-.54.54-.297 0-.54-.241-.54-.54V8.9c0-.232.148-.438.369-.515.058-.02.118-.025.179-.025.166 0 .328.078.428.215l2.14 2.917V8.9c0-.299.244-.54.54-.54.297 0 .54.241.54.54v3.22Zm3.36-2.13c.297 0 .54.241.54.54 0 .298-.243.54-.54.54h-1.53v.59h1.53c.296 0 .54.242.54.54 0 .299-.244.54-.54.54h-2.07c-.296 0-.54-.241-.54-.54V8.9c0-.299.244-.54.54-.54h2.07c.296 0 .54.241.54.54 0 .298-.244.54-.54.54h-1.53v.59h1.53Z" />
+              </svg>
+            </span>
+            <span className="thanks-line-btn-label">LINE で友だち追加</span>
+            <span className="thanks-line-btn-arrow" aria-hidden>›</span>
           </a>
+
+          <p className="mt-3 text-[10.5px] text-text-muted text-center leading-[1.6]">
+            ※ LINE アプリが開きます。お持ちでない場合はインストール後にご登録ください。
+          </p>
         </div>
       </section>
     </main>
