@@ -573,21 +573,21 @@ function CausesSection() {
 function DeterminationSection() {
   return (
     <section className="px-4 py-8 bg-white">
-      <div className="w-full max-w-[440px] mx-auto flex items-center gap-3">
-        <div className="flex-1 min-w-0 text-left">
-          <p className="text-[12px] leading-[1.7] font-bold text-text-strong">
+      <div className="w-full max-w-[440px] mx-auto flex items-center justify-center gap-3">
+        <div className="text-center">
+          <p className="text-[13px] leading-[1.7] font-bold text-text-strong">
             我々、
           </p>
-          <p className="text-[16px] leading-[1.4] font-black my-1 tracking-tight text-brand-primary whitespace-nowrap">
+          <p className="text-[18px] leading-[1.3] font-black my-1 tracking-tight text-brand-primary whitespace-nowrap">
             VibesCareer
-            <span className="block text-[11px] mt-0.5 tracking-wide">
+            <span className="block text-[12px] mt-0.5 tracking-wide">
               （バイブスキャリア）
             </span>
           </p>
-          <p className="text-[12px] leading-[1.7] font-bold text-text-strong">
+          <p className="text-[13px] leading-[1.7] font-bold text-text-strong">
             にすべてお任せください。
           </p>
-          <p className="mt-3 text-[14px] font-black leading-[1.5] text-text-strong">
+          <p className="mt-3 text-[15px] font-black leading-[1.5] text-text-strong">
             あなたの転職を
             <br />
             <span className="text-brand-primary border-b-2 border-brand-primary/40">
@@ -595,7 +595,7 @@ function DeterminationSection() {
             </span>
           </p>
         </div>
-        <div className="flex-shrink-0 w-[45%]">
+        <div className="flex-shrink-0 w-[150px]">
           <ImagePlaceholder
             src="/images/result-determination-illustration.png"
             label="Section 12: 意気込みコピーのキャラクター"
