@@ -285,6 +285,147 @@ NO '¥' symbol anywhere. Pure flat infographic design.
 
 ---
 
+## 応用テクニック
+
+### 1. LP 全体でトンマナを揃える方法
+
+別のセクションで別の人物・別のシーンを生成しても **「同じサイトの中の写真」と感じさせる** ための手法。
+
+**核となる発想**: プロンプトに「**共有テンプレ句**」を仕込んで、それを全画像で使い回す。被写体が変わっても、形容句が同じなら世界観が揃う。
+
+#### 共有テンプレ句 (これらを全画像のプロンプトに必ず入れる)
+
+| カテゴリー | 共有文 |
+|---|---|
+| 品質基準 | `Magazine-quality, like Wired Japan / Forbes Japan editorial portrait` |
+| 光 | `warm natural daylight from a large window, soft directional shadows` |
+| 質感 | `healthy realistic skin tones, very slight film-like grain` |
+| カメラ | `35mm or 50mm prime lens, shallow depth of field, sharp focus on the face` |
+| カラーパレット | `warm cream / beige / soft orange accents in the background, tying into the brand's warm orange tone` |
+| ブランド色 | `#ff6b00` を明示 (RGB 値を直接書く方が AI に伝わりやすい) |
+| 除外 | `NOT illustration, NOT 3D render, NOT anime, NOT cartoon` |
+
+#### 男性・女性で「変える部分 / 変えない部分」を分ける
+
+被写体が変わるたびに、変えるパラメーターを 4 つに絞ると、世界観が崩れない:
+
+| 変える | 例 (男性) | 例 (女性) |
+|---|---|---|
+| 髪型 | `neat short black hair` | `shoulder-length dark brown hair with a soft natural wave` |
+| 服装の系統 | `navy slim-fit blazer over a crisp white t-shirt` | `soft cream knit sweater under a tailored navy blazer` |
+| 表情の方向性 | `confident, energetic with a slight gentle smile` | `warm, friendly with a clear natural open smile` |
+| アクション | `reviewing campaign storyboards` | `typing on her laptop` |
+
+**変えないもの**: 光・カメラ・構図・カラーパレット・STRICT 内容。これらを変えるとトンマナが破綻する。
+
+#### 入口 LP (Top) と結果 LP (Result) の繋ぎ
+
+入口 LP のヒーロー画像と、結果 LP の人物写真で同じ世界観にするコツ:
+
+- **両方に共通のカラーパレット句** を入れる: `warm cream / beige / soft orange tones`
+- **両方に共通のテイスト宣言** を入れる: `Magazine-quality editorial`
+- **背景のシーン要素を統一**: モダンな木製デスク / 自然光 / 観葉植物
+- **構図 (subject occupies the LEFT/RIGHT 2/3 of the frame) も統一**
+
+これだけで、別の被写体・別の職種でも「同じサイトの写真」として感じられる。
+
+#### 失敗パターン (やりがち)
+
+- 個別のプロンプトでカラーパレット句を**外す** → その 1 枚だけ世界観がズレる
+- 男性は `professional headshot`、女性は `lifestyle photo` のように **冒頭スタイル宣言を変える** → 質感が違ってくる
+- 各セクションごとに違うレンズ感を指定 → 一貫性が崩れる
+
+---
+
+### 2. 「素材だけ修正、テキストは維持」する技術 — Inpainting / Masked Editing
+
+> **キー技術**: OpenAI Image API の **`/v1/images/edits`** エンドポイント + **マスク画像** による部分編集 (Inpainting と呼ばれる)。
+
+#### 仕組み
+
+1. 元画像と同じサイズの **マスク PNG** を用意
+   - **透明 (alpha=0)** の領域 → AI が再生成する
+   - **不透明 (alpha=255)** の領域 → そのまま維持
+2. `images/edits` API に **元画像 + マスク + 新プロンプト** を送る
+3. AI は透明部分だけを描き直し、不透明部分 (例: テキスト) はそのまま保持
+
+#### ChatGPT UI でやる場合 (簡単)
+
+ChatGPT (Plus) で生成した画像に対して:
+1. 生成済み画像をクリックして編集モードに入る
+2. 「ここだけ変えて」「○○の部分だけ別のものに」と指示
+3. UI が自動的にマスク領域を判定して再生成
+
+これは内部的に edits API + マスクを使っている。テキストはそのまま残るように AI が周辺の文脈から判断してくれる。
+
+#### API でやる場合 (制御可能)
+
+```bash
+curl https://api.openai.com/v1/images/edits \
+  -F model="gpt-image-2" \
+  -F image="@original.png" \
+  -F mask="@mask.png" \
+  -F prompt="新しい素材の指示 (テキストには触れない)"
+```
+
+マスク PNG の作り方:
+- **Photoshop / Figma**: 元画像と同じサイズで新規レイヤー、編集したい領域を消しゴム (透明化) → PNG 書き出し
+- **Pillow (Python)**: 元画像と同じサイズの透明 PNG を作って、テキスト領域だけ不透明で塗る
+- **CLI**: ImageMagick で透明レイヤーを作って合成
+
+#### 実用上のコツ
+
+- **マスクの境界をフェザー (ぼかし) する** → 編集領域と保持領域の境目が自然に馴染む
+- **テキスト周辺は「不透明」で広めに保持** → 文字の輪郭がブレない
+- **素材のサイズ感は変えない** → 元の構図を保つために、プロンプトで「same composition」を指示
+
+#### 別のアプローチ: 最初から分ける
+
+実は、**Inpainting に頼らず「素材」と「テキスト」を別の画像にして、HTML/CSS で重ねる** ほうが運用が楽な場面が多い:
+
+- 素材画像 (テキストなし、AI 生成)
+- テキストレイヤー (HTML/CSS で position: absolute で重ねる)
+
+これなら **テキストの修正が一瞬** (HTML 編集だけ)、再生成不要。
+
+VibesCareer の運用では、可能な限りこのアプローチを優先しています (BEFORE/AFTER インフォグラフィックは画像に焼き込んだが、フォーム見出しなどは HTML で別レイヤー化)。
+
+---
+
+### 3. 参考画像 / 競合スクショを渡すことは精度向上に効くか?
+
+> **結論**: 効きます。ただし「インスピレーション」として使い、**そのままのコピーは避ける**。
+
+#### 効果が高い使い方
+
+| 用途 | プロンプト例 | 渡す画像 |
+|---|---|---|
+| トンマナ参照 | "Match the warm color tone and editorial feel of the reference" | 参考写真 1 枚 |
+| 構図参照 | "Use the same compositional layout as the reference (subject left, blurred background right)" | 構図見本 |
+| スタイル参照 | "Match the photorealism level shown in the reference" | クオリティ見本 |
+
+#### 技術的に渡す方法
+
+- **ChatGPT UI**: 画像をドラッグアンドドロップ + テキスト指示
+- **API**: `/v1/images/edits` の入力画像として渡す、または `references` 系のパラメーターを使う (モデルやエンドポイントで仕様が異なるので最新ドキュメントで確認)
+
+#### 効きにくいケース・避けるべきケース
+
+- **競合サイトを丸ごとコピーしようとする**: 著作権侵害のリスク。AI も拒否することがある
+- **解像度が低すぎる参考画像**: 細部が伝わらず、AI が逆に混乱する → 1024px 以上推奨
+- **複数枚の参考画像で違うトンマナを渡す**: AI がブレる → 1〜2 枚に絞る
+
+#### ベストプラクティス
+
+1. 参考画像は「**この雰囲気・トンマナ・構図感**」を伝えるためのもの
+2. 具体的な要素 (色 / 構図 / ライティング / カメラ感) は**プロンプトで言語化**しておく
+3. 参考画像 + プロンプトの**両方**を渡すと、AI の解釈が安定する
+4. 競合の素材を「ベースに変形して使う」のは著作権上 NG。あくまで「インスピレーションを得る」目的に絞る
+
+VibesCareer 制作でも、参考 LP のスクショは「**こういう構造で作りたい**」という設計意図を伝えるのには使いましたが、生成 AI に直接渡すよりも、構造的特徴を抽出して**自分のプロンプトに言語化**して投げる方が、ブランド適合性が高い結果になりました。
+
+---
+
 ## まとめ
 
 | ポイント | キー |
@@ -295,5 +436,8 @@ NO '¥' symbol anywhere. Pure flat infographic design.
 | 仕上げ | STRICT で除外を明示 |
 | 失敗対応 | プロンプトを変えず `--force` で再試行 |
 | 確認 | 目視必須 (指 / 顔 / 文字 / ロゴ混入) |
+| トンマナ統一 | 共有テンプレ句を全プロンプトで使い回す |
+| 部分修正 | Inpainting (マスク付き edits API) or 最初から HTML/CSS で別レイヤー化 |
+| 参考画像 | インスピレーション用途で使うのは有効、丸コピーは避ける |
 
 このガイドはあくまで **gpt-image-2 で「LP に使える」品質の画像を量産する** ための実用的なテクニックです。Midjourney / Imagen / Stable Diffusion 等の他モデルではプロンプト構造が異なるので、別途調整が必要です。
