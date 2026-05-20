@@ -189,7 +189,7 @@ export type PartnerLogo = {
 };
 
 export const PARTNER_LOGOS: PartnerLogo[] = [
-  { name: "BizReach", file: "/images/partner-logo-bizreach.png" },
+  { name: "BizReach", file: "/images/partner-logo-bizreach.svg" },
   { name: "Speee", file: "/images/partner-logo-speee.png" },
   { name: "Sansan", file: "/images/partner-logo-sansan.svg" },
   { name: "Leverages", file: "/images/partner-logo-leverages.svg" },
