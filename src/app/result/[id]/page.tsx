@@ -572,50 +572,66 @@ function CausesSection() {
 // =============================================================================
 function DeterminationSection() {
   return (
-    <section className="px-4 py-8 bg-white">
-      <div className="w-full max-w-[440px] mx-auto flex items-center justify-center gap-3">
-        <div className="text-center">
-          <p className="text-[13px] leading-[1.7] font-bold text-text-strong">
-            我々、
-          </p>
-          <p className="text-[18px] leading-[1.3] font-black my-1 tracking-tight text-brand-primary whitespace-nowrap">
-            VibesCareer
-            <span className="block text-[12px] mt-0.5 tracking-wide">
-              （バイブスキャリア）
-            </span>
-          </p>
-          <p className="text-[13px] leading-[1.7] font-bold text-text-strong">
-            にすべてお任せください。
-          </p>
-          <p className="mt-3 text-[15px] font-black leading-[1.5] text-text-strong">
-            あなたの転職を
-            <br />
-            <span className="text-brand-primary border-b-2 border-brand-primary/40">
-              成功させてみせます。
-            </span>
-          </p>
-        </div>
-        <div className="flex-shrink-0 w-[150px]">
-          <ImagePlaceholder
-            src="/images/result-determination-illustration.png"
-            label="Section 12: 意気込みコピーのキャラクター"
-            alt="VibesCareerのキャリアアドバイザーが支援を約束するイラスト"
-            width={1024}
-            height={1024}
-            className="w-full h-auto block"
-          />
-        </div>
+    <section className="bg-white">
+      <div className="w-full max-w-[440px] mx-auto">
+        <ImagePlaceholder
+          src="/images/result-determination-illustration.png"
+          label="Section 12: 意気込みコピー (FVスタイル・テキスト込み)"
+          alt="我々、VibesCareer（バイブスキャリア）にすべてお任せください。あなたの転職を成功させてみせます。"
+          width={1024}
+          height={1536}
+          className="w-full h-auto block"
+        />
       </div>
     </section>
   );
 }
 
 // =============================================================================
-// Section 13: サービス紹介
+// Section 13: サービス紹介 — VibesCareer の 3 つの POINT
 // =============================================================================
+type ServicePoint = {
+  title: string;
+  body: React.ReactNode;
+};
+
+const SERVICE_POINTS: ServicePoint[] = [
+  {
+    title: "VibesRadarで「本当の自分」を可視化",
+    body: (
+      <>
+        次世代型パーソナル適性診断「<strong>VibesRadar</strong>」で、
+        自分でも気づいていない<strong>強み・ポテンシャル・ストレス耐性</strong>
+        を可視化します。本来有料の診断を、本ページからのお申込み限定で
+        <strong>完全無料</strong>でご案内します。
+      </>
+    ),
+  },
+  {
+    title: "専属アドバイザーが自己分析からキャリア設計まで伴走",
+    body: (
+      <>
+        診断結果をもとに、<strong>キャリアアドバイザーがあなた専属で伴走</strong>。
+        表面的な希望条件だけでなく、これまでの経験・価値観・将来像まで丁寧にヒアリングしながら、
+        <strong>納得感のあるキャリア設計</strong>を一緒に組み立てます。
+      </>
+    ),
+  },
+  {
+    title: "「最適な職場」×「適正年収」で内定まで支援",
+    body: (
+      <>
+        厳選した<strong>10,000社以上の企業</strong>から、あなたに合う求人を提案。
+        応募書類の添削や面接対策、企業ごとのリアルな情報提供、内定後の交渉まで
+        <strong>最後まで伴走</strong>します。サービスは完全無料です。
+      </>
+    ),
+  },
+];
+
 function ServiceIntroSection() {
   return (
-    <section className="px-4 py-10 bg-bg-subtle">
+    <section className="px-4 py-10 bg-white">
       <div className="section-eyebrow-block">
         <span className="en">OUR SOLUTION</span>
         <h2 className="ja">
@@ -623,43 +639,32 @@ function ServiceIntroSection() {
           <span className="marker">どんなサービス？</span>
         </h2>
         <span className="sub">
-          「適職×適正年収」を約束する<br />
-          第２新卒特化型の転職支援サービスです。
+          20代・第二新卒のための<br />
+          パーソナル型 転職支援サービスです。
         </span>
       </div>
 
-      <div className="mt-2 flex justify-center">
-        <ImagePlaceholder
-          src="/images/result-service-hero.png"
-          label="Section 13: サービス紹介イメージ"
-          alt="アドバイザーと相談者の面談シーン"
-          width={1536}
-          height={1024}
-          rounded
-          className="w-full h-auto max-w-[420px]"
-        />
-      </div>
+      <p className="mt-6 text-[13.5px] leading-[1.95] text-text-secondary">
+        一般的な転職支援は、最初から転職前提で求人の大量紹介やスピーディーな決断を求められがち。
+        VibesCareerでは <strong>「本当に自分に合う仕事は何か」</strong> を見極めることを最優先に、
+        まずは <strong>自己分析からスタート</strong> します。
+      </p>
 
-      <div className="mt-6 space-y-4 text-[13.5px] leading-[1.95] text-text-secondary">
-        <p>
-          一般的な転職支援では、はじめから転職を前提に、多くの求人紹介や短期間での意思決定を求められがちです。
-        </p>
-        <p>
-          VibesCareerでは「本当に自分に合う仕事は何か」を見極めるため、
-          <strong className="text-brand-primary">
-            あなたに本気で向き合うパーソナルカウンセリングを徹底
-          </strong>
-          します。
-        </p>
-        <p>
-          さらに、次世代型パーソナルWeb診断「VibesRadar」を受検いただき、統計学に基づいた自己分析を実施。
-          <strong>&quot;最適な職種&quot;へ&quot;適正年収&quot;での転職支援</strong>
-          をお約束します。
-        </p>
-        <p className="text-[11px] text-text-muted">
-          ※サービスはすべて無料で受けられます
-        </p>
-      </div>
+      <ul className="mt-7 space-y-4">
+        {SERVICE_POINTS.map((p, i) => (
+          <li key={i} className="service-point-card">
+            <div className="service-point-label">
+              POINT.{String(i + 1).padStart(2, "0")}
+            </div>
+            <h3 className="service-point-title">{p.title}</h3>
+            <p className="service-point-body">{p.body}</p>
+          </li>
+        ))}
+      </ul>
+
+      <p className="mt-6 text-center text-[11px] text-text-muted">
+        ※サービスはすべて無料で受けられます
+      </p>
     </section>
   );
 }

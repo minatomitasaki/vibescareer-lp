@@ -1826,6 +1826,46 @@ body {
 }
 
 /* =============================================================
+   Section 13: サービス紹介 POINT カード (POINT.XX 形式)
+   ============================================================= */
+.service-point-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px 20px 22px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid color-mix(in srgb, var(--color-brand-primary) 10%, white);
+}
+.service-point-label {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--color-brand-primary);
+  letter-spacing: 0.06em;
+  padding-bottom: 4px;
+  margin-bottom: 14px;
+  border-bottom: 2.5px solid var(--color-brand-primary);
+}
+.service-point-title {
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1.55;
+  color: var(--color-text-primary);
+  margin-bottom: 12px;
+  letter-spacing: 0.01em;
+}
+.service-point-body {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.9;
+  color: var(--color-text-secondary);
+}
+.service-point-body strong {
+  font-weight: 800;
+  color: var(--color-brand-primary);
+}
+
+/* =============================================================
    Section 8: 取り扱い企業 (横スクロール)
    ============================================================= */
 .partners-headline {
