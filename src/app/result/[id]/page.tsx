@@ -532,24 +532,25 @@ function CausesSection() {
         </h2>
       </div>
 
-      <div className="mt-2 flex justify-center">
-        <ImagePlaceholder
-          src="/images/result-headache-three.png"
-          label="Section 11: 悩みの原因イメージ"
-          alt="頭を抱える3人の若手社会人"
-          width={1536}
-          height={1024}
-          rounded
-          className="w-full h-auto max-w-[420px]"
-        />
-      </div>
-
       <div className="mt-6 space-y-4 text-[13.5px] leading-[1.95] text-text-secondary">
         <p>
           厚生労働省の公表データによると、新卒3年以内の離職率は約30%。つまり、
           <strong className="text-brand-primary">3人に1人が早期離職している</strong>
           という事実があります。
         </p>
+
+        {/* 30% ドーナツチャート + 3 人 (2 人元気 / 1 人悩み) のビジュアル */}
+        <div className="flex justify-center py-2">
+          <ImagePlaceholder
+            src="/images/result-headache-three.png"
+            label="Section 11: 悩みの原因イメージ"
+            alt="3人のうち1人が早期離職している様子を示すドーナツチャートと若手社会人3人のイラスト"
+            width={1536}
+            height={1024}
+            className="w-full h-auto max-w-[440px]"
+          />
+        </div>
+
         <p>
           その背景には「将来やりたいことがわからない」「目標がないまま、なんとなく働いている」といった、悩みが隠れていることが大半。
         </p>
