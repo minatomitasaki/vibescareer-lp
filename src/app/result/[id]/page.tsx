@@ -539,15 +539,15 @@ function CausesSection() {
           という事実があります。
         </p>
 
-        {/* 30% ドーナツチャート + 3 人 (2 人元気 / 1 人悩み) のビジュアル */}
+        {/* 30% ドーナツチャート + 頭を抱える 3 人のビジュアル (縦長) */}
         <div className="flex justify-center py-2">
           <ImagePlaceholder
             src="/images/result-headache-three.png"
             label="Section 11: 悩みの原因イメージ"
-            alt="3人のうち1人が早期離職している様子を示すドーナツチャートと若手社会人3人のイラスト"
-            width={1536}
-            height={1024}
-            className="w-full h-auto max-w-[440px]"
+            alt="新卒3年以内の早期離職率30%を示すドーナツチャートと、頭を抱える若手社会人3人のイラスト"
+            width={1024}
+            height={1536}
+            className="w-full h-auto max-w-[320px]"
           />
         </div>
 
@@ -568,23 +568,35 @@ function CausesSection() {
 }
 
 // =============================================================================
-// Section 12: 意気込みコピー — オレンジ全面の宣言ブロック
+// Section 12: 意気込みコピー — 左右にビジネスパーソンを配したイラスト背景 + 中央コピー
 // =============================================================================
 function DeterminationSection() {
   return (
-    <section className="px-6 py-12 bg-gradient-to-br from-brand-primary to-brand-primary-dark text-white text-center">
-      <p className="text-[15px] leading-[1.95] font-bold">
-        我々、
-        <span className="block text-[22px] my-2 tracking-wide">
-          VibesCareer（バイブスキャリア）
-        </span>
-        にすべてお任せください。
-      </p>
-      <p className="mt-4 text-[18px] font-black leading-[1.5]">
-        あなたの転職を
-        <br />
-        <span className="text-accent-yellow">成功させてみせます。</span>
-      </p>
+    <section className="px-4 py-8 bg-white">
+      <div className="relative w-full max-w-[440px] mx-auto">
+        <ImagePlaceholder
+          src="/images/result-determination-illustration.png"
+          label="Section 12: 意気込みコピー背景イラスト"
+          alt="VibesCareerのキャリアアドバイザー2名がガッツポーズで支援を約束するイラスト"
+          width={1536}
+          height={1024}
+          className="w-full h-auto block"
+        />
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-16">
+          <p className="text-[13px] leading-[1.85] font-bold text-text-strong">
+            我々、
+            <span className="block text-[17px] my-1 tracking-wide">
+              VibesCareer（バイブスキャリア）
+            </span>
+            にすべてお任せください。
+          </p>
+          <p className="mt-2 text-[15px] font-black leading-[1.5] text-text-strong">
+            あなたの転職を
+            <br />
+            <span className="text-brand-primary">成功させてみせます。</span>
+          </p>
+        </div>
+      </div>
     </section>
   );
 }
