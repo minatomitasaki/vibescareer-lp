@@ -1826,6 +1826,97 @@ body {
 }
 
 /* =============================================================
+   Section 13: サービス紹介 セクション全体
+   - 上部に巨大ブランド名の横流しマーキー (背景装飾)
+   - 一行見出し + 大型サブテキスト
+   - 薄オレンジ装飾ドット
+   ============================================================= */
+.service-intro-section {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #FFFAF2 0%, #FFFFFF 100%);
+}
+
+/* 上部の巨大ブランド名マーキー (装飾、pointer-events なし) */
+.service-intro-marquee {
+  position: relative;
+  overflow: hidden;
+  margin: -28px -16px 0;
+  padding: 28px 0 8px;
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+}
+.service-intro-marquee-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 48px;
+  animation: service-intro-marquee 24s linear infinite;
+  will-change: transform;
+}
+@keyframes service-intro-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.service-intro-marquee-text {
+  font-family: var(--font-display);
+  font-size: 64px;
+  font-weight: 900;
+  color: color-mix(in srgb, var(--color-brand-primary) 14%, white);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+@media (prefers-reduced-motion: reduce) {
+  .service-intro-marquee-track {
+    animation: none;
+  }
+}
+
+/* 背景装飾ドット (薄オレンジ) */
+.service-intro-decor-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-brand-primary) 22%, white);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 一行見出し (Section 13 専用オーバーライド) */
+.section-eyebrow-block .ja.service-intro-title {
+  font-size: 22px;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+/* 大型サブテキスト (見出しの真下) */
+.service-intro-lead {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 16.5px;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: 0.02em;
+  line-height: 1.7;
+}
+
+/* =============================================================
    Section 13: サービス紹介 POINT カード (POINT.XX 形式)
    ============================================================= */
 .service-point-card {

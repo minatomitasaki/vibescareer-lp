@@ -631,40 +631,75 @@ const SERVICE_POINTS: ServicePoint[] = [
 
 function ServiceIntroSection() {
   return (
-    <section className="px-4 py-10 bg-white">
-      <div className="section-eyebrow-block">
-        <span className="en">OUR SOLUTION</span>
-        <h2 className="ja">
-          VibesCareerは<br />
-          <span className="marker">どんなサービス？</span>
-        </h2>
-        <span className="sub">
-          20代・第二新卒のための<br />
-          パーソナル型 転職支援サービスです。
-        </span>
+    <section className="service-intro-section relative px-4 py-10">
+      {/* 上部の巨大ブランド名マーキー (背景装飾) */}
+      <div className="service-intro-marquee" aria-hidden>
+        <div className="service-intro-marquee-track">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <span key={i} className="service-intro-marquee-text">
+              VibesCareer
+            </span>
+          ))}
+        </div>
       </div>
 
-      <p className="mt-6 text-[13.5px] leading-[1.95] text-text-secondary">
-        一般的な転職支援は、最初から転職前提で求人の大量紹介やスピーディーな決断を求められがち。
-        VibesCareerでは <strong>「本当に自分に合う仕事は何か」</strong> を見極めることを最優先に、
-        まずは <strong>自己分析からスタート</strong> します。
-      </p>
+      {/* 背景装飾ドット (絶対配置) */}
+      <span
+        className="service-intro-decor-dot"
+        style={{ top: "18%", left: "6%", width: 14, height: 14 }}
+        aria-hidden
+      />
+      <span
+        className="service-intro-decor-dot"
+        style={{ top: "38%", right: "8%", width: 8, height: 8, opacity: 0.7 }}
+        aria-hidden
+      />
+      <span
+        className="service-intro-decor-dot"
+        style={{ top: "62%", left: "10%", width: 10, height: 10, opacity: 0.8 }}
+        aria-hidden
+      />
+      <span
+        className="service-intro-decor-dot"
+        style={{ top: "82%", right: "12%", width: 12, height: 12 }}
+        aria-hidden
+      />
 
-      <ul className="mt-7 space-y-4">
-        {SERVICE_POINTS.map((p, i) => (
-          <li key={i} className="service-point-card">
-            <div className="service-point-label">
-              POINT.{String(i + 1).padStart(2, "0")}
-            </div>
-            <h3 className="service-point-title">{p.title}</h3>
-            <p className="service-point-body">{p.body}</p>
-          </li>
-        ))}
-      </ul>
+      <div className="relative">
+        <div className="section-eyebrow-block">
+          <span className="en">ABOUT US</span>
+          <h2 className="ja service-intro-title">
+            VibesCareer<span className="marker">とは？</span>
+          </h2>
+        </div>
 
-      <p className="mt-6 text-center text-[11px] text-text-muted">
-        ※サービスはすべて無料で受けられます
-      </p>
+        <p className="service-intro-lead">
+          20代・第二新卒のための<br />
+          パーソナル型 転職支援サービスです。
+        </p>
+
+        <p className="mt-6 text-[13.5px] leading-[1.95] text-text-secondary">
+          一般的な転職支援は、最初から転職前提で求人の大量紹介やスピーディーな決断を求められがち。
+          VibesCareerでは <strong>「本当に自分に合う仕事は何か」</strong> を見極めることを最優先に、
+          まずは <strong>自己分析からスタート</strong> します。
+        </p>
+
+        <ul className="mt-7 space-y-4">
+          {SERVICE_POINTS.map((p, i) => (
+            <li key={i} className="service-point-card">
+              <div className="service-point-label">
+                POINT.{String(i + 1).padStart(2, "0")}
+              </div>
+              <h3 className="service-point-title">{p.title}</h3>
+              <p className="service-point-body">{p.body}</p>
+            </li>
+          ))}
+        </ul>
+
+        <p className="mt-6 text-center text-[11px] text-text-muted">
+          ※サービスはすべて無料で受けられます
+        </p>
+      </div>
     </section>
   );
 }
