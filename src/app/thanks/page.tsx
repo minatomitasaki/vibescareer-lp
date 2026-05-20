@@ -5,6 +5,7 @@
 //
 // LINE 公式アカウントの登録 URL は本番値を取得し次第差し替える。
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Logo } from "@/components/Logo";
 
 const LINE_REGISTER_URL = "https://line.me/R/ti/p/@vibescareer"; // TODO: 本番 URL に差し替え
@@ -15,6 +16,31 @@ export const metadata: Metadata = {
     "初回カウンセリングのご予約ありがとうございます。VibesRadar の受検 URL は登録メールアドレス宛にお送りします。",
 };
 
+const STEPS = [
+  {
+    label: "STEP.01",
+    title: "VibesRadar を受検",
+    desc: "ご登録メールアドレスに受検URLをお送りします。所要時間は約15分です。",
+    icon: "/images/thanks-icon-inbox.svg",
+    iconAlt: "受検URLを受け取るアイコン",
+  },
+  {
+    label: "STEP.02",
+    title: "初回カウンセリング",
+    desc: "VibesRadar の診断結果をもとに、専属アドバイザーが一緒に振り返ります。",
+    icon: "/images/thanks-icon-chat.svg",
+    iconAlt: "カウンセリングのアイコン",
+    current: true,
+  },
+  {
+    label: "STEP.03",
+    title: "自己分析とキャリア設計",
+    desc: "強みと志向を整理し、あなたに合った進路をアドバイザーと描いていきます。",
+    icon: "/images/thanks-icon-rocket.svg",
+    iconAlt: "キャリア設計のアイコン",
+  },
+] as const;
+
 export default function ThanksPage() {
   return (
     <main className="lp-container bg-white">
@@ -24,80 +50,141 @@ export default function ThanksPage() {
         <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-primary/60 to-transparent" />
       </header>
 
-      {/* 完了見出し */}
-      <section className="px-4 pt-10 pb-6 text-center">
-        <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-brand-primary/10 mb-4">
-          <span className="text-brand-primary text-[28px]">✓</span>
+      {/* 完了見出し: ヒーロー化 */}
+      <section className="thanks-hero px-4 pt-12 pb-10 text-center">
+        {/* 背景ドット装飾 */}
+        <span
+          className="service-intro-decor-dot"
+          style={{ width: 60, height: 60, top: 24, left: -16, opacity: 0.55 }}
+          aria-hidden
+        />
+        <span
+          className="service-intro-decor-dot"
+          style={{ width: 28, height: 28, top: 70, right: 20, opacity: 0.7 }}
+          aria-hidden
+        />
+        <span
+          className="service-intro-decor-dot"
+          style={{ width: 18, height: 18, bottom: 30, left: 30, opacity: 0.7 }}
+          aria-hidden
+        />
+        <span
+          className="service-intro-decor-dot"
+          style={{ width: 40, height: 40, bottom: 10, right: -10, opacity: 0.5 }}
+          aria-hidden
+        />
+
+        {/* 紙吹雪 */}
+        <span
+          className="thanks-confetti text-brand-primary"
+          style={{ top: 30, left: "18%", fontSize: 14, transform: "rotate(-15deg)" }}
+          aria-hidden
+        >
+          ★
+        </span>
+        <span
+          className="thanks-confetti"
+          style={{ top: 18, right: "22%", fontSize: 10, color: "#ffb380", transform: "rotate(20deg)" }}
+          aria-hidden
+        >
+          ●
+        </span>
+        <span
+          className="thanks-confetti text-brand-primary"
+          style={{ top: 60, right: "8%", fontSize: 12, transform: "rotate(12deg)" }}
+          aria-hidden
+        >
+          ✦
+        </span>
+        <span
+          className="thanks-confetti"
+          style={{ bottom: 50, left: "10%", fontSize: 11, color: "#ffb380", transform: "rotate(-22deg)" }}
+          aria-hidden
+        >
+          ★
+        </span>
+
+        {/* チェックマーク (アニメ付き) */}
+        <div className="relative z-10 thanks-check-circle mb-6">
+          <svg viewBox="0 0 52 52" aria-hidden="true">
+            <path d="M14 27 l9 9 l16 -18" />
+          </svg>
         </div>
-        <h1 className="text-[22px] font-black text-text-primary leading-[1.5]">
-          ご予約ありがとうございます
-        </h1>
-        <p className="mt-4 text-[13.5px] leading-[1.95] text-text-secondary">
-          このあとすぐに、ご登録いただいた
-          <br />
-          メールアドレス宛に
-          <br />
-          <strong className="text-brand-primary">
-            VibesRadar の受検 URL
-          </strong>
-          をお送りします。
-        </p>
-        <p className="mt-3 text-[13px] leading-[1.9] text-text-secondary">
-          お手数ですが初回カウンセリングまでに
-          <br />
-          受検をお済ませください。
-        </p>
+
+        {/* eyebrow + 見出し + サブ */}
+        <div className="section-eyebrow-block relative z-10">
+          <span className="en">THANK YOU</span>
+          <h1 className="ja">
+            ご予約<span className="marker">ありがとうございます</span>
+          </h1>
+          <span className="sub">
+            初回カウンセリングのご予約を受け付けました
+          </span>
+        </div>
+
+        {/* 補足: 受検URL案内 */}
+        <div className="relative z-10 mt-6 mx-auto max-w-[340px] bg-white/80 backdrop-blur rounded-2xl border border-brand-primary/20 px-5 py-4 shadow-sm">
+          <p className="text-[13.5px] leading-[1.85] text-text-secondary">
+            このあとすぐに、ご登録の
+            <br />
+            メールアドレス宛に
+            <br />
+            <strong className="text-brand-primary">
+              VibesRadar の受検 URL
+            </strong>
+            をお送りします。
+          </p>
+          <p className="mt-3 text-[12px] leading-[1.85] text-text-muted">
+            お手数ですが初回カウンセリングまでに
+            <br />
+            受検をお済ませください。
+          </p>
+        </div>
       </section>
 
-      {/* 今後の流れ */}
-      <section className="px-4 pb-10">
-        <div className="bg-bg-form rounded-2xl border border-brand-primary/30 p-5">
-          <h2 className="text-center text-[15px] font-black text-text-primary mb-4">
-            ▼ 今後の流れ
+      {/* 今後の流れ: ロードマップカード */}
+      <section className="px-4 pt-2 pb-10">
+        <div className="section-eyebrow-block mb-5">
+          <span className="en">ROADMAP</span>
+          <h2 className="ja text-[20px]">
+            今後の<span className="marker">流れ</span>
           </h2>
+        </div>
 
-          <ol className="space-y-4">
-            {[
-              {
-                no: 1,
-                title: "VibesRadar を受検",
-                desc: "※ ご登録メールアドレスにお送りします",
-              },
-              {
-                no: 2,
-                title: "初回カウンセリングにて、\nVibesRadar の診断結果を発表",
-              },
-              {
-                no: 3,
-                title:
-                  "キャリアアドバイザーと一緒に\n自己分析とキャリアを設計",
-              },
-            ].map((step, idx) => (
-              <li key={step.no}>
+        <ol className="space-y-0">
+          {STEPS.map((step, idx) => (
+            <li key={step.label}>
+              <div
+                className={`thanks-step-card ${
+                  "current" in step && step.current ? "is-current" : ""
+                }`}
+              >
                 <div className="flex gap-3 items-start">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-brand-primary text-white text-[14px] font-black flex items-center justify-center">
-                    {step.no}
+                  <span className="thanks-step-icon">
+                    <Image
+                      src={step.icon}
+                      alt={step.iconAlt}
+                      width={30}
+                      height={30}
+                    />
                   </span>
-                  <div className="flex-1">
-                    <p className="text-[13.5px] font-bold text-text-primary leading-[1.55] whitespace-pre-line">
+                  <div className="flex-1 min-w-0">
+                    <span className="thanks-step-label">{step.label}</span>
+                    <p className="text-[14.5px] font-black text-text-primary leading-[1.5]">
                       {step.title}
                     </p>
-                    {step.desc && (
-                      <p className="text-[11px] text-text-muted mt-1">
-                        {step.desc}
-                      </p>
-                    )}
+                    <p className="text-[12px] text-text-secondary leading-[1.75] mt-1.5">
+                      {step.desc}
+                    </p>
                   </div>
                 </div>
-                {idx < 2 && (
-                  <div className="flex justify-center my-2">
-                    <span className="text-brand-primary text-[18px]">↓</span>
-                  </div>
-                )}
-              </li>
-            ))}
-          </ol>
-        </div>
+              </div>
+              {idx < STEPS.length - 1 && (
+                <div className="thanks-step-connector" aria-hidden />
+              )}
+            </li>
+          ))}
+        </ol>
       </section>
 
       {/* LINE 登録 CTA */}
@@ -110,7 +197,7 @@ export default function ThanksPage() {
             <p className="text-[13.5px] leading-[1.85] text-text-secondary">
               VibesCareer 代表・渡邉との
               <br />
-              <strong className="text-text-primary">"直通 LINE"</strong> を公開しています。
+              <strong className="text-text-primary">&quot;直通 LINE&quot;</strong> を公開しています。
               <br />
               LINE 登録いただいた方より<strong>優先的に対応</strong>しますので、
               <br />

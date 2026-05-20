@@ -1834,7 +1834,11 @@ body {
 .service-intro-section {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, #FFFAF2 0%, #FFFFFF 100%);
+  background-color: #FFFAF2;
+  background-image: url('/images/result-service-bg.png');
+  background-size: 100% auto;
+  background-position: top center;
+  background-repeat: no-repeat;
 }
 
 /* 上部の巨大ブランド名マーキー (装飾、pointer-events なし) */
@@ -2057,5 +2061,150 @@ body {
    ============================================================ */
 .diagnosis-bg {
   background-color: #ffffff;
+}
+
+/* ============================================================
+   /thanks ページ専用スタイル
+   ============================================================ */
+
+/* ヒーロー: warm cream グラデ背景 + 紙吹雪/ドット装飾を絶対配置で散らす */
+.thanks-hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #fff5e6 0%, #ffffff 100%);
+}
+
+/* チェックマーク円: 大型 + 薄オレンジ塗り + オレンジリング + 登場アニメ */
+.thanks-check-circle {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-brand-primary) 14%, white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-brand-primary) 8%, white);
+  animation: thanks-check-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.thanks-check-circle svg {
+  width: 44px;
+  height: 44px;
+  stroke: var(--color-brand-primary);
+  stroke-width: 3;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  animation: thanks-check-draw 0.6s 0.35s ease-out forwards;
+}
+
+@keyframes thanks-check-pop {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes thanks-check-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* 紙吹雪 (小さな★や●): 絶対配置でランダム散布 */
+.thanks-confetti {
+  position: absolute;
+  pointer-events: none;
+  font-weight: 900;
+  opacity: 0.65;
+  user-select: none;
+}
+
+/* STEP カード — 結果LPの service-point-card と同じトンマナ */
+.thanks-step-card {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--color-brand-primary) 18%, white);
+  box-shadow: 0 4px 14px -8px rgba(255, 107, 0, 0.18);
+  padding: 18px 16px 16px;
+}
+.thanks-step-card .thanks-step-label {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--color-brand-primary);
+  border-bottom: 2px solid var(--color-brand-primary);
+  padding: 0 2px 2px;
+  margin-bottom: 10px;
+}
+.thanks-step-card.is-current {
+  background: color-mix(in srgb, var(--color-brand-primary) 6%, white);
+  border-color: var(--color-brand-primary);
+  box-shadow: 0 6px 18px -8px rgba(255, 107, 0, 0.35);
+}
+.thanks-step-card.is-current::before {
+  content: "NOW";
+  position: absolute;
+  top: -10px;
+  right: 14px;
+  background: var(--color-brand-primary);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  padding: 3px 9px;
+  border-radius: 999px;
+  box-shadow: 0 3px 8px -3px rgba(255, 107, 0, 0.5);
+}
+.thanks-step-icon {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--color-brand-primary) 10%, white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.thanks-step-icon img {
+  width: 30px;
+  height: 30px;
+}
+
+/* カード間: 点線の縦バー + 下向き三角 */
+.thanks-step-connector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
+  position: relative;
+}
+.thanks-step-connector::before {
+  content: "";
+  width: 0;
+  height: 100%;
+  border-left: 2px dashed color-mix(in srgb, var(--color-brand-primary) 55%, white);
+}
+.thanks-step-connector::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 7px solid color-mix(in srgb, var(--color-brand-primary) 70%, white);
 }
 

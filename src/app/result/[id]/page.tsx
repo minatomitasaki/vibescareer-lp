@@ -643,28 +643,6 @@ function ServiceIntroSection() {
         </div>
       </div>
 
-      {/* 背景装飾ドット (絶対配置) */}
-      <span
-        className="service-intro-decor-dot"
-        style={{ top: "18%", left: "6%", width: 14, height: 14 }}
-        aria-hidden
-      />
-      <span
-        className="service-intro-decor-dot"
-        style={{ top: "38%", right: "8%", width: 8, height: 8, opacity: 0.7 }}
-        aria-hidden
-      />
-      <span
-        className="service-intro-decor-dot"
-        style={{ top: "62%", left: "10%", width: 10, height: 10, opacity: 0.8 }}
-        aria-hidden
-      />
-      <span
-        className="service-intro-decor-dot"
-        style={{ top: "82%", right: "12%", width: 12, height: 12 }}
-        aria-hidden
-      />
-
       <div className="relative">
         <div className="section-eyebrow-block">
           <span className="en">ABOUT US</span>
