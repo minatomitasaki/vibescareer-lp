@@ -79,7 +79,7 @@ export default async function ResultPage({
       {/* === 固定ブロック後半 (Section 10-18) === */}
       <ConcernsSection />
       <CausesSection />
-      <DeterminationSection />
+      <BridgeSection />
       <ServiceIntroSection />
       <RoadmapSection />
       <RadarBonusSection variant="tertiary" />
@@ -568,21 +568,56 @@ function CausesSection() {
 }
 
 // =============================================================================
-// Section 12: 意気込みコピー — 横長 1 枚画像 (左に吹き出し+ヒーロー文字、右に女性)
+// Section 12: ブリッジ — 悩みの原因 → サービス紹介 を繋ぐオレンジバンド + 波形セパレーター
 // =============================================================================
-function DeterminationSection() {
+function BridgeSection() {
   return (
-    <section className="bg-white">
-      <div className="w-full max-w-[440px] mx-auto">
-        <ImagePlaceholder
-          src="/images/result-determination-b.png"
-          label="Section 12: 意気込みコピー (パターンB)"
-          alt="我々、VibesCareer（バイブスキャリア）にすべてお任せください。あなたの転職を成功させてみせます。"
-          width={1536}
-          height={1024}
-          className="w-full h-auto block"
+    <section className="relative" aria-label="サービス紹介への橋渡し">
+      {/* 上端: 白 → オレンジ への波形 (オレンジが上向きに食い込む) */}
+      <svg
+        viewBox="0 0 1440 80"
+        preserveAspectRatio="none"
+        className="block w-full h-6 -mb-px"
+        aria-hidden
+      >
+        <path
+          d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z"
+          fill="#FF6B00"
         />
+      </svg>
+
+      {/* オレンジバンド: ブリッジコピー + 下向き矢印 */}
+      <div className="bg-gradient-to-br from-brand-primary to-brand-primary-dark text-white text-center px-6 py-7">
+        <p className="text-[15px] font-bold leading-[1.7] tracking-wide">
+          そんなあなたに、
+          <br />
+          私たちが伝えたいことがあります。
+        </p>
+        <div className="mt-3 flex justify-center" aria-hidden>
+          <svg width="22" height="22" viewBox="0 0 20 20" fill="none">
+            <path
+              d="M4 7l6 6 6-6"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
       </div>
+
+      {/* 下端: オレンジ → ServiceIntroSection の背景色 (#FFFAF2) への波形 */}
+      <svg
+        viewBox="0 0 1440 80"
+        preserveAspectRatio="none"
+        className="block w-full h-6 -mt-px"
+        aria-hidden
+      >
+        <path
+          d="M0,40 C240,0 480,80 720,40 C960,0 1200,80 1440,40 L1440,80 L0,80 Z"
+          fill="#FFFAF2"
+        />
+      </svg>
     </section>
   );
 }

@@ -23,6 +23,7 @@ const STEPS = [
     desc: "ご登録メールアドレスに受検URLをお送りします。所要時間は約15分です。",
     icon: "/images/thanks-icon-inbox.svg",
     iconAlt: "受検URLを受け取るアイコン",
+    current: true,
   },
   {
     label: "STEP.02",
@@ -30,7 +31,6 @@ const STEPS = [
     desc: "VibesRadar の診断結果をもとに、専属アドバイザーが一緒に振り返ります。",
     icon: "/images/thanks-icon-chat.svg",
     iconAlt: "カウンセリングのアイコン",
-    current: true,
   },
   {
     label: "STEP.03",
