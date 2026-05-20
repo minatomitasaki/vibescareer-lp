@@ -392,19 +392,44 @@ function PartnersSection() {
         <span className="sub">あなたに適した職場が、必ず見つかる</span>
       </div>
 
-      <ul className="partners-logos-grid">
-        {PARTNER_LOGOS.map((logo) => (
-          <li key={logo.name} className="partners-logo-cell">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={logo.file}
-              alt={`${logo.name} ロゴ`}
-              className="partners-logo-img"
-              loading="lazy"
-            />
-          </li>
-        ))}
-      </ul>
+      {/* 上下 2 行で逆方向に流れる無限マーキー。
+          配列を 2 回展開してシームレスループ (translateX -50% で 1 周期戻る)。 */}
+      <div className="partners-marquee-wrap">
+        <div className="partners-marquee-row">
+          <div className="partners-marquee-track partners-marquee-left">
+            {[...PARTNER_LOGOS.slice(0, 5), ...PARTNER_LOGOS.slice(0, 5)].map(
+              (logo, i) => (
+                <div key={`r1-${i}`} className="partners-marquee-cell">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={logo.file}
+                    alt={`${logo.name} ロゴ`}
+                    className="partners-marquee-img"
+                    loading="lazy"
+                  />
+                </div>
+              ),
+            )}
+          </div>
+        </div>
+        <div className="partners-marquee-row">
+          <div className="partners-marquee-track partners-marquee-right">
+            {[...PARTNER_LOGOS.slice(5), ...PARTNER_LOGOS.slice(5)].map(
+              (logo, i) => (
+                <div key={`r2-${i}`} className="partners-marquee-cell">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={logo.file}
+                    alt={`${logo.name} ロゴ`}
+                    className="partners-marquee-img"
+                    loading="lazy"
+                  />
+                </div>
+              ),
+            )}
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

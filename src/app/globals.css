@@ -1845,27 +1845,79 @@ body {
   line-height: 1;
 }
 
-/* ロゴグリッド: 白背景にロゴを直置きするシンプルレイアウト */
-.partners-logos-grid {
-  margin-top: 24px;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 24px;
-  row-gap: 28px;
-  padding: 0 8px;
+/* ロゴ無限マーキー (上下 2 行、左右逆方向に流す)
+   - CSS の transform アニメーションのみで実装 (JS 不要、GPU 描画で軽量)
+   - 配列を 2 回展開した上で translateX(-50%) で 1 周期戻ることでシームレスループ
+   - 左右端は mask-image でフェードアウト */
+.partners-marquee-wrap {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* セクション余白を超えて画面端まで流れるように margin で逃がす */
+  margin-left: -16px;
+  margin-right: -16px;
 }
-.partners-logo-cell {
+.partners-marquee-row {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+}
+.partners-marquee-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 36px;
+  padding: 4px 0;
+  will-change: transform;
+}
+.partners-marquee-left {
+  animation: partners-marquee-left 26s linear infinite;
+}
+.partners-marquee-right {
+  animation: partners-marquee-right 30s linear infinite;
+}
+@keyframes partners-marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes partners-marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.partners-marquee-cell {
+  flex: 0 0 auto;
+  width: 120px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 56px;
 }
-.partners-logo-img {
+.partners-marquee-img {
   max-width: 100%;
   max-height: 100%;
   width: auto;
   height: auto;
   object-fit: contain;
+}
+/* 動きを苦手とするユーザー向け: prefers-reduced-motion でアニメ停止 */
+@media (prefers-reduced-motion: reduce) {
+  .partners-marquee-left,
+  .partners-marquee-right {
+    animation: none;
+  }
 }
 
 /* ============================================================
