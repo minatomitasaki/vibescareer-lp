@@ -1767,22 +1767,24 @@ export const IMAGES = [
     ].join("\n"),
   },
 
-  // 三浦 美咲 (ORGANIC GROUP 事業責任者) - フォトリアル portrait
+  // 三浦 美咲 (ORGANIC GROUP 事業責任者) - フォトリアル environmental portrait
+  // 他 3 名 (渡邉/松下/古澤) の本人実写写真に揃えるため、studio 証明写真風から
+  // 「自然光のオフィス環境ヘッドショット」 に書き換え。
   {
     file: "advisor-miura.png",
     size: "1024x1024",
     quality: "high",
     prompt: [
-      "PHOTOREALISTIC professional corporate headshot portrait, square 1024x1024.",
-      "Subject: a Japanese woman in her late 20s, a refined and intelligent business unit director.",
-      "- Smooth shoulder-length dark brown hair with a soft natural wave, subtle minimal makeup, gentle confident smile.",
-      "- Wearing a soft cream blouse under a beige tailored blazer. Elegant and polished professional look.",
-      "- Head-and-shoulders framing, perfectly centered for circular cropping.",
-      "- Eyes looking directly at the camera, warm but composed.",
-      "- Lighting: soft studio key light from front, gentle fill, healthy natural skin tones.",
-      "- Background: soft out-of-focus neutral cream / light beige tone with a very subtle warm-orange halo.",
-      "- Camera feel: 85mm portrait lens, shallow depth of field, sharp focus on the eyes.",
-      "STRICT: No text, no watermark, no logo. One person only. Clean photographic portrait, not illustration.",
+      "PHOTOREALISTIC editorial-style environmental headshot, square 1024x1024. Looks like a real corporate photographer captured this — natural, candid, magazine-quality. NOT a studio passport-style photo.",
+      "Subject: a Japanese woman in her late 20s (26 years old), a refined and intelligent business unit director at an organic / wellness company.",
+      "- Smooth shoulder-length dark brown hair with a soft natural wave, subtle minimal makeup, gentle confident smile (slightly natural, not posed).",
+      "- Wearing a soft cream blouse under a beige tailored blazer. Polished but approachable professional look.",
+      "- Head-and-shoulders framing, perfectly centered for circular cropping. Slightly off-axis posture (3/4 shoulder turn) so it doesn't feel like a passport photo.",
+      "- Eyes looking directly at the camera, warm, calm, intelligent.",
+      "- Lighting: NATURAL daylight from a large office window on the side, soft directional shadows, healthy realistic Japanese skin tones, no studio key flash. Same warm natural daylight feel as the other three advisor photos (Watanabe / Matsushita / Furusawa).",
+      "- Background: a softly out-of-focus modern Tokyo office interior — whitewashed wall or pale neutral office area with a hint of warm wooden desk / soft greenery / window light. Background tone: neutral cream / soft warm grey, NEVER a flat coloured halo, NEVER pink, NEVER orange gradient, NEVER a studio backdrop.",
+      "- Camera/lens: 50mm prime lens equivalent, shallow depth of field, sharp focus on the eyes, gentle background bokeh, very slight film-like grain for editorial realism.",
+      "STRICT: No text, no watermark, no logo. One person only. Indistinguishable from a real photograph. NO illustration, NO 3D render, NO over-airbrushed skin, NO obvious AI artifacts.",
     ].join("\n"),
   },
 
