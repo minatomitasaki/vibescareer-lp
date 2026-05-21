@@ -56,6 +56,15 @@ body {
   max-width: 480px;
   margin-left: auto;
   margin-right: auto;
+  /* マーキーや負マージン要素がコンテナ外にはみ出して
+     iPhone Safari 等で水平スクロールが発生するのを防ぐ */
+  overflow-x: hidden;
+}
+
+/* body レベルでも水平スクロールを禁止 (iOS Safari の念のため) */
+html,
+body {
+  overflow-x: hidden;
 }
 
 /* CTAボタン共通スタイル */
