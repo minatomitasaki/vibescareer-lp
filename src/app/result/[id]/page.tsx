@@ -787,17 +787,16 @@ function FaqSection() {
 function LastMessageSection() {
   return (
     <section className="last-message-section px-4 py-12">
-      {/* 上部セリフラベル: ─── Letter ─── */}
+      {/* 上部ラベル: ─── LAST MESSAGE ─── */}
       <div className="last-message-letter-label" aria-hidden>
         <span className="label-rule" />
-        <span className="label-text">Letter</span>
+        <span className="label-text">LAST MESSAGE</span>
         <span className="label-rule" />
       </div>
 
       {/* 内側カード: 全コンテンツを白カードに収める */}
       <div className="last-message-card">
       <div className="section-eyebrow-block">
-        <span className="en">LAST MESSAGE</span>
         <h2 className="ja">
           転職を迷っている<br />
           <span className="marker">あなたへ。</span>
@@ -816,7 +815,7 @@ function LastMessageSection() {
         />
       </div>
 
-      <div className="last-message-text-paper mt-6 space-y-4 text-[15.5px] leading-[1.95] text-text-secondary">
+      <div className="mt-6 space-y-4 text-[15.5px] leading-[1.95] text-text-secondary">
         <p>
           最後までページをご覧いただき、ありがとうございます。
           <br />
