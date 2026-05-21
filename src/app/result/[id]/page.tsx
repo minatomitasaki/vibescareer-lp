@@ -15,6 +15,7 @@ import { Logo } from "@/components/Logo";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { EntryForm } from "@/components/EntryForm";
 import { OtherJobsList } from "@/components/OtherJobsList";
+import { ConfettiBurst } from "@/components/ConfettiBurst";
 import { RoadmapScrollProgress } from "@/components/RoadmapScrollProgress";
 import {
   RESULT_DATA,
@@ -61,6 +62,8 @@ export default async function ResultPage({
 
   return (
     <main className="lp-container bg-white">
+      {/* ページ遷移直後の紙吹雪エフェクト (結果発表の祝祭感) */}
+      <ConfettiBurst />
       {/* ヘッダー: 入口LPと統一 */}
       <header className="relative px-4 py-3 flex items-center justify-start bg-white">
         <Logo width={160} height={44} priority />
