@@ -80,7 +80,6 @@ export default async function ResultPage({
       <ConcernsSection />
       <CausesSection />
       <ServiceIntroSection />
-      <RoadmapSection />
       <RadarBonusSection variant="tertiary" />
       <FaqSection />
       <LastMessageSection />
@@ -603,6 +602,37 @@ function ServiceIntroSection() {
           まずは <strong>自己分析からスタート</strong> します。
         </p>
 
+        {/* ロードマップ見出し (同セクション内に統合) */}
+        <div className="section-eyebrow-block mt-12">
+          <span className="en">ROADMAP</span>
+          <h2 className="ja">
+            【<span className="marker">転職成功までのロードマップ</span>】
+          </h2>
+        </div>
+
+        {/* STEP カード (POINT カード風スタイル) */}
+        <ol className="mt-7 space-y-4">
+          {ROADMAP_STEPS.map((s) => (
+            <li key={s.step} className="service-point-card">
+              <div className="service-point-label">
+                STEP {String(s.step).padStart(2, "0")}
+              </div>
+              <h3 className="service-point-title">{s.title}</h3>
+              <p className="service-point-body whitespace-pre-line">{s.body}</p>
+              {s.callout && (
+                <div className="mt-4 inline-flex items-center bg-brand-primary text-white rounded-full pl-3 pr-4 py-1.5 shadow-md">
+                  <span className="text-[10.5px] mr-1">転職成功の</span>
+                  <span className="text-[24px] font-black mx-0.5 leading-none">
+                    {s.callout.ratio}
+                  </span>
+                  <span className="text-[13px] font-black mr-1">割</span>
+                  <span className="text-[10.5px]">{s.callout.text}</span>
+                </div>
+              )}
+            </li>
+          ))}
+        </ol>
+
         <p className="mt-6 text-center text-[11px] text-text-muted">
           ※サービスはすべて無料で受けられます
         </p>
@@ -612,7 +642,8 @@ function ServiceIntroSection() {
 }
 
 // =============================================================================
-// Section 14: 転職成功までのロードマップ (3 STEP)
+// Section 14: 転職成功までのロードマップ (3 STEP) — Section 13 に統合済み
+// ROADMAP_STEPS データは ServiceIntroSection が参照する
 // =============================================================================
 const ROADMAP_STEPS = [
   {
@@ -637,48 +668,6 @@ const ROADMAP_STEPS = [
     callout: null as null | { ratio: string; text: string },
   },
 ];
-
-function RoadmapSection() {
-  return (
-    <section className="px-4 py-10 bg-white">
-      <div className="section-eyebrow-block">
-        <span className="en">ROADMAP</span>
-        <h2 className="ja">
-          【<span className="marker">転職成功までのロードマップ</span>】
-        </h2>
-      </div>
-
-      <ol className="mt-8 space-y-6">
-        {ROADMAP_STEPS.map((s) => (
-          <li
-            key={s.step}
-            className="relative bg-bg-subtle rounded-2xl border-2 border-brand-primary/15 p-5 pt-7 shadow-sm"
-          >
-            <span className="absolute -top-3 left-4 bg-brand-primary text-white text-[12px] font-black px-3 py-1 rounded-full shadow-md tracking-wider">
-              STEP {s.step}
-            </span>
-            <h3 className="text-[14.5px] font-black text-text-primary leading-[1.55] mb-3">
-              {s.title}
-            </h3>
-            <p className="text-[12.5px] leading-[1.85] text-text-secondary whitespace-pre-line">
-              {s.body}
-            </p>
-            {s.callout && (
-              <div className="mt-4 inline-flex items-center bg-brand-primary text-white rounded-full pl-3 pr-4 py-1.5 shadow-md">
-                <span className="text-[10.5px] mr-1">転職成功の</span>
-                <span className="text-[24px] font-black mx-0.5 leading-none">
-                  {s.callout.ratio}
-                </span>
-                <span className="text-[13px] font-black mr-1">割</span>
-                <span className="text-[10.5px]">{s.callout.text}</span>
-              </div>
-            )}
-          </li>
-        ))}
-      </ol>
-    </section>
-  );
-}
 
 // =============================================================================
 // Section 16: FAQ — 7 問
