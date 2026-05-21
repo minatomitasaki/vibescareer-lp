@@ -25,24 +25,43 @@ export function RoadmapScrollProgress({ steps, children }: Props) {
 
   useEffect(() => {
     if (refs.current.length === 0) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          const idx = refs.current.findIndex((el) => el === entry.target);
-          if (idx >= 0) setActiveStep(steps[idx].step);
-        }
-      },
-      {
-        rootMargin: "-45% 0px -45% 0px",
-        threshold: 0,
-      },
-    );
 
-    refs.current.forEach((el) => {
-      if (el) observer.observe(el);
-    });
-    return () => observer.disconnect();
+    let rafId = 0;
+    const update = () => {
+      const center = window.innerHeight * 0.45;
+      let closestIdx = 0;
+      let closestDist = Infinity;
+      refs.current.forEach((el, i) => {
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        // カードの可視範囲が画面上部に来る前は最初の STEP に固定
+        if (rect.bottom < 0) return;
+        const cardTop = rect.top;
+        const dist = Math.abs(cardTop - center);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closestIdx = i;
+        }
+      });
+      setActiveStep(steps[closestIdx]?.step ?? steps[0]?.step ?? 1);
+    };
+
+    const onScroll = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(() => {
+        rafId = 0;
+        update();
+      });
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (rafId) window.cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, [steps]);
 
   const first = steps[0]?.step ?? 1;
