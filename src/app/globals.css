@@ -1143,6 +1143,27 @@ body {
 }
 
 /* =============================================================
+   入口LP CTA スタック — 「いますぐ無料で」ピル + メインCTAを
+   ひとつの塊として scale させる wrapper。
+   ピル下の三角がボタンに連結しているため、個別アニメだとスケール中心の
+   ズレで接続部に隙間が出る。wrapper 一括で動かして連動させる。
+   ============================================================= */
+.cta-radar-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  animation: cta-radar-pulse 1.4s ease-in-out infinite;
+  will-change: transform;
+  transform-origin: center center;
+}
+/* wrapper 内のメインCTAは wrapper 側でスケールするので、ボタン本体の
+   pulse アニメは無効化する (::after の波動リングは別アニメ名なので継続) */
+.cta-radar-stack .btn-cta-radar-orange {
+  animation: none;
+}
+
+/* =============================================================
    入口LP 用 CTA ボタン — btn-cta-radar と同じ構造でカラーだけオレンジ
    ============================================================= */
 .btn-cta-radar-orange {

@@ -133,22 +133,25 @@ function CtaButton({
           <span className="slash">／</span>
         </div>
       )}
-      {/* 上の「いますぐ無料で」ピル (ブランドオレンジ) */}
-      <div className="relative bg-white border-2 border-brand-primary rounded-full px-5 py-1.5 text-[12px] font-black text-brand-primary mb-[-14px] z-10 shadow-md">
-        いますぐ無料で
-        {/* 下向き三角の小さな矢印 (ピルからボタンへ繋がる印象) */}
-        <span className="absolute -bottom-[7px] left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-r-2 border-b-2 border-brand-primary rotate-45" />
+      {/* ピル + メインCTA をひと塊として連動アニメさせる (cta-radar-stack) */}
+      <div className="cta-radar-stack max-w-[300px]">
+        {/* 上の「いますぐ無料で」ピル (ブランドオレンジ) */}
+        <div className="relative bg-white border-2 border-brand-primary rounded-full px-5 py-1.5 text-[12px] font-black text-brand-primary mb-[-14px] z-10 shadow-md">
+          いますぐ無料で
+          {/* 下向き三角の小さな矢印 (ピルからボタンへ繋がる印象) */}
+          <span className="absolute -bottom-[7px] left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-r-2 border-b-2 border-brand-primary rotate-45" />
+        </div>
+        {/* メインCTAボタン (btn-cta-radar と同構造、色はブランドオレンジ) */}
+        <Link
+          href="/diagnosis"
+          className="btn-cta-radar-orange group w-full text-center"
+        >
+          <span className="relative z-10">診断START！</span>
+          <span className="relative z-10 inline-block transition-transform group-hover:translate-x-1">
+            ▶
+          </span>
+        </Link>
       </div>
-      {/* メインCTAボタン (btn-cta-radar と同構造、色はブランドオレンジ) */}
-      <Link
-        href="/diagnosis"
-        className="btn-cta-radar-orange group w-full max-w-[300px] text-center"
-      >
-        <span className="relative z-10">診断START！</span>
-        <span className="relative z-10 inline-block transition-transform group-hover:translate-x-1">
-          ▶
-        </span>
-      </Link>
       {/* 補助テキスト（丸い立体オレンジバッジ + アイコン + ダークテキスト） */}
       <div className="flex items-center justify-center gap-x-3.5 gap-y-2 mt-5 flex-wrap px-2">
         <CtaFeaturePill icon="clock">15秒で完了</CtaFeaturePill>
