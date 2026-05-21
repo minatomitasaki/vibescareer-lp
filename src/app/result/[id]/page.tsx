@@ -14,6 +14,7 @@ import { notFound } from "next/navigation";
 import { Logo } from "@/components/Logo";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { EntryForm } from "@/components/EntryForm";
+import { OtherJobsList } from "@/components/OtherJobsList";
 import { RoadmapScrollProgress } from "@/components/RoadmapScrollProgress";
 import {
   RESULT_DATA,
@@ -175,20 +176,14 @@ function InsightSection({ data }: { data: ResultData }) {
 
         <div className="result-insight-divider" aria-hidden />
 
-        {/* その他の適職 */}
+        {/* その他の適職: 診断ロジックの 6 職種から、メイン以外で距離が近い 2 つを表示。
+            クライアント側で localStorage の診断結果があれば、その人専用の 2 位 3 位に差し替える。 */}
         <div className="result-insight-item">
           <h3 className="result-insight-heading">
             <span className="result-insight-en">OTHER POSSIBILITIES</span>
             <span className="result-insight-ja">その他の適職</span>
           </h3>
-          <div className="flex flex-col gap-4 mt-3">
-            {data.otherJobs.map((job) => (
-              <div key={job.name} className="result-other-card">
-                <span className="job-name">{job.name}</span>
-                <p className="job-desc">{job.description}</p>
-              </div>
-            ))}
-          </div>
+          <OtherJobsList defaults={data.otherJobs} mainJob={data.jobType} />
         </div>
       </div>
     </section>
