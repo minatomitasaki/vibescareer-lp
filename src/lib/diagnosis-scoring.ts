@@ -18,9 +18,9 @@ export type Answers = Record<number, number>;
 // ===========================================================================
 //
 // 各セルは「その職種にとって理想の回答値 (1-5)」。意味合いは以下の通り。
-//   Q1: 1=技術を身につける ←→ 5=人を笑顔・感動する
-//   Q2: 1=会社・組織の発展 ←→ 5=物事の探究・分析
-//   Q5: 1=自分の軸を作る   ←→ 5=周囲の意見を聞く
+//   Q1: 1=スキルを身につける ←→ 5=人を笑顔・感動させる
+//   Q2: 1=会社・組織の発展   ←→ 5=物事の探究・分析
+//   Q5: 1=自分の軸を作る     ←→ 5=周囲の意見を聞く
 //   Q6: 1=自分の考えを信じる ←→ 5=多様な知識を取り入れる
 type JobProfile = { Q1: number; Q2: number; Q5: number; Q6: number };
 
@@ -55,9 +55,9 @@ const JOB_TIEBREAK_ORDER: JobType[] = [
 // 職場軸: 各設問が「stable 度」をどちら向きで表現するか
 // ===========================================================================
 //
-//   Q3: 1=戦略的に考える (=stable) ←→ 5=相手や顧客を整理 (=speed)   → left-is-stable
+//   Q3: 1=戦略的に考える (=stable) ←→ 5=感覚的に動く (=speed)       → left-is-stable
 //   Q4: 1=ひとりで静かに (=stable) ←→ 5=多くの人と賑やかに (=speed) → left-is-stable
-//   Q7: 1=正直に表に出す (=speed)  ←→ 5=冷静に伝わる (=stable)      → right-is-stable
+//   Q7: 1=正直に表に出す (=speed)  ←→ 5=冷静に伝える (=stable)      → right-is-stable
 //   Q8: 1=柔軟に動く (=speed)      ←→ 5=計画的に準備する (=stable)  → right-is-stable
 
 type Direction = "right-is-stable" | "left-is-stable";

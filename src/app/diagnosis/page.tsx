@@ -26,15 +26,14 @@ type Question = {
 };
 
 // 設問データ
-// ⚠️ Q3, Q7 の左右ラベルは Figma 解像度の都合で読み取り推定。後日 SPEC とあわせて要原本確認。
 const QUESTIONS: Question[] = [
-  { id: 1, axis: "job",       text: "あなたが仕事で大切にしたいのは？",     left: "技術を身につける",       right: "人を笑顔・感動する" },
+  { id: 1, axis: "job",       text: "あなたが仕事で大切にしたいのは？",     left: "スキルを身につける",     right: "人を笑顔・感動させる" },
   { id: 2, axis: "job",       text: "仕事のやりがいとして近いのは？",       left: "会社・組織の発展",       right: "物事の探究・分析" },
-  { id: 3, axis: "workplace", text: "仕事のスタイルはどちらに近い？",       left: "戦略的に考える",         right: "相手や顧客を整理" }, // ⚠️ 推定ラベル
+  { id: 3, axis: "workplace", text: "仕事のスタイルはどちらに近い？",       left: "戦略的に考える",         right: "感覚的に動く" },
   { id: 4, axis: "workplace", text: "オフの日の過ごし方はどちらに近い？",   left: "ひとりで静かに",         right: "多くの人と賑やかに" },
   { id: 5, axis: "job",       text: "人間関係で意識することは？",           left: "自分の軸を作る",         right: "周囲の意見を聞く" },
   { id: 6, axis: "job",       text: "物事の捉え方はどちらに近い？",         left: "自分の考え方を信じる",   right: "多様な知識を取り入れる" },
-  { id: 7, axis: "workplace", text: "感情の出し方はどちらに近い？",         left: "正直に表に出す",         right: "冷静に伝わる" }, // ⚠️ 推定ラベル
+  { id: 7, axis: "workplace", text: "感情の出し方はどちらに近い？",         left: "正直に表に出す",         right: "冷静に伝える" },
   { id: 8, axis: "workplace", text: "仕事の進め方はどちらに近い？",         left: "柔軟に動く",             right: "計画的に準備する" },
 ];
 
@@ -258,7 +257,7 @@ function QuestionCard({
     <div className="bg-white border border-border-default/70 rounded-2xl px-5 pt-5 pb-6 shadow-card">
       {/* ナンバリング + ヘアライン */}
       <div className="flex items-center gap-3 mb-3">
-        <span className="text-[10px] tracking-[0.28em] text-brand-primary font-bold">
+        <span className="text-[11px] tracking-[0.04em] text-brand-primary font-bold">
           Q.{String(index).padStart(2, "0")}
         </span>
         <span className="flex-1 h-px bg-border-default/60" />
