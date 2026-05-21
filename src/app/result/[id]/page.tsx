@@ -890,7 +890,7 @@ function FormSection({ resultId }: { resultId: string }) {
             },
             {
               step: 3,
-              text: "VibesRadarの受検チケット送信",
+              text: "VibesRadarの受検チケットをGET",
               icon: (
                 <svg
                   width={28}
