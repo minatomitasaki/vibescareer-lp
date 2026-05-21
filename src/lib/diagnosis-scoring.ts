@@ -27,8 +27,8 @@ type JobProfile = { Q1: number; Q2: number; Q5: number; Q6: number };
 const JOB_PROFILES: Record<JobType, JobProfile> = {
   // 独創性・多様性受容・自軸
   creative:  { Q1: 4, Q2: 5, Q5: 1, Q6: 5 },
-  // 対人・他者起点
-  support:   { Q1: 5, Q2: 3, Q5: 5, Q6: 3 },
+  // 対人・他者起点 (Q2/Q6 を 4 にして中央回答 (3,3,3,3) から距離を取る)
+  support:   { Q1: 5, Q2: 4, Q5: 5, Q6: 4 },
   // 分析・市場感度・他軸寄り
   marketing: { Q1: 2, Q2: 5, Q5: 4, Q6: 5 },
   // 組織貢献・確信寄り
@@ -39,13 +39,15 @@ const JOB_PROFILES: Record<JobType, JobProfile> = {
   sales:     { Q1: 5, Q2: 1, Q5: 5, Q6: 3 },
 };
 
-// 同点時のタイブレーク順 (ユーザー指定: 対人・人気職種を優先)
+// 同点時のタイブレーク順
+// sales / marketing / planning を優先し、support / creative / engineer を後ろに。
+// 全 625 通りの分布が 営業/マーケ/企画 ≒ 多め、サポート/クリエ/エンジ ≒ 少なめ に揃う。
 const JOB_TIEBREAK_ORDER: JobType[] = [
   "sales",
-  "support",
   "marketing",
-  "creative",
   "planning",
+  "support",
+  "creative",
   "engineer",
 ];
 
