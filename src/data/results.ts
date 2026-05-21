@@ -93,7 +93,7 @@ export const JOB_OTHER_DESCRIPTION: Record<JobType, OtherJob> = {
 // -----------------------------------------------------------------------------
 const WORKPLACE_SUB_LABEL: Record<WorkplaceType, string> = {
   speed: "スピード感MAX！勢いある職場の",
-  stable: "安定感バツグン！じっくり腰を据える職場の",
+  stable: "安定感◎！じっくり腰を据える職場の",
 };
 
 // -----------------------------------------------------------------------------
