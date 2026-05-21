@@ -34,12 +34,13 @@ export function RoadmapScrollProgress({ steps, children }: Props) {
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
+
     let rafId = 0;
+    let active = false;
+
     const update = () => {
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      // セクション top が画面 70% 位置から、セクション bottom が画面 30% 位置まで
-      // 動く間で 0 → 1 の進捗にする
       const start = vh * 0.7;
       const end = -el.offsetHeight + vh * 0.3;
       const span = start - end;
@@ -48,20 +49,44 @@ export function RoadmapScrollProgress({ steps, children }: Props) {
       const p = Math.max(0, Math.min(1, raw));
       setProgress(p);
     };
-    const onScroll = () => {
-      if (rafId) return;
-      rafId = window.requestAnimationFrame(() => {
+
+    const tick = () => {
+      update();
+      if (active) {
+        rafId = window.requestAnimationFrame(tick);
+      } else {
         rafId = 0;
-        update();
-      });
+      }
     };
+
+    // セクションが画面に近づいたら rAF ループを start、離れたら stop。
+    // iOS Safari の慣性スクロール中も rAF は 60 fps で発火するため、
+    // scroll event 依存より滑らかに進捗バー / 点が追従する。
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!active) {
+            active = true;
+            rafId = window.requestAnimationFrame(tick);
+          }
+        } else {
+          active = false;
+        }
+      },
+      { rootMargin: "30% 0px 30% 0px" },
+    );
+    observer.observe(el);
+
+    // 初期表示と resize は 1 回更新するだけで十分
     update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    const onResize = () => update();
+    window.addEventListener("resize", onResize);
+
     return () => {
+      observer.disconnect();
+      active = false;
       if (rafId) window.cancelAnimationFrame(rafId);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 

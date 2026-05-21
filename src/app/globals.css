@@ -2197,7 +2197,6 @@ body {
   height: var(--progress, 0%);
   background: var(--color-brand-primary);
   border-radius: 999px;
-  transition: height 0.18s linear;
   will-change: height;
 }
 /* 現在位置を示す点 */
@@ -2212,7 +2211,6 @@ body {
   background: var(--color-brand-primary);
   border: 2.5px solid #fff;
   box-shadow: 0 4px 12px rgba(255, 107, 0, 0.45);
-  transition: top 0.18s linear;
   z-index: 2;
   will-change: top;
 }
