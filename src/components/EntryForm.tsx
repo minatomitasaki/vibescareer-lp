@@ -137,10 +137,12 @@ export function EntryForm({ resultId }: { resultId: string }) {
       </Field>
 
       <Field label="生年月日" required>
+        {/* iOS Safari の input[type=date] は -webkit-appearance の最小コンテンツ幅で
+            親をはみ出すため、appearance-none と min-w-0 で width:100% を効かせる */}
         <input
           type="date"
           name="birthdate"
-          className={INPUT_CLS}
+          className={`${INPUT_CLS} appearance-none min-w-0`}
           required
         />
       </Field>
