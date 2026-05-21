@@ -51,12 +51,22 @@ export default function Home() {
         ctaWithPulse
       />
 
-      {/* フッターは現状不要のため削除済み。
+      {/* フッター: VibesCareer ロゴを中央配置
           本番リリース時には下記の法的情報のリンク追加が必要：
           - 特定商取引法に基づく表記
           - プライバシーポリシー
           - 会社概要 / 利用規約
           人材紹介事業のため特に上記の整備は必須。 */}
+      <footer className="relative px-4 py-9 flex flex-col items-center gap-3 bg-white">
+        <span
+          aria-hidden
+          className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-primary/60 to-transparent"
+        />
+        <Logo width={140} height={40} />
+        <p className="text-[11px] text-text-muted tracking-wider">
+          © VibesCareer
+        </p>
+      </footer>
     </main>
   );
 }
