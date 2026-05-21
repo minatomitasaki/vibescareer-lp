@@ -14,6 +14,7 @@ import { notFound } from "next/navigation";
 import { Logo } from "@/components/Logo";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { EntryForm } from "@/components/EntryForm";
+import { RoadmapScrollProgress } from "@/components/RoadmapScrollProgress";
 import {
   RESULT_DATA,
   allResultIds,
@@ -619,10 +620,15 @@ function ServiceIntroSection() {
           </h2>
         </div>
 
-        {/* STEP カード (POINT カード風スタイル) */}
-        <ol className="mt-10 space-y-7">
+        {/* STEP カード (sticky 進捗バー + スクロール演出) */}
+        <RoadmapScrollProgress
+          steps={ROADMAP_STEPS.map((s) => ({
+            step: s.step,
+            label: String(s.step).padStart(2, "0"),
+          }))}
+        >
           {ROADMAP_STEPS.map((s) => (
-            <li key={s.step} className="service-point-card">
+            <div key={s.step} className="service-point-card">
               {s.callout && (
                 <div className="service-point-callout" aria-label={`転職成功の${s.callout.ratio}割${s.callout.text}`}>
                   <span className="callout-prefix">転職成功の</span>
@@ -648,9 +654,9 @@ function ServiceIntroSection() {
                 </div>
               )}
               <p className="service-point-body whitespace-pre-line">{s.body}</p>
-            </li>
+            </div>
           ))}
-        </ol>
+        </RoadmapScrollProgress>
 
         <div className="mt-7 flex justify-center">
           <span className="service-free-badge">

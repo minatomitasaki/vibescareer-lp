@@ -2161,6 +2161,82 @@ body {
   height: auto;
 }
 
+/* ===== ロードマップ sticky 進捗バー + スクロール演出 ===== */
+.roadmap-scrollwrap {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 14px;
+  margin-top: 36px;
+}
+.roadmap-progress {
+  position: sticky;
+  top: 96px;
+  align-self: start;
+  height: 240px;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+.roadmap-progress-track {
+  position: absolute;
+  left: 50%;
+  top: 18px;
+  bottom: 18px;
+  width: 3px;
+  transform: translateX(-50%);
+  background: rgba(255, 107, 0, 0.18);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.roadmap-progress-fill {
+  width: 100%;
+  background: var(--color-brand-primary);
+  border-radius: 999px;
+  transition: height 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.roadmap-progress-steps {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 1;
+}
+.roadmap-progress-step {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2.5px solid rgba(255, 107, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.35);
+  letter-spacing: 0.02em;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.roadmap-progress-step.is-active {
+  background: var(--color-brand-primary);
+  border-color: var(--color-brand-primary);
+  color: #fff;
+  transform: scale(1.08);
+  box-shadow: 0 6px 18px rgba(255, 107, 0, 0.32);
+}
+.roadmap-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
+}
+.roadmap-card-wrap {
+  position: relative;
+}
+
 /* 吹き出し風コールアウト (カード右上、外側にはみ出す、1 行構成) */
 .service-point-callout {
   position: absolute;
