@@ -1297,50 +1297,6 @@ body {
 }
 /* (引用符の装飾は廃止) */
 
-/* =============================================================
-   tertiary variant 用: 元画像の上端緑リボンを HTML マスクで覆い隠し、
-   「まずはVibesRadarで自己分析」に差し替える。
-   元アセット (result-radar-bonus.png) を共通使用するための仕組み。
-   ============================================================= */
-.radar-bonus-mask-wrap {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  max-width: 480px;
-  /* 子のマスク要素を画像幅基準でスケールさせるための container query */
-  container-type: inline-size;
-}
-.radar-bonus-mask-ribbon {
-  position: absolute;
-  /* 元画像内の緑リボンの位置に合わせる (1024×1536px 基準) */
-  top: 1.4%;
-  left: 5.5%;
-  right: 5.5%;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5em;
-  padding: 0.55em 1em;
-  background: linear-gradient(180deg, #2dc955 0%, #16a34a 100%);
-  color: #fff;
-  font-weight: 900;
-  font-size: clamp(11px, 3.4cqw, 16px);
-  line-height: 1.3;
-  letter-spacing: 0.02em;
-  border-radius: 9999px;
-  box-shadow:
-    0 2px 6px rgba(22, 163, 74, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  white-space: nowrap;
-}
-.radar-bonus-mask-ribbon .slash {
-  font-size: 1.25em;
-  line-height: 1;
-  font-weight: 900;
-  flex-shrink: 0;
-}
-
 /* 引用カード見出し */
 .result-quote-heading {
   display: flex;
