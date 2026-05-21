@@ -606,7 +606,7 @@ function ServiceIntroSection() {
         <div className="section-eyebrow-block mt-12">
           <span className="en">ROADMAP</span>
           <h2 className="ja">
-            【<span className="marker">転職成功までのロードマップ</span>】
+            <span className="marker">転職成功までのロードマップ</span>
           </h2>
         </div>
 
