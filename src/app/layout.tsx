@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_JP, Inter, Noto_Serif_JP } from "next/font/google";
+import { Noto_Sans_JP, Inter, Zen_Kaku_Gothic_Antique } from "next/font/google";
 import "./globals.css";
 
 const notoSansJP = Noto_Sans_JP({
@@ -17,9 +17,9 @@ const inter = Inter({
   display: "swap",
 });
 
-// セリフ/キャッチコピー用の明朝体 (アドバイザーのセリフなど特別な場面で使用)
-const notoSerifJP = Noto_Serif_JP({
-  variable: "--font-serif-jp",
+// アドバイザーキャッチコピー用 (角に少し丸みがある柔らかいゴシック)
+const zenKakuGothicAntique = Zen_Kaku_Gothic_Antique({
+  variable: "--font-zen-kaku",
   subsets: ["latin"],
   weight: ["500", "700", "900"],
   display: "swap",
@@ -39,7 +39,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${notoSansJP.variable} ${inter.variable} ${notoSerifJP.variable}`}
+      className={`${notoSansJP.variable} ${inter.variable} ${zenKakuGothicAntique.variable}`}
     >
       <body className="min-h-screen bg-white">{children}</body>
     </html>
