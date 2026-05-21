@@ -455,8 +455,8 @@ const CONCERNS: Concern[] = [
   {
     body: (
       <>
-        今の会社が<strong>自分に合っているとは思えない</strong>。
-        <strong>やりがいを感じられない</strong>。
+        今の会社が自分に合っているとは思えない。
+        やりがいを感じられない。
       </>
     ),
   },
@@ -464,7 +464,7 @@ const CONCERNS: Concern[] = [
     body: (
       <>
         このまま今の仕事を続けていても、
-        <strong>成長できるイメージが持てない</strong>。
+        成長できるイメージが持てない。
       </>
     ),
   },
@@ -472,7 +472,7 @@ const CONCERNS: Concern[] = [
     body: (
       <>
         頑張りや成績に見合うだけの
-        <strong>評価や年収が欲しい</strong>。
+        評価や年収が欲しい。
       </>
     ),
   },
@@ -480,7 +480,7 @@ const CONCERNS: Concern[] = [
     body: (
       <>
         もっと
-        <strong>自分本来の力を発揮できる会社</strong>
+        自分本来の力を発揮できる会社
         で働きたい。
       </>
     ),
