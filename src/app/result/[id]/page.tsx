@@ -567,46 +567,8 @@ function CausesSection() {
 }
 
 // =============================================================================
-// Section 13: サービス紹介 — VibesCareer の 3 つの POINT
+// Section 13: サービス紹介 — 導入文のみ (3 STEP の詳細は Section 14 ロードマップに統合)
 // =============================================================================
-type ServicePoint = {
-  title: string;
-  body: React.ReactNode;
-};
-
-const SERVICE_POINTS: ServicePoint[] = [
-  {
-    title: "VibesRadarで「本当の自分」を可視化",
-    body: (
-      <>
-        次世代型パーソナル適性診断「<strong>VibesRadar</strong>」で、
-        自分でも気づいていない<strong>強み・ポテンシャル・ストレス耐性</strong>
-        を可視化します。本来有料の診断を、本ページからのお申込み限定で
-        <strong>完全無料</strong>でご案内します。
-      </>
-    ),
-  },
-  {
-    title: "専属アドバイザーが自己分析からキャリア設計まで伴走",
-    body: (
-      <>
-        診断結果をもとに、<strong>キャリアアドバイザーがあなた専属で伴走</strong>。
-        表面的な希望条件だけでなく、これまでの経験・価値観・将来像まで丁寧にヒアリングしながら、
-        <strong>納得感のあるキャリア設計</strong>を一緒に組み立てます。
-      </>
-    ),
-  },
-  {
-    title: "「最適な職場」×「適正年収」で内定まで支援",
-    body: (
-      <>
-        厳選した<strong>10,000社以上の企業</strong>から、あなたに合う求人を提案。
-        応募書類の添削や面接対策、企業ごとのリアルな情報提供、内定後の交渉まで
-        <strong>最後まで伴走</strong>します。サービスは完全無料です。
-      </>
-    ),
-  },
-];
 
 function ServiceIntroSection() {
   return (
@@ -640,18 +602,6 @@ function ServiceIntroSection() {
           VibesCareerでは <strong>「本当に自分に合う仕事は何か」</strong> を見極めることを最優先に、
           まずは <strong>自己分析からスタート</strong> します。
         </p>
-
-        <ul className="mt-7 space-y-4">
-          {SERVICE_POINTS.map((p, i) => (
-            <li key={i} className="service-point-card">
-              <div className="service-point-label">
-                POINT.{String(i + 1).padStart(2, "0")}
-              </div>
-              <h3 className="service-point-title">{p.title}</h3>
-              <p className="service-point-body">{p.body}</p>
-            </li>
-          ))}
-        </ul>
 
         <p className="mt-6 text-center text-[11px] text-text-muted">
           ※サービスはすべて無料で受けられます
@@ -696,18 +646,6 @@ function RoadmapSection() {
         <h2 className="ja">
           【<span className="marker">転職成功までのロードマップ</span>】
         </h2>
-      </div>
-
-      <div className="mt-2 flex justify-center">
-        <ImagePlaceholder
-          src="/images/result-roadmap.png"
-          label="Section 14: ロードマップイメージ"
-          alt="3 STEP で上昇していくロードマップ"
-          width={1536}
-          height={1024}
-          rounded
-          className="w-full h-auto max-w-[440px]"
-        />
       </div>
 
       <ol className="mt-8 space-y-6">
