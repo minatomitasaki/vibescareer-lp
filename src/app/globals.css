@@ -567,6 +567,20 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
+/* 本文段落エリアにだけ便箋風の水平罫線を引く
+   (line-height 1.95 × 15.5px ≈ 30px の行に揃えた 32px 周期) */
+.last-message-text-paper {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 31px,
+    rgba(255, 107, 0, 0.12) 31px,
+    rgba(255, 107, 0, 0.12) 32px
+  );
+  /* 1 行目の文字下に線が重なるよう、本文を 4px だけ下げる */
+  padding-top: 4px;
+}
+
 /* ロードマップ末尾「サービスはすべて無料で受けられます」バッジ
    薄オレンジの pill + 円形オレンジバッジに白チェック */
 .service-free-badge {

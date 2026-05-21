@@ -816,7 +816,7 @@ function LastMessageSection() {
         />
       </div>
 
-      <div className="mt-6 space-y-4 text-[15.5px] leading-[1.95] text-text-secondary">
+      <div className="last-message-text-paper mt-6 space-y-4 text-[15.5px] leading-[1.95] text-text-secondary">
         <p>
           最後までページをご覧いただき、ありがとうございます。
           <br />
