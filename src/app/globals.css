@@ -554,7 +554,8 @@ body {
   line-height: 1;
 }
 
-/* 内側カード */
+/* 内側カード: 手書き風フォントで「代表からの便箋」感を演出
+   (Klee One: ペン書きのような上品な手書き日本語フォント) */
 .last-message-card {
   position: relative;
   background: #FFFFFF;
@@ -565,6 +566,12 @@ body {
     0 10px 28px -8px rgba(255, 107, 0, 0.22),
     0 2px 6px rgba(0, 0, 0, 0.04),
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  font-family: var(--font-handwritten), var(--font-noto-sans-jp), sans-serif;
+}
+/* 署名「渡邉 大典」: Klee One の最重ウェイト 600 で存在感を出す
+   (元 className に font-black があるが、Klee One は 400/600 の 2 ウェイトのみのため) */
+.last-message-card .text-text-primary.font-black {
+  font-weight: 600;
 }
 
 /* ロードマップ末尾「サービスはすべて無料で受けられます」バッジ
@@ -2163,27 +2170,18 @@ body {
   height: auto;
 }
 
-/* ===== ロードマップ pin + フェード切替演出 ===== */
-.roadmap-pin-section {
-  position: relative;
-  /* JS から height を上書き (steps.length * 90vh)。フォールバック値 */
-  height: 270vh;
-  margin-top: 36px;
-}
-.roadmap-pin-inner {
-  position: sticky;
-  top: 0;
-  height: 100vh;
+/* ===== ロードマップ sticky 進捗バー + 各カードのライズイン演出 ===== */
+.roadmap-scrollwrap {
   display: grid;
   grid-template-columns: 52px 1fr;
   gap: 14px;
-  align-items: center;
-  padding: 24px 0;
+  margin-top: 36px;
 }
 .roadmap-progress {
-  position: relative;
-  align-self: center;
-  height: 220px;
+  position: sticky;
+  top: 96px;
+  align-self: start;
+  height: 240px;
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -2238,34 +2236,24 @@ body {
   transform: scale(1.08);
   box-shadow: 0 6px 18px rgba(255, 107, 0, 0.32);
 }
-.roadmap-stage {
-  position: relative;
-  height: 100%;
+.roadmap-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
   min-width: 0;
-  display: flex;
-  align-items: center;
 }
-.roadmap-card-slide {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
+.roadmap-card-rise {
+  position: relative;
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(18px);
   transition:
-    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
-  overflow-y: auto;
+    opacity 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
 }
-.roadmap-card-slide > * {
-  width: 100%;
-  max-height: 100%;
-}
-.roadmap-card-slide.is-active {
+.roadmap-card-rise.is-revealed {
   opacity: 1;
   transform: translateY(0);
-  pointer-events: auto;
 }
 
 /* 吹き出し風コールアウト (カード右上、外側にはみ出す、1 行構成) */

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_JP, Inter, Zen_Kaku_Gothic_Antique } from "next/font/google";
+import { Noto_Sans_JP, Inter, Zen_Kaku_Gothic_Antique, Klee_One } from "next/font/google";
 import "./globals.css";
 
 const notoSansJP = Noto_Sans_JP({
@@ -25,6 +25,14 @@ const zenKakuGothicAntique = Zen_Kaku_Gothic_Antique({
   display: "swap",
 });
 
+// ラストメッセージ用 (上品な手書き風日本語フォント、ペン書き感)
+const kleeOne = Klee_One({
+  variable: "--font-handwritten",
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "適職・適正年収 15秒診断 | VibesCareer",
   description:
@@ -39,7 +47,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${notoSansJP.variable} ${inter.variable} ${zenKakuGothicAntique.variable}`}
+      className={`${notoSansJP.variable} ${inter.variable} ${zenKakuGothicAntique.variable} ${kleeOne.variable}`}
     >
       <body className="min-h-screen bg-white">{children}</body>
     </html>
