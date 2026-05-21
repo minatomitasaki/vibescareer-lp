@@ -880,10 +880,10 @@ function LastMessageSection() {
         </p>
       </div>
 
-      <p className="mt-8 text-right text-[14.5px] text-text-muted">
+      <p className="mt-8 text-right text-[19px] text-text-muted">
         VibesCareer 代表
         <br />
-        <span className="text-[18px] font-black text-text-primary tracking-wider">
+        <span className="text-[23px] font-black text-text-primary tracking-wider">
           渡邉 大典
         </span>
       </p>
