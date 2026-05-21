@@ -703,8 +703,8 @@ const ROADMAP_STEPS = [
       "“最適な職場”に“適正年収”で転職できるよう支援",
     body: "キャリア設計を終えたら、あなたに合う企業を厳選してご紹介。「存分に力を発揮できるか」「納得して働き続けられるか」まで考えた選択肢を提案します。応募書類・面接対策・企業のリアルな情報・内定後の相談まで、最後まで伴走します。",
     callout: null as null | { ratio: string; text: string },
-    image: null as string | null,
-    imageAlt: "",
+    image: "/images/result-roadmap-step3.png" as string | null,
+    imageAlt: "アドバイザーと一緒に求人カードを見比べる応募者、おすすめカードには年収UPバッジ",
   },
 ];
 
@@ -787,14 +787,9 @@ function FaqSection() {
 function LastMessageSection() {
   return (
     <section className="last-message-section px-6 py-12">
-      {/* コーナー装飾 (便箋の四隅セリフ flourish) */}
-      <span className="last-message-corner top-left" aria-hidden>✦</span>
-      <span className="last-message-corner top-right" aria-hidden>✦</span>
-      <span className="last-message-corner bottom-left" aria-hidden>✦</span>
-      <span className="last-message-corner bottom-right" aria-hidden>✦</span>
-
-      {/* 上部セリフラベル: ─── LETTER ─── */}
-      <div className="last-message-letter-label" aria-hidden>LETTER</div>
+      {/* 巨大な引用符 (背景装飾、薄オレンジ) */}
+      <span className="last-message-quote top-left" aria-hidden>“</span>
+      <span className="last-message-quote bottom-right" aria-hidden>”</span>
 
       <div className="section-eyebrow-block">
         <span className="en">LAST MESSAGE</span>
