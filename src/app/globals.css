@@ -1996,53 +1996,61 @@ body {
   color: var(--color-brand-primary);
 }
 
-/* 吹き出し風コールアウト (カード右上、外側にはみ出す) */
+/* 吹き出し風コールアウト (カード右上、外側にはみ出す、2 行構成) */
 .service-point-callout {
   position: absolute;
-  top: -16px;
+  top: -22px;
   right: 12px;
   background: var(--color-brand-primary);
   color: #fff;
-  border-radius: 20px;
-  padding: 7px 13px 7px 12px;
+  border-radius: 18px;
+  padding: 8px 16px 9px;
   display: inline-flex;
-  align-items: baseline;
-  gap: 1px;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
   box-shadow: 0 4px 12px rgba(255, 107, 0, 0.35);
   z-index: 3;
   white-space: nowrap;
   font-feature-settings: "tnum" 1;
-  line-height: 1;
   letter-spacing: 0.02em;
+  text-align: center;
 }
 /* 吹き出しの下向きしっぽ (三角形) */
 .service-point-callout::after {
   content: "";
   position: absolute;
   bottom: -7px;
-  right: 22px;
+  right: 26px;
   width: 0;
   height: 0;
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
   border-top: 9px solid var(--color-brand-primary);
 }
-.service-point-callout .callout-prefix {
-  font-size: 10.5px;
+.service-point-callout .callout-line-1 {
+  display: block;
+  font-size: 12px;
   font-weight: 700;
-  margin-right: 2px;
+  line-height: 1.1;
+}
+.service-point-callout .callout-line-2 {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+  line-height: 1;
 }
 .service-point-callout .callout-ratio {
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 900;
 }
 .service-point-callout .callout-unit {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 900;
   margin: 0 2px 0 1px;
 }
 .service-point-callout .callout-suffix {
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 700;
 }
 

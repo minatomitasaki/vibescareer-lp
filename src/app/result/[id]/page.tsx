@@ -616,10 +616,12 @@ function ServiceIntroSection() {
             <li key={s.step} className="service-point-card">
               {s.callout && (
                 <div className="service-point-callout" aria-label={`転職成功の${s.callout.ratio}割${s.callout.text}`}>
-                  <span className="callout-prefix">転職成功の</span>
-                  <span className="callout-ratio">{s.callout.ratio}</span>
-                  <span className="callout-unit">割</span>
-                  <span className="callout-suffix">{s.callout.text}</span>
+                  <span className="callout-line-1">転職成功の</span>
+                  <span className="callout-line-2">
+                    <span className="callout-ratio">{s.callout.ratio}</span>
+                    <span className="callout-unit">割</span>
+                    <span className="callout-suffix">{s.callout.text}</span>
+                  </span>
                 </div>
               )}
               <div className="service-point-label">
