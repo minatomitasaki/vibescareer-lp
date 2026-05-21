@@ -786,7 +786,16 @@ function FaqSection() {
 // =============================================================================
 function LastMessageSection() {
   return (
-    <section className="px-6 py-10 bg-white">
+    <section className="last-message-section px-6 py-12">
+      {/* コーナー装飾 (便箋の四隅セリフ flourish) */}
+      <span className="last-message-corner top-left" aria-hidden>✦</span>
+      <span className="last-message-corner top-right" aria-hidden>✦</span>
+      <span className="last-message-corner bottom-left" aria-hidden>✦</span>
+      <span className="last-message-corner bottom-right" aria-hidden>✦</span>
+
+      {/* 上部セリフラベル: ─── LETTER ─── */}
+      <div className="last-message-letter-label" aria-hidden>LETTER</div>
+
       <div className="section-eyebrow-block">
         <span className="en">LAST MESSAGE</span>
         <h2 className="ja">
