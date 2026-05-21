@@ -611,24 +611,22 @@ function ServiceIntroSection() {
         </div>
 
         {/* STEP カード (POINT カード風スタイル) */}
-        <ol className="mt-7 space-y-4">
+        <ol className="mt-10 space-y-7">
           {ROADMAP_STEPS.map((s) => (
             <li key={s.step} className="service-point-card">
+              {s.callout && (
+                <div className="service-point-callout" aria-label={`転職成功の${s.callout.ratio}割${s.callout.text}`}>
+                  <span className="callout-prefix">転職成功の</span>
+                  <span className="callout-ratio">{s.callout.ratio}</span>
+                  <span className="callout-unit">割</span>
+                  <span className="callout-suffix">{s.callout.text}</span>
+                </div>
+              )}
               <div className="service-point-label">
                 STEP {String(s.step).padStart(2, "0")}
               </div>
               <h3 className="service-point-title">{s.title}</h3>
               <p className="service-point-body whitespace-pre-line">{s.body}</p>
-              {s.callout && (
-                <div className="mt-4 inline-flex items-center bg-brand-primary text-white rounded-full pl-3 pr-4 py-1.5 shadow-md">
-                  <span className="text-[10.5px] mr-1">転職成功の</span>
-                  <span className="text-[24px] font-black mx-0.5 leading-none">
-                    {s.callout.ratio}
-                  </span>
-                  <span className="text-[13px] font-black mr-1">割</span>
-                  <span className="text-[10.5px]">{s.callout.text}</span>
-                </div>
-              )}
             </li>
           ))}
         </ol>
@@ -651,14 +649,14 @@ const ROADMAP_STEPS = [
     title:
       "パーソナル適性診断『VibesRadar』で、まずは“本当の自分”を知る",
     body: "転職で後悔しないために最も大切なのは、求人を見ることではなく、まずは自分自身を正しく理解すること。VibesRadarは、一般的な適性検査をさらに発展させた、よりパーソナルな傾向を分析できる次世代型のWeb診断サービスです。あなたの特性や強みはもちろん、これまで自分でも気づいていなかった思考のクセや秘められたポテンシャル、ストレス耐性や入社後の成長度合いまで、多角的に可視化。なお、本来有料でのご案内ですが、本ページからの申請で完全無料で受検いただけます。",
-    callout: { ratio: "6", text: "がココで決まる！" },
+    callout: { ratio: "7", text: "がココで決まる！" },
   },
   {
     step: 2,
     title:
       "専属のキャリアアドバイザーが一緒に自己分析し、キャリア設計を構築",
     body: "VibesRadarの結果をもとに、プロのキャリアアドバイザーがあなたと一緒に自己分析を深めていきます。表面的な希望条件だけでなく、これまでの経験や現在の悩み、将来の理想像まで丁寧に整理しながら、あなたに本当に合ったキャリアの方向性を明確にしていきます。\n・どんな環境なら力を発揮できるのか\n・どんな働き方なら納得感を持てるのか\nまで伴走して考えることで、転職の解像度を引き上げながらあなただけのキャリア設計を構築します。",
-    callout: { ratio: "8", text: "がココで決まる！" },
+    callout: { ratio: "9", text: "がココで決まる！" },
   },
   {
     step: 3,

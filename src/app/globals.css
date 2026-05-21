@@ -1921,14 +1921,50 @@ body {
 }
 
 /* =============================================================
-   Section 13: サービス紹介 POINT カード (POINT.XX 形式)
+   Section 13/14: サービス紹介 + ロードマップ STEP カード
+   (POINT.XX / STEP.XX 形式、共通スタイル)
    ============================================================= */
 .service-point-card {
+  position: relative;
   background: #fff;
   border-radius: 16px;
   padding: 24px 20px 22px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
   border: 1px solid color-mix(in srgb, var(--color-brand-primary) 10%, white);
+}
+/* 背景あしらい: 右下に薄オレンジの放射状グラデ */
+.service-point-card::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(
+    circle at 100% 100%,
+    color-mix(in srgb, var(--color-brand-primary) 18%, white) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 0 0 16px 0;
+}
+/* 背景あしらい: 左上に小さなアクセントドット */
+.service-point-card::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-brand-primary) 30%, white);
+  pointer-events: none;
+  z-index: 0;
+}
+.service-point-card > * {
+  position: relative;
+  z-index: 1;
 }
 .service-point-label {
   display: inline-block;
@@ -1958,6 +1994,56 @@ body {
 .service-point-body strong {
   font-weight: 800;
   color: var(--color-brand-primary);
+}
+
+/* 吹き出し風コールアウト (カード右上、外側にはみ出す) */
+.service-point-callout {
+  position: absolute;
+  top: -16px;
+  right: 12px;
+  background: var(--color-brand-primary);
+  color: #fff;
+  border-radius: 20px;
+  padding: 7px 13px 7px 12px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.35);
+  z-index: 3;
+  white-space: nowrap;
+  font-feature-settings: "tnum" 1;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+/* 吹き出しの下向きしっぽ (三角形) */
+.service-point-callout::after {
+  content: "";
+  position: absolute;
+  bottom: -7px;
+  right: 22px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 9px solid var(--color-brand-primary);
+}
+.service-point-callout .callout-prefix {
+  font-size: 10.5px;
+  font-weight: 700;
+  margin-right: 2px;
+}
+.service-point-callout .callout-ratio {
+  font-size: 22px;
+  font-weight: 900;
+}
+.service-point-callout .callout-unit {
+  font-size: 12px;
+  font-weight: 900;
+  margin: 0 2px 0 1px;
+}
+.service-point-callout .callout-suffix {
+  font-size: 10.5px;
+  font-weight: 700;
 }
 
 /* =============================================================
