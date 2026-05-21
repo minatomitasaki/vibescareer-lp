@@ -2101,6 +2101,17 @@ body {
   font-weight: 800;
   color: var(--color-brand-primary);
 }
+.service-point-image {
+  margin: 4px -2px 14px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #FFFEFB;
+}
+.service-point-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 
 /* 吹き出し風コールアウト (カード右上、外側にはみ出す、1 行構成) */
 .service-point-callout {

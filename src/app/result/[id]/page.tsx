@@ -635,6 +635,18 @@ function ServiceIntroSection() {
                 STEP {String(s.step).padStart(2, "0")}
               </div>
               <h3 className="service-point-title">{s.title}</h3>
+              {s.image && (
+                <div className="service-point-image">
+                  <ImagePlaceholder
+                    src={s.image}
+                    label={`STEP ${s.step} イメージ`}
+                    alt={s.imageAlt}
+                    width={1536}
+                    height={1024}
+                    className="w-full h-auto block rounded-2xl"
+                  />
+                </div>
+              )}
               <p className="service-point-body whitespace-pre-line">{s.body}</p>
             </li>
           ))}
@@ -673,6 +685,8 @@ const ROADMAP_STEPS = [
       "パーソナル適性診断『VibesRadar』で、まずは“本当の自分”を知る",
     body: "転職で後悔しないために、まずは自分を正しく理解することが最優先。VibesRadarは、強み・思考のクセ・ストレス耐性・成長度合いまで多角的に可視化する次世代型のパーソナル適性診断です。本来有料の診断を、本ページからのお申込み限定で完全無料でご案内します。",
     callout: { ratio: "7", text: "がココで決まる！" },
+    image: "/images/result-roadmap-step1.png" as string | null,
+    imageAlt: "スマホとノートPCでVibesRadarの適性診断を受ける男女",
   },
   {
     step: 2,
@@ -680,6 +694,8 @@ const ROADMAP_STEPS = [
       "専属のキャリアアドバイザーが一緒に自己分析し、キャリア設計を構築",
     body: "VibesRadarの結果をもとに、プロのキャリアアドバイザーが自己分析を深めます。希望条件だけでなく、経験・悩み・将来像まで整理し、\n・どんな環境なら力を発揮できるか\n・どんな働き方なら納得感を持てるか\nまで伴走しながら、あなただけのキャリア設計を構築します。",
     callout: { ratio: "9", text: "がココで決まる！" },
+    image: null as string | null,
+    imageAlt: "",
   },
   {
     step: 3,
@@ -687,6 +703,8 @@ const ROADMAP_STEPS = [
       "“最適な職場”に“適正年収”で転職できるよう支援",
     body: "キャリア設計を終えたら、あなたに合う企業を厳選してご紹介。「存分に力を発揮できるか」「納得して働き続けられるか」まで考えた選択肢を提案します。応募書類・面接対策・企業のリアルな情報・内定後の相談まで、最後まで伴走します。",
     callout: null as null | { ratio: string; text: string },
+    image: null as string | null,
+    imageAlt: "",
   },
 ];
 
