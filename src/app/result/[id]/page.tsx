@@ -694,8 +694,8 @@ const ROADMAP_STEPS = [
       "専属のキャリアアドバイザーが一緒に自己分析し、キャリア設計を構築",
     body: "VibesRadarの結果をもとに、プロのキャリアアドバイザーが自己分析を深めます。希望条件だけでなく、経験・悩み・将来像まで整理し、\n・どんな環境なら力を発揮できるか\n・どんな働き方なら納得感を持てるか\nまで伴走しながら、あなただけのキャリア設計を構築します。",
     callout: { ratio: "9", text: "がココで決まる！" },
-    image: null as string | null,
-    imageAlt: "",
+    image: "/images/result-roadmap-step2.png" as string | null,
+    imageAlt: "モニター画面越しに笑顔でアドバイスする男性キャリアアドバイザー",
   },
   {
     step: 3,
