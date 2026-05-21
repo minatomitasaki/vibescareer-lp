@@ -520,70 +520,48 @@ body {
 }
 
 /* =============================================================
-   Section 17: LastMessage 背景あしらい (案 A: 便箋風)
+   Section 17: LastMessage 背景あしらい (案 B: 朝焼けグラデ + 巨大引用符)
    ---------------------------------------------------------------
-   クリーム背景 + 上下の薄い罫線 + 四隅セリフ flourish + LETTER ラベル
+   上端から淡い朝焼けオレンジ → 白へのグラデ +
+   左上と右下に巨大な薄い引用符 “ ” を背景装飾として配置
    ============================================================= */
 .last-message-section {
   position: relative;
   overflow: hidden;
-  background-color: #FFFAF2;
-}
-/* 上下の罫線 (便箋風、両端フェード) */
-.last-message-section::before,
-.last-message-section::after {
-  content: '';
-  position: absolute;
-  left: 28px;
-  right: 28px;
-  height: 1px;
   background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 107, 0, 0.45) 50%,
-    transparent 100%
+    180deg,
+    #FFE5CC 0%,
+    #FFF3E2 25%,
+    #FFFCF6 65%,
+    #FFFFFF 100%
   );
-  pointer-events: none;
 }
-.last-message-section::before { top: 22px; }
-.last-message-section::after  { bottom: 22px; }
-
-/* 上部セリフラベル: ─── LETTER ─── */
-.last-message-letter-label {
+/* 子要素を引用符の上にレイヤー (z-index 1) させるため */
+.last-message-section > *:not(.last-message-quote) {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  font-family: var(--font-serif);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.45em;
-  color: rgba(207, 78, 0, 0.7);
-  margin-top: 4px;
-  margin-bottom: 20px;
-}
-.last-message-letter-label::before,
-.last-message-letter-label::after {
-  content: '';
-  width: 34px;
-  height: 1px;
-  background-color: rgba(255, 107, 0, 0.55);
+  z-index: 1;
 }
 
-/* コーナー装飾 (四隅の星マーク) */
-.last-message-corner {
+/* 巨大な引用符 (背景装飾) */
+.last-message-quote {
   position: absolute;
-  font-size: 14px;
-  color: rgba(255, 107, 0, 0.55);
+  font-family: var(--font-serif);
+  font-size: 280px;
+  font-weight: 900;
+  color: rgba(255, 107, 0, 0.12);
   pointer-events: none;
   user-select: none;
-  line-height: 1;
+  line-height: 0.75;
+  z-index: 0;
 }
-.last-message-corner.top-left     { top: 14px;    left: 14px; }
-.last-message-corner.top-right    { top: 14px;    right: 14px; }
-.last-message-corner.bottom-left  { bottom: 14px; left: 14px; }
-.last-message-corner.bottom-right { bottom: 14px; right: 14px; }
+.last-message-quote.top-left {
+  top: 8px;
+  left: -10px;
+}
+.last-message-quote.bottom-right {
+  bottom: -40px;
+  right: -8px;
+}
 
 /* ロードマップ末尾「サービスはすべて無料で受けられます」バッジ
    薄オレンジの pill + 円形オレンジバッジに白チェック */
