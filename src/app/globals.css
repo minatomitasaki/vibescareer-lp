@@ -2163,18 +2163,27 @@ body {
   height: auto;
 }
 
-/* ===== ロードマップ sticky 進捗バー + スクロール演出 ===== */
-.roadmap-scrollwrap {
+/* ===== ロードマップ pin + フェード切替演出 ===== */
+.roadmap-pin-section {
+  position: relative;
+  /* JS から height を上書き (steps.length * 90vh)。フォールバック値 */
+  height: 270vh;
+  margin-top: 36px;
+}
+.roadmap-pin-inner {
+  position: sticky;
+  top: 0;
+  height: 100vh;
   display: grid;
   grid-template-columns: 52px 1fr;
   gap: 14px;
-  margin-top: 36px;
+  align-items: center;
+  padding: 24px 0;
 }
 .roadmap-progress {
-  position: sticky;
-  top: 96px;
-  align-self: start;
-  height: 240px;
+  position: relative;
+  align-self: center;
+  height: 220px;
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -2229,14 +2238,34 @@ body {
   transform: scale(1.08);
   box-shadow: 0 6px 18px rgba(255, 107, 0, 0.32);
 }
-.roadmap-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  min-width: 0;
-}
-.roadmap-card-wrap {
+.roadmap-stage {
   position: relative;
+  height: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+.roadmap-card-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  overflow-y: auto;
+}
+.roadmap-card-slide > * {
+  width: 100%;
+  max-height: 100%;
+}
+.roadmap-card-slide.is-active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 /* 吹き出し風コールアウト (カード右上、外側にはみ出す、1 行構成) */

@@ -14,36 +14,31 @@ type Props = {
 };
 
 /**
- * ロードマップ用の sticky 進捗バー + スクロール演出ラッパー。
- * children に各 STEP カードを順番に渡すと、左の番号バーが sticky で固定され
- * 画面中央付近にあるカードの番号がハイライトされる。
+ * ロードマップ用の pin + フェード切替演出。
+ * セクション全体の高さを伸ばし、内側を sticky でビューポートに張り付ける。
+ * ページのスクロール量に応じて active step を更新し、対応する STEP カードを
+ * フェードイン/アウトで切替表示する。aixinc.co.jp 風の挙動。
  */
 export function RoadmapScrollProgress({ steps, children }: Props) {
   const items = Children.toArray(children);
   const [activeStep, setActiveStep] = useState(steps[0]?.step ?? 1);
-  const refs = useRef<Array<HTMLDivElement | null>>([]);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (refs.current.length === 0) return;
+    const el = sectionRef.current;
+    if (!el || steps.length === 0) return;
 
     let rafId = 0;
     const update = () => {
-      const center = window.innerHeight * 0.45;
-      let closestIdx = 0;
-      let closestDist = Infinity;
-      refs.current.forEach((el, i) => {
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        // カードの可視範囲が画面上部に来る前は最初の STEP に固定
-        if (rect.bottom < 0) return;
-        const cardTop = rect.top;
-        const dist = Math.abs(cardTop - center);
-        if (dist < closestDist) {
-          closestDist = dist;
-          closestIdx = i;
-        }
-      });
-      setActiveStep(steps[closestIdx]?.step ?? steps[0]?.step ?? 1);
+      const rect = el.getBoundingClientRect();
+      const sectionHeight = el.offsetHeight;
+      const viewportHeight = window.innerHeight;
+      const scrollableRange = Math.max(1, sectionHeight - viewportHeight);
+      // -rect.top はピン留め範囲内でスクロールした量
+      const scrolled = -rect.top;
+      const progress = Math.max(0, Math.min(0.999, scrolled / scrollableRange));
+      const idx = Math.min(steps.length - 1, Math.floor(progress * steps.length));
+      setActiveStep(steps[idx]?.step ?? steps[0]?.step ?? 1);
     };
 
     const onScroll = () => {
@@ -69,40 +64,47 @@ export function RoadmapScrollProgress({ steps, children }: Props) {
   const fillPct = ((activeStep - first) / span) * 100;
 
   return (
-    <div className="roadmap-scrollwrap">
-      <aside className="roadmap-progress" aria-hidden>
-        <div className="roadmap-progress-track">
-          <div
-            className="roadmap-progress-fill"
-            style={{ height: `${fillPct}%` }}
-          />
-        </div>
-        <ul className="roadmap-progress-steps">
-          {steps.map((s) => (
-            <li
-              key={s.step}
-              className={
-                "roadmap-progress-step" +
-                (activeStep >= s.step ? " is-active" : "")
-              }
-            >
-              <span>{s.label}</span>
-            </li>
-          ))}
-        </ul>
-      </aside>
-      <div className="roadmap-cards">
-        {items.map((child, i) => (
-          <div
-            key={steps[i]?.step ?? i}
-            ref={(el) => {
-              refs.current[i] = el;
-            }}
-            className="roadmap-card-wrap"
-          >
-            {child}
+    <div
+      ref={sectionRef}
+      className="roadmap-pin-section"
+      style={{ height: `${steps.length * 90}vh` }}
+    >
+      <div className="roadmap-pin-inner">
+        <aside className="roadmap-progress" aria-hidden>
+          <div className="roadmap-progress-track">
+            <div
+              className="roadmap-progress-fill"
+              style={{ height: `${fillPct}%` }}
+            />
           </div>
-        ))}
+          <ul className="roadmap-progress-steps">
+            {steps.map((s) => (
+              <li
+                key={s.step}
+                className={
+                  "roadmap-progress-step" +
+                  (activeStep >= s.step ? " is-active" : "")
+                }
+              >
+                <span>{s.label}</span>
+              </li>
+            ))}
+          </ul>
+        </aside>
+        <div className="roadmap-stage">
+          {items.map((child, i) => {
+            const isActive = activeStep === steps[i]?.step;
+            return (
+              <div
+                key={steps[i]?.step ?? i}
+                className={"roadmap-card-slide" + (isActive ? " is-active" : "")}
+                aria-hidden={!isActive}
+              >
+                {child}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
