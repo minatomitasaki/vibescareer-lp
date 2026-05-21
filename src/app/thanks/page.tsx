@@ -8,7 +8,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Logo } from "@/components/Logo";
 
-const LINE_REGISTER_URL = "https://line.me/R/ti/p/@vibescareer"; // TODO: 本番 URL に差し替え
+const LINE_REGISTER_URL = "https://line.me/ti/p/Qugul-H8lv";
 
 export const metadata: Metadata = {
   title: "ご予約ありがとうございます | VibesCareer",
