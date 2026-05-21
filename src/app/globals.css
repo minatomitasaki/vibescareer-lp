@@ -2102,7 +2102,8 @@ body {
   color: var(--color-brand-primary);
 }
 .service-point-image {
-  margin: 4px -2px 14px;
+  width: 75%;
+  margin: 4px auto 14px;
   border-radius: 16px;
   overflow: hidden;
   background: #FFFEFB;
