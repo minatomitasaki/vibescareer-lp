@@ -2170,90 +2170,88 @@ body {
   height: auto;
 }
 
-/* ===== ロードマップ sticky 進捗バー + 各カードのライズイン演出 ===== */
-.roadmap-scrollwrap {
-  display: grid;
-  grid-template-columns: 52px 1fr;
-  gap: 14px;
+/* ===== ロードマップ タイムライン進捗演出 =====
+   - 各 STEP カードの横に丸数字を固定配置
+   - 丸数字を貫く縦線が、スクロール進捗 (--progress) に応じて下へ濃く塗られる
+   - 線上を点 (dot) が走り、現在地を表現 */
+.roadmap-timeline {
+  position: relative;
   margin-top: 36px;
+  --progress: 0%;
 }
-.roadmap-progress {
-  position: sticky;
-  top: 96px;
-  align-self: start;
-  height: 240px;
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-}
-.roadmap-progress-track {
+/* 背景の縦線 (薄い線。丸数字 36px の中心 = 18px に揃える) */
+.roadmap-timeline-line {
   position: absolute;
-  left: 50%;
+  left: 18px;
   top: 18px;
   bottom: 18px;
   width: 3px;
-  transform: translateX(-50%);
   background: rgba(255, 107, 0, 0.18);
   border-radius: 999px;
-  overflow: hidden;
+  z-index: 0;
+  overflow: visible;
 }
-.roadmap-progress-fill {
+/* 進捗 fill (濃いオレンジが上から下へ伸びる) */
+.roadmap-timeline-line-fill {
   width: 100%;
+  height: var(--progress, 0%);
   background: var(--color-brand-primary);
   border-radius: 999px;
-  transition: height 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: height 0.18s linear;
+  will-change: height;
 }
-.roadmap-progress-steps {
+/* 現在位置を示す点 */
+.roadmap-timeline-dot {
+  position: absolute;
+  left: 50%;
+  top: var(--progress, 0%);
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-brand-primary);
+  border: 2.5px solid #fff;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.45);
+  transition: top 0.18s linear;
+  z-index: 2;
+  will-change: top;
+}
+.roadmap-timeline-cards {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 28px;
   list-style: none;
   padding: 0;
   margin: 0;
   z-index: 1;
 }
-.roadmap-progress-step {
+.roadmap-timeline-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.roadmap-timeline-num {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #fff;
-  border: 2.5px solid rgba(255, 107, 0, 0.25);
+  background: var(--color-brand-primary);
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 800;
-  color: rgba(0, 0, 0, 0.35);
   letter-spacing: 0.02em;
-  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.roadmap-progress-step.is-active {
-  background: var(--color-brand-primary);
-  border-color: var(--color-brand-primary);
-  color: #fff;
-  transform: scale(1.08);
-  box-shadow: 0 6px 18px rgba(255, 107, 0, 0.32);
-}
-.roadmap-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  min-width: 0;
-}
-.roadmap-card-rise {
+  box-shadow: 0 4px 10px rgba(255, 107, 0, 0.32);
   position: relative;
-  opacity: 0;
-  transform: translateY(18px);
-  transition:
-    opacity 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
-    transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
-  will-change: opacity, transform;
+  z-index: 1;
 }
-.roadmap-card-rise.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
+.roadmap-timeline-card-content {
+  min-width: 0;
 }
 
 /* 吹き出し風コールアウト (カード右上、外側にはみ出す、1 行構成) */
