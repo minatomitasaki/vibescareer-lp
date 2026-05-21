@@ -223,7 +223,7 @@ function RadarBonusSection({
           href="#form"
           className="btn-cta-radar group w-full max-w-[420px]"
         >
-          <span className="relative z-10">いますぐチケットを受け取る</span>
+          <span className="relative z-10">無料チケットを受け取る</span>
           <span className="relative z-10 inline-block transition-transform group-hover:translate-x-1">
             ▶
           </span>
@@ -587,7 +587,7 @@ function ServiceIntroSection() {
         <div className="section-eyebrow-block">
           <span className="en">ABOUT US</span>
           <h2 className="ja service-intro-title">
-            VibesCareer<span className="marker">とは？</span>
+            <span className="marker">VibesCareer</span>とは？
           </h2>
         </div>
 
@@ -616,12 +616,10 @@ function ServiceIntroSection() {
             <li key={s.step} className="service-point-card">
               {s.callout && (
                 <div className="service-point-callout" aria-label={`転職成功の${s.callout.ratio}割${s.callout.text}`}>
-                  <span className="callout-line-1">転職成功の</span>
-                  <span className="callout-line-2">
-                    <span className="callout-ratio">{s.callout.ratio}</span>
-                    <span className="callout-unit">割</span>
-                    <span className="callout-suffix">{s.callout.text}</span>
-                  </span>
+                  <span className="callout-prefix">転職成功の</span>
+                  <span className="callout-ratio">{s.callout.ratio}</span>
+                  <span className="callout-unit">割</span>
+                  <span className="callout-suffix">{s.callout.text}</span>
                 </div>
               )}
               <div className="service-point-label">
