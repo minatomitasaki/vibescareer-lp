@@ -204,10 +204,12 @@ function RadarBonusSection({
 }: {
   variant: "primary" | "secondary" | "tertiary";
 }) {
-  // tertiary だけ画像上端の緑リボン文言を HTML マスクで差し替える。
-  // 画像本体は共通アセットを再利用したいので、元バナーをそのまま塗りつぶす。
-  const isMaskedRibbon = variant === "tertiary";
-  const altText = isMaskedRibbon
+  // tertiary だけリボン文言が「まずはVibesRadarで自己分析」に焼き込まれた専用画像を使う。
+  const isSelfAnalysis = variant === "tertiary";
+  const imageSrc = isSelfAnalysis
+    ? "/images/result-radar-bonus-self.png"
+    : "/images/result-radar-bonus.png";
+  const altText = isSelfAnalysis
     ? "まずは VibesRadar で自己分析。次世代型パーソナルWeb診断で 8 つのポテンシャルタイプ・全 48 項目・ネガティブアラート 5 つを可視化。"
     : "15秒診断を受けた方限定で無料配布。VibesRadar の無料チケット ¥3,300 → ¥0。次世代型パーソナルWeb診断で 8 つのポテンシャルタイプ・全 48 項目・ネガティブアラート 5 つを可視化。";
 
@@ -216,32 +218,14 @@ function RadarBonusSection({
     // 同じミント緑で section 全体を塗って白い間隙を消す。
     <section className="px-4 pt-8 pb-10 bg-[#ECFDF3]">
       <div className="flex justify-center">
-        {isMaskedRibbon ? (
-          <div className="radar-bonus-mask-wrap">
-            <ImagePlaceholder
-              src="/images/result-radar-bonus.png"
-              label="VibesRadar 無料チケット特典"
-              alt={altText}
-              width={1024}
-              height={1536}
-              className="w-full h-auto block"
-            />
-            <div className="radar-bonus-mask-ribbon" aria-hidden>
-              <span className="slash">＼</span>
-              <span>まずはVibesRadarで自己分析</span>
-              <span className="slash">／</span>
-            </div>
-          </div>
-        ) : (
-          <ImagePlaceholder
-            src="/images/result-radar-bonus.png"
-            label="VibesRadar 無料チケット特典"
-            alt={altText}
-            width={1024}
-            height={1536}
-            className="w-full h-auto max-w-[480px] block"
-          />
-        )}
+        <ImagePlaceholder
+          src={imageSrc}
+          label="VibesRadar 無料チケット特典"
+          alt={altText}
+          width={1024}
+          height={1536}
+          className="w-full h-auto max-w-[480px] block"
+        />
       </div>
       <div className="mt-2 flex justify-center px-2">
         <Link

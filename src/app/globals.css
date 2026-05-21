@@ -1305,6 +1305,17 @@ body {
   max-width: 480px;
   container-type: inline-size;
 }
+/* 元画像の上端リボン領域 (約 9%) を白で完全に覆い隠す。
+   画像の背景は上部が白なので、白カバーで段差なく自然に消える。 */
+.radar-bonus-mask-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 9%;
+  background: #FFFFFF;
+  z-index: 1;
+}
 .radar-bonus-mask-ribbon {
   position: absolute;
   top: 1.4%;
