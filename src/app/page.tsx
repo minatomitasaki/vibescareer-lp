@@ -127,7 +127,7 @@ function CtaButton({
       {trustLine && (
         <div className="slash-headline mb-4">
           <span className="slash">＼</span>
-          <span className="text-[14.5px] font-black text-text-primary leading-tight">
+          <span className="text-[13.5px] sm:text-[14.5px] font-black text-text-primary leading-tight">
             {trustLine}
           </span>
           <span className="slash">／</span>

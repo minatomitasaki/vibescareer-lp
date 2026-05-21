@@ -476,6 +476,15 @@ body {
   display: inline-block;
   flex-shrink: 0;
 }
+/* スマホ幅では ＼／ と gap を縮めて、トラストラインが画面端に張り付かないようにする */
+@media (max-width: 639px) {
+  .slash-headline {
+    gap: 6px;
+  }
+  .slash-headline .slash {
+    font-size: 24px;
+  }
+}
 
 /* CTAの下に並ぶ「所要時間 15秒・完全無料・登録不要」 */
 .cta-feature-pill {
