@@ -786,11 +786,16 @@ function FaqSection() {
 // =============================================================================
 function LastMessageSection() {
   return (
-    <section className="last-message-section px-6 py-12">
-      {/* 巨大な引用符 (背景装飾、薄オレンジ) */}
-      <span className="last-message-quote top-left" aria-hidden>“</span>
-      <span className="last-message-quote bottom-right" aria-hidden>”</span>
+    <section className="last-message-section px-4 py-12">
+      {/* 上部セリフラベル: ─── Letter ─── */}
+      <div className="last-message-letter-label" aria-hidden>
+        <span className="label-rule" />
+        <span className="label-text">Letter</span>
+        <span className="label-rule" />
+      </div>
 
+      {/* 内側カード: 全コンテンツを白カードに収める */}
+      <div className="last-message-card">
       <div className="section-eyebrow-block">
         <span className="en">LAST MESSAGE</span>
         <h2 className="ja">
@@ -867,6 +872,7 @@ function LastMessageSection() {
           渡邉 大典
         </span>
       </p>
+      </div>
     </section>
   );
 }

@@ -520,47 +520,51 @@ body {
 }
 
 /* =============================================================
-   Section 17: LastMessage 背景あしらい (案 B: 朝焼けグラデ + 巨大引用符)
+   Section 17: LastMessage 背景あしらい (案 C: 内側カード + Letter ラベル)
    ---------------------------------------------------------------
-   上端から淡い朝焼けオレンジ → 白へのグラデ +
-   左上と右下に巨大な薄い引用符 “ ” を背景装飾として配置
+   クリーム背景の上に白いカードを浮かべ、上部に ─ Letter ─ ラベル
    ============================================================= */
 .last-message-section {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(
-    180deg,
-    #FFE5CC 0%,
-    #FFF3E2 25%,
-    #FFFCF6 65%,
-    #FFFFFF 100%
-  );
-}
-/* 子要素を引用符の上にレイヤー (z-index 1) させるため */
-.last-message-section > *:not(.last-message-quote) {
-  position: relative;
-  z-index: 1;
+  background-color: #FFFAF2;
 }
 
-/* 巨大な引用符 (背景装飾) */
-.last-message-quote {
-  position: absolute;
+/* 上部セリフラベル: ── Letter ── */
+.last-message-letter-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 18px;
   font-family: var(--font-serif);
-  font-size: 280px;
-  font-weight: 900;
-  color: rgba(255, 107, 0, 0.12);
-  pointer-events: none;
-  user-select: none;
-  line-height: 0.75;
-  z-index: 0;
+  font-style: italic;
+  color: var(--color-brand-primary);
 }
-.last-message-quote.top-left {
-  top: 8px;
-  left: -10px;
+.last-message-letter-label .label-rule {
+  display: inline-block;
+  width: 36px;
+  height: 1px;
+  background: rgba(255, 107, 0, 0.55);
 }
-.last-message-quote.bottom-right {
-  bottom: -40px;
-  right: -8px;
+.last-message-letter-label .label-text {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1;
+}
+
+/* 内側カード */
+.last-message-card {
+  position: relative;
+  background: #FFFFFF;
+  border: 1.5px solid rgba(255, 107, 0, 0.22);
+  border-radius: 22px;
+  padding: 28px 18px 24px;
+  box-shadow:
+    0 10px 28px -8px rgba(255, 107, 0, 0.22),
+    0 2px 6px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 /* ロードマップ末尾「サービスはすべて無料で受けられます」バッジ
