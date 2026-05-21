@@ -539,7 +539,7 @@ function CausesSection() {
         </h2>
       </div>
 
-      <div className="mt-6 space-y-4 text-[13.5px] leading-[1.95] text-text-secondary">
+      <div className="mt-6 space-y-4 text-[15.5px] leading-[1.95] text-text-secondary">
         <p>
           厚生労働省の公表データによると、新卒3年以内の離職率は約30%。つまり、
           <strong className="text-brand-primary">3人に1人が早期離職している</strong>
@@ -605,7 +605,7 @@ function ServiceIntroSection() {
           パーソナル型 転職支援サービスです。
         </p>
 
-        <p className="mt-6 text-[13.5px] leading-[1.95] text-text-secondary">
+        <p className="mt-6 text-[15.5px] leading-[1.95] text-text-secondary">
           一般的な転職支援は、最初から転職前提で求人の大量紹介やスピーディーな決断を求められがち。
           VibesCareerでは <strong>「本当に自分に合う仕事は何か」</strong> を見極めることを最優先に、
           まずは <strong>自己分析からスタート</strong> します。
@@ -640,7 +640,7 @@ function ServiceIntroSection() {
           ))}
         </ol>
 
-        <p className="mt-6 text-center text-[11px] text-text-muted">
+        <p className="mt-6 text-center text-[13px] text-text-muted">
           ※サービスはすべて無料で受けられます
         </p>
       </div>
@@ -730,7 +730,7 @@ function FaqSection() {
               <span className="text-brand-primary text-[18px] font-black leading-none flex-shrink-0">
                 Q.
               </span>
-              <p className="text-[13px] font-bold text-text-primary leading-[1.6]">
+              <p className="text-[15px] font-bold text-text-primary leading-[1.6]">
                 {item.q}
               </p>
             </div>
@@ -738,7 +738,7 @@ function FaqSection() {
               <span className="text-text-muted text-[18px] font-black leading-none flex-shrink-0">
                 A.
               </span>
-              <p className="text-[12.5px] text-text-secondary leading-[1.8]">
+              <p className="text-[14.5px] text-text-secondary leading-[1.8]">
                 {item.a}
               </p>
             </div>
@@ -775,7 +775,7 @@ function LastMessageSection() {
         />
       </div>
 
-      <div className="mt-6 space-y-4 text-[13.5px] leading-[1.95] text-text-secondary">
+      <div className="mt-6 space-y-4 text-[15.5px] leading-[1.95] text-text-secondary">
         <p>
           最後までページをご覧いただき、ありがとうございます。ここまで読み進めてくださったあなたは、きっと今、現状に少なからず不満があったり、転職について迷いを感じているのではないでしょうか。
         </p>
@@ -802,7 +802,7 @@ function LastMessageSection() {
         </p>
       </div>
 
-      <p className="mt-8 text-right text-[12.5px] text-text-muted">
+      <p className="mt-8 text-right text-[14.5px] text-text-muted">
         VibesCareer 代表
         <br />
         <span className="text-[18px] font-black text-text-primary tracking-wider">
@@ -823,7 +823,7 @@ function FormSection({ resultId }: { resultId: string }) {
     <section id="form" className="px-4 py-10 bg-bg-form">
       <div className="bg-white rounded-3xl p-5 shadow-md">
         <div className="text-center py-1">
-          <p className="text-[13px] font-bold text-text-secondary leading-[1.85]">
+          <p className="text-[15px] font-bold text-text-secondary leading-[1.85]">
             カンタン申し込み＆カウンセリング予約で
           </p>
           <p className="mt-2.5 text-[22px] font-black leading-[1.45] text-text-primary">
@@ -915,13 +915,13 @@ function FormSection({ resultId }: { resultId: string }) {
               key={s.step}
               className="px-2 flex flex-col items-center text-center"
             >
-              <span className="text-[10.5px] font-black text-brand-primary tracking-[0.05em] underline underline-offset-[3px] decoration-1">
+              <span className="text-[12.5px] font-black text-brand-primary tracking-[0.05em] underline underline-offset-[3px] decoration-1">
                 STEP.{String(s.step).padStart(2, "0")}
               </span>
               <span className="mt-3 w-[58px] h-[58px] rounded-[14px] bg-gradient-to-br from-brand-primary to-[#FF9A4D] shadow-[0_4px_10px_-2px_rgba(255,107,0,0.35)] flex items-center justify-center text-white">
                 {s.icon}
               </span>
-              <p className="mt-3 text-[11px] font-bold text-text-primary leading-[1.55]">
+              <p className="mt-3 text-[13px] font-bold text-text-primary leading-[1.55]">
                 {s.text}
               </p>
             </li>
