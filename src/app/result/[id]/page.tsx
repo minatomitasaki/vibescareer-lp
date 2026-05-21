@@ -754,7 +754,7 @@ function FaqSection() {
 // =============================================================================
 function LastMessageSection() {
   return (
-    <section className="px-4 py-10 bg-white">
+    <section className="px-6 py-10 bg-white">
       <div className="section-eyebrow-block">
         <span className="en">LAST MESSAGE</span>
         <h2 className="ja">

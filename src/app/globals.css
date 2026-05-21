@@ -1883,7 +1883,7 @@ body {
   border-bottom: 2.5px solid var(--color-brand-primary);
 }
 .concern-text {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 1.85;
   color: var(--color-text-primary);
