@@ -1798,22 +1798,23 @@ export const IMAGES = [
     ].join("\n"),
   },
 
-  // 古澤 真波人 (ORGANIC GROUP 事業責任者) - フォトリアル portrait
+  // 古澤 真波人 - フォトリアル portrait
+  // 松下 / 三浦 と揃えた「自然光オフィスヘッドショット」スタイルに統一。
   {
     file: "advisor-furusawa.png",
     size: "1024x1024",
     quality: "high",
     prompt: [
-      "PHOTOREALISTIC professional corporate headshot portrait, square 1024x1024.",
-      "Subject: a Japanese man in his early 30s, an intellectual and thoughtful business unit director with a law background.",
-      "- Neat short black hair, clean shave, wearing thin black-rimmed rectangular glasses, calm and well-read expression with a gentle smile.",
+      "PHOTOREALISTIC professional natural-light office headshot portrait, square 1024x1024.",
+      "Subject: A Japanese man in his early 30s, a thoughtful and approachable HR & e-commerce business unit director with a law background.",
+      "- Neat short black hair, clean shave, wearing thin black-rimmed rectangular glasses, calm intelligent expression with a gentle warm smile.",
       "- Wearing a charcoal blazer over a soft cream knit. Calm, intellectual professional look.",
-      "- Head-and-shoulders framing, perfectly centered for circular cropping.",
+      "- Head-and-shoulders framing, perfectly centered for circular cropping. Slightly off-axis posture (3/4 shoulder turn) so it doesn't feel like a passport photo.",
       "- Eyes looking directly at the camera through the glasses, thoughtful and trustworthy.",
-      "- Lighting: soft studio key light, gentle fill, subtle highlights on the glasses without harsh reflections.",
-      "- Background: soft out-of-focus neutral cream / light beige tone with a very subtle warm-orange halo.",
-      "- Camera feel: 85mm portrait lens, shallow depth of field, sharp focus on the eyes.",
-      "STRICT: No text, no watermark, no logo. One person only. Clean photographic portrait, not illustration.",
+      "- Lighting: NATURAL daylight from a large office window on the side, soft directional shadows, healthy realistic Japanese skin tones, no studio key flash. Same warm natural daylight feel as the other advisor photos (Watanabe / Matsushita / Miura).",
+      "- Background: a softly out-of-focus modern Tokyo office interior — whitewashed wall or pale neutral office area with a hint of warm wooden desk / soft greenery / window light. Background tone: neutral cream / soft warm grey, NEVER a flat coloured halo, NEVER pink, NEVER orange gradient, NEVER a studio backdrop.",
+      "- Camera/lens: 50mm prime lens equivalent, shallow depth of field, sharp focus on the eyes, gentle background bokeh, very slight film-like grain for editorial realism.",
+      "STRICT: No text, no watermark, no logo. One person only. Clean photographic portrait, not illustration. Natural realistic human anatomy.",
     ].join("\n"),
   },
 
