@@ -77,9 +77,10 @@ Worker → **Settings → Variables and Secrets** → **Add variable**（Type: *
 | `GOOGLE_OAUTH_CLIENT_SECRET` | 既存 `.env.local` |
 | `GOOGLE_OAUTH_REFRESH_TOKEN` | 既存 `.env.local` |
 | `GOOGLE_CALENDAR_ID` | 既存 `.env.local`（テスト用 `minato_mitasaki@organic-gr.com` から後日切替）|
-| `SLACK_WEBHOOK_URL` | 既存 `.env.local`（VibesCareer_予約通知 アプリ）|
 
 ⚠️ `OPENAI_API_KEY` は本番ランタイムでは未使用（`scripts/generate-images.mjs` がローカル専用）。本番には登録しない。
+
+⚠️ `SLACK_WEBHOOK_URL` も登録不要。Slack 通知は GAS Web App (`src/components/EntryForm.tsx` / `src/app/api/calendar/book/route.ts` が POST する script.google.com の endpoint) 側で送信されており、Next.js ランタイムの `notifyBookingToSlack` は未設定時 no-op で素通り（[`src/lib/slack-notify.ts`](../src/lib/slack-notify.ts) 参照）。Vercel にも未登録のまま本番稼働している。
 
 ---
 
