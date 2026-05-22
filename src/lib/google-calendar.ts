@@ -1,24 +1,24 @@
-// Google Calendar API ラッパー
+// Google Calendar API ラッパー (Cloudflare Workers 互換版)
 //
-// 認証は OAuth 2.0 + refresh token 方式。Vercel の環境変数に下記を設定:
+// 認証は OAuth 2.0 + refresh token 方式。環境変数:
 //   GOOGLE_OAUTH_CLIENT_ID
 //   GOOGLE_OAUTH_CLIENT_SECRET
 //   GOOGLE_OAUTH_REFRESH_TOKEN
 //   GOOGLE_CALENDAR_ID         (e.g. "primary" もしくは メールアドレス)
 //
 // /api/calendar/slots と /api/calendar/book からのみ呼び出される。
+//
+// 実装メモ:
+// 以前は `googleapis` (Node 用 SDK) を使っていたが、Cloudflare Workers の
+// fetch ランタイムとの相性が悪く、token refresh レスポンスの gzip 自動展開と
+// gaxios 内部の処理が衝突して TypeError で死ぬ既知問題があった。
+// → 必要な 3 endpoint (token / freeBusy / events.insert) だけを fetch で直接叩く実装に置換。
+// Workers / Node どちらでも動く。
 
-import { google, type calendar_v3 } from "googleapis";
-
-// 必要スコープ:
-// - calendar.events  : events.insert (予定作成 + Meet 自動付与)
-// - calendar.readonly: freebusy.query (空き時間取得)
-// freebusy は events スコープに含まれないため、両方必要。
-const SCOPE = [
-  "https://www.googleapis.com/auth/calendar.events",
-  "https://www.googleapis.com/auth/calendar.readonly",
-].join(" ");
 export const TIME_ZONE = "Asia/Tokyo";
+
+const TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token";
+const CALENDAR_API = "https://www.googleapis.com/calendar/v3";
 
 function getEnv(key: string): string {
   const v = process.env[key];
@@ -26,16 +26,29 @@ function getEnv(key: string): string {
   return v;
 }
 
-function getCalendar(): calendar_v3.Calendar {
-  const oauth2 = new google.auth.OAuth2(
-    getEnv("GOOGLE_OAUTH_CLIENT_ID"),
-    getEnv("GOOGLE_OAUTH_CLIENT_SECRET"),
-  );
-  oauth2.setCredentials({
+// refresh_token を使って access_token を発行する。
+// 短命 (約 1 時間) のためリクエスト毎に取得 (キャッシュなし)。
+async function getAccessToken(): Promise<string> {
+  const params = new URLSearchParams({
+    client_id: getEnv("GOOGLE_OAUTH_CLIENT_ID"),
+    client_secret: getEnv("GOOGLE_OAUTH_CLIENT_SECRET"),
     refresh_token: getEnv("GOOGLE_OAUTH_REFRESH_TOKEN"),
-    scope: SCOPE,
+    grant_type: "refresh_token",
   });
-  return google.calendar({ version: "v3", auth: oauth2 });
+  const res = await fetch(TOKEN_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: params.toString(),
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`token refresh failed: ${res.status} ${text}`);
+  }
+  const data = (await res.json()) as { access_token?: string; error?: string };
+  if (!data.access_token) {
+    throw new Error(`token refresh: access_token がレスポンスに含まれていません (${data.error ?? "unknown"})`);
+  }
+  return data.access_token;
 }
 
 export type BusyRange = { start: string; end: string };
@@ -48,17 +61,32 @@ export async function getBusyRanges(
   timeMin: string,
   timeMax: string,
 ): Promise<BusyRange[]> {
-  const cal = getCalendar();
   const calendarId = getEnv("GOOGLE_CALENDAR_ID");
-  const res = await cal.freebusy.query({
-    requestBody: {
+  const accessToken = await getAccessToken();
+
+  const res = await fetch(`${CALENDAR_API}/freeBusy`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
       timeMin,
       timeMax,
       timeZone: TIME_ZONE,
       items: [{ id: calendarId }],
-    },
+    }),
   });
-  const busy = res.data.calendars?.[calendarId]?.busy ?? [];
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`freeBusy failed: ${res.status} ${text}`);
+  }
+
+  type FreeBusyResponse = {
+    calendars?: Record<string, { busy?: Array<{ start?: string; end?: string }> }>;
+  };
+  const data = (await res.json()) as FreeBusyResponse;
+  const busy = data.calendars?.[calendarId]?.busy ?? [];
   return busy
     .filter((b): b is { start: string; end: string } =>
       typeof b.start === "string" && typeof b.end === "string",
@@ -77,47 +105,67 @@ export type CreateEventParams = {
 
 /**
  * 初回カウンセリングの予定を作成し、Google Meet も自動付与する。
- * 参加者には Google から招待メールが自動送信される。
+ * 参加者には Google から招待メールが自動送信される (sendUpdates=all)。
  */
 export async function createCounselingEvent(
   params: CreateEventParams,
 ): Promise<{ eventId: string; meetUrl: string | null; htmlLink: string | null }> {
-  const cal = getCalendar();
   const calendarId = getEnv("GOOGLE_CALENDAR_ID");
+  const accessToken = await getAccessToken();
 
   const requestId = `vc-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
-  const res = await cal.events.insert({
-    calendarId,
-    sendUpdates: "all",
-    conferenceDataVersion: 1,
-    requestBody: {
-      summary: `[VibesCareer] 初回カウンセリング - ${params.attendeeName} 様`,
-      description: [
-        `診断ID: ${params.resultId}`,
-        `氏名: ${params.attendeeName}`,
-        `メール: ${params.attendeeEmail}`,
-        params.notes ? `\n備考:\n${params.notes}` : "",
-      ]
-        .filter(Boolean)
-        .join("\n"),
-      start: { dateTime: params.startISO, timeZone: TIME_ZONE },
-      end: { dateTime: params.endISO, timeZone: TIME_ZONE },
-      attendees: [
-        { email: params.attendeeEmail, displayName: params.attendeeName },
-      ],
-      conferenceData: {
-        createRequest: {
-          requestId,
-          conferenceSolutionKey: { type: "hangoutsMeet" },
-        },
+  const url = new URL(
+    `${CALENDAR_API}/calendars/${encodeURIComponent(calendarId)}/events`,
+  );
+  url.searchParams.set("sendUpdates", "all");
+  url.searchParams.set("conferenceDataVersion", "1");
+
+  const requestBody = {
+    summary: `[VibesCareer] 初回カウンセリング - ${params.attendeeName} 様`,
+    description: [
+      `診断ID: ${params.resultId}`,
+      `氏名: ${params.attendeeName}`,
+      `メール: ${params.attendeeEmail}`,
+      params.notes ? `\n備考:\n${params.notes}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n"),
+    start: { dateTime: params.startISO, timeZone: TIME_ZONE },
+    end: { dateTime: params.endISO, timeZone: TIME_ZONE },
+    attendees: [
+      { email: params.attendeeEmail, displayName: params.attendeeName },
+    ],
+    conferenceData: {
+      createRequest: {
+        requestId,
+        conferenceSolutionKey: { type: "hangoutsMeet" },
       },
     },
-  });
+  };
 
+  const res = await fetch(url.toString(), {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(requestBody),
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`events.insert failed: ${res.status} ${text}`);
+  }
+
+  type EventResponse = {
+    id?: string;
+    hangoutLink?: string;
+    htmlLink?: string;
+  };
+  const data = (await res.json()) as EventResponse;
   return {
-    eventId: res.data.id ?? "",
-    meetUrl: res.data.hangoutLink ?? null,
-    htmlLink: res.data.htmlLink ?? null,
+    eventId: data.id ?? "",
+    meetUrl: data.hangoutLink ?? null,
+    htmlLink: data.htmlLink ?? null,
   };
 }
