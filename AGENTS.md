@@ -114,7 +114,7 @@ npx --prefix "C:/Users/minato_mitasaki/Documents/claude-projects/vibescareer-lp"
 
 | 項目 | 値 |
 |---|---|
-| OAuth 主催者 | `minato_mitasaki@organic-gr.com` (テスト用、**後日切替予定**) |
+| OAuth 主催者 | `daisuke_watanabe@organic-gr.com` (2026-05-22 に旧テスト主催者 minato_mitasaki@organic-gr.com から切替済み) |
 | Calendar スコープ | `calendar.events` + `calendar.readonly` (両方必須) |
 | Slack 通知 | `VibesCareer_予約通知` アプリ (Incoming Webhook) |
 | GAS シート | stage 列で「form_submitted」「booking_confirmed」を識別 |

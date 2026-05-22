@@ -25,7 +25,7 @@
 
 2. **Google Calendar 自前予約フローの E2E テスト完了**
    - `/api/calendar/slots` (空き時間取得) + `/api/calendar/book` (予約 + Meet 自動付与)
-   - 主催者: `minato_mitasaki@organic-gr.com`
+   - 主催者: `daisuke_watanabe@organic-gr.com` (旧テスト主催者: `minato_mitasaki@organic-gr.com`)
 
 3. **Slack Incoming Webhook 連携**
    - 環境変数 `SLACK_WEBHOOK_URL` を Vercel に登録
@@ -120,12 +120,12 @@
 
 | 項目 | 値 |
 |---|---|
-| OAuth 主催者 | `minato_mitasaki@organic-gr.com` |
+| OAuth 主催者 | `daisuke_watanabe@organic-gr.com` (2026-05-22 に minato_mitasaki@organic-gr.com から切替) |
 | Calendar スコープ | `calendar.events` + `calendar.readonly` |
 | Slack アプリ | `VibesCareer_予約通知` (Incoming Webhook) |
 | GAS シート | `https://docs.google.com/spreadsheets/d/1n0r6uED1J7PFeNhC5PQqqt5RWNEHBCHRuPIrhmLf9SQ/edit` |
 | GAS payload に追加された列 | `stage`, `bookingStartISO`, `bookingEndISO`, `bookingMeetUrl` |
-| 本番ドメイン | `vibescareer-lp.vercel.app` |
+| 本番ドメイン | `career.vibesradar.ai` (Cloudflare Workers + OpenNext。LP は `/lp01/` 配下) |
 | `.env.local` のキー | `OPENAI_API_KEY`, `GOOGLE_OAUTH_*`, `GOOGLE_CALENDAR_ID`, `SLACK_WEBHOOK_URL` |
 
 ---

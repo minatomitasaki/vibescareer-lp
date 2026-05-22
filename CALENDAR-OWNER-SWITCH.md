@@ -2,9 +2,11 @@
 
 VibesCareer の予約フローを動かしている **Google Calendar の主催者アカウント** を、別の人のアカウントに切り替えるための手順書です。
 
-現在の主催者: `minato_mitasaki@organic-gr.com` (テスト用)
+現在の主催者: `daisuke_watanabe@organic-gr.com` (2026-05-22 に minato_mitasaki@organic-gr.com から切替済み)
 ↓
-新しい主催者: 本番運用者の Google アカウント (例: `本番@example.com`)
+新しい主催者: 別の本番運用者の Google アカウント (例: `次の人@organic-gr.com`)
+
+> 過去の切り替え履歴は git log を参照。
 
 ---
 

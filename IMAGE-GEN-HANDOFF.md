@@ -126,7 +126,7 @@ Vercel デプロイ後、本番でフォーム → 予約 → Slack に通知が
 ### Google Calendar 連携 (完了)
 
 - `/api/calendar/slots` (空き時間取得) + `/api/calendar/book` (予約作成 + Meet URL 自動付与)
-- 主催者: `minato_mitasaki@organic-gr.com` (三反﨑さんの Workspace アカウント)
+- 主催者: `daisuke_watanabe@organic-gr.com` (渡邊さん。2026-05-22 に minato_mitasaki@organic-gr.com から切替)
 - 必要スコープ: `calendar.events` + `calendar.readonly` (freebusy.query には readonly 必須)
 - 関連: `src/lib/google-calendar.ts`, `src/lib/slot-generator.ts`, `src/components/SchedulePicker.tsx`
 
