@@ -1777,8 +1777,8 @@ export const IMAGES = [
     ].join("\n"),
   },
 
-  // 三浦 美咲 (ORGANIC GROUP 事業責任者) - フォトリアル environmental portrait
-  // 他 3 名 (渡邉/松下/古澤) の本人実写写真に揃えるため、studio 証明写真風から
+  // 三村 舞華 - フォトリアル environmental portrait
+  // 他 3 名 (渡邉/松下/近藤) の本人実写写真に揃えるため、studio 証明写真風から
   // 「自然光のオフィス環境ヘッドショット」 に書き換え。
   {
     file: "advisor-miura.png",
@@ -1798,8 +1798,8 @@ export const IMAGES = [
     ].join("\n"),
   },
 
-  // 古澤 真波人 - フォトリアル portrait
-  // 松下 / 三浦 と揃えた「自然光オフィスヘッドショット」スタイルに統一。
+  // 近藤 龍太郎 - フォトリアル portrait
+  // 松下 / 三村 と揃えた「自然光オフィスヘッドショット」スタイルに統一。
   {
     file: "advisor-furusawa.png",
     size: "1024x1024",
