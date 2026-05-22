@@ -77,10 +77,9 @@ Worker → **Settings → Variables and Secrets** → **Add variable**（Type: *
 | `GOOGLE_OAUTH_CLIENT_SECRET` | 既存 `.env.local` |
 | `GOOGLE_OAUTH_REFRESH_TOKEN` | 既存 `.env.local` |
 | `GOOGLE_CALENDAR_ID` | 既存 `.env.local`（テスト用 `minato_mitasaki@organic-gr.com` から後日切替）|
+| `SLACK_WEBHOOK_URL` | 既存 `.env.local`（VibesCareer_予約通知 アプリ）|
 
 ⚠️ `OPENAI_API_KEY` は本番ランタイムでは未使用（`scripts/generate-images.mjs` がローカル専用）。本番には登録しない。
-
-⚠️ `SLACK_WEBHOOK_URL` も登録不要。Slack 通知は GAS Web App (`src/components/EntryForm.tsx` / `src/app/api/calendar/book/route.ts` が POST する script.google.com の endpoint) 側で送信されており、Next.js ランタイムの `notifyBookingToSlack` は未設定時 no-op で素通り（[`src/lib/slack-notify.ts`](../src/lib/slack-notify.ts) 参照）。Vercel にも未登録のまま本番稼働している。
 
 ---
 
@@ -94,17 +93,8 @@ Worker → **Settings → Variables and Secrets** → **Add variable**（Type: *
    - `/schedule` の予約 UI（Google Calendar の枠が読めること）
    - `/thanks` の表示
 
-### Google OAuth リダイレクト URI の暫定追加
-
-予約 UI が OAuth を使うため、Google Cloud Console の OAuth クライアント設定で
-**承認済みリダイレクト URI** に下記を追加する（本番切替後に Vercel 側は削除可能）:
-
-```
-https://vibescareer-lp.<account>.workers.dev/api/auth/callback/google
-https://career.vibesradar.ai/api/auth/callback/google
-```
-
-※ 実際のコールバックパスはコード側で確認（`src/lib/google-calendar.ts`）。
+> Google OAuth リダイレクト URI の追加は **不要**。
+> Calendar 連携は refresh_token 方式で動いており、ランタイム OAuth フロー (`/api/auth/callback/google` 等) は実装されていない。
 
 ---
 
@@ -154,7 +144,6 @@ https://career.vibesradar.ai/api/auth/callback/google
 1. Vercel ダッシュボード → vibescareer-lp プロジェクト → **Settings → Domains** → カスタムドメインが付いていれば削除
 2. Vercel → Settings → 一般 → プロジェクトを残しても課金は発生しないが、不要なら Delete Project
 3. GitHub リポジトリの Vercel Integration を解除（任意）
-4. Google OAuth リダイレクト URI から Vercel ドメインを削除
 
 ---
 
@@ -172,7 +161,8 @@ https://career.vibesradar.ai/api/auth/callback/google
 | Worker サイズ | Free 3MiB / Paid 10MiB（圧縮後）。VibesCareer 規模なら問題なし、初回ビルドで `wrangler` がサイズを出力する |
 | `next/image` の最適化 | Cloudflare Workers の Image Optimization は Vercel と挙動が異なる。OpenNext がフォールバック実装するが、初回は画像表示の劣化が無いか目視確認 |
 | ISR (再検証) | VibesCareer は全 `generateStaticParams` で SSG 完結しているため影響なし |
-| Node.js 互換 | `wrangler.jsonc` で `compatibility_flags: ["nodejs_compat"]` を有効化済み（`googleapis` の動作に必須）|
+| Node.js 互換 | `wrangler.jsonc` で `compatibility_flags: ["nodejs_compat"]` を有効化済み（OpenNext のランタイムが要求するため）|
+| Google Calendar 連携 | `src/lib/google-calendar.ts` は fetch 直叩き実装（旧 `googleapis` SDK は Workers の gzip 自動展開と互換性問題があったため除去済み）|
 | ビルド時間 | 初回は依存インストール込みで 3〜5 分かかる |
 | ログ閲覧 | Worker → **Logs** タブで Real-time logs が見える |
 | 環境変数の変更 | 変更後、再デプロイが必要（git push でもダッシュボードの Redeploy でも OK）|
