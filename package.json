@@ -9,6 +9,7 @@
     "lint": "eslint",
     "gen:images": "node scripts/generate-images.mjs",
     "convert:webp": "node scripts/convert-to-webp.mjs",
+    "gen:favicon": "node scripts/generate-favicon.mjs",
     "cf:build": "opennextjs-cloudflare build",
     "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
