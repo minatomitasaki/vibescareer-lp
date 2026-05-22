@@ -11,8 +11,10 @@
 //   2) コンソールに表示された URL をブラウザで開いて Google でログイン
 //   3) 「許可」を押すと自動で http://localhost:53682/oauth/callback にリダイレクト
 //   4) 自動でコードを交換し refresh_token がコンソールに表示される
-//   5) その refresh_token を .env.local と Vercel 環境変数の
-//      GOOGLE_OAUTH_REFRESH_TOKEN に保存
+//   5) その refresh_token を Cloudflare Workers の Secret
+//      (vibescareer-lp Worker → 設定 → 変数とシークレット の
+//      GOOGLE_OAUTH_REFRESH_TOKEN) に保存。ローカル開発する場合は
+//      .env.local の同名キーにも保存。
 //
 // 一度成功すれば refresh_token は半永久的に使えるので、このスクリプトは
 // 初回セットアップでしか走らせない。
@@ -139,7 +141,7 @@ async function main() {
   }
 
   console.log("");
-  console.log("✅ 取得成功！下記の REFRESH_TOKEN を .env.local と Vercel 環境変数に保存してください:");
+  console.log("✅ 取得成功！下記の REFRESH_TOKEN を Cloudflare Worker の Secret (vibescareer-lp → 設定 → 変数とシークレット) に保存してください (ローカル開発するなら .env.local にも):");
   console.log("");
   console.log("GOOGLE_OAUTH_REFRESH_TOKEN=" + tokens.refresh_token);
   console.log("");

@@ -71,50 +71,57 @@ GOOGLE_OAUTH_REFRESH_TOKEN=1//0eXXXXXX...XXXXXX
 1. 新しい人に [Google Calendar](https://calendar.google.com/) の設定 → 該当カレンダーを開く → 「カレンダーの統合」セクションの「カレンダー ID」をコピーしてもらう
 2. 例: `c_xxxxxxxxxxx@group.calendar.google.com`
 
-### Step 5: Vercel 環境変数を更新
+### Step 5: Cloudflare Workers の Secrets を更新
 
-[vercel.com/dashboard](https://vercel.com/dashboard) → `vibescareer-lp` → Settings → Environment Variables
+本番ホスティングは Cloudflare Workers (`career.vibesradar.ai`)。Vercel 時代の手順とは更新先が異なるので注意。
 
-以下 **2 つ** を編集 (Edit):
+1. [Cloudflare ダッシュボード](https://dash.cloudflare.com/) → **Workers & Pages** → **vibescareer-lp**
+2. 上タブ **設定** → 左メニュー **変数とシークレット** (Variables and Secrets)
+3. 以下 **2 つ** を編集 (該当行の「編集」 or 一旦削除して + 追加で再登録):
 
-| 変数名 | 新しい値 |
-|---|---|
-| `GOOGLE_OAUTH_REFRESH_TOKEN` | Step 3 で取得した `1//0e...` |
-| `GOOGLE_CALENDAR_ID` | `primary` (or Step 4 のカレンダー ID) |
+| 変数名 | タイプ | 新しい値 |
+|---|---|---|
+| `GOOGLE_OAUTH_REFRESH_TOKEN` | Secret | Step 3 で取得した `1//0e...` |
+| `GOOGLE_CALENDAR_ID` | Secret | `primary` (or Step 4 のカレンダー ID) |
 
-**Save** を押す。
+**保存**を押す。
 
-### Step 6: `.env.local` も同じ値に更新
+### Step 6: `.env.local` も同じ値に更新 (ローカル開発時のみ)
 
-ローカル開発用に `.env.local` の同じ 2 行も書き換える:
+ローカルで `npm run dev` 等で動作確認したい場合のみ、`.env.local` の同じ 2 行も書き換える:
 ```env
 GOOGLE_OAUTH_REFRESH_TOKEN=1//0e...
 GOOGLE_CALENDAR_ID=primary
 ```
 
-### Step 7: Vercel に再デプロイトリガー
+本番側はあくまで Cloudflare 側の Secret が使われるため、ローカル更新は省略可。
 
-環境変数は変更しただけでは既存デプロイに反映されないので、再デプロイが必要。
+### Step 7: Cloudflare Workers Builds を再デプロイ
 
-**方法 1**: 空コミットで push
+Secrets を変えただけでは既存デプロイの環境変数は変わらないので、再デプロイが必須。
+
+**方法 1**: 空コミットで push (Workers Builds が main を見て自動再デプロイ、3〜5 分)
 ```powershell
 cd C:\Users\minato_mitasaki\Documents\claude-projects\vibescareer-lp
 git commit --allow-empty -m "chore: 主催者カレンダー切り替えの再デプロイ"
 git push origin main
 ```
 
-**方法 2**: Vercel ダッシュボード → Deployments → 最新の「⋯」→ Redeploy
+**方法 2**: Cloudflare ダッシュボード → vibescareer-lp Worker → 上タブ **デプロイ** → 最新リビジョン右側の「⋯」→ **再デプロイ**
 
 ### Step 8: 動作確認
 
-1. `https://vibescareer-lp.vercel.app/result/planning-stable` を開く
+1. [`https://career.vibesradar.ai/lp01/result/planning-stable`](https://career.vibesradar.ai/lp01/result/planning-stable) を開く
 2. フォームに**テスト情報**を入力 (メールアドレスは自分のものを使用)
-3. `/schedule` で日時を選んで予約
+3. `/lp01/schedule` で日時を選んで予約
 4. **新しい人の Google カレンダーに予定が入っている**ことを確認
 5. 入力したメールアドレスに Google から招待メール (Meet URL 付き) が届くことを確認
-6. 完了 → Slack に通知が来ることを確認
+6. 完了 → Slack `VibesCareer_予約通知` チャネルに通知が届くことを確認
+7. (任意) スプシ ([sheet](https://docs.google.com/spreadsheets/d/1n0r6uED1J7PFeNhC5PQqqt5RWNEHBCHRuPIrhmLf9SQ/edit)) に `booking_confirmed` 行が追加されているか確認
 
 すべて OK なら切り替え完了 🎉
+
+エラーが出たら **Cloudflare → vibescareer-lp Worker → 上タブ Observability → ライブ** でログをリアルタイム確認できる。
 
 ---
 
@@ -126,7 +133,7 @@ git push origin main
 - Node.js 18+ がインストールされた PC
 - このリポジトリへの読み取り権限 (Public なので URL でアクセス可)
 - `.env.local` に `GOOGLE_OAUTH_CLIENT_ID` / `GOOGLE_OAUTH_CLIENT_SECRET` を共有してもらう (これは秘密情報なので慎重に)
-- Vercel プロジェクトへの編集権限 (環境変数を変更できる)
+- Cloudflare アカウントへの編集権限 (vibescareer-lp Worker の Secrets を変更できる)
 
 ### 手順
 
@@ -150,11 +157,11 @@ git push origin main
    ```
 5. 表示された URL を**自分のブラウザで開く** → 自分の Google アカウントでログイン → 「許可」
 6. ターミナルに表示された `GOOGLE_OAUTH_REFRESH_TOKEN=1//0e...` をコピー
-7. Vercel ダッシュボードで以下を更新:
-   - `GOOGLE_OAUTH_REFRESH_TOKEN`: コピーした値
-   - `GOOGLE_CALENDAR_ID`: `primary` (or 任意のカレンダー ID)
-8. Vercel ダッシュボードから Redeploy
-9. テスト予約で確認
+7. Cloudflare ダッシュボードで以下を更新 (Workers & Pages → vibescareer-lp → 設定 → 変数とシークレット):
+   - `GOOGLE_OAUTH_REFRESH_TOKEN`: コピーした値 (Secret)
+   - `GOOGLE_CALENDAR_ID`: `primary` (or 任意のカレンダー ID) (Secret)
+8. Cloudflare ダッシュボード → vibescareer-lp Worker → デプロイ → 最新リビジョン右の「⋯」→ 再デプロイ
+9. テスト予約で確認 (`https://career.vibesradar.ai/lp01/schedule`)
 
 ---
 
@@ -183,13 +190,13 @@ const SCOPES = [
 
 ### Q. 予約完了後、新しい人のカレンダーに予定が入らない
 
-- Vercel ダッシュボードで `GOOGLE_OAUTH_REFRESH_TOKEN` が正しく更新されているか確認
-- 環境変数を更新した後、必ず Redeploy したか確認
-- `https://vibescareer-lp.vercel.app/api/calendar/slots?debug=env` (現在は debug 機能なし、ログでのみ確認可)
+- Cloudflare ダッシュボード → vibescareer-lp Worker → 設定 → 変数とシークレット で `GOOGLE_OAUTH_REFRESH_TOKEN` / `GOOGLE_CALENDAR_ID` が正しく更新されているか確認
+- 環境変数を更新した後、必ず Cloudflare 側で再デプロイしたか確認 (空コミット push or ダッシュボードから再デプロイ)
+- それでも入らない場合は **Worker → 上タブ Observability → ライブ** でログを取り、`[api/calendar/book]` 系のエラー文を確認 (例: `invalid_grant` / `insufficient authentication scopes` 等)
 
 ### Q. 認証スクリプト実行時に「.env.local に GOOGLE_OAUTH_CLIENT_ID / GOOGLE_OAUTH_CLIENT_SECRET が必要」と出た
 
-`.env.local` ファイルにこの 2 つの環境変数が定義されているか確認。Vercel ダッシュボードに登録されていても、**ローカル `.env.local` には別途書く必要** がある。
+`.env.local` ファイルにこの 2 つの環境変数が定義されているか確認。Cloudflare Worker の Secret として登録されていても、**ローカル `.env.local` には別途書く必要** がある (スクリプトはローカル `.env.local` だけ読むため)。
 
 ### Q. 旧 (minato_mitasaki) のカレンダーをもう完全に解除したい
 
@@ -219,8 +226,8 @@ const SCOPES = [
 |---|---|---|
 | 認証スクリプト実行 | 三反﨑さん | 1 分 |
 | 新しい人のブラウザで「許可」 | 新しい人 | 30 秒 |
-| Vercel 環境変数更新 (2 変数) | 三反﨑さん | 2 分 |
-| 再デプロイ + テスト予約 | 三反﨑さん | 5 分 |
+| Cloudflare Secrets 更新 (2 変数) | 三反﨑さん | 2 分 |
+| 再デプロイ (Workers Builds) + テスト予約 | 三反﨑さん | 5 分 |
 | **合計** |  | **約 10 分** |
 
 新しい人が必要なのは Step 2 の「30 秒の承認」だけです。
