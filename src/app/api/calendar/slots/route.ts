@@ -7,7 +7,7 @@
 // 個人カレンダーの詳細は外に出ない (freebusy は busy/free 時間だけ返す)。
 
 import { NextResponse } from "next/server";
-import { getBusyRanges } from "@/lib/google-calendar";
+import { getCalendarAvailability } from "@/lib/google-calendar";
 import { buildAvailableSlots, dayBoundsJst } from "@/lib/slot-generator";
 
 export const dynamic = "force-dynamic"; // ISR/SSG 無効化、常に最新
@@ -27,8 +27,8 @@ export async function GET(request: Request) {
 
   try {
     const { timeMin, timeMax } = dayBoundsJst(date);
-    const busy = await getBusyRanges(timeMin, timeMax);
-    const slots = buildAvailableSlots(date, busy);
+    const { available, busy } = await getCalendarAvailability(timeMin, timeMax);
+    const slots = buildAvailableSlots(date, available, busy);
     return NextResponse.json({ date, slots });
   } catch (err) {
     console.error("[api/calendar/slots] failed", err);

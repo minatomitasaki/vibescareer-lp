@@ -18,12 +18,16 @@
 //
 // 一度成功すれば refresh_token は半永久的に使えるので、このスクリプトは
 // 初回セットアップでしか走らせない。
+//
+// 実装メモ:
+// 以前は `googleapis` SDK を使っていたが、本番ランタイムから googleapis を
+// 削除した (Cloudflare Workers 非互換) のに合わせてこのスクリプトも
+// fetch ベースに書き換え。外部依存は node 組み込みモジュールのみ。
 
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import http from "node:http";
 import { fileURLToPath } from "node:url";
-import { google } from "googleapis";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, "..");
@@ -38,6 +42,9 @@ const SCOPES = [
   "https://www.googleapis.com/auth/calendar.events",
   "https://www.googleapis.com/auth/calendar.readonly",
 ];
+
+const AUTH_ENDPOINT = "https://accounts.google.com/o/oauth2/v2/auth";
+const TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token";
 
 async function loadDotEnv(filePath) {
   try {
@@ -62,6 +69,38 @@ async function loadDotEnv(filePath) {
   }
 }
 
+function buildAuthUrl(clientId) {
+  const url = new URL(AUTH_ENDPOINT);
+  url.searchParams.set("client_id", clientId);
+  url.searchParams.set("redirect_uri", REDIRECT_URI);
+  url.searchParams.set("response_type", "code");
+  url.searchParams.set("scope", SCOPES.join(" "));
+  url.searchParams.set("access_type", "offline");
+  // prompt=consent を強制することで、再認可時にも refresh_token が必ず発行される
+  url.searchParams.set("prompt", "consent");
+  return url.toString();
+}
+
+async function exchangeCodeForTokens(code, clientId, clientSecret) {
+  const body = new URLSearchParams({
+    code,
+    client_id: clientId,
+    client_secret: clientSecret,
+    redirect_uri: REDIRECT_URI,
+    grant_type: "authorization_code",
+  });
+  const res = await fetch(TOKEN_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: body.toString(),
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`token exchange failed: ${res.status} ${text}`);
+  }
+  return res.json();
+}
+
 async function main() {
   await loadDotEnv(ENV_FILE);
 
@@ -73,13 +112,7 @@ async function main() {
     process.exit(1);
   }
 
-  const oauth2 = new google.auth.OAuth2(clientId, clientSecret, REDIRECT_URI);
-
-  const authUrl = oauth2.generateAuthUrl({
-    access_type: "offline",
-    prompt: "consent",
-    scope: SCOPES,
-  });
+  const authUrl = buildAuthUrl(clientId);
 
   console.log("");
   console.log("▼ 下記 URL をブラウザで開いて承認してください:");
@@ -129,7 +162,7 @@ async function main() {
   });
 
   console.log("→ 認可コードを取得しました。アクセストークンに交換中...");
-  const { tokens } = await oauth2.getToken(code);
+  const tokens = await exchangeCodeForTokens(code, clientId, clientSecret);
 
   if (!tokens.refresh_token) {
     console.error(

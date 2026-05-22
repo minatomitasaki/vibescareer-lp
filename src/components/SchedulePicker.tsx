@@ -23,7 +23,7 @@ type EntryFormPayload = {
   major: string;
 };
 
-const DAYS_AHEAD = 14;
+const DAYS_AHEAD = 7;
 const WEEK_LABEL = ["日", "月", "火", "水", "木", "金", "土"];
 
 function pad2(n: number) {

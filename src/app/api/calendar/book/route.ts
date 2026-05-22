@@ -18,7 +18,7 @@
 import { NextResponse } from "next/server";
 import {
   createCounselingEvent,
-  getBusyRanges,
+  getCalendarAvailability,
 } from "@/lib/google-calendar";
 import { notifyBookingToSlack } from "@/lib/slack-notify";
 
@@ -74,8 +74,10 @@ export async function POST(request: Request) {
   }
 
   // 二重予約防止: 直前に再度 busy を確認
+  // events.list の結果のうち、タイトル != "予約可能" のイベントが
+  // 選択スロットと被っていれば既予約扱いで弾く。
   try {
-    const busy = await getBusyRanges(startISO, endISO);
+    const { busy } = await getCalendarAvailability(startISO, endISO);
     if (busy.length > 0) {
       return NextResponse.json(
         {
@@ -86,7 +88,7 @@ export async function POST(request: Request) {
       );
     }
   } catch (err) {
-    console.error("[api/calendar/book] freebusy check failed", err);
+    console.error("[api/calendar/book] availability check failed", err);
     return NextResponse.json(
       { error: "空き状況の再確認に失敗しました。再度お試しください。" },
       { status: 500 },

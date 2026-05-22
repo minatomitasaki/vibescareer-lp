@@ -53,45 +53,78 @@ async function getAccessToken(): Promise<string> {
 
 export type BusyRange = { start: string; end: string };
 
+/** タイトル "予約可能" のイベントだけを抽出した「許可枠」 */
+export type AvailableEventRange = { start: string; end: string };
+
+/** events.list で取得した、許可枠と busy 枠の両方をまとめた結果 */
+export type CalendarAvailability = {
+  /** タイトル == "予約可能" の時間帯 (許可枠) */
+  available: AvailableEventRange[];
+  /** タイトル != "予約可能" の時間帯 (二重予約防止用の busy) */
+  busy: BusyRange[];
+};
+
+/** 予約可能枠を示すカレンダーイベントのタイトル (完全一致) */
+const AVAILABLE_TITLE = "予約可能";
+
 /**
- * freebusy.query で指定範囲内の busy 時間帯を返す。
- * 予定タイトルや詳細は返らないため安全 (個人カレンダーをユーザーに見せない設計)。
+ * events.list で指定範囲のイベントを取得し、タイトル "予約可能" のイベントを
+ * 「許可枠 (available)」、それ以外のイベントを「busy」に振り分けて返す。
+ *
+ * 終日イベント (date 形式) は除外 (空き枠管理に時刻が必要なため)。
+ * cancelled イベントも除外。繰り返しイベントは singleEvents=true で展開済み。
  */
-export async function getBusyRanges(
+export async function getCalendarAvailability(
   timeMin: string,
   timeMax: string,
-): Promise<BusyRange[]> {
+): Promise<CalendarAvailability> {
   const calendarId = getEnv("GOOGLE_CALENDAR_ID");
   const accessToken = await getAccessToken();
 
-  const res = await fetch(`${CALENDAR_API}/freeBusy`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      timeMin,
-      timeMax,
-      timeZone: TIME_ZONE,
-      items: [{ id: calendarId }],
-    }),
+  const url = new URL(
+    `${CALENDAR_API}/calendars/${encodeURIComponent(calendarId)}/events`,
+  );
+  url.searchParams.set("timeMin", timeMin);
+  url.searchParams.set("timeMax", timeMax);
+  url.searchParams.set("singleEvents", "true");
+  url.searchParams.set("orderBy", "startTime");
+  url.searchParams.set("maxResults", "250");
+  url.searchParams.set("timeZone", TIME_ZONE);
+
+  const res = await fetch(url.toString(), {
+    headers: { Authorization: `Bearer ${accessToken}` },
   });
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`freeBusy failed: ${res.status} ${text}`);
+    throw new Error(`events.list failed: ${res.status} ${text}`);
   }
 
-  type FreeBusyResponse = {
-    calendars?: Record<string, { busy?: Array<{ start?: string; end?: string }> }>;
+  type EventsListResponse = {
+    items?: Array<{
+      summary?: string;
+      status?: string;
+      start?: { dateTime?: string };
+      end?: { dateTime?: string };
+    }>;
   };
-  const data = (await res.json()) as FreeBusyResponse;
-  const busy = data.calendars?.[calendarId]?.busy ?? [];
-  return busy
-    .filter((b): b is { start: string; end: string } =>
-      typeof b.start === "string" && typeof b.end === "string",
-    )
-    .map((b) => ({ start: b.start, end: b.end }));
+  const data = (await res.json()) as EventsListResponse;
+  const items = data.items ?? [];
+
+  const available: AvailableEventRange[] = [];
+  const busy: BusyRange[] = [];
+
+  for (const ev of items) {
+    if (ev.status === "cancelled") continue;
+    const start = ev.start?.dateTime;
+    const end = ev.end?.dateTime;
+    if (!start || !end) continue; // 終日イベントなど時刻が無いものは除外
+    if (ev.summary === AVAILABLE_TITLE) {
+      available.push({ start, end });
+    } else {
+      busy.push({ start, end });
+    }
+  }
+  return { available, busy };
 }
 
 export type CreateEventParams = {
