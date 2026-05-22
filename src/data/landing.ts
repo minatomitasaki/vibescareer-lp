@@ -30,7 +30,8 @@ export const VIBES_RADAR_FEATURES = [
 // -----------------------------------------------------------------------------
 export type Advisor = {
   id: string;
-  role: string;
+  /** 肩書き。VibesCareer 代表のみ表示し、他のアドバイザーでは未設定 */
+  role?: string;
   name: string;
   catchphrase: string;
   bio: string[];
@@ -51,7 +52,6 @@ export const ADVISORS: Advisor[] = [
   },
   {
     id: "matsushita",
-    role: "薬院オーガニック 代表",
     name: "松下 敬亮",
     catchphrase: "運任せの転職ではなく マッチ率 100% の転職を約束します。",
     bio: [
@@ -63,7 +63,6 @@ export const ADVISORS: Advisor[] = [
   },
   {
     id: "miura",
-    role: "ORGANIC GROUP 事業責任者",
     name: "三浦 美咲",
     catchphrase:
       "一人では気づけなかった可能性まで一緒に丁寧に見つけていきます。",
@@ -76,7 +75,6 @@ export const ADVISORS: Advisor[] = [
   },
   {
     id: "furusawa",
-    role: "VibesRadar 開発責任者",
     name: "古澤 真波人",
     catchphrase:
       "転職しないという選択もある。あなたにとって最善の道を考えます。",

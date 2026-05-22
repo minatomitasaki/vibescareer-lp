@@ -280,7 +280,9 @@ function AdvisorCard({ advisor }: { advisor: Advisor }) {
           />
         </div>
         <div className="advisor-name-block">
-          <span className="advisor-role">{advisor.role}</span>
+          {advisor.role && (
+            <span className="advisor-role">{advisor.role}</span>
+          )}
           <p className="advisor-name">{advisor.name}</p>
         </div>
       </header>
