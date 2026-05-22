@@ -56,6 +56,19 @@ async function publicFileMtime(srcPath: string): Promise<number> {
   }
 }
 
+// .png で渡された src を .webp に置換する (転送量削減用)。
+// 開発時は .webp が無ければ .png にフォールバックし、AI 生成の最新 PNG を
+// その場で確認できるようにする。本番は scripts/convert-to-webp.mjs で
+// 事前生成済みである前提で常に .webp を返す。
+async function resolveWebpSrc(src: string): Promise<string> {
+  if (!src.endsWith(".png")) return src;
+  const webpSrc = src.replace(/\.png$/, ".webp");
+  if (IS_DEV) {
+    return (await publicFileExists(webpSrc)) ? webpSrc : src;
+  }
+  return webpSrc;
+}
+
 export async function ImagePlaceholder({
   src,
   alt,
@@ -68,9 +81,12 @@ export async function ImagePlaceholder({
 }: Props) {
   // src が指定され、かつファイルが実在する場合のみ <Image> を返す
   if (src && (await publicFileExists(src))) {
+    // .png は .webp に置換して転送量を削減 (約 1/10 程度)
+    const resolvedSrc = await resolveWebpSrc(src);
     // ファイル更新時刻をクエリに付与してキャッシュバスティング
-    const mtime = await publicFileMtime(src);
-    const versionedSrc = mtime > 0 ? `${src}?v=${mtime}` : src;
+    const mtime = await publicFileMtime(resolvedSrc);
+    const versionedSrc =
+      mtime > 0 ? `${resolvedSrc}?v=${mtime}` : resolvedSrc;
     return (
       <Image
         src={versionedSrc}

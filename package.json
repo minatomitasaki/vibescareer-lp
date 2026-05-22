@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "gen:images": "node scripts/generate-images.mjs",
+    "convert:webp": "node scripts/convert-to-webp.mjs",
     "cf:build": "opennextjs-cloudflare build",
     "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
@@ -26,6 +27,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "^16.2.6",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "typescript": "^5",
     "wrangler": "^4.93.1"

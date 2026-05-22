@@ -209,7 +209,7 @@ export default function ThanksPage() {
           <div className="flex items-start gap-3">
             <div className="thanks-line-avatar">
               <Image
-                src="/images/advisor-watanabe.png"
+                src="/images/advisor-watanabe.webp"
                 alt="VibesCareer 代表・渡邉"
                 width={72}
                 height={72}

@@ -2018,7 +2018,7 @@ body {
   /* hidden だと内部の sticky 進捗バーが効かなくなるため clip を使う */
   overflow: clip;
   background-color: #FFFAF2;
-  background-image: url('/images/result-service-bg.png');
+  background-image: url('/images/result-service-bg.webp');
   background-size: 100% auto;
   background-position: top center;
   background-repeat: no-repeat;
