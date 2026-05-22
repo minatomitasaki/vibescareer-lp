@@ -184,7 +184,12 @@ export function EntryForm({ resultId }: { resultId: string }) {
       <label className="flex items-start gap-2 text-[12px] text-text-secondary leading-[1.6]">
         <input type="checkbox" className="mt-0.5" required />
         <span>
-          <a href="/privacy" className="text-brand-primary underline">
+          <a
+            href="/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand-primary underline"
+          >
             個人情報取扱方針
           </a>
           に同意する
