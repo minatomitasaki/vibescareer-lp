@@ -242,6 +242,12 @@ function PrivacyContact() {
         </div>
         <div className="flex gap-2">
           <dt className="font-bold text-text-primary min-w-[5.5rem]">
+            許可番号
+          </dt>
+          <dd>厚生労働大臣許可 13-ユ-318094 (有料職業紹介事業)</dd>
+        </div>
+        <div className="flex gap-2">
+          <dt className="font-bold text-text-primary min-w-[5.5rem]">
             受付時間
           </dt>
           <dd>平日 10:00 〜 19:00 (土日祝・年末年始を除く)</dd>
