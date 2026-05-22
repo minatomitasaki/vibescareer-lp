@@ -66,7 +66,7 @@ export default function AnalyzingPage() {
     }, 1000);
 
     const doneId = window.setTimeout(() => {
-      router.replace(`/result/${resultId}`);
+      router.replace(`/lp01/result/${resultId}`);
     }, COUNTDOWN_SECONDS * 1000);
 
     return () => {
