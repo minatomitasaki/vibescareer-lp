@@ -16,7 +16,7 @@ CLAUDE.md は `@AGENTS.md` 参照のため、ここに書けば自動的に Clau
 - 名称: **VibesCareer LP** (20代・第二新卒向けのパーソナル型 転職支援サービス LP)
 - スタック: Next.js 16 App Router + React 19 + TypeScript + Tailwind CSS v4
 - 主要ページ: `/` (入口LP) / `/result/[id]` (12 パターンの診断結果LP) / `/schedule` (予約) / `/thanks` (完了)
-- 本番: `https://vibescareer-lp.vercel.app` (Vercel、main push で自動デプロイ 60〜90 秒)
+- 本番: `https://career.vibesradar.ai` (Cloudflare Workers + OpenNext、main push で Workers Builds が自動デプロイ 3〜5 分)
 - リポジトリ: `github.com/minatomitasaki/vibescareer-lp` (Public)
 
 ## ブランド / デザインの基本
