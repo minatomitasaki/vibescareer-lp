@@ -16,6 +16,11 @@ const GAS_ENDPOINT =
 const INPUT_CLS =
   "w-full border-2 border-border-default rounded-lg px-3 py-2.5 text-[14px] focus:border-brand-primary focus:outline-none bg-white";
 
+// 生年月日入力のデフォルト値。第二新卒 (23〜26歳) の中央値である 24 歳の
+// 生年に合わせる。月日は 1/1 固定にすることで「デフォルト値」と一目で
+// わかるようにし、ユーザーが必ず自分の誕生日に書き換えるよう促す。
+const DEFAULT_BIRTHDATE = `${new Date().getFullYear() - 24}-01-01`;
+
 export function EntryForm({ resultId }: { resultId: string }) {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
@@ -142,6 +147,7 @@ export function EntryForm({ resultId }: { resultId: string }) {
         <input
           type="date"
           name="birthdate"
+          defaultValue={DEFAULT_BIRTHDATE}
           className={`${INPUT_CLS} appearance-none min-w-0`}
           required
         />
