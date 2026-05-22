@@ -118,7 +118,7 @@ export default function DiagnosisPage() {
     } catch {
       // localStorage が無効な環境ではスキップ
     }
-    router.push("/analyzing");
+    router.push("/lp01/analyzing");
   };
 
   return (

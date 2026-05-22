@@ -57,7 +57,7 @@ export default function AnalyzingPage() {
 
     // resultId が無ければ診断やり直しに戻す
     if (!resultId) {
-      router.replace("/diagnosis");
+      router.replace("/lp01/diagnosis");
       return;
     }
 

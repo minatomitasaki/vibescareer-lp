@@ -37,7 +37,7 @@ export function CtaButtonNeon({
       {/* メインボタン */}
       <div className={withPulse ? "cta-pulse-ring" : undefined}>
         <Link
-          href="/diagnosis"
+          href="/lp01/diagnosis"
           className="cta-neon group relative w-[330px] py-5 px-6 inline-flex flex-col items-center justify-center"
         >
           <span className="relative z-10 text-[22px] font-black tracking-wider"

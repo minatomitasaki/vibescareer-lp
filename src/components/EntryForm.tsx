@@ -62,7 +62,7 @@ export function EntryForm({ resultId }: { resultId: string }) {
       });
       // no-cors なので response は opaque (読み取れない)。
       // ネットワークエラーが出なければ送信成功とみなして遷移する。
-      router.push("/schedule");
+      router.push("/lp01/schedule");
     } catch {
       setError("送信に失敗しました。時間を置いて再度お試しください。");
       setSubmitting(false);

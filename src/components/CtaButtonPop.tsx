@@ -40,7 +40,7 @@ export function CtaButtonPop({
         <span className="cta-pop-stamp">無料！</span>
 
         <Link
-          href="/diagnosis"
+          href="/lp01/diagnosis"
           className="cta-pop group relative w-[300px] py-5 px-6 inline-flex flex-col items-center justify-center"
         >
           <span className="text-[22px] font-black flex items-center gap-2 leading-none">

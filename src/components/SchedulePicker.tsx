@@ -127,7 +127,7 @@ export function SchedulePicker() {
       } catch {
         /* ignore */
       }
-      router.push("/thanks");
+      router.push("/lp01/thanks");
     } catch {
       setSubmitError("通信エラーが発生しました。電波の良い場所で再度お試しください。");
       setSubmitting(false);
