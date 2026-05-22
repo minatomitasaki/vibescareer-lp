@@ -1,0 +1,32 @@
+/**
+ * Cloudflare Workers 設定 (OpenNext for Cloudflare 経由で Next.js を実行)
+ *
+ * - main: OpenNext がビルドする Worker エントリポイント
+ * - assets: ビルド後の静的ファイル群を Worker から配信
+ * - compatibility_flags: Node.js 互換 API を有効化 (googleapis などが動くため必須)
+ * - compatibility_date: Workers のランタイム挙動を固定するための日付
+ *
+ * 本番ドメイン: career.vibesradar.ai (Cloudflare ダッシュボードで Custom Domain を設定)
+ *
+ * 環境変数 (本番):
+ *   GOOGLE_OAUTH_CLIENT_ID
+ *   GOOGLE_OAUTH_CLIENT_SECRET
+ *   GOOGLE_OAUTH_REFRESH_TOKEN
+ *   GOOGLE_CALENDAR_ID
+ *   SLACK_WEBHOOK_URL
+ * は Cloudflare ダッシュボードの Worker 設定 → Variables and Secrets で登録する。
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vibescareer-lp",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-05-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".open-next/assets"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

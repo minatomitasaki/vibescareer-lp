@@ -36,6 +36,11 @@ yarn-error.log*
 # vercel
 .vercel
 
+# cloudflare (OpenNext + Wrangler の中間生成物 / 型定義)
+.open-next/
+.wrangler/
+cloudflare-env.d.ts
+
 # claude code (local-only settings)
 .claude/settings.local.json
 
