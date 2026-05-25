@@ -10,12 +10,60 @@
 //     透過が必要なら別途画像処理 (例: rembg) で抜くか、白背景前提でデザインする。
 
 // -----------------------------------------------------------------------------
-// B 版 CTA バナー (個別キャリア面談 特典)。
-// A 版 (radarBonusPrompt: VibesRadar 無料チケット訴求) と同じ縦長 2:3、
-// 同じレイアウト骨格 (リボン / メインビジュアル / 価格カード / 3 特徴カード) を保ちつつ、
+// B 版 CTA バナー (個別キャリア面談 特典 + VibesRadar セット訴求)。
+// A 版 (radarBonusPrompt: VibesRadar 無料チケット単体訴求) と同じ縦長 2:3 骨格を保ち、
 // テーマカラーをミントグリーンからウォームオレンジ系に変えて「個別面談」訴求に。
+// 価格は ¥3,300 → ¥0 (VibesRadar と同額)。
+//
+// vibesRadarPlacement で VibesRadar 訴求の組み込み方を 2 通り選べる:
+//   "parallel" — 個別面談と VibesRadar 受検チケットを「2 つ並列でセット」訴求
+//   "sub"      — メインは個別面談、VibesRadar は補足として小さく付記
 // -----------------------------------------------------------------------------
-function meetingBonusPrompt() {
+function meetingBonusPrompt({ vibesRadarPlacement = "parallel" } = {}) {
+  const isParallel = vibesRadarPlacement === "parallel";
+
+  const productLines = isParallel
+    ? [
+        "   - Two stacked Japanese lines centered, dark charcoal #1A1A1A:",
+        "     Line 1 (16 px, regular weight): 「個別キャリア面談 ＋ VibesRadar の 2 つを無料でセット」",
+        "     Line 2 (28 px, ultra bold): 「個別キャリア面談 ＋ VibesRadar」",
+        "   - Below the headline, a small grey eyebrow line (14 px regular): 「オンライン 60 分の個別面談 + 次世代型パーソナルWeb診断」",
+      ]
+    : [
+        "   - Two stacked Japanese lines centered, dark charcoal #1A1A1A:",
+        "     Line 1 (16 px, regular weight): 「プロのキャリアアドバイザーがあなたの志向と強みを言語化する」",
+        "     Line 2 (28 px, ultra bold): 「個別キャリア面談」",
+        "   - Below the headline, a small grey eyebrow line (14 px regular): 「オンライン / 60 分 / 1 対 1」",
+      ];
+
+  // 価格カード下の補足セクション (案 A: 並列ベネフィット表 / 案 B: VibesRadar 小さく付記)
+  const subBlock = isParallel
+    ? [
+        "4.5) MIDDLE-LOWER — TWO-COLUMN BENEFIT CARD (「無料で受け取れる 2 つ」を並列で訴求):",
+        "   - White rounded-rectangle card centered, ~92% of canvas width, dashed soft warm-orange 1.5 px border, padding ~22 px.",
+        "   - Tiny grey eyebrow at the top center: 「無料で受け取れる特典」 (~14 px).",
+        "   - Below it, TWO equal-width columns side-by-side, separated by a thin vertical hairline:",
+        "     LEFT column:",
+        "       - Small icon at top: a speech-bubble pair (1-on-1 dialogue), warm orange.",
+        "       - Title (centered, BOLD charcoal, ~18 px): 「個別キャリア面談」",
+        "       - Subtitle (centered, 12 px, muted grey): 「60 分・オンライン」",
+        "       - NO price chip on this column.",
+        "     RIGHT column:",
+        "       - Small icon at top: a tiny radar/spider chart with 8 axes, warm orange outline.",
+        "       - Title (centered, BOLD charcoal, ~18 px): 「VibesRadar 受検チケット」",
+        "       - Subtitle (centered, 12 px, muted grey): 「次世代型パーソナルWeb診断」",
+        "       - NO price chip on this column.",
+        "   - DO NOT render any small per-column 「¥3,300 → 無料」 price chips. The price information lives ONLY in the main price callout above and the single line below this card.",
+        "   - Below the two columns, a small charcoal line centered (~14 px, bold): 「2 つセットで通常 ¥3,300 → 無料でご案内」",
+      ]
+    : [
+        "4.5) MIDDLE-LOWER — VIBESRADAR PLUS-NOTE (小さく付記):",
+        "   - A thin warm-orange dashed pill chip centered (~70% of canvas width, ~40 px tall).",
+        "   - Inside the chip: a tiny radar icon (8-axis spider chart, ~24 px) on the LEFT, then the Japanese text (centered, charcoal 14-15 px regular):",
+        "       「+ さらに VibesRadar 受検チケット (¥3,300 相当) も無料でご案内」",
+        "   - This is a quiet supplementary note. NO heavy emphasis. Just a small accent.",
+      ];
+
   return [
     "Produce a single vertical 2:3 image (1024x1536) — a REFINED, ELEGANT promotional banner for a FREE 1-on-1 career counseling session with a professional career advisor. Think 'editorial premium service card', NOT 'busy retail flyer'. Generous whitespace and modern Japanese editorial sensibility.",
     "",
@@ -45,10 +93,7 @@ function meetingBonusPrompt() {
     "   - NO heavy black border, NO drop shadow — clean and tasteful.",
     "",
     "2) UPPER-MIDDLE — JP HEADLINE (centered, compact):",
-    "   - Two stacked Japanese lines centered, dark charcoal #1A1A1A:",
-    "     Line 1 (16 px, regular weight): 「プロのキャリアアドバイザーがあなたの志向と強みを言語化する」",
-    "     Line 2 (28 px, ultra bold): 「個別キャリア面談」",
-    "   - Below the headline, a small grey eyebrow line (14 px regular): 「オンライン / 60 分 / 1 対 1」",
+    ...productLines,
     "",
     "2.5) PRODUCT VISUAL — ADVISOR & APPLICANT VECTOR ILLUSTRATION (centered, ~36% canvas height):",
     "   - A clean editorial 2D vector illustration of a 1-on-1 career counseling scene rendered as a stylized laptop view: ONE professional career advisor (mid-30s Japanese woman in a soft beige blazer) facing ONE young applicant (24-year-old Japanese man in a casual navy shirt) across a video call window.",
@@ -67,10 +112,12 @@ function meetingBonusPrompt() {
     "   - White rounded-rectangle card centered, ~92% of canvas width.",
     "   - 1.5 px dashed soft warm-orange border, padding inside ~28 px vertical / ~32 px horizontal.",
     "   - Inside the card, a single horizontal row with left / center / right zones:",
-    "     LEFT (~25%): tiny grey eyebrow 「通常価格」 (~14 px) stacked above 「¥9,980」 (~30 px, medium weight, muted grey #6B7280) with a clean diagonal RED strikethrough across the digits.",
+    "     LEFT (~25%): tiny grey eyebrow 「通常価格」 (~14 px) stacked above 「¥3,300」 (~30 px, medium weight, muted grey #6B7280) with a clean diagonal RED strikethrough across the digits.",
     "     CENTER (~10%): a slim charcoal arrow 「→」 (~28 px) vertically centered.",
     "     RIGHT (~50%): the digits 「¥0」 rendered ENORMOUSLY (~120-140 px tall, ultra-bold, warm-orange gradient #FF8533 → #FF6B00), filling the right zone. A small ✦ sparkle (yellow #FFD700) sits at the top-right of ¥0. Below ¥0, a small charcoal line (~14 px) 「あなたへプレゼント」 centered under the digits.",
     "   - NO 「今だけ」 badge. Calm, premium, ¥0 dominates the eye.",
+    "",
+    ...subBlock,
     "",
     "4) BOTTOM — THREE FEATURE CARDS IN A HORIZONTAL ROW:",
     "   - Three EQUAL-WIDTH cards arranged SIDE BY SIDE in a single row, separated by ~10 px gaps. Each card: white panel, 1 px soft warm-orange hairline border, rounded 12 px corners, ~14 px inner padding.",
@@ -91,7 +138,7 @@ function meetingBonusPrompt() {
     "============================================================",
     "STRICT REQUIREMENTS:",
     "============================================================",
-    "- All Japanese text MUST be character-for-character correct (個別キャリア面談 / プロ / キャリアアドバイザー / 言語化 / ヒアリング / 提案 / 通常価格 / プレゼント / 無料).",
+    "- All Japanese text MUST be character-for-character correct (個別キャリア面談 / プロ / キャリアアドバイザー / 言語化 / ヒアリング / 提案 / 通常価格 / プレゼント / 無料 / VibesRadar / 受検チケット).",
     "- LEAVE THE BOTTOM ~140 px OF THE CANVAS AS CLEAN EMPTY PEACH-CREAM SPACE — the HTML CTA button is overlaid externally. NO illustration, NO text in that bottom band.",
     "- KEEP THE COMPOSITION CALM AND PREMIUM. NO clutter, NO retail-ad vibe, NO heavy black borders, NO pink hairlines.",
     "- Colors allowed: white, soft peach cream gradient background, warm orange #FF6B00 (ribbon/borders/price), red #DC2626 only for the strikethrough line, charcoal #1A1A1A for primary text, muted grey for secondary, soft beige/navy for the human illustrations.",
@@ -99,9 +146,89 @@ function meetingBonusPrompt() {
 }
 
 // -----------------------------------------------------------------------------
-// 離脱 POP (exit-intent モーダル) のプロンプト生成関数。
-// 正方形 1024x1024、画面中央にコンパクトに配置されるサイズ感。
-// A 版 = VibesRadar 訴求 / B 版 = 個別面談訴求 で価格・色味だけ差し替え。
+// 離脱 POP A 版 (?v=なし のデフォルト LP 用)。
+// 縦長 1024x1536、CTA バナー (radarBonusPrompt) と同じ
+// 「laptop + smartphone + 金チケット」 のデバイスヒーローを中央に配置し、
+// 「失効する前に取って!」の緊急感を強めに訴求する。
+// 参照: image[0] = vibes-radar-logo.png (公式ロゴをそのまま焼き込む)
+// -----------------------------------------------------------------------------
+function exitPopupPromptA() {
+  return [
+    "You are given ONE reference image:",
+    "  image[0] = vibes-radar-logo.png — the OFFICIAL VibesRadar brand logo. Place it as-is in the banner (do NOT redraw or restyle the logo; keep its exact letterforms and colors).",
+    "",
+    "Produce a single vertical 2:3 image (1024x1536) — a REFINED, ELEGANT EXIT-INTENT MODAL banner shown when a user is about to leave a Japanese career landing page. The mood is 'wait, your free ticket is about to expire!' — slightly urgent but still calm and premium. NOT a busy retail flyer.",
+    "",
+    "============================================================",
+    "STYLE — refined editorial, premium feel:",
+    "============================================================",
+    "- Clean 2D vector look. Crisp Japanese typography (Noto Sans JP / Hiragino style).",
+    "- Generous whitespace, calm hierarchy, NO cluttered layout.",
+    "- Flat color fills with very light cel-shading on small objects only.",
+    "- AVOID: 3D, photorealism, anime, watercolor, gradient mesh, drop-shadow heavy 'web ad' look.",
+    "",
+    "============================================================",
+    "OVERALL CANVAS (1024x1536):",
+    "============================================================",
+    "- Background: very soft mint cream gradient — top #FFFFFF fading downward to #ECFDF3. Almost off-white at the top.",
+    "- Outer ~60 px margin: empty whitespace around all sides.",
+    "- Two faint warm-orange ✦ sparkles for elegance (top-right area, middle-left area). NO other ornaments.",
+    "",
+    "============================================================",
+    "LAYOUT (top to bottom, breathing room between sections):",
+    "============================================================",
+    "",
+    "1) TOP — PILL RIBBON, MUCH LARGER TYPE (centered, ~96 px tall, ~92% of canvas width):",
+    "   - Pill-shaped band with soft green gradient (#22C55E to #16A34A).",
+    "   - White Japanese text centered, BOLD, ~36 px: 「ちょっと待って！チケットが失効します」",
+    "   - Two large white slashes 「＼」 「／」 at each end of the text, matching the text height.",
+    "   - NO heavy black border, NO drop shadow.",
+    "",
+    "2) UPPER-MIDDLE — JP HEADLINE + LOGO (centered, compact):",
+    "   - Two stacked Japanese lines come FIRST (above the logo), centered, dark charcoal #1A1A1A:",
+    "     Line 1 (16 px, regular weight): 「あなたのビジネス戦闘力／ポテンシャルを可視化する」",
+    "     Line 2 (22 px, bold): 「次世代型パーソナルWeb診断」",
+    "   - Below those two lines, place the OFFICIAL VibesRadar logo from image[0] centered, about 55% of canvas width.",
+    "   - CRITICAL — LOGO MUST BE A PIXEL-FAITHFUL REPRODUCTION OF image[0]:",
+    "     • Treat image[0] as an immutable brand asset. DO NOT redraw, restyle, or re-typeset the wordmark.",
+    "     • Preserve the exact typeface, letter shapes, weights, kerning, baseline, and capitalization (V-i-b-e-s-R-a-d-a-r) as shown in image[0].",
+    "     • 「Vibes」 is in bold charcoal #1A1A1A; 「Radar」 is in a LIGHTER weight (regular/medium, NOT bold) in lighter charcoal/grey or dark grey — exactly as in image[0].",
+    "     • The icon on the left is exactly three vertical ellipses with orange/yellow/red gradient fills (top→bottom), as in image[0]. Three shapes only.",
+    "     • No frame, no border, no shadow around the logo.",
+    "",
+    "2.5) PRODUCT VISUAL — DEVICE MOCK-UP HERO (centered, ~36% canvas height):",
+    "   - A clean editorial product illustration of an OPEN LAPTOP and a SMARTPHONE both showing the VibesRadar diagnosis dashboard on their screens, plus a GOLDEN TICKET coupon tucked beside them. Soft realistic vector style.",
+    "   - LAPTOP: an open silver-grey laptop angled at 3/4 view, screen clearly visible facing the viewer. The screen displays an abstract VibesRadar dashboard mock-up: a circular radar/spider chart on the left (8 axes, soft pastel fill), a vertical bar list on the right (4-5 short orange bars). NO readable text on the screen.",
+    "   - SMARTPHONE: a modern smartphone (iPhone-like) standing in front of and partly overlapping the laptop on the right side, its screen showing a simplified version of the same dashboard (the same radar/spider chart, smaller).",
+    "   - GOLDEN TICKET: a LUXURIOUS, POLISHED GOLD coupon with a metallic finish. Smooth gold gradient (highlight #FFF1B0 top edge → deep gold #D4A017 bottom, subtle warm-orange #C97A1F inner shadow). Rectangular with SERRATED EDGE on its left side. Embossed thin double-line gold border just inside the perimeter. Small ornamental flourish at top-left corner, tiny ✦ sparkle at bottom-right. Sized noticeably (~35% of canvas width), tilted ~12 degrees, tucked diagonally in front of the laptop base. ON THE TICKET, render 「PREMIUM TICKET」 in bold, embossed deep-bronze / dark-gold serif uppercase text (centered, 2 lines if needed). Soft drop shadow under the ticket.",
+    "   - Drop a very soft shadow under the whole device group for editorial depth. KEEP IT CLEAN — no extra clutter.",
+    "",
+    "3) MIDDLE-LOWER — PRICE CALLOUT (¥0 を主役にした横長カード):",
+    "   - White rounded-rectangle card centered, ~92% of canvas width.",
+    "   - 1.5 px dashed soft-green border, padding inside ~28 px vertical / ~32 px horizontal.",
+    "   - Inside the card, a single horizontal row:",
+    "     LEFT (~25%): tiny grey eyebrow 「通常価格」 (~14 px) stacked above 「¥3,300」 (~30 px, medium weight, muted grey #6B7280) with a clean diagonal RED strikethrough.",
+    "     CENTER (~10%): a slim charcoal arrow 「→」 (~28 px) vertically centered.",
+    "     RIGHT (~50%): the digits 「¥0」 rendered ENORMOUSLY (~120-140 px tall, ultra-bold, warm-orange gradient #FF8533 → #FF6B00). A small ✦ sparkle (yellow #FFD700) at the top-right of ¥0. Below ¥0, a small charcoal line (~14 px) 「あなたへプレゼント」 centered.",
+    "",
+    "4) LOWER — REASSURANCE LINE (centered, just below the price card):",
+    "   - A single charcoal Japanese line, ~18 px, semi-bold: 「まずは、2026年最新の適性検査で自己分析！」",
+    "   - The phrase 「2026年最新の適性検査」 has a soft warm-orange highlight bar behind it (transparent yellow #FFE680 ~ 40% opacity) like a marker pen.",
+    "",
+    "============================================================",
+    "STRICT REQUIREMENTS:",
+    "============================================================",
+    "- The VibesRadar logo MUST appear EXACTLY like image[0]. Treat the logo as a sacred brand asset.",
+    "- All Japanese text MUST be character-for-character correct (ちょっと待って / チケット / 失効 / 適性検査 / 自己分析 / 次世代型パーソナルWeb診断 / 通常価格 / プレゼント).",
+    "- LEAVE THE BOTTOM ~140 px OF THE CANVAS AS CLEAN EMPTY MINT-CREAM SPACE — the HTML CTA button is overlaid externally. NO illustration, NO text in that bottom band.",
+    "- KEEP THE COMPOSITION CALM AND PREMIUM. NO clutter, NO retail-ad vibe, NO heavy black borders.",
+    "- Colors allowed: white, soft mint cream gradient background, soft green #22C55E (ribbon/borders), warm orange #FF6B00 (price/accents), red #DC2626 only for the strikethrough line, charcoal #1A1A1A for primary text, muted grey for secondary, gold tones for the ticket only.",
+  ].join("\n");
+}
+
+// -----------------------------------------------------------------------------
+// 離脱 POP B 版 (?v=b の LP 用)。
+// 正方形 1024x1024、コンパクトモーダル。個別面談 ¥9,980 → ¥0 訴求 (現状維持)。
 // -----------------------------------------------------------------------------
 function exitPopupPrompt({ variant }) {
   const isB = variant === "b";
@@ -1888,17 +2015,16 @@ export const IMAGES = [
   },
 
   // -------------------------------------------------------------------------
-  // B 版 CTA バナー (個別キャリア面談 ¥9,980 → ¥0 訴求)。
+  // B 版 CTA バナー (個別キャリア面談 ¥3,300 → ¥0 + VibesRadar セット 訴求)。
   // URL クエリ ?v=b で出る Section 5/9/15 共通のバナー。
-  // A 版 (result-radar-bonus.png) と同じ骨格で、テーマカラーを
-  // ピーチクリームに変更、訴求対象を「VibesRadar 受検チケット」から
-  // 「個別キャリア面談」に置換。
+  // 個別面談と VibesRadar 受検チケットを「2 つ並列で無料セット」訴求し
+  // 「合計 ¥6,600 相当を ¥0 でご案内」のお得感を強調する案 A (parallel) を採用。
   // -------------------------------------------------------------------------
   {
     file: "result-meeting-bonus.png",
     size: "1024x1536",
     quality: "high",
-    prompt: meetingBonusPrompt(),
+    prompt: meetingBonusPrompt({ vibesRadarPlacement: "parallel" }),
   },
 
   // -------------------------------------------------------------------------
@@ -1909,9 +2035,10 @@ export const IMAGES = [
   // -------------------------------------------------------------------------
   {
     file: "exit-popup-a.png",
-    size: "1024x1024",
+    size: "1024x1536",
     quality: "high",
-    prompt: exitPopupPrompt({ variant: "a" }),
+    references: ["vibes-radar-logo.png"],
+    prompt: exitPopupPromptA(),
   },
   {
     file: "exit-popup-b.png",

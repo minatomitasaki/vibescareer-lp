@@ -132,10 +132,12 @@ export function ExitIntentPopup() {
     version === "b" ? "/images/exit-popup-b.png" : "/images/exit-popup-a.png";
   const altText =
     version === "b"
-      ? "本来 9,980 円の個別キャリア面談が無料"
-      : "VibesRadar 受検チケット ¥3,300 が無料";
+      ? "個別キャリア面談 + VibesRadar の 2 つを無料でセット (合計 ¥6,600 相当)"
+      : "ちょっと待って！VibesRadar 受検チケット ¥3,300 が失効する前に受け取る";
   const ctaLabel =
     version === "b" ? "個別面談を予約する" : "無料チケットを受け取る";
+  // 画像は A 版が縦長 (1024x1536)、B 版が正方形 (1024x1024)
+  const imageHeight = version === "b" ? 1024 : 1536;
 
   return (
     <div
@@ -149,22 +151,22 @@ export function ExitIntentPopup() {
         className="relative w-full max-w-[360px] bg-white rounded-2xl overflow-hidden shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* 閉じるボタン */}
+        {/* 閉じるボタン (背景・境界線・影でコントラストを高め視認性向上) */}
         <button
           type="button"
           onClick={close}
           aria-label="閉じる"
-          className="absolute top-2 right-2 z-10 w-8 h-8 rounded-full bg-white/90 hover:bg-white text-text-secondary hover:text-text-primary flex items-center justify-center text-lg leading-none shadow"
+          className="absolute top-2.5 right-2.5 z-10 w-9 h-9 rounded-full bg-white text-text-primary flex items-center justify-center text-xl leading-none shadow-md border border-border-default hover:bg-gray-50"
         >
           ✕
         </button>
 
-        {/* メインビジュアル (正方形 1024x1024) */}
+        {/* メインビジュアル (A 版: 1024x1536 縦長 / B 版: 1024x1024 正方形) */}
         <Image
           src={imageSrc}
           alt={altText}
           width={1024}
-          height={1024}
+          height={imageHeight}
           priority
           className="w-full h-auto block"
         />
