@@ -162,40 +162,69 @@ async function main() {
 
     // ── 5. 登録ボタン ─────────────────────────────────────
     console.log("[step 5] 「登録して案内を送信」をクリック");
-    const submitButton = page
+    // ダイアログ scope 内で探す (ダイアログ外の同名ボタンが存在する場合の誤クリックを防ぐ)
+    const submitButton = scope
       .getByRole("button", { name: "登録して案内を送信" })
-      .or(page.locator('button:has-text("登録して案内を送信")'))
+      .or(scope.locator('button:has-text("登録して案内を送信")'))
       .first();
+
+    // クリック前の状態を記録 (遷移検知に使う)
+    const urlBeforeSubmit = page.url();
+    await dumpScreenshot("before-submit");
+
     await submitButton.click();
 
     // ── 6. 成功確認 ───────────────────────────────────────
-    // 完了文言 (「送信しました」等) or 一覧画面復帰のいずれかを待つ
-    console.log("[step 6] 成功表示を待機");
+    // 「登録ボタン押下 → 何かが変化した」ことを厳密に検知する。
+    // 旧実装は waitForURL がパスマッチで即 return してしまい、押す前から成功扱い
+    // になるバグがあった。今は以下の3条件のうちいずれかが起きるまで待つ:
+    //   a) 完了文言 (Toast / alert) が新しく表示される
+    //   b) 登録ダイアログが閉じる
+    //   c) URL が現在と異なるものに変わる
+    console.log("[step 6] 成功表示を待機 (a:文言 / b:ダイアログ閉鎖 / c:URL遷移)");
+
     const successByText = page
-      .getByText(/送信しました|登録しました|案内.*送信/)
+      .getByText(/送信しました|登録しました|案内.*送信|登録が完了|追加しました/)
       .first()
-      .waitFor({ timeout: 15_000 })
+      .waitFor({ state: "visible", timeout: 15_000 })
       .then(() => "text");
 
+    // ダイアログを最初に検出できていた場合のみ「閉じる」を待つ
+    const successByDialogClose = dialogVisible
+      ? dialog
+          .waitFor({ state: "hidden", timeout: 15_000 })
+          .then(() => "dialog-closed")
+      : new Promise(() => {}); // never resolve (シグナルとして使わない)
+
+    // URL が「現在と異なるもの」に変わるのを待つ (パスマッチではない)
     const successByNav = page
-      .waitForURL((url) => /examinee|candidate|user|list/i.test(url.pathname), {
-        timeout: 15_000,
-      })
+      .waitForURL((url) => url.href !== urlBeforeSubmit, { timeout: 15_000 })
       .then(() => "nav");
 
-    const reason = await Promise.race([successByText, successByNav]).catch(
-      () => null,
-    );
+    const reason = await Promise.race([
+      successByText,
+      successByDialogClose,
+      successByNav,
+    ]).catch(() => null);
+
+    // submit 後のスクリーンショットは必ず残す (成功でも失敗でも診断材料に)
+    await dumpScreenshot(`after-submit-${reason ?? "no-signal"}`);
 
     if (!reason) {
-      await dumpScreenshot("submit-no-confirmation");
+      // バリデーションエラーで送信できていない可能性が高い → エラー文言の有無もログに残す
+      const errorTexts = await scope
+        .locator(':is([role="alert"], .error, [aria-invalid="true"])')
+        .allTextContents()
+        .catch(() => []);
+      if (errorTexts.length > 0) {
+        console.error("[step 6] 画面上のエラー文言:", errorTexts);
+      }
       throw new Error(
-        "登録ボタン押下後、完了文言も一覧画面復帰も検知できませんでした",
+        "登録ボタン押下後、完了文言・ダイアログ閉鎖・URL 遷移のいずれも検知できませんでした",
       );
     }
 
     console.log(`[done] 受検者登録に成功しました (確認方法: ${reason})`);
-    await dumpScreenshot("success");
     await browser.close();
     process.exit(0);
   } catch (err) {

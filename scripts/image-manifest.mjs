@@ -10,6 +10,173 @@
 //     透過が必要なら別途画像処理 (例: rembg) で抜くか、白背景前提でデザインする。
 
 // -----------------------------------------------------------------------------
+// B 版 CTA バナー (個別キャリア面談 特典)。
+// A 版 (radarBonusPrompt: VibesRadar 無料チケット訴求) と同じ縦長 2:3、
+// 同じレイアウト骨格 (リボン / メインビジュアル / 価格カード / 3 特徴カード) を保ちつつ、
+// テーマカラーをミントグリーンからウォームオレンジ系に変えて「個別面談」訴求に。
+// -----------------------------------------------------------------------------
+function meetingBonusPrompt() {
+  return [
+    "Produce a single vertical 2:3 image (1024x1536) — a REFINED, ELEGANT promotional banner for a FREE 1-on-1 career counseling session with a professional career advisor. Think 'editorial premium service card', NOT 'busy retail flyer'. Generous whitespace and modern Japanese editorial sensibility.",
+    "",
+    "============================================================",
+    "STYLE — refined editorial, premium feel:",
+    "============================================================",
+    "- Clean 2D vector look. Crisp Japanese typography (Noto Sans JP / Hiragino style).",
+    "- Generous whitespace, calm hierarchy, NO cluttered layout.",
+    "- Flat color fills with very light cel-shading on small objects only.",
+    "- AVOID: 3D, photorealism, anime, watercolor, drop-shadow heavy 'web ad' look.",
+    "",
+    "============================================================",
+    "OVERALL CANVAS (1024x1536):",
+    "============================================================",
+    "- Background: very soft peach cream gradient — top #FFFFFF fading downward to #FFF7ED. Almost off-white at the top.",
+    "- Outer ~60 px margin: empty whitespace around all sides.",
+    "- Two faint warm-orange ✦ sparkles for elegance (top-right area, middle-left area). NO other ornaments.",
+    "",
+    "============================================================",
+    "LAYOUT (top to bottom, breathing room between sections):",
+    "============================================================",
+    "",
+    "1) TOP — PILL RIBBON (centered, ~96 px tall, ~92% of canvas width):",
+    "   - Pill-shaped band with soft warm-orange gradient (#FF8533 to #FF6B00).",
+    "   - White Japanese text centered, BOLD, ~38 px: 「本ページからのお申込み限定」",
+    "   - Two large white slashes 「＼」 「／」 at each end of the text, matching text height.",
+    "   - NO heavy black border, NO drop shadow — clean and tasteful.",
+    "",
+    "2) UPPER-MIDDLE — JP HEADLINE (centered, compact):",
+    "   - Two stacked Japanese lines centered, dark charcoal #1A1A1A:",
+    "     Line 1 (16 px, regular weight): 「プロのキャリアアドバイザーがあなたの志向と強みを言語化する」",
+    "     Line 2 (28 px, ultra bold): 「個別キャリア面談」",
+    "   - Below the headline, a small grey eyebrow line (14 px regular): 「オンライン / 60 分 / 1 対 1」",
+    "",
+    "2.5) PRODUCT VISUAL — ADVISOR & APPLICANT VECTOR ILLUSTRATION (centered, ~36% canvas height):",
+    "   - A clean editorial 2D vector illustration of a 1-on-1 career counseling scene rendered as a stylized laptop view: ONE professional career advisor (mid-30s Japanese woman in a soft beige blazer) facing ONE young applicant (24-year-old Japanese man in a casual navy shirt) across a video call window.",
+    "   - Show this as a laptop screen mock-up (silver-grey laptop, 3/4 angle, screen facing viewer). The screen shows a Google Meet-style video call UI: left tile = advisor smiling kindly with a slight forward lean, right tile = applicant listening with attentive expression. Both faces are simplified vector portraits with warm skin tones, friendly expressions.",
+    "   - A small clock indicator 「60:00」 in the top-right of the video UI.",
+    "   - Beside the laptop, a small notepad and a warm-orange coffee mug as editorial props (tiny, subtle).",
+    "   - Drop a very soft shadow under the laptop. KEEP IT CLEAN — no busy desk clutter.",
+    "",
+    "2.7) HEADLINE BAND — gift announcement (centered, just below the visual):",
+    "   - A single bold Japanese line, centered, dark charcoal #1A1A1A, ~22 px:",
+    "       「キャリア面談を無料でご招待！」",
+    "   - The phrase 「無料」 has a soft warm-orange highlight bar behind it (transparent yellow #FFE680 ~ 40% opacity) like a marker pen.",
+    "   - Comfortable vertical spacing (~24 px) above and below.",
+    "",
+    "3) MIDDLE-LOWER — PRICE CALLOUT (¥0 を主役にした横長カード):",
+    "   - White rounded-rectangle card centered, ~92% of canvas width.",
+    "   - 1.5 px dashed soft warm-orange border, padding inside ~28 px vertical / ~32 px horizontal.",
+    "   - Inside the card, a single horizontal row with left / center / right zones:",
+    "     LEFT (~25%): tiny grey eyebrow 「通常価格」 (~14 px) stacked above 「¥9,980」 (~30 px, medium weight, muted grey #6B7280) with a clean diagonal RED strikethrough across the digits.",
+    "     CENTER (~10%): a slim charcoal arrow 「→」 (~28 px) vertically centered.",
+    "     RIGHT (~50%): the digits 「¥0」 rendered ENORMOUSLY (~120-140 px tall, ultra-bold, warm-orange gradient #FF8533 → #FF6B00), filling the right zone. A small ✦ sparkle (yellow #FFD700) sits at the top-right of ¥0. Below ¥0, a small charcoal line (~14 px) 「あなたへプレゼント」 centered under the digits.",
+    "   - NO 「今だけ」 badge. Calm, premium, ¥0 dominates the eye.",
+    "",
+    "4) BOTTOM — THREE FEATURE CARDS IN A HORIZONTAL ROW:",
+    "   - Three EQUAL-WIDTH cards arranged SIDE BY SIDE in a single row, separated by ~10 px gaps. Each card: white panel, 1 px soft warm-orange hairline border, rounded 12 px corners, ~14 px inner padding.",
+    "   - Inside each card (vertically stacked): icon at TOP center (~40 px), title text BELOW the icon (centered, BOLD charcoal, ~18-20 px, wrap to 2 lines if needed). Only icon + title.",
+    "",
+    "   Card 1 (LEFT):",
+    "     - Icon: a charcoal magnifying glass over a small lightbulb (insight discovery).",
+    "     - Title: 「あなたの強みと志向を言語化」",
+    "",
+    "   Card 2 (CENTER):",
+    "     - Icon: two charcoal speech bubbles overlapping (1-on-1 dialogue).",
+    "     - Title: 「プロが 1 対 1 で丁寧にヒアリング」",
+    "",
+    "   Card 3 (RIGHT):",
+    "     - Icon: a charcoal compass with a warm-orange needle pointing up-right (direction-finding).",
+    "     - Title: 「最適なキャリアの道筋を提案」",
+    "",
+    "============================================================",
+    "STRICT REQUIREMENTS:",
+    "============================================================",
+    "- All Japanese text MUST be character-for-character correct (個別キャリア面談 / プロ / キャリアアドバイザー / 言語化 / ヒアリング / 提案 / 通常価格 / プレゼント / 無料).",
+    "- LEAVE THE BOTTOM ~140 px OF THE CANVAS AS CLEAN EMPTY PEACH-CREAM SPACE — the HTML CTA button is overlaid externally. NO illustration, NO text in that bottom band.",
+    "- KEEP THE COMPOSITION CALM AND PREMIUM. NO clutter, NO retail-ad vibe, NO heavy black borders, NO pink hairlines.",
+    "- Colors allowed: white, soft peach cream gradient background, warm orange #FF6B00 (ribbon/borders/price), red #DC2626 only for the strikethrough line, charcoal #1A1A1A for primary text, muted grey for secondary, soft beige/navy for the human illustrations.",
+  ].join("\n");
+}
+
+// -----------------------------------------------------------------------------
+// 離脱 POP (exit-intent モーダル) のプロンプト生成関数。
+// 正方形 1024x1024、画面中央にコンパクトに配置されるサイズ感。
+// A 版 = VibesRadar 訴求 / B 版 = 個別面談訴求 で価格・色味だけ差し替え。
+// -----------------------------------------------------------------------------
+function exitPopupPrompt({ variant }) {
+  const isB = variant === "b";
+  const themeName = isB ? "WARM ORANGE / PEACH" : "MINT GREEN";
+  const bgGradient = isB
+    ? "very soft peach cream gradient — top #FFFFFF fading to #FFF7ED at bottom"
+    : "very soft mint cream gradient — top #FFFFFF fading to #ECFDF3 at bottom";
+  const ribbonGradient = isB ? "#FF8533 to #FF6B00" : "#22C55E to #16A34A";
+  const priceColor = isB
+    ? "warm-orange gradient #FF8533 → #FF6B00"
+    : "warm-orange gradient #FF8533 → #FF6B00";
+  const oldPrice = isB ? "¥9,980" : "¥3,300";
+  const productLine = isB
+    ? "「個別キャリア面談 (60 分・オンライン)」"
+    : "「VibesRadar 受検チケット」";
+  const subline = isB
+    ? "「プロのキャリアアドバイザーと 1 対 1 で」"
+    : "「次世代型パーソナルWeb診断」";
+  const borderColor = isB ? "warm-orange" : "soft green";
+
+  return [
+    `Produce a single SQUARE image (1024x1024) — a compact, REFINED exit-intent modal banner shown when a user is about to leave a Japanese career landing page. Think 'premium product card', NOT 'busy retail flyer'. Theme: ${themeName}.`,
+    "",
+    "============================================================",
+    "STYLE — refined editorial, premium feel:",
+    "============================================================",
+    "- Clean 2D vector look. Crisp Japanese typography (Noto Sans JP / Hiragino style).",
+    "- Generous whitespace, calm hierarchy.",
+    "- Flat color fills, very light cel-shading on small objects only.",
+    "- AVOID: 3D, photorealism, anime, watercolor, drop-shadow heavy 'web ad' look.",
+    "",
+    "============================================================",
+    "OVERALL CANVAS (1024x1024 square):",
+    "============================================================",
+    `- Background: ${bgGradient}.`,
+    "- Outer ~50 px margin: empty whitespace around all sides.",
+    "- One faint ✦ sparkle in the top-right area, one in the lower-left. NO other ornaments.",
+    "",
+    "============================================================",
+    "LAYOUT (top to bottom, square composition):",
+    "============================================================",
+    "",
+    "1) TOP — PILL RIBBON (centered, ~72 px tall, ~88% of canvas width):",
+    `   - Pill-shaped band with gradient ${ribbonGradient}.`,
+    "   - White Japanese text centered, BOLD, ~32 px: 「閉じる前に、もう 1 つだけ」",
+    "   - Two large white slashes 「＼」 「／」 at each end. NO border, NO drop shadow.",
+    "",
+    "2) UPPER-MIDDLE — JP HEADLINE (centered, compact):",
+    "   - One Japanese line centered, dark charcoal #1A1A1A, BOLD, ~26 px:",
+    `       ${productLine}`,
+    "   - Below it, a smaller grey line (16 px, regular weight):",
+    `       ${subline}`,
+    "",
+    "3) CENTER — PRICE CALLOUT (¥0 を主役にした、横長カード):",
+    "   - White rounded-rectangle card centered, ~88% of canvas width, ~30% of canvas height.",
+    `   - 1.5 px dashed ${borderColor} border, padding inside ~24 px vertical / ~28 px horizontal.`,
+    "   - Inside the card, a single horizontal row:",
+    `     LEFT (~28%): tiny grey eyebrow 「通常価格」 (~14 px) stacked above 「${oldPrice}」 (~28 px, medium weight, muted grey #6B7280) with a clean diagonal RED strikethrough.`,
+    "     CENTER (~12%): a slim charcoal arrow 「→」 (~26 px) vertically centered.",
+    `     RIGHT (~50%): the digits 「¥0」 rendered ENORMOUSLY (~100 px tall, ultra-bold, ${priceColor}), filling the right zone. A small ✦ sparkle (yellow #FFD700) at the top-right of ¥0. Below ¥0, a small charcoal line (~13 px) 「あなたへプレゼント」 centered under the digits.`,
+    "",
+    "4) LOWER — REASSURANCE LINE (small text under the price card, centered):",
+    "   - 14 px charcoal Japanese line: 「いますぐの登録なら、本日の枠でご案内可能」",
+    "",
+    "============================================================",
+    "STRICT REQUIREMENTS:",
+    "============================================================",
+    "- All Japanese text MUST be character-for-character correct.",
+    "- LEAVE THE BOTTOM ~120 px OF THE CANVAS AS CLEAN EMPTY SPACE — the HTML CTA button is overlaid externally. NO illustration, NO text in that bottom band.",
+    "- KEEP IT CALM AND PREMIUM. NO clutter, NO retail-ad vibe, NO heavy black borders.",
+    `- Colors allowed: white, the ${themeName.toLowerCase()} background, the ribbon/border accent color, warm orange for ¥0, red #DC2626 only for strikethrough, charcoal #1A1A1A for primary text.`,
+  ].join("\n");
+}
+
+// -----------------------------------------------------------------------------
 // VibesRadar 特典バナー (Section 5/9/15 共通) のプロンプト生成関数。
 // リボン文言だけバリアントで差し替えるため、共通プロンプトを関数化。
 // ribbonText に渡す文字列が、画像上端の緑ピルリボン内に焼き込まれる。
@@ -1718,6 +1885,39 @@ export const IMAGES = [
     quality: "high",
     references: ["vibes-radar-logo.png"],
     prompt: radarBonusPrompt("まずはVibesRadarで自己分析"),
+  },
+
+  // -------------------------------------------------------------------------
+  // B 版 CTA バナー (個別キャリア面談 ¥9,980 → ¥0 訴求)。
+  // URL クエリ ?v=b で出る Section 5/9/15 共通のバナー。
+  // A 版 (result-radar-bonus.png) と同じ骨格で、テーマカラーを
+  // ピーチクリームに変更、訴求対象を「VibesRadar 受検チケット」から
+  // 「個別キャリア面談」に置換。
+  // -------------------------------------------------------------------------
+  {
+    file: "result-meeting-bonus.png",
+    size: "1024x1536",
+    quality: "high",
+    prompt: meetingBonusPrompt(),
+  },
+
+  // -------------------------------------------------------------------------
+  // 離脱 POP (exit-intent モーダル) 用クリエイティブ A/B。
+  // 正方形 1024x1024、モーダル中央にコンパクト表示。
+  //   A: VibesRadar 受検チケット ¥3,300 → ¥0 (?v=なし のデフォルト)
+  //   B: 個別キャリア面談 ¥9,980 → ¥0 (?v=b)
+  // -------------------------------------------------------------------------
+  {
+    file: "exit-popup-a.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: exitPopupPrompt({ variant: "a" }),
+  },
+  {
+    file: "exit-popup-b.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: exitPopupPrompt({ variant: "b" }),
   },
 
   // -------------------------------------------------------------------------

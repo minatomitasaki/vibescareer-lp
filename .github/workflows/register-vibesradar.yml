@@ -118,8 +118,9 @@ jobs:
             --name "$TARGET_NAME" \
             --email "$TARGET_EMAIL"
 
-      - name: Upload artifacts on failure
-        if: failure()
+      - name: Upload artifacts (always, for debugging)
+        # 成功・失敗どちらでも screenshot を残しておく (運用が安定したら if: failure() に戻す)
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-artifacts-${{ github.run_id }}

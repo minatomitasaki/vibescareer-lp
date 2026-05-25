@@ -8,6 +8,7 @@
 //
 // Phase 1: 可変ブロック (Section 1-4)
 // 残りの Section 5-18 は後続フェーズで追加。
+import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -16,6 +17,8 @@ import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { EntryForm } from "@/components/EntryForm";
 import { OtherJobsList } from "@/components/OtherJobsList";
 import { RoadmapScrollProgress } from "@/components/RoadmapScrollProgress";
+import { RadarBonusSection } from "@/components/RadarBonusSection";
+import { ExitIntentPopup } from "@/components/ExitIntentPopup";
 import {
   RESULT_DATA,
   allResultIds,
@@ -72,20 +75,31 @@ export default async function ResultPage({
       <InsightSection data={data} />
 
       {/* === 固定ブロック前半 (Section 5-9) === */}
-      <RadarBonusSection variant="primary" />
+      <Suspense fallback={null}>
+        <RadarBonusSection variant="primary" />
+      </Suspense>
       <AdvisorsSection />
       <SuccessCasesSection />
       <PartnersSection />
-      <RadarBonusSection variant="secondary" />
+      <Suspense fallback={null}>
+        <RadarBonusSection variant="secondary" />
+      </Suspense>
 
       {/* === 固定ブロック後半 (Section 10-18) === */}
       <ConcernsSection />
       <CausesSection />
       <ServiceIntroSection />
-      <RadarBonusSection variant="tertiary" />
+      <Suspense fallback={null}>
+        <RadarBonusSection variant="tertiary" />
+      </Suspense>
       <FaqSection />
       <LastMessageSection />
       <FormSection resultId={data.id} />
+
+      {/* 離脱 POP (PC: マウス上端離脱 / モバイル: 2 分・別タブ復帰・戻る捕捉) */}
+      <Suspense fallback={null}>
+        <ExitIntentPopup />
+      </Suspense>
     </main>
   );
 }
@@ -191,52 +205,9 @@ function InsightSection({ data }: { data: ResultData }) {
 }
 
 // =============================================================================
-// Section 5 / 9 / 15: VibesRadar 特典カード (再利用コンポーネント)
-// variant: primary (1回目) / secondary (2回目) / tertiary (3回目)
-// 装飾は同じ、ラベルだけ少し変える
+// Section 5 / 9 / 15: VibesRadar 特典カード は src/components/RadarBonusSection.tsx
+// に Client Component として分離。URL クエリ ?v=b で A/B バリアント切替。
 // =============================================================================
-function RadarBonusSection({
-  variant,
-}: {
-  variant: "primary" | "secondary" | "tertiary";
-}) {
-  // tertiary だけリボン文言が「まずはVibesRadarで自己分析」に焼き込まれた専用画像を使う。
-  const isSelfAnalysis = variant === "tertiary";
-  const imageSrc = isSelfAnalysis
-    ? "/images/result-radar-bonus-self.png"
-    : "/images/result-radar-bonus.png";
-  const altText = isSelfAnalysis
-    ? "まずは VibesRadar で自己分析。次世代型パーソナルWeb診断で 8 つのポテンシャルタイプ・全 48 項目・ネガティブアラート 5 つを可視化。"
-    : "15秒診断を受けた方限定で無料配布。VibesRadar の無料チケット ¥3,300 → ¥0。次世代型パーソナルWeb診断で 8 つのポテンシャルタイプ・全 48 項目・ネガティブアラート 5 つを可視化。";
-
-  return (
-    // 画像と CTA を 1 つの CTA セクションとして、画像の背景色 (#ECFDF3) と
-    // 同じミント緑で section 全体を塗って白い間隙を消す。
-    <section className="px-4 pt-8 pb-10 bg-[#ECFDF3]">
-      <div className="flex justify-center">
-        <ImagePlaceholder
-          src={imageSrc}
-          label="VibesRadar 無料チケット特典"
-          alt={altText}
-          width={1024}
-          height={1536}
-          className="w-full h-auto max-w-[480px] block"
-        />
-      </div>
-      <div className="mt-2 flex justify-center px-2">
-        <Link
-          href="#form"
-          className="btn-cta-radar group w-full max-w-[420px]"
-        >
-          <span className="relative z-10">無料チケットを受け取る</span>
-          <span className="relative z-10 inline-block transition-transform group-hover:translate-x-1">
-            ▶
-          </span>
-        </Link>
-      </div>
-    </section>
-  );
-}
 
 // =============================================================================
 // Section 6: アドバイザー紹介
