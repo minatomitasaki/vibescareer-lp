@@ -11,24 +11,12 @@
 
 import { useEffect, useState } from "react";
 import { JOB_OTHER_DESCRIPTION, type JobType } from "@/data/results";
-
-// 距離タイブレーク順 (diagnosis-scoring.ts と同一)
-const TIEBREAK_ORDER: JobType[] = [
-  "sales",
-  "marketing",
-  "planning",
-  "support",
-  "creative",
-  "engineer",
-];
+import {
+  computePersonalizedOtherJobs,
+  type StoredDiagnosis,
+} from "@/lib/result-meta";
 
 const STORAGE_KEY = "vc:diagnosis:answers";
-
-type StoredDiagnosis = {
-  debug?: {
-    jobDistances?: Partial<Record<JobType, number>>;
-  };
-};
 
 export function OtherJobsList({
   defaults,
@@ -46,26 +34,11 @@ export function OtherJobsList({
       const parsed = JSON.parse(raw) as StoredDiagnosis;
       const distances = parsed?.debug?.jobDistances;
       if (!distances) return;
-
-      // メイン以外の 5 職種を「距離昇順 → タイブレーク順」でソート
-      const ranked = TIEBREAK_ORDER.filter((j) => j !== mainJob)
-        .map((j) => ({
-          job: j,
-          dist: distances[j] ?? Infinity,
-          tiebreakIdx: TIEBREAK_ORDER.indexOf(j),
-        }))
-        .sort((a, b) => {
-          if (a.dist !== b.dist) return a.dist - b.dist;
-          return a.tiebreakIdx - b.tiebreakIdx;
-        });
-
-      if (ranked.length >= 2) {
-        setJobs([ranked[0].job, ranked[1].job]);
-      }
+      setJobs(computePersonalizedOtherJobs(mainJob, distances, defaults));
     } catch {
       /* localStorage が無効でも defaults のまま表示 */
     }
-  }, [mainJob]);
+  }, [mainJob, defaults]);
 
   return (
     <div className="flex flex-col gap-4 mt-3">

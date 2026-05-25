@@ -9,9 +9,37 @@
 
 import { useState, type FormEvent, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
+import {
+  buildResultMetaForSheet,
+  isValidResultId,
+  type StoredDiagnosis,
+} from "@/lib/result-meta";
 
 const GAS_ENDPOINT =
   "https://script.google.com/macros/s/AKfycbxdh39Lxmv0mQ55xzBU41OpZWykbVgq7pUouU83ieXMv9SzXQNWhBOxBiZ8kqeRqlZP/exec";
+
+// 診断結果が保存される localStorage キー (lp01/diagnosis/page.tsx と同一)
+const DIAGNOSIS_STORAGE_KEY = "vc:diagnosis:answers";
+
+/**
+ * シート連携用に「個人別 2 位 3 位」を含む日本語ラベル一式を組み立てる。
+ * localStorage に jobDistances があればその人専用の 2 位 3 位、無ければ
+ * results.ts に定義された defaults が使われる。
+ */
+function buildSheetMeta(resultId: string) {
+  if (!isValidResultId(resultId)) return null;
+  let distances;
+  try {
+    const raw = window.localStorage.getItem(DIAGNOSIS_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as StoredDiagnosis;
+      distances = parsed?.debug?.jobDistances;
+    }
+  } catch {
+    /* localStorage が無効でも defaults で続行 */
+  }
+  return buildResultMetaForSheet(resultId, distances);
+}
 
 const INPUT_CLS =
   "w-full border-2 border-border-default rounded-lg px-3 py-2.5 text-[14px] focus:border-brand-primary focus:outline-none bg-white";
@@ -32,6 +60,9 @@ export function EntryForm({ resultId }: { resultId: string }) {
     setSubmitting(true);
 
     const fd = new FormData(event.currentTarget);
+    // 個人別 2位3位 + 日本語ラベル一式 (シート連携用)
+    // localStorage に診断結果があればその人専用、無ければ defaults。
+    const sheetMeta = buildSheetMeta(resultId);
     // stage: GAS 側で「フォーム送信のみで離脱」と「予約完了」を区別するためのフラグ。
     // - "form_submitted": ここで送信される (このフォームを送信した時点)
     // - "booking_confirmed": /api/calendar/book で送信される (予約成立時)
@@ -48,6 +79,13 @@ export function EntryForm({ resultId }: { resultId: string }) {
       education: String(fd.get("education") ?? ""),
       school: String(fd.get("school") ?? ""),
       major: String(fd.get("major") ?? ""),
+      // シート C 列〜向け: 日本語化済みラベル
+      workplaceLabel: sheetMeta?.workplaceLabel ?? "",
+      jobLabel: sheetMeta?.jobLabel ?? "",
+      combinedLabel: sheetMeta?.combinedLabel ?? "",
+      subJobLabel1: sheetMeta?.subJobLabel1 ?? "",
+      subJobLabel2: sheetMeta?.subJobLabel2 ?? "",
+      salaryRange: sheetMeta?.salaryRange ?? "",
     };
 
     // /schedule ページが SchedulePicker から再利用できるように sessionStorage に保存

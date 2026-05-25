@@ -40,6 +40,13 @@ type EntryFormPayload = {
   education?: string;
   school?: string;
   major?: string;
+  // シート連携用 (EntryForm で日本語化済み、SchedulePicker → 本 API 経由で GAS へ転送)
+  workplaceLabel?: string;
+  jobLabel?: string;
+  combinedLabel?: string;
+  subJobLabel1?: string;
+  subJobLabel2?: string;
+  salaryRange?: string;
 };
 
 type BookRequest = {
