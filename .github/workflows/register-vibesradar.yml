@@ -1,0 +1,161 @@
+# LP の予約完了から repository_dispatch で起動される、
+# VibesRadar 受検者自動登録ワークフロー。
+#
+# 起動方法:
+#   LP 側 (src/lib/dispatch-vibesradar.ts) が
+#   POST https://api.github.com/repos/<owner>/<repo>/dispatches
+#   { event_type: "register-vibesradar",
+#     client_payload: { name, email, resultId } }
+#   を投げる。
+#
+# 必要な GitHub Secrets:
+#   VIBESRADAR_EMAIL       管理画面のログインメール
+#   VIBESRADAR_PASSWORD    管理画面のログインパスワード
+#   SLACK_WEBHOOK_URL      失敗時の通知先 (既存の予約通知 webhook を流用可、未設定なら通知スキップ)
+#
+# 手動テスト:
+#   GitHub の Actions タブから "Run workflow" でも実行可能。
+#
+# セキュリティ:
+#   client_payload / inputs はユーザー入力 (LP のフォーム経由) なので、
+#   シェルへの直接補間 (${{ ... }}) を避け、必ず env: 経由で渡している。
+#   コマンドインジェクションを防ぐためのお約束。
+
+name: Register VibesRadar Examinee
+
+on:
+  repository_dispatch:
+    types: [register-vibesradar]
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "受検者氏名 (例: 山田 太郎)"
+        required: true
+        type: string
+      email:
+        description: "受検者メールアドレス"
+        required: true
+        type: string
+      resultId:
+        description: "診断ID (任意、ログ用)"
+        required: false
+        type: string
+
+jobs:
+  register:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    # ユーザー入力はすべて env: 経由で受け、シェル補間を避ける。
+    # 後続ステップは $DISPATCH_* / $INPUT_* を bash 変数として参照する。
+    env:
+      EVENT_NAME: ${{ github.event_name }}
+      DISPATCH_NAME: ${{ github.event.client_payload.name }}
+      DISPATCH_EMAIL: ${{ github.event.client_payload.email }}
+      DISPATCH_RESULT_ID: ${{ github.event.client_payload.resultId }}
+      INPUT_NAME: ${{ github.event.inputs.name }}
+      INPUT_EMAIL: ${{ github.event.inputs.email }}
+      INPUT_RESULT_ID: ${{ github.event.inputs.resultId }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Resolve inputs
+        run: |
+          # repository_dispatch なら client_payload、workflow_dispatch なら inputs を採用。
+          if [ "$EVENT_NAME" = "repository_dispatch" ]; then
+            TARGET_NAME="$DISPATCH_NAME"
+            TARGET_EMAIL="$DISPATCH_EMAIL"
+            TARGET_RESULT_ID="$DISPATCH_RESULT_ID"
+          else
+            TARGET_NAME="$INPUT_NAME"
+            TARGET_EMAIL="$INPUT_EMAIL"
+            TARGET_RESULT_ID="$INPUT_RESULT_ID"
+          fi
+          # 必須値の検証 (空なら早期失敗)
+          if [ -z "$TARGET_NAME" ] || [ -z "$TARGET_EMAIL" ]; then
+            echo "::error::name / email が空です (name='$TARGET_NAME', email='$TARGET_EMAIL')"
+            exit 1
+          fi
+          # 後続ステップへ env として伝搬。
+          # heredoc + ランダムデリミタで改行・特殊文字を完全に保護する。
+          DELIM="VR_EOF_$(openssl rand -hex 16)"
+          {
+            echo "TARGET_NAME<<$DELIM"
+            printf '%s\n' "$TARGET_NAME"
+            echo "$DELIM"
+            echo "TARGET_EMAIL<<$DELIM"
+            printf '%s\n' "$TARGET_EMAIL"
+            echo "$DELIM"
+            echo "TARGET_RESULT_ID<<$DELIM"
+            printf '%s\n' "$TARGET_RESULT_ID"
+            echo "$DELIM"
+          } >> "$GITHUB_ENV"
+          # ログには出すが、これは bash 変数なので補間問題は発生しない
+          echo "対象: $TARGET_NAME / $TARGET_EMAIL (resultId=$TARGET_RESULT_ID)"
+
+      - name: Run VibesRadar registration
+        env:
+          VIBESRADAR_EMAIL: ${{ secrets.VIBESRADAR_EMAIL }}
+          VIBESRADAR_PASSWORD: ${{ secrets.VIBESRADAR_PASSWORD }}
+        run: |
+          # TARGET_NAME / TARGET_EMAIL は前ステップが GITHUB_ENV にセット済み。
+          # 必ず "$VAR" で参照 (引数として安全に渡る)。
+          node scripts/register-vibesradar.mjs \
+            --name "$TARGET_NAME" \
+            --email "$TARGET_EMAIL"
+
+      - name: Upload artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts-${{ github.run_id }}
+          path: playwright-artifacts/
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Notify Slack on failure
+        # secrets.SLACK_WEBHOOK_URL を if: で直接評価すると不安定なので、
+        # 条件は failure() のみ、Webhook URL の有無は run 内でチェックする。
+        if: failure()
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK_URL" ]; then
+            echo "SLACK_WEBHOOK_URL 未設定のため Slack 通知をスキップ"
+            exit 0
+          fi
+          # jq の --arg で安全にエスケープしつつ JSON 構築
+          PAYLOAD=$(jq -n \
+            --arg name "${TARGET_NAME:-(unknown)}" \
+            --arg email "${TARGET_EMAIL:-(unknown)}" \
+            --arg rid "${TARGET_RESULT_ID:-}" \
+            --arg url "$RUN_URL" \
+            '{
+              text: (
+                ":warning: *VibesRadar 受検者自動登録に失敗しました*\n" +
+                "─────────────\n" +
+                "*氏名:* " + $name + "\n" +
+                "*メール:* " + $email + "\n" +
+                "*診断ID:* " + (if $rid == "" then "(なし)" else $rid end) + "\n" +
+                "─────────────\n" +
+                ":bust_in_silhouette: 管理画面で手動登録してください\n" +
+                ":mag: <" + $url + "|GitHub Actions ログを開く>"
+              )
+            }')
+          curl -sS -X POST -H "Content-Type: application/json" \
+            --data "$PAYLOAD" "$SLACK_WEBHOOK_URL"

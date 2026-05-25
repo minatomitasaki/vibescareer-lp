@@ -21,6 +21,7 @@ import {
   getCalendarAvailability,
 } from "@/lib/google-calendar";
 import { notifyBookingToSlack } from "@/lib/slack-notify";
+import { dispatchVibesRadarRegistration } from "@/lib/dispatch-vibesradar";
 
 export const dynamic = "force-dynamic";
 
@@ -142,6 +143,20 @@ export async function POST(request: Request) {
     });
   } catch (err) {
     console.warn("[api/calendar/book] GAS forward failed (non-fatal)", err);
+  }
+
+  // VibesRadar 受検者自動登録 (best-effort: 失敗しても予約成立は妨げない)
+  // GitHub Actions の repository_dispatch を発火 → Playwright で管理画面を操作
+  // → 「登録して案内を送信」で受検URLが本人にメール送信される。
+  // 失敗時は GitHub Actions 側の Slack 通知が「手動登録してください」と促す。
+  try {
+    await dispatchVibesRadarRegistration({
+      name: `${formData.lastName} ${formData.firstName}`,
+      email: formData.email,
+      resultId: formData.resultId ?? "",
+    });
+  } catch (err) {
+    console.warn("[api/calendar/book] vibesradar dispatch failed (non-fatal)", err);
   }
 
   // Slack 通知 (best-effort: 失敗しても予約成立は妨げない)
