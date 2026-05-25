@@ -172,7 +172,7 @@ export function ExitIntentPopup() {
           priority
           className="w-full h-auto block"
         />
-        <div className="absolute bottom-4 left-0 right-0 px-4">
+        <div className="absolute bottom-1 left-0 right-0 px-4">
           <a
             href="#form"
             onClick={onCtaClick}
