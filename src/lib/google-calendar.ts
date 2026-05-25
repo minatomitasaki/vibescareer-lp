@@ -142,6 +142,14 @@ export type CreateEventParams = {
   attendeeName: string;
   resultId: string;
   notes?: string;
+  /** 日本語化済みの適性ラベル (例 "安定 / エンジニア職") */
+  combinedLabel?: string;
+  /** 適正年収レンジ (例 "480〜580万円") */
+  salaryRange?: string;
+  /** サブ職種 1 (個人別 2 位、日本語名) */
+  subJobLabel1?: string;
+  /** サブ職種 2 (個人別 3 位、日本語名) */
+  subJobLabel2?: string;
 };
 
 /**
@@ -162,13 +170,20 @@ export async function createCounselingEvent(
   url.searchParams.set("sendUpdates", "all");
   url.searchParams.set("conferenceDataVersion", "1");
 
+  const subJobs = [params.subJobLabel1, params.subJobLabel2]
+    .filter(Boolean)
+    .join(" / ");
+
   const requestBody = {
     summary: `[VibesCareer] 初回カウンセリング - ${params.attendeeName} 様`,
     description: [
-      `診断ID: ${params.resultId}`,
+      params.combinedLabel ? `適性: ${params.combinedLabel}` : "",
+      params.salaryRange ? `年収レンジ: ${params.salaryRange}` : "",
+      subJobs ? `サブ職種候補: ${subJobs}` : "",
       `氏名: ${params.attendeeName}`,
       `メール: ${params.attendeeEmail}`,
       params.notes ? `\n備考:\n${params.notes}` : "",
+      params.resultId ? `\n(診断ID: ${params.resultId})` : "",
     ]
       .filter(Boolean)
       .join("\n"),

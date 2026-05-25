@@ -36,6 +36,14 @@ export type BookingNotifyPayload = {
   school: string;
   major: string;
   resultId: string;
+  /** 日本語化済みの適性ラベル (例 "安定 / エンジニア職") */
+  combinedLabel?: string;
+  /** 適正年収レンジ (例 "480〜580万円") */
+  salaryRange?: string;
+  /** サブ職種 1 (個人別 2 位、日本語名) */
+  subJobLabel1?: string;
+  /** サブ職種 2 (個人別 3 位、日本語名) */
+  subJobLabel2?: string;
   startISO: string;
   endISO: string;
   meetUrl: string | null;
@@ -47,13 +55,17 @@ export async function notifyBookingToSlack(
   const url = process.env.SLACK_WEBHOOK_URL;
   if (!url) return;
 
+  const subJobs = [p.subJobLabel1, p.subJobLabel2].filter(Boolean).join(" / ");
+
   const lines = [
     "🎉 *新規予約が入りました*",
     "─────────────",
     `*お客様:* ${p.lastName} ${p.firstName} 様`,
     `*メール:* ${p.email}`,
     `*日時:* ${fmtDateJp(p.startISO)} - ${fmtTimeJp(p.endISO)}`,
-    `*診断ID:* ${p.resultId || "(なし)"}`,
+    `*適性:* ${p.combinedLabel || p.resultId || "(なし)"}`,
+    `*年収レンジ:* ${p.salaryRange || "(なし)"}`,
+    `*サブ職種候補:* ${subJobs || "(なし)"}`,
     `*電話:* ${p.phone || "(未入力)"}`,
     `*希望地域:* ${p.location || "(未入力)"}`,
     `*希望時期:* ${p.timing || "(未入力)"}`,
