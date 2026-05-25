@@ -172,7 +172,17 @@ export function ExitIntentPopup() {
           priority
           className="w-full h-auto block"
         />
-        <div className="absolute bottom-1 left-0 right-0 px-4">
+        <div className="absolute bottom-3 left-0 right-0 px-4">
+          {/* reassurance line (画像内のテキストではなく HTML で表示。CTA のすぐ上に密接配置) */}
+          {version === "a" && (
+            <p className="mb-2 text-center text-[13px] font-semibold text-text-primary leading-snug">
+              まずは、
+              <span className="bg-brand-primary/15 px-1 rounded-sm">
+                2026年最新の適性検査
+              </span>
+              で自己分析！
+            </p>
+          )}
           <a
             href="#form"
             onClick={onCtaClick}
