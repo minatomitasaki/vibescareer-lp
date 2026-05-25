@@ -6,22 +6,42 @@
 // /api/calendar/book で予約成立時に呼び出される。
 // 通知失敗は予約成立を妨げないため best-effort (try/catch で握りつぶす)。
 
-const WEEKDAY_JP = ["日", "月", "火", "水", "木", "金", "土"];
+// Cloudflare Workers の実行環境はタイムゾーンが UTC 固定のため、Date#getHours() 等を
+// そのまま使うと JST から 9 時間ずれた値が返る (例: JST 22:00 → 13 が返る)。
+// Slack 通知の日時表示は必ず Asia/Tokyo で計算する。
+const TIME_ZONE = "Asia/Tokyo";
+
+function tokyoParts(iso: string): Record<string, string> {
+  const d = new Date(iso);
+  const numeric = new Intl.DateTimeFormat("en-US", {
+    timeZone: TIME_ZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(d);
+  const weekday = new Intl.DateTimeFormat("ja-JP", {
+    timeZone: TIME_ZONE,
+    weekday: "short",
+  }).formatToParts(d);
+  const map: Record<string, string> = {};
+  for (const p of numeric) map[p.type] = p.value;
+  map.weekday = weekday.find((x) => x.type === "weekday")?.value ?? "";
+  // hour: "2-digit" + hour12: false で 24 を返す環境があるため 00 に補正
+  if (map.hour === "24") map.hour = "00";
+  return map;
+}
 
 function fmtDateJp(iso: string): string {
-  const d = new Date(iso);
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  const wd = WEEKDAY_JP[d.getDay()];
-  const hh = String(d.getHours()).padStart(2, "0");
-  const mm = String(d.getMinutes()).padStart(2, "0");
-  return `${y}/${m}/${day} (${wd}) ${hh}:${mm}`;
+  const p = tokyoParts(iso);
+  return `${p.year}/${p.month}/${p.day} (${p.weekday}) ${p.hour}:${p.minute}`;
 }
 
 function fmtTimeJp(iso: string): string {
-  const d = new Date(iso);
-  return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+  const p = tokyoParts(iso);
+  return `${p.hour}:${p.minute}`;
 }
 
 export type BookingNotifyPayload = {
