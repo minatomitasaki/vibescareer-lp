@@ -152,6 +152,11 @@ npx --prefix "C:/Users/minato_mitasaki/Documents/claude-projects/vibescareer-lp"
 - 競合 LP の CSS や HTML を一字一句コピーしない (構造アイデアの参考に留める)
 - ユーザーが「保留」「いったんステイ」と言ったタスクには勝手に手を出さない
 - `.env.local` をコミットしない (`.gitignore` で `.env*` 除外済み)
+- **Windows ローカルから `npm run cf:deploy` / `wrangler deploy` を実行しない**
+  - 過去に Windows + OpenNext の互換性問題で本番 LP が壊れた事例あり (ChunkLoadError / Internal Server Error)
+  - 本番デプロイは **必ず `git push origin main` 経由で Workers Builds (Cloudflare 側 = Linux) に任せる**
+  - OpenNext は実行時に `WARN OpenNext is not fully compatible with Windows.` を出すが、これは無視せず、deploy をキャンセルする
+  - もし誤って deploy して本番が壊れたら、Cloudflare ダッシュボード → デプロイタブ → 過去の git push 由来 (commit hash がメッセージに付いているもの) の安定版にロールバックして即復旧する
 
 ## エージェント起動時の前置きテンプレ
 
