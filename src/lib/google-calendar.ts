@@ -105,6 +105,10 @@ export async function getCalendarAvailability(
       status?: string;
       start?: { dateTime?: string };
       end?: { dateTime?: string };
+      attendees?: Array<{
+        self?: boolean;
+        responseStatus?: string;
+      }>;
     }>;
   };
   const data = (await res.json()) as EventsListResponse;
@@ -120,9 +124,13 @@ export async function getCalendarAvailability(
     if (!start || !end) continue; // 終日イベントなど時刻が無いものは除外
     if (ev.summary === AVAILABLE_TITLE) {
       available.push({ start, end });
-    } else {
-      busy.push({ start, end });
+      continue;
     }
+    // カレンダー主催者本人が「辞退」している予定は空きとみなす (busy に入れない)
+    // accepted / tentative / needsAction はすべて busy 扱い
+    const selfAttendee = ev.attendees?.find((a) => a.self);
+    if (selfAttendee?.responseStatus === "declined") continue;
+    busy.push({ start, end });
   }
   return { available, busy };
 }
