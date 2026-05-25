@@ -161,7 +161,9 @@ export function ExitIntentPopup() {
           ✕
         </button>
 
-        {/* メインビジュアル (A 版: 1024x1536 縦長 / B 版: 1024x1024 正方形) */}
+        {/* メインビジュアル (A 版: 1024x1536 縦長 / B 版: 1024x1024 正方形)
+            画像下部に意図的に空白を残してあり、その領域に CTA を absolute で
+            オーバーラップ配置する (空白の浮きを防ぎ、画像と CTA を一体化させる) */}
         <Image
           src={imageSrc}
           alt={altText}
@@ -170,9 +172,7 @@ export function ExitIntentPopup() {
           priority
           className="w-full h-auto block"
         />
-
-        {/* CTA */}
-        <div className="px-4 pt-3 pb-5">
+        <div className="absolute bottom-4 left-0 right-0 px-4">
           <a
             href="#form"
             onClick={onCtaClick}
