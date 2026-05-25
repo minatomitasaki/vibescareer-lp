@@ -119,22 +119,44 @@ async function main() {
       .or(page.locator(':is(button, a):has-text("個別登録")'))
       .first()
       .click();
-    await page.waitForLoadState("networkidle");
+
+    // 登録モーダル/ダイアログの出現を待つ。
+    // 一覧画面の検索フィルター (id="candidates-email-filter" 等) と混ざらないよう、
+    // 以後の input 探索はダイアログ内にスコープを限定する。
+    // radix-ui 系 (data-slot="dialog-content") にも対応。
+    const dialog = page
+      .getByRole("dialog")
+      .or(
+        page.locator(
+          '[role="dialog"], [data-slot="dialog-content"], [data-state="open"][role="alertdialog"]',
+        ),
+      )
+      .first();
+    const dialogVisible = await dialog
+      .waitFor({ state: "visible", timeout: 10_000 })
+      .then(() => true)
+      .catch(() => false);
+
+    // ダイアログを取れたらそこを scope に、ダメならページ全体だがフィルター系は除外
+    const scope = dialogVisible ? dialog : page;
 
     // ── 4. フォーム入力 ───────────────────────────────────
-    console.log("[step 4] 氏名・メールを入力");
+    console.log(`[step 4] 氏名・メールを入力 (dialog scope: ${dialogVisible})`);
     // 氏名: ラベル「氏名」近傍の input、または placeholder マッチ
-    const nameInput = page
+    // どのパスでも検索フィルター (id 末尾が -filter / -search) は除外
+    const nameInput = scope
       .getByLabel("氏名")
-      .or(page.locator('input[placeholder*="氏名"]'))
-      .or(page.locator('input[name*="name" i]'))
+      .or(scope.locator('input[placeholder*="氏名"]:not([id*="filter"]):not([id*="search"])'))
+      .or(scope.locator('input[name*="name" i]:not([id*="filter"]):not([id*="search"])'))
       .first();
     await nameInput.fill(name);
 
-    const emailInput = page
-      .getByLabel(/メール/)
-      .or(page.locator('input[type="email"]'))
-      .or(page.locator('input[placeholder*="メール"]'))
+    // メール: ラベル先頭が「メール」(「メールアドレス」「メール」両方マッチ)
+    // type=email / placeholder マッチは検索フィルターを除外
+    const emailInput = scope
+      .getByLabel(/^メール/)
+      .or(scope.locator('input[type="email"]:not([id*="filter"]):not([id*="search"])'))
+      .or(scope.locator('input[placeholder*="メール"]:not([id*="filter"]):not([id*="search"])'))
       .first();
     await emailInput.fill(email);
 
