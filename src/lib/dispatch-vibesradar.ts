@@ -25,12 +25,23 @@ export type VibesRadarDispatchPayload = {
 export async function dispatchVibesRadarRegistration(
   payload: VibesRadarDispatchPayload,
 ): Promise<void> {
+  // デバッグ: 呼び出し自体が起きているか確認
+  console.log("[dispatch-vibesradar] called", {
+    name: payload.name,
+    email: payload.email,
+    resultId: payload.resultId,
+  });
+
   const token = process.env.GITHUB_DISPATCH_TOKEN;
   if (!token) {
     throw new Error("GITHUB_DISPATCH_TOKEN が未設定です");
   }
+  // デバッグ: token が読めているか (値そのものは出さず、長さだけ)
+  console.log(`[dispatch-vibesradar] token length: ${token.length}, prefix: ${token.slice(0, 12)}...`);
+
   const repo = process.env.GITHUB_DISPATCH_REPO || DEFAULT_REPO;
   const url = `https://api.github.com/repos/${repo}/dispatches`;
+  console.log(`[dispatch-vibesradar] POST ${url} event=${EVENT_TYPE}`);
 
   const res = await fetch(url, {
     method: "POST",
@@ -52,10 +63,14 @@ export async function dispatchVibesRadarRegistration(
     }),
   });
 
+  console.log(`[dispatch-vibesradar] response status: ${res.status} ${res.statusText}`);
+
   if (!res.ok) {
     const text = await res.text();
     throw new Error(
       `repository_dispatch failed: ${res.status} ${res.statusText} ${text}`,
     );
   }
+
+  console.log("[dispatch-vibesradar] success");
 }
