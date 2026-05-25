@@ -6,6 +6,11 @@ import "./globals.css";
 // Google Tag Manager コンテナ ID
 const GTM_ID = "GTM-NLBK2344";
 
+// GTM を読み込むかどうか (本番ビルドのみ true)。
+// ローカル `npm run dev` (NODE_ENV=development) では発火させず、
+// 計測データに開発時アクセスが混ざらないようにする。
+const enableGtm = process.env.NODE_ENV === "production";
+
 const notoSansJP = Noto_Sans_JP({
   variable: "--font-noto-sans-jp",
   subsets: ["latin"],
@@ -55,24 +60,28 @@ export default function RootLayout({
     >
       <head>
         {/* Google Tag Manager (head 上部に配置するため layout.tsx 内 <head> に直書き) */}
-        <Script id="gtm-init" strategy="afterInteractive">
-          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        {enableGtm && (
+          <Script id="gtm-init" strategy="afterInteractive">
+            {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','${GTM_ID}');`}
-        </Script>
+          </Script>
+        )}
       </head>
       <body className="min-h-screen bg-white">
         {/* Google Tag Manager (noscript) — body 開始直後に配置 */}
-        <noscript>
-          <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          />
-        </noscript>
+        {enableGtm && (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+            />
+          </noscript>
+        )}
         {children}
       </body>
     </html>
