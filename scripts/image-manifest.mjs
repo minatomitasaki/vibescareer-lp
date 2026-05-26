@@ -146,6 +146,126 @@ function meetingBonusPrompt({ vibesRadarPlacement = "parallel" } = {}) {
 }
 
 // -----------------------------------------------------------------------------
+// Meta 広告 軸 1 (コピー違い) 用プロンプト生成関数。
+// ベース A 案 (meta-ad-square-a-tekishoku.png) と全く同じ構図・配色・キャラ・
+// スマホ表示で「メイン見出し / 上部リボン / 下部チップ」だけを差し替える。
+// → コピー文言の刺さりだけを A/B テストするための変数統制。
+// -----------------------------------------------------------------------------
+function adAxis1CopyPrompt({ topHeadline, ribbonText, bottomChipText }) {
+  return [
+    "Square 1024x1024 social-media ad creative for a Japanese career-matching service 'VibesCareer' targeting 20-something second-career job seekers.",
+    "",
+    "STYLE:",
+    "- Flat 2D vector illustration, clean editorial Japanese style (similar to Noto Sans JP typography).",
+    "- Color palette: warm orange (#FF6B00, #FF8533, #FFD9B3) on cream background (#FFFAF2). NO blue, green, purple, cyan.",
+    "- Bright, optimistic, modern Japanese editorial feel.",
+    "",
+    "COMPOSITION (top to bottom):",
+    `- TOP 20%: Big bold Japanese headline centered, ultra-bold sans-serif, dark charcoal #1A1A1A on a soft cream area: 「${topHeadline}」(approx 64px).`,
+    `  - Just above the headline, a small warm-orange pill chip with white bold text: 「${ribbonText}」 (~20px).`,
+    "- MIDDLE 60%: Centered illustration of two cheerful Japanese 20-somethings (one man in casual navy shirt, one woman in beige cardigan, both around 24 years old) leaning toward a smartphone the woman holds. Both smiling, friendly modern faces.",
+    "  - The phone screen shows a simplified diagnosis result UI: a stylized 5-star icon row with one job-type badge labeled '★ エンジニア職 96%' in Japanese.",
+    "  - Faint warm-orange sparkle dots (✦) around the phone for a sense of excitement.",
+    `- BOTTOM 20%: A thin dashed warm-orange pill chip centered with tiny charcoal text: 「${bottomChipText}」 (~16px).`,
+    "",
+    "STRICT RULES:",
+    "- NO logo, NO watermark, NO website URL, NO English text other than the % number and star icon.",
+    "- Japanese typography must be crisp and correct (Noto Sans JP / Hiragino).",
+    "- Two people only. Hands and fingers must be anatomically correct (5 fingers per visible hand).",
+    "- NO 3D, NO photorealism, NO anime, NO watercolor, NO manga lines.",
+  ].join("\n");
+}
+
+// -----------------------------------------------------------------------------
+// Meta 広告 軸 2 (トンマナ違い) 用プロンプト生成関数。
+// コピー (見出し / リボン / 下部チップ) は A 案と完全に同じ固定値、
+// ビジュアルスタイル (写真風 / ミニマル / 漫画) だけを差し替える。
+// → ビジュアル様式の刺さりだけを A/B テストするための変数統制。
+// -----------------------------------------------------------------------------
+function adAxis2StylePrompt({ styleVariant }) {
+  const FIXED_HEADLINE = "15秒で適職診断";
+  const FIXED_RIBBON = "完全無料";
+  const FIXED_BOTTOM = "論文2,400本ベースの独自診断";
+
+  if (styleVariant === "photo") {
+    return [
+      "Square 1024x1024 social-media ad creative for a Japanese career-matching service 'VibesCareer'. PHOTOREALISTIC PORTRAIT style.",
+      "",
+      "STYLE — PHOTOREALISTIC:",
+      "- Soft, natural studio-lit photography of real Japanese people in their mid 20s.",
+      "- Warm cinematic color grading, light cream background.",
+      "- Warm orange (#FF6B00) used ONLY as overlay text/chip accent, not in the photograph itself.",
+      "- NOT illustration, NOT anime, NOT cartoon — must read as a real photograph.",
+      "",
+      "COMPOSITION (top to bottom):",
+      `- TOP 20%: Big bold Japanese headline centered, ultra-bold sans-serif, dark charcoal #1A1A1A on a soft cream overlay band: 「${FIXED_HEADLINE}」(approx 64px).`,
+      `  - Just above the headline, a small warm-orange pill chip with white bold text: 「${FIXED_RIBBON}」 (~20px).`,
+      "- MIDDLE 60%: Studio portrait photograph of two real Japanese 20-somethings (one man around 24 in a casual navy shirt, one woman around 24 in a beige cardigan), both smiling with pleasant surprise, leaning toward a smartphone the woman holds. Natural skin texture, soft window-lit lighting, shallow depth of field.",
+      "  - Phone screen mock: clean app UI with 5-star icon row and the badge '★ エンジニア職 96%' (overlaid on the phone in post).",
+      "  - 3-4 subtle warm-orange ✦ sparkle accents around the phone (graphic overlay, not painted on).",
+      `- BOTTOM 20%: A thin dashed warm-orange pill chip centered with tiny charcoal text: 「${FIXED_BOTTOM}」 (~16px).`,
+      "",
+      "STRICT RULES:",
+      "- Real photo style. NOT illustration, NOT cartoon.",
+      "- Two real Japanese people, natural expressions, anatomically correct hands (5 fingers).",
+      "- Japanese typography overlay crisp and correct.",
+      "- NO logo, NO website URL.",
+    ].join("\n");
+  }
+
+  if (styleVariant === "minimal") {
+    return [
+      "Square 1024x1024 social-media ad creative for a Japanese career-matching service 'VibesCareer'. ULTRA MINIMAL typography-first style.",
+      "",
+      "STYLE — ULTRA MINIMAL:",
+      "- 80%+ whitespace. Hero element is the Japanese typography, secondary element is a single iPhone mockup. NO people.",
+      "- Flat 2D vector iPhone mockup, clean editorial composition.",
+      "- Pure cream background (#FFFAF2), warm orange (#FF6B00) accents only. Charcoal #1A1A1A type.",
+      "- Premium magazine / editorial feel.",
+      "",
+      "COMPOSITION (top to bottom):",
+      `- TOP 30%: MASSIVE bold Japanese headline centered, ultra-bold sans-serif, charcoal #1A1A1A: 「${FIXED_HEADLINE}」(approx 92px — significantly larger than other variants because typography is the hero here).`,
+      `  - Just above the headline, a small warm-orange pill chip with white bold text: 「${FIXED_RIBBON}」 (~20px).`,
+      "- MIDDLE 50%: A SINGLE iPhone mockup centered on the canvas, tilted ~8 degrees, soft drop shadow below. Phone screen shows a simplified diagnosis result UI: 5-star icon row, badge '★ エンジニア職 96%', and a small circular radar/spider chart preview. Lots of empty cream space around the phone.",
+      "  - 3-4 faint warm-orange ✦ sparkles scattered minimally near the phone.",
+      `- BOTTOM 20%: A thin dashed warm-orange pill chip centered with tiny charcoal text: 「${FIXED_BOTTOM}」 (~16px).`,
+      "",
+      "STRICT RULES:",
+      "- ZERO PEOPLE in this version. Typography + phone + sparkles only.",
+      "- 80%+ whitespace, calm and premium.",
+      "- NO logo, NO website URL.",
+      "- Japanese typography character-for-character correct.",
+    ].join("\n");
+  }
+
+  if (styleVariant === "manga") {
+    return [
+      "Square 1024x1024 social-media ad creative for a Japanese career-matching service 'VibesCareer'. JAPANESE MANGA / SEINEN MAGAZINE style.",
+      "",
+      "STYLE — MANGA PANEL ART:",
+      "- Black ink manga line art with screentone shading (think Weekly Young Magazine seinen style — not chibi).",
+      "- High-contrast B&W base with warm orange (#FF6B00) accent splashes (single splash background for the right panel).",
+      "- Dramatic expressions, slight perspective, action lines for energy.",
+      "",
+      "COMPOSITION (top to bottom, 2-PANEL LAYOUT):",
+      `- TOP 15%: Bold Japanese headline centered with a slight tilt as if hand-drawn manga title text, charcoal #1A1A1A: 「${FIXED_HEADLINE}」(approx 58px). Above it, a small warm-orange pill chip with white bold text: 「${FIXED_RIBBON}」 (~20px).`,
+      "- MIDDLE 70% — TWO MANGA PANELS side by side, each with thick black borders and a subtle gutter between:",
+      "  - LEFT PANEL: a young Japanese man (24 yo, navy shirt) sitting at a desk in a slightly slumped posture, head in hand with a worried/lost expression. Screentone background. A speech bubble next to him: 「やりたい仕事が…」",
+      "  - RIGHT PANEL: SAME PERSON now with a big bright smile and stylized 'sparkle eyes' effect, looking down at a smartphone screen showing the diagnosis result with stars. A warm-orange action burst behind the phone. Speech bubble: 「これだ！」",
+      `- BOTTOM 15%: A thin dashed warm-orange pill chip (hand-drawn style) centered with tiny charcoal text: 「${FIXED_BOTTOM}」 (~16px).`,
+      "",
+      "STRICT RULES:",
+      "- Authentic manga line art + screentone. NOT flat vector, NOT anime cel, NOT photorealism.",
+      "- Japanese typography (including speech bubbles) character-for-character correct.",
+      "- Anatomically correct hands.",
+      "- NO logo, NO website URL.",
+    ].join("\n");
+  }
+
+  throw new Error(`Unknown ad style variant: ${styleVariant}`);
+}
+
+// -----------------------------------------------------------------------------
 // 離脱 POP A 版 (?v=なし のデフォルト LP 用)。
 // 縦長 1024x1536、CTA バナー (radarBonusPrompt) と同じ
 // 「laptop + smartphone + 金チケット」 のデバイスヒーローを中央に配置し、
@@ -2938,6 +3058,326 @@ export const IMAGES = [
       "- The 4 cards MUST have 4 DIFFERENT industry icons and 4 DIFFERENT bottom pastel tags.",
       "- The highlighted center card MUST display a clearly readable orange-circle badge with 「￥↑」 in its top-right corner, AND a small ascending bar-chart icon with an upward arrow near its bottom-right corner. These salary-up signals must be unmistakable.",
     ].join("\n"),
+  },
+
+  // -------------------------------------------------------------------------
+  // Meta (Facebook / Instagram) 広告用 正方形クリエイティブ 3 種
+  // 1024x1024 (Meta 推奨 1080x1080 に近い、最小要件 600x600 を余裕クリア)
+  // 訴求軸別 A/B/C テスト用。画像内テキストは最小限にして、説明は
+  // Meta 広告マネージャー側の「メインテキスト」「見出し」「説明」で入れる。
+  // -------------------------------------------------------------------------
+
+  // 案 A: 適職診断軸 (王道、機能訴求)
+  {
+    file: "meta-ad-square-a-tekishoku.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: [
+      "Square 1024x1024 social-media ad creative for a Japanese career-matching service 'VibesCareer' targeting 20-something second-career job seekers.",
+      "",
+      "STYLE:",
+      "- Flat 2D vector illustration, clean editorial Japanese style (similar to Noto Sans JP typography).",
+      "- Color palette: warm orange (#FF6B00, #FF8533, #FFD9B3) on cream background (#FFFAF2). NO blue, green, purple, cyan.",
+      "- Bright, optimistic, modern Japanese editorial feel.",
+      "",
+      "COMPOSITION (top to bottom):",
+      "- TOP 20%: Big bold Japanese headline centered, ultra-bold sans-serif, dark charcoal #1A1A1A on a soft cream area: 「15秒で適職診断」(approx 64px).",
+      "  - Just above the headline, a small warm-orange pill chip with white bold text: 「完全無料」 (~20px).",
+      "- MIDDLE 60%: Centered illustration of two cheerful Japanese 20-somethings (one man in casual navy shirt, one woman in beige cardigan, both around 24 years old) leaning toward a smartphone the woman holds. Both smiling, friendly modern faces.",
+      "  - The phone screen shows a simplified diagnosis result UI: a stylized 5-star icon row with one job-type badge labeled '★ エンジニア職 96%' in Japanese.",
+      "  - Faint warm-orange sparkle dots (✦) around the phone for a sense of excitement.",
+      "- BOTTOM 20%: A thin dashed warm-orange pill chip centered with tiny charcoal text: 「論文2,400本ベースの独自診断」 (~16px).",
+      "",
+      "STRICT RULES:",
+      "- NO logo, NO watermark, NO website URL, NO English text other than the % number and star icon.",
+      "- Japanese typography must be crisp and correct (Noto Sans JP / Hiragino).",
+      "- Two people only. Hands and fingers must be anatomically correct (5 fingers per visible hand).",
+      "- NO 3D, NO photorealism, NO anime, NO watercolor, NO manga lines.",
+    ].join("\n"),
+  },
+
+  // 案 B: 適正年収軸 (金銭メリット、CV 出やすい訴求)
+  {
+    file: "meta-ad-square-b-nensyu.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: [
+      "Square 1024x1024 social-media ad creative for a Japanese career-matching service 'VibesCareer' targeting 20-something job seekers focused on salary upgrade.",
+      "",
+      "STYLE:",
+      "- Flat 2D vector illustration, clean editorial Japanese style.",
+      "- Color palette: warm orange (#FF6B00, #FF8533, #FFD9B3) on cream background (#FFFAF2), with tasteful golden-yellow accents (#FFD23F) ONLY for sparkle dots and the price callout.",
+      "- Bright, optimistic, 'salary-up' excitement vibe.",
+      "",
+      "COMPOSITION (top to bottom):",
+      "- TOP 20%: Big bold Japanese headline centered, ultra-bold sans-serif, dark charcoal #1A1A1A on cream: 「あなたの適正年収、いくら？」(approx 56px).",
+      "  - Just below the headline, a small warm-orange pill chip with white bold text: 「15秒で診断」 (~20px).",
+      "- MIDDLE 60%: Centered illustration of one cheerful Japanese 24-year-old man (casual navy shirt, short dark hair) holding a smartphone with a surprised but happy expression (slightly wide eyes, gentle open-mouth smile).",
+      "  - The phone screen shows a stylized salary card UI: a big bold golden-yellow price callout '¥520万円〜650万円' in stylized digits, with a small upward arrow icon (↗) next to it. Above the number, smaller Japanese text 「あなたの適正年収」(~18px).",
+      "  - Faint golden (#FFD23F) ✦ sparkle dots around the phone.",
+      "- BOTTOM 20%: A thin dashed warm-orange pill chip centered with tiny charcoal text: 「20代専用・完全無料のキャリア診断」 (~16px).",
+      "",
+      "STRICT RULES:",
+      "- NO logo, NO watermark, NO URL, NO English text other than the ¥ amount and ↗ arrow.",
+      "- Japanese typography crisp and correct.",
+      "- One person only. Hands and fingers anatomically correct (5 fingers per visible hand).",
+      "- NO 3D, NO photorealism, NO anime, NO watercolor, NO manga lines.",
+    ].join("\n"),
+  },
+
+  // パターン D: 年収アップ訴求 (競合「ほくりくFIT転職」のトンマナを参考)
+  // 都会のビル背景 + 紺・白・マゼンタピンク。LP の warm orange に縛られない。
+  {
+    file: "meta-ad-square-d-salary-jump.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: [
+      "Square 1024x1024 high-impact social-media ad creative for a Japanese career-matching service 'VibesCareer' targeting 20-something second-career job seekers.",
+      "",
+      "STYLE:",
+      "- Modern Japanese ad style with a photographic background + flat overlay design.",
+      "- Bold sans-serif Japanese typography (Noto Sans JP, ultra-bold).",
+      "- Color palette: navy #0A2540, white #FFFFFF, vivid magenta-pink #FF3D9A, light blue accent #B8DAFF. NOT the brand's usual warm orange — this is a bold contrasty creative.",
+      "",
+      "COMPOSITION:",
+      "- BACKGROUND: a blurred, slightly desaturated photo of modern Tokyo skyscrapers in the daytime, navy/blue tint, soft bokeh.",
+      "- LEFT-BOTTOM 40%: photorealistic 24-year-old Japanese man in a dark suit and white shirt, side profile facing slightly right, looking forward with a confident, optimistic expression. Only head and upper shoulders visible, framed at the bottom-left corner.",
+      "- CENTER-TOP 60%: three stacked white rounded-rectangle cards (slight drop-shadow), each showing a salary jump example. Each card has:",
+      "  - LEFT half: Japanese yen amount in BOLD dark navy text 「380万円」",
+      "  - MIDDLE: a small navy filled triangle arrow pointing right ▶",
+      "  - RIGHT half: the increased amount in BIGGER, BOLDER, vivid magenta-pink 「480万円」",
+      "  - The three rows MUST show, top to bottom:",
+      "    Row 1: 「380万円」 ▶ 「480万円」",
+      "    Row 2: 「420万円」 ▶ 「580万円」",
+      "    Row 3: 「500万円」 ▶ 「680万円」",
+      "  - NO labels like '20代' or '○年目' or any other prefix text on the cards — ONLY the yen amounts and the arrow.",
+      "- RIGHT side: a huge bold magenta-pink upward arrow (↑) rising from the bottom-right corner across the right edge, behind the cards. Suggests salary climbing.",
+      "- BOTTOM-CENTER overlay: two stacked Japanese lines on a semi-transparent navy panel:",
+      "  - Line 1 (regular, ~22 px, white): 「年収アップを狙うなら」",
+      "  - Line 2 (ultra-bold, ~44 px, white): 「VibesCareer」",
+      "- BELOW the brand line, two small white pill chips side-by-side with tiny navy text:",
+      "  - 「論文2,400本ベース」",
+      "  - 「企業データ5,000件」",
+      "",
+      "STRICT RULES:",
+      "- All Japanese typography must be crisp and correct.",
+      "- The yen amounts MUST read exactly as specified above. Numbers must not be jumbled or rearranged.",
+      "- NO logos other than the 'VibesCareer' wordmark text.",
+      "- One person only.",
+      "- NO 3D, NO anime, NO watercolor.",
+    ].join("\n"),
+  },
+
+  // パターン E: ビフォーアフター比較 (競合「ココカラ転職」のトンマナを参考)
+  // 青グラデ背景 + 2 列比較表 + 中央に若手社員イラスト。
+  {
+    file: "meta-ad-square-e-before-after.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: [
+      "Square 1024x1024 high-impact social-media ad creative for a Japanese career-matching service 'VibesCareer'.",
+      "",
+      "STYLE:",
+      "- Bold Japanese ad design with a clean 2-column before/after comparison table.",
+      "- Flat 2D vector illustration for the central character.",
+      "- Color palette: bright blue gradient background #1E5DD8 (top) to #4A8DFF (bottom), white #FFFFFF, dark navy #0A2540 for 'before' band, warm orange #FF6B00 for 'after' band and CTA. NOT bound to brand warm-orange limitations — this creative leans on the blue ad style.",
+      "",
+      "COMPOSITION (top to bottom):",
+      "- TOP 18%: Big bold white Japanese headline centered: 「20代の年収UPを実現」 (~64 px, ultra-bold).",
+      "  - Below it, smaller white subhead 2 lines (~22 px): 「2,400論文ベースの診断で」「あなたに合う職場を見つける」",
+      "- MIDDLE 60%: A 2-column comparison table card (white rounded background, soft shadow).",
+      "  - LEFT column header band: dark navy #0A2540 fill, white bold text 「転職前」 (~28 px).",
+      "  - RIGHT column header band: warm orange #FF6B00 fill, white bold text 「転職後」 (~28 px).",
+      "  - Between the two columns there is a small white arrow icon (↗) running from top-left to bottom-right at the divider, suggesting transformation.",
+      "  - Three rows below the headers, separated by thin horizontal dashed lines:",
+      "    Row 1: LEFT 「月収22万円」 / RIGHT 「月収32万円」",
+      "    Row 2: LEFT 「賞与なし」 / RIGHT 「賞与あり」",
+      "    Row 3: LEFT 「残業多い」 / RIGHT 「ワークライフバランス◎」",
+      "  - All cell text is dark charcoal #1A1A1A, medium-bold, ~22 px.",
+      "  - In front of the table (overlapping slightly), a flat 2D vector illustration of one confident young Japanese man (~24, casual navy shirt, friendly smile, arms crossed) standing in the gap between the two columns. He is the visual anchor showing the 'transformation'.",
+      "- BOTTOM 22%:",
+      "  - A warm orange #FF6B00 rounded CTA button with white bold text 「詳しく見る ▶」 centered (~32 px).",
+      "  - Below the button, large bold white text 「VibesCareer」 (~42 px).",
+      "",
+      "STRICT RULES:",
+      "- All Japanese typography must be crisp and correct.",
+      "- The 3 comparison rows MUST read exactly as specified.",
+      "- One person only. Hands and fingers anatomically correct.",
+      "- NO 3D, NO photorealism for the character, NO anime, NO watercolor.",
+    ].join("\n"),
+  },
+
+  // パターン F: 急募派手系 (競合「キャリアアドバイザー求人」のトンマナを参考)
+  // 黒背景 + 蛍光ピンク・イエロー、写真風人物、3 ベネフィットアイコン。
+  {
+    file: "meta-ad-square-f-urgent.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: [
+      "Square 1024x1024 high-impact, attention-grabbing social-media ad creative for a Japanese career-matching service 'VibesCareer'.",
+      "",
+      "STYLE:",
+      "- Bold magazine-shock style ad with high contrast.",
+      "- Color palette: black #000000 background with rough painted neon pink #FF1A8C and neon yellow #FFE600 brush stroke accents. White text. NOT bound to brand warm orange.",
+      "- Japanese typography: ultra-bold sans-serif (Noto Sans JP Black).",
+      "",
+      "COMPOSITION:",
+      "- BACKGROUND: solid black with energetic rough neon pink and neon yellow brush stroke shapes (3-4 strokes diagonally), creating urgency and excitement.",
+      "- TOP-LEFT: a small yellow stamp-style chip rotated -8 degrees, black bold text inside: 「【無料】」 (~28 px).",
+      "- CENTER-LEFT, HUGE HEADLINE in white:",
+      "  - Line 1 (regular, ~36 px): 「年収を」",
+      "  - Line 2 (ultra-bold, ~88 px, with a small bright pink upward arrow ↑ embedded after 'UP'): 「UP↑」",
+      "  - Line 3 (ultra-bold, ~36 px): 「させたい20代!」",
+      "- BELOW the headline, a yellow tape ribbon (~50 px tall, rotated -3 degrees) with black bold Japanese text: 「VibesCareer の無料診断」 (~32 px).",
+      "- RIGHT 35%: photorealistic 24-25 year old Japanese man and woman, both in business casual (white shirt + dark blazer), standing side by side, both looking up-and-right with confident, optimistic expressions. Side profile, only upper bodies visible, framed at the right edge.",
+      "- BOTTOM-CENTER: three small white rounded cards in a horizontal row, each with a tiny icon at top and Japanese bold text below:",
+      "  - Card 1: bar-chart icon 📊 + 「2,400論文ベースの 科学的診断」 (~14 px text, 2 lines)",
+      "  - Card 2: yen icon ¥ + 「個人別の 適正年収レンジ」 (~14 px text, 2 lines)",
+      "  - Card 3: headset icon 🎧 + 「キャリアアドバイザー 1on1」 (~14 px text, 2 lines)",
+      "- BOTTOM BAND:",
+      "  - LEFT: small white Japanese text 「今の一歩が、未来のあなたを変える。」 (~16 px)",
+      "  - RIGHT: bright yellow rounded CTA button with black bold text 「無料診断はこちら ▶」 (~22 px)",
+      "",
+      "STRICT RULES:",
+      "- All Japanese typography crisp and correct.",
+      "- Two people only.",
+      "- High-energy, urgent feeling. NOT calm. NOT soft.",
+      "- NO 3D, NO anime, NO watercolor.",
+    ].join("\n"),
+  },
+
+  // パターン G: 求人相談チーム (競合「ほくりくFIT 職場シーン」のトンマナを参考)
+  // オフィス写真背景 + 紺ブロック大文字キャッチ + 信頼バッジ。
+  {
+    file: "meta-ad-square-g-team.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: [
+      "Square 1024x1024 high-impact social-media ad creative for a Japanese career-matching service 'VibesCareer'.",
+      "",
+      "STYLE:",
+      "- Photo background + bold typographic overlay. Clean modern Japanese ad style.",
+      "- Color palette: photographic warm cream and white tones from the office photo, with dark navy #0A2540 typographic blocks and white text overlays. Subtle warm orange #FF6B00 brand accent. NOT bound to a pure warm-orange palette.",
+      "",
+      "COMPOSITION:",
+      "- BACKGROUND: photorealistic photo of a bright modern Japanese open-plan office (white walls, light wood desks, soft natural daylight, slightly blurred bokeh). In the photo: three young Japanese professionals (mixed gender, late 20s, business casual — one woman with shoulder-length hair in a beige cardigan in the center, two men flanking her in light blue and white shirts) standing and talking with genuine smiles, holding notebooks or tablets. Friendly, approachable, real-workplace feel.",
+      "- LEFT-CENTER OVERLAY: three stacked dark navy #0A2540 rectangular blocks (each one filled solid navy, slight drop shadow, separate boxes per line), with BIG bold white Japanese text inside each (~52 px ultra-bold):",
+      "  - Block 1: 「適職が」",
+      "  - Block 2: 「わからない」",
+      "  - Block 3: 「あなたへ」",
+      "  - The blocks are left-aligned, stacked vertically with small gaps.",
+      "- TOP-RIGHT: two small horizontal white pill badges (one above the other), each with a tiny crown icon ♛ on the left and small dark navy Japanese text:",
+      "  - Badge 1: 「論文2,400本ベース」",
+      "  - Badge 2: 「企業データ5,000件」",
+      "- BOTTOM BAND (full-width, ~14% canvas height, dark navy #0A2540 fill):",
+      "  - LEFT: bold white text 「VibesCareer」 (~44 px ultra-bold)",
+      "  - RIGHT: two stacked smaller white Japanese lines (~18 px regular):",
+      "    Line 1: 「20代専用の科学的キャリア診断」",
+      "    Line 2: 「15秒・完全無料でお試しいただけます」",
+      "",
+      "STRICT RULES:",
+      "- All Japanese typography crisp and correct.",
+      "- Three people in the photo, all looking natural and authentically Japanese, in genuine conversation (not staged).",
+      "- Hands and fingers anatomically correct.",
+      "- NO 3D, NO illustration for the people (must be photorealistic), NO anime.",
+    ].join("\n"),
+  },
+
+  // 案 C: モヤモヤ共感軸 (共感訴求)
+  {
+    file: "meta-ad-square-c-moyamoya.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: [
+      "Square 1024x1024 social-media ad creative for a Japanese career-matching service 'VibesCareer' targeting 20-something 'stuck' workers feeling vague career dissatisfaction.",
+      "",
+      "STYLE:",
+      "- Flat 2D vector illustration, clean editorial Japanese style.",
+      "- Color palette: muted warm orange (#FF8533, #FFD9B3, #FFE5D1) on cream background (#FFFAF2). Slightly softer and calmer than typical bright ads — empathetic tone.",
+      "- Calm, empathetic, 'I get you' vibe — not too cheerful, but ending on a hopeful note.",
+      "",
+      "COMPOSITION (top to bottom):",
+      "- TOP 20%: Big bold Japanese headline centered, ultra-bold sans-serif, dark charcoal #1A1A1A on cream: 「モヤモヤ、卒業しよう。」(approx 60px). The Japanese period 「。」at the end is important — keep it.",
+      "- MIDDLE 60%: Centered illustration of one Japanese woman in her mid-20s (soft beige cardigan, shoulder-length dark brown hair). She is sitting at a small wooden desk, looking thoughtful and slightly down — chin lightly resting on hand, gentle introspective expression.",
+      "  - Above her head, three small soft-grey 'moyamoya' speech-cloud icons (◌ ◌ ◌) suggesting vague worries — small, subtle, NOT cartoony.",
+      "  - In front of her on the desk, a smartphone with a simplified diagnosis UI: a single warm-orange progress bar at ~70% width, with small Japanese label 「あなたの強み診断中…」(~16px) above it.",
+      "- BOTTOM 20%: A thin dashed warm-orange pill chip centered with tiny charcoal text: 「20代向け・15秒の無料キャリア診断」 (~16px).",
+      "",
+      "STRICT RULES:",
+      "- NO logo, NO watermark, NO URL, NO English text.",
+      "- Japanese typography crisp and correct (especially the period 「。」at end of headline).",
+      "- One person only. Hands and fingers anatomically correct (5 fingers per visible hand).",
+      "- NO 3D, NO photorealism, NO anime, NO watercolor, NO manga lines.",
+      "- Tone: empathetic and calm, NOT overly cheerful.",
+    ].join("\n"),
+  },
+
+  // ---------------------------------------------------------------------------
+  // Meta 広告 軸 1: コピー違い 4 種の A/B テスト用
+  // ベース構図・配色・キャラ・スマホ表示は meta-ad-square-a-tekishoku.png と
+  // 完全に揃え、メイン見出し + 上部リボン + 下部チップだけを差し替える。
+  //   1-A = meta-ad-square-a-tekishoku.png (既存、流用)
+  //   1-B = ベネフィット (適性年収)
+  //   1-C = 悩み (やりたい仕事ない)
+  //   1-D = ターゲット名指し (キャリア迷子の 20 代)
+  // ---------------------------------------------------------------------------
+  {
+    file: "meta-ad-axis1-b-nensyu-benefit.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: adAxis1CopyPrompt({
+      topHeadline: "あなたの適性年収、わかる",
+      ribbonText: "完全無料",
+      bottomChipText: "20代の平均年収アップ +120万円",
+    }),
+  },
+  {
+    file: "meta-ad-axis1-c-yaritai-nayami.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: adAxis1CopyPrompt({
+      topHeadline: "やりたい仕事、見つかってますか?",
+      ribbonText: "完全無料",
+      bottomChipText: "20代 2.4万人が受検済み",
+    }),
+  },
+  {
+    file: "meta-ad-axis1-d-meigo-target.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: adAxis1CopyPrompt({
+      topHeadline: "キャリア迷子の20代へ",
+      ribbonText: "完全無料",
+      bottomChipText: "論文2,400本ベースの独自診断",
+    }),
+  },
+
+  // ---------------------------------------------------------------------------
+  // Meta 広告 軸 2: トンマナ違い 4 種の A/B テスト用
+  // コピー (見出し / リボン / 下部チップ) は A 案と同じ固定。ビジュアル様式
+  // (フラット 2D / 写真 / ミニマル / 漫画) だけを差し替える。
+  //   2-A = meta-ad-square-a-tekishoku.png (既存、流用)
+  //   2-B = 写真風リアル人物
+  //   2-C = ミニマル (人物なし、タイポ主役)
+  //   2-D = 漫画コマ割り Before/After
+  // ---------------------------------------------------------------------------
+  {
+    file: "meta-ad-axis2-b-photo.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: adAxis2StylePrompt({ styleVariant: "photo" }),
+  },
+  {
+    file: "meta-ad-axis2-c-minimal.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: adAxis2StylePrompt({ styleVariant: "minimal" }),
+  },
+  {
+    file: "meta-ad-axis2-d-manga.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: adAxis2StylePrompt({ styleVariant: "manga" }),
   },
 
 ];
