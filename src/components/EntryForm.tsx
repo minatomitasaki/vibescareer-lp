@@ -123,7 +123,14 @@ export function EntryForm({ resultId }: { resultId: string }) {
   }
 
   return (
-    <form className="mt-6 space-y-4" onSubmit={onSubmit} noValidate={false}>
+    // data-clarity-mask: Microsoft Clarity にフォーム値を録画させない
+    // (操作・フォーカス・クリックは記録され、入力値だけ ★ で伏せられる)
+    <form
+      className="mt-6 space-y-4"
+      onSubmit={onSubmit}
+      noValidate={false}
+      data-clarity-mask="true"
+    >
       <Field label="お名前" required>
         <div className="grid grid-cols-2 gap-2">
           <input

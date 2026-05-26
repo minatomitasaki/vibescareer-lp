@@ -228,7 +228,11 @@ export function SchedulePicker() {
             {selectedIso.replaceAll("-", "/")}{" "}
             <span className="text-brand-primary">{picked.label}</span>
           </p>
-          <p className="text-[12px] text-text-muted mt-1">
+          {/* data-clarity-mask: 氏名・メールアドレスは Clarity 録画でマスクする */}
+          <p
+            className="text-[12px] text-text-muted mt-1"
+            data-clarity-mask="true"
+          >
             {formData.lastName} {formData.firstName} 様 / {formData.email}
           </p>
           <button
