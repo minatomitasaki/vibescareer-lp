@@ -161,17 +161,23 @@ export function ExitIntentPopup() {
         </button>
 
         {/* メインビジュアル (A 版: 1024x1536 縦長 / B 版: 1024x1024 正方形)
-            画像内 reassurance line は削除済み。HTML 側で画像の真下に
-            reassurance line + CTA を通常配置 (absolute 重ね配置だと画像内の
-            価格カード等と被るため、ノーマルフローで密接配置に変更) */}
-        <Image
-          src={imageSrc}
-          alt={altText}
-          width={1024}
-          height={imageHeight}
-          priority
-          className="w-full h-auto block"
-        />
+            A 版は画像生成時に下部 ~280 px を空白に指示してあるが、HTML
+            (reassurance line + CTA) を画像の真下に通常配置する今の方針では
+            その空白がそのまま見えて不自然な大隙間になる。
+            overflow-hidden の親 div + 画像に負 margin で下端をクロップする
+            ことで、画像内の最後のコンテンツ (価格カード) のすぐ下に HTML
+            部分が密接して並ぶようにする。 */}
+        <div className="overflow-hidden">
+          <Image
+            src={imageSrc}
+            alt={altText}
+            width={1024}
+            height={imageHeight}
+            priority
+            className="w-full h-auto block"
+            style={{ marginBottom: version === "a" ? "-25%" : 0 }}
+          />
+        </div>
         {version === "a" && (
           <p className="px-4 pt-2 text-center text-[13px] font-semibold text-text-primary leading-snug">
             まずは、
