@@ -162,8 +162,9 @@ export function ExitIntentPopup() {
         </button>
 
         {/* メインビジュアル (A 版: 1024x1536 縦長 / B 版: 1024x1024 正方形)
-            画像下部に意図的に空白を残してあり、その領域に CTA を absolute で
-            オーバーラップ配置する (空白の浮きを防ぎ、画像と CTA を一体化させる) */}
+            画像内 reassurance line は削除済み。HTML 側で画像の真下に
+            reassurance line + CTA を通常配置 (absolute 重ね配置だと画像内の
+            価格カード等と被るため、ノーマルフローで密接配置に変更) */}
         <Image
           src={imageSrc}
           alt={altText}
@@ -172,17 +173,16 @@ export function ExitIntentPopup() {
           priority
           className="w-full h-auto block"
         />
-        <div className="absolute bottom-3 left-0 right-0 px-4">
-          {/* reassurance line (画像内のテキストではなく HTML で表示。CTA のすぐ上に密接配置) */}
-          {version === "a" && (
-            <p className="mb-2 text-center text-[13px] font-semibold text-text-primary leading-snug">
-              まずは、
-              <span className="bg-brand-primary/15 px-1 rounded-sm">
-                2026年最新の適性検査
-              </span>
-              で自己分析！
-            </p>
-          )}
+        {version === "a" && (
+          <p className="px-4 pt-2 text-center text-[13px] font-semibold text-text-primary leading-snug">
+            まずは、
+            <span className="bg-brand-primary/15 px-1 rounded-sm">
+              2026年最新の適性検査
+            </span>
+            で自己分析！
+          </p>
+        )}
+        <div className="px-4 pt-2 pb-4">
           <a
             href="#form"
             onClick={onCtaClick}
