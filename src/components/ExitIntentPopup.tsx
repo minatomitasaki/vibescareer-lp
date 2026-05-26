@@ -4,10 +4,10 @@
 //
 // 発火条件:
 //   - PC: マウスがブラウザ上端を超えて出た瞬間 (mouseleave to viewport top)
+//   - PC + モバイル共通: ページを開いてから 10 分経過
 //   - モバイル:
-//       1) ページを開いてから 2 分経過
-//       2) 別タブ・別アプリから戻った瞬間 (visibilitychange: hidden → visible)
-//       3) ブラウザ「戻る」ボタンを押した瞬間 (history.pushState ダミー + popstate)
+//       1) 別タブ・別アプリから戻った瞬間 (visibilitychange: hidden → visible)
+//       2) ブラウザ「戻る」ボタンを押した瞬間 (history.pushState ダミー + popstate)
 //
 // セッション中は 1 回だけ表示。閉じた後は再発火しない (sessionStorage で抑制)。
 // クリックすると #form (申込フォームセクション) にスムーズスクロールしてモーダルを閉じる。
@@ -21,7 +21,7 @@ import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const STORAGE_KEY = "vc:exit-popup:shown";
-const MOBILE_TIMEOUT_MS = 2 * 60 * 1000; // 2 分
+const TIMEOUT_MS = 10 * 60 * 1000; // 10 分 (PC + モバイル 共通)
 
 function isMobileUA(): boolean {
   if (typeof navigator === "undefined") return false;
@@ -71,10 +71,9 @@ export function ExitIntentPopup() {
     return () => document.removeEventListener("mouseout", handler);
   }, [fire]);
 
-  // モバイル: 2 分経過で発火
+  // PC + モバイル共通: 10 分経過で発火
   useEffect(() => {
-    if (!isMobileUA()) return;
-    const id = window.setTimeout(fire, MOBILE_TIMEOUT_MS);
+    const id = window.setTimeout(fire, TIMEOUT_MS);
     return () => window.clearTimeout(id);
   }, [fire]);
 
