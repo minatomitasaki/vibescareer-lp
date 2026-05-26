@@ -47,6 +47,13 @@ type EntryFormPayload = {
   subJobLabel1?: string;
   subJobLabel2?: string;
   salaryRange?: string;
+  // 広告流入元 (UTM パラメータ、EntryForm で localStorage から取得した値を中継)
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_term?: string;
+  utm_content?: string;
+  utm_placement?: string;
 };
 
 type BookRequest = {
@@ -187,6 +194,12 @@ export async function POST(request: Request) {
     salaryRange: formData.salaryRange,
     subJobLabel1: formData.subJobLabel1,
     subJobLabel2: formData.subJobLabel2,
+    utm_source: formData.utm_source,
+    utm_medium: formData.utm_medium,
+    utm_campaign: formData.utm_campaign,
+    utm_term: formData.utm_term,
+    utm_content: formData.utm_content,
+    utm_placement: formData.utm_placement,
     startISO,
     endISO,
     meetUrl: created.meetUrl,

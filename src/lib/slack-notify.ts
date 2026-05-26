@@ -64,6 +64,13 @@ export type BookingNotifyPayload = {
   subJobLabel1?: string;
   /** サブ職種 2 (個人別 3 位、日本語名) */
   subJobLabel2?: string;
+  /** 広告流入元 (UTM パラメータ、EntryForm で localStorage から取得) */
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_term?: string;
+  utm_content?: string;
+  utm_placement?: string;
   startISO: string;
   endISO: string;
   meetUrl: string | null;
@@ -77,12 +84,19 @@ export async function notifyBookingToSlack(
 
   const subJobs = [p.subJobLabel1, p.subJobLabel2].filter(Boolean).join(" / ");
 
+  // 流入元行: utm_source / utm_campaign / utm_content をスラッシュ区切りで表示。
+  // 全部空 (直接訪問・検索流入) なら 「(直接 / 自然検索)」を表示。
+  const utmParts = [p.utm_source, p.utm_campaign, p.utm_content].filter(Boolean);
+  const utmLine = utmParts.length > 0 ? utmParts.join(" / ") : "(直接 / 自然検索)";
+  const placementLine = p.utm_placement ? ` (${p.utm_placement})` : "";
+
   const lines = [
     "🎉 *新規予約が入りました*",
     "─────────────",
     `*お客様:* ${p.lastName} ${p.firstName} 様`,
     `*メール:* ${p.email}`,
     `*日時:* ${fmtDateJp(p.startISO)} - ${fmtTimeJp(p.endISO)}`,
+    `*流入元:* ${utmLine}${placementLine}`,
     `*適性:* ${p.combinedLabel || p.resultId || "(なし)"}`,
     `*年収レンジ:* ${p.salaryRange || "(なし)"}`,
     `*サブ職種候補:* ${subJobs || "(なし)"}`,

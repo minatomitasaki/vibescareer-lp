@@ -14,6 +14,7 @@ import {
   isValidResultId,
   type StoredDiagnosis,
 } from "@/lib/result-meta";
+import { getStoredUtm } from "@/lib/utm";
 
 const GAS_ENDPOINT =
   "https://script.google.com/macros/s/AKfycbxdh39Lxmv0mQ55xzBU41OpZWykbVgq7pUouU83ieXMv9SzXQNWhBOxBiZ8kqeRqlZP/exec";
@@ -63,6 +64,8 @@ export function EntryForm({ resultId }: { resultId: string }) {
     // 個人別 2位3位 + 日本語ラベル一式 (シート連携用)
     // localStorage に診断結果があればその人専用、無ければ defaults。
     const sheetMeta = buildSheetMeta(resultId);
+    // 広告流入元 (localStorage に保存された UTM パラメータ)
+    const utm = getStoredUtm();
     // stage: GAS 側で「フォーム送信のみで離脱」と「予約完了」を区別するためのフラグ。
     // - "form_submitted": ここで送信される (このフォームを送信した時点)
     // - "booking_confirmed": /api/calendar/book で送信される (予約成立時)
@@ -86,6 +89,13 @@ export function EntryForm({ resultId }: { resultId: string }) {
       subJobLabel1: sheetMeta?.subJobLabel1 ?? "",
       subJobLabel2: sheetMeta?.subJobLabel2 ?? "",
       salaryRange: sheetMeta?.salaryRange ?? "",
+      // シート U 列〜向け: 広告流入元 (UTM パラメータ)
+      utm_source: utm.utm_source ?? "",
+      utm_medium: utm.utm_medium ?? "",
+      utm_campaign: utm.utm_campaign ?? "",
+      utm_term: utm.utm_term ?? "",
+      utm_content: utm.utm_content ?? "",
+      utm_placement: utm.utm_placement ?? "",
     };
 
     // /schedule ページが SchedulePicker から再利用できるように sessionStorage に保存

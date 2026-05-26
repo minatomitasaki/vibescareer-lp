@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_JP, Inter, Zen_Kaku_Gothic_Antique, Klee_One } from "next/font/google";
 import Script from "next/script";
+import { UtmCapture } from "@/components/UtmCapture";
 import "./globals.css";
 
 // Google Tag Manager コンテナ ID
@@ -82,6 +83,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             />
           </noscript>
         )}
+        {/* URL の UTM パラメータを localStorage に保存 (last paid touch attribution) */}
+        <UtmCapture />
         {children}
       </body>
     </html>
