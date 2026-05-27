@@ -3352,6 +3352,61 @@ export const IMAGES = [
     }),
   },
 
+  // プラン α: 「15秒で XX診断」フォーマットの診断対象違い 5 種
+  // 「15秒で適職診断」(axis1-a 相当) が当たっている前提で、診断対象を
+  // 入れ替えて「何の診断」が刺さるかを純粋検証。下部チップは固定で
+  // 「論文2,400本ベースの独自診断」(= 王道訴求の変数統制)。
+  {
+    file: "meta-ad-axis1-e-15s-nensyu.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: adAxis1CopyPrompt({
+      topHeadline: "15秒で年収診断",
+      ribbonText: "完全無料",
+      bottomChipText: "論文2,400本ベースの独自診断",
+    }),
+  },
+  {
+    file: "meta-ad-axis1-f-15s-potential.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: adAxis1CopyPrompt({
+      topHeadline: "15秒でポテンシャル診断",
+      ribbonText: "完全無料",
+      bottomChipText: "論文2,400本ベースの独自診断",
+    }),
+  },
+  {
+    file: "meta-ad-axis1-g-15s-tsuyomi.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: adAxis1CopyPrompt({
+      topHeadline: "15秒で強み診断",
+      ribbonText: "完全無料",
+      bottomChipText: "論文2,400本ベースの独自診断",
+    }),
+  },
+  {
+    file: "meta-ad-axis1-h-15s-sainou.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: adAxis1CopyPrompt({
+      topHeadline: "15秒で隠れた才能診断",
+      ribbonText: "完全無料",
+      bottomChipText: "論文2,400本ベースの独自診断",
+    }),
+  },
+  {
+    file: "meta-ad-axis1-i-15s-tenshoku.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: adAxis1CopyPrompt({
+      topHeadline: "15秒で天職診断",
+      ribbonText: "完全無料",
+      bottomChipText: "論文2,400本ベースの独自診断",
+    }),
+  },
+
   // ---------------------------------------------------------------------------
   // Meta 広告 軸 2: トンマナ違い 4 種の A/B テスト用
   // コピー (見出し / リボン / 下部チップ) は A 案と同じ固定。ビジュアル様式
