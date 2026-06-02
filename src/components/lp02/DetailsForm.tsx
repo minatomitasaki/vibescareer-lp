@@ -181,7 +181,7 @@ export function DetailsForm({ resultId }: { resultId: string }) {
         className="btn-cta-radar-orange group w-full disabled:opacity-60 disabled:cursor-not-allowed"
       >
         <span className="relative z-10">
-          {submitting ? "送信中…" : "予約日程を選ぶ"}
+          {submitting ? "送信中…" : "次へ"}
         </span>
         <span className="relative z-10 inline-block transition-transform group-hover:translate-x-1">
           ▶
