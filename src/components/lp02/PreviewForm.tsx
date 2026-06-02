@@ -160,18 +160,17 @@ export function PreviewForm({ resultId }: { resultId: string }) {
       </Field>
 
       {/* 同意チェックボックスは廃止し、ボタンクリック = 同意 として扱う。
-          リーガル説明文をボタン上に小さく明示。 */}
+          リーガル説明文をボタン上に小さく明示 (privacy へのリンクのみ強調)。 */}
       <p className="text-[11px] text-text-muted text-center leading-[1.6]">
-        ボタンを押すと
         <a
           href="/privacy"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-brand-primary underline mx-0.5"
+          className="text-brand-primary underline"
         >
           個人情報取扱方針
         </a>
-        に同意したものとみなします
+        に同意にして、診断結果を見る
       </p>
 
       <button
@@ -180,7 +179,7 @@ export function PreviewForm({ resultId }: { resultId: string }) {
         className="btn-cta-radar-orange group w-full disabled:opacity-60 disabled:cursor-not-allowed"
       >
         <span className="relative z-10">
-          {submitting ? "解放中…" : "個人情報取扱方針に同意して、診断結果を見る"}
+          {submitting ? "解放中…" : "詳細な診断結果を見る"}
         </span>
         <span className="relative z-10 inline-block transition-transform group-hover:translate-x-1">
           ▶
