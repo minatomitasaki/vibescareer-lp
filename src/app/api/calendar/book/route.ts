@@ -54,6 +54,9 @@ type EntryFormPayload = {
   utm_term?: string;
   utm_content?: string;
   utm_placement?: string;
+  // LP バージョン識別子 (PreviewForm / DetailsForm が sessionStorage 経由で付与)
+  // 例: "lp01" / "lp02"。GAS と Slack 双方で振り分け / 表示に使う。
+  lpVersion?: string;
 };
 
 type BookRequest = {
@@ -200,6 +203,7 @@ export async function POST(request: Request) {
     utm_term: formData.utm_term,
     utm_content: formData.utm_content,
     utm_placement: formData.utm_placement,
+    lpVersion: formData.lpVersion,
     startISO,
     endISO,
     meetUrl: created.meetUrl,

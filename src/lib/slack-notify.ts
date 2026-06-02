@@ -56,6 +56,8 @@ export type BookingNotifyPayload = {
   school: string;
   major: string;
   resultId: string;
+  /** LP バージョン (例 "lp01" / "lp02")。Slack 見出しに表示して識別 */
+  lpVersion?: string;
   /** 日本語化済みの適性ラベル (例 "安定 / エンジニア職") */
   combinedLabel?: string;
   /** 適正年収レンジ (例 "480〜580万円") */
@@ -90,8 +92,17 @@ export async function notifyBookingToSlack(
   const utmLine = utmParts.length > 0 ? utmParts.join(" / ") : "(直接 / 自然検索)";
   const placementLine = p.utm_placement ? ` (${p.utm_placement})` : "";
 
+  // LP02 経由の予約はオファー内容が違う (個別カウンセリング主役) ため、
+  // 受信側で運用を分けやすいよう見出しで明示する。
+  const lpLabel =
+    p.lpVersion === "lp02"
+      ? "LP02 (個別カウンセリング)"
+      : p.lpVersion === "lp01"
+        ? "LP01 (VibesRadar 受検チケット)"
+        : "LP不明";
+
   const lines = [
-    "🎉 *新規予約が入りました*",
+    `🎉 *新規予約が入りました* — ${lpLabel}`,
     "─────────────",
     `*お客様:* ${p.lastName} ${p.firstName} 様`,
     `*メール:* ${p.email}`,
