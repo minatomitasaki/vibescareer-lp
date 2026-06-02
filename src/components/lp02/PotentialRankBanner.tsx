@@ -48,18 +48,15 @@ export function PotentialRankBanner() {
         </span>
 
         <div className="px-6 py-7 text-center">
-          {/* おめでとうリード */}
-          <p className="inline-flex items-center gap-1.5 text-[13px] font-black text-brand-primary tracking-wider">
+          {/* 「おめでとうございます！」をメインの大見出しに */}
+          <p className="inline-flex items-center justify-center gap-2 text-[26px] font-black text-brand-primary leading-tight">
             <span aria-hidden>🎉</span>
-            <span>CONGRATULATIONS</span>
+            <span>おめでとうございます！</span>
             <span aria-hidden>🎉</span>
-          </p>
-          <p className="mt-2 text-[17px] font-black text-text-primary">
-            おめでとうございます！
           </p>
 
           {/* 上位 N% メインキャッチ */}
-          <p className="mt-4 text-[14px] leading-[1.85] text-text-secondary">
+          <p className="mt-5 text-[14px] leading-[1.85] text-text-secondary">
             あなたには同世代の
           </p>
           <p className="mt-1 flex items-baseline justify-center gap-1">
@@ -72,7 +69,7 @@ export function PotentialRankBanner() {
             </span>
           </p>
           <p className="mt-2 text-[14px] leading-[1.85] text-text-secondary">
-            の年収を狙えるポテンシャルがあります！
+            の年収を狙えるポテンシャルがあることが判明しました。
           </p>
         </div>
       </div>
