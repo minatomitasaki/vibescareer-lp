@@ -133,3 +133,92 @@ export async function notifyBookingToSlack(
     console.warn("[slack-notify] failed", err);
   }
 }
+
+// =====================================================================
+// フォーム入力 (リード捕捉) 用 Slack 通知。
+// 予約成立より手前の段階で「誰が」「どの LP の」「どの段階で」入力した
+// かをチームに即通知するための軽量バージョン。
+//
+// 想定 stage:
+//   - "preview_unlocked": LP02 の preview ページで 4 項目 (氏名・電話・
+//     メール・生年月日) を入力した時点
+//   - "form_submitted": LP01/LP02 とも 詳細フォーム送信 → 予約画面遷移
+//     直前の状態 (まだ予約は成立していない)
+// =====================================================================
+export type LeadNotifyPayload = {
+  resultId: string;
+  lpVersion?: string;
+  stage: "preview_unlocked" | "form_submitted";
+  lastName: string;
+  firstName: string;
+  email: string;
+  phone?: string;
+  birthdate?: string;
+  location?: string;
+  timing?: string;
+  education?: string;
+  school?: string;
+  major?: string;
+  combinedLabel?: string;
+  salaryRange?: string;
+  subJobLabel1?: string;
+  subJobLabel2?: string;
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_term?: string;
+  utm_content?: string;
+  utm_placement?: string;
+};
+
+export async function notifyLeadToSlack(p: LeadNotifyPayload): Promise<void> {
+  const url = process.env.SLACK_WEBHOOK_URL;
+  if (!url) return;
+
+  const lpLabel =
+    p.lpVersion === "lp02"
+      ? "LP02 (個別カウンセリング)"
+      : p.lpVersion === "lp01"
+        ? "LP01 (VibesRadar 受検チケット)"
+        : "LP不明";
+
+  const stageLabel =
+    p.stage === "preview_unlocked"
+      ? "📝 *リード入力 (LP02 第1段フォーム)*"
+      : "📋 *詳細フォーム入力 (予約直前)*";
+
+  const utmParts = [p.utm_source, p.utm_campaign, p.utm_content].filter(Boolean);
+  const utmLine = utmParts.length > 0 ? utmParts.join(" / ") : "(直接 / 自然検索)";
+  const placementLine = p.utm_placement ? ` (${p.utm_placement})` : "";
+
+  const subJobs = [p.subJobLabel1, p.subJobLabel2].filter(Boolean).join(" / ");
+
+  const lines = [
+    `${stageLabel} — ${lpLabel}`,
+    "─────────────",
+    `*お客様:* ${p.lastName} ${p.firstName} 様`,
+    `*メール:* ${p.email}`,
+    p.phone ? `*電話:* ${p.phone}` : null,
+    p.birthdate ? `*生年月日:* ${p.birthdate}` : null,
+    `*流入元:* ${utmLine}${placementLine}`,
+    p.combinedLabel ? `*適性:* ${p.combinedLabel}` : null,
+    p.salaryRange ? `*年収レンジ:* ${p.salaryRange}` : null,
+    subJobs ? `*サブ職種候補:* ${subJobs}` : null,
+    p.location ? `*希望地域:* ${p.location}` : null,
+    p.timing ? `*希望時期:* ${p.timing}` : null,
+    p.education ? `*最終学歴:* ${p.education}` : null,
+    p.school ? `*学校名:* ${p.school}` : null,
+    p.major ? `*専攻学科:* ${p.major}` : null,
+    "─────────────",
+  ].filter((l): l is string => Boolean(l));
+
+  try {
+    await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: lines.join("\n") }),
+    });
+  } catch (err) {
+    console.warn("[slack-notify lead] failed", err);
+  }
+}

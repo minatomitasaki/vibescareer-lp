@@ -90,12 +90,21 @@ export function PreviewForm({ resultId }: { resultId: string }) {
     }
 
     try {
-      await fetch(GAS_ENDPOINT, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload),
-      });
+      // GAS スプシ + Slack 通知 (リード捕捉 1段目) を並行送信。
+      // どちらも best-effort、Slack 失敗は遷移を妨げない。
+      await Promise.allSettled([
+        fetch(GAS_ENDPOINT, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload),
+        }),
+        fetch("/api/lead-notify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }),
+      ]);
       router.push(`/lp02/result/${resultId}`);
     } catch {
       setError("送信に失敗しました。時間を置いて再度お試しください。");

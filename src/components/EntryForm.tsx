@@ -71,6 +71,7 @@ export function EntryForm({ resultId }: { resultId: string }) {
     // - "booking_confirmed": /api/calendar/book で送信される (予約成立時)
     const payload = {
       resultId,
+      lpVersion: "lp01" as const,
       stage: "form_submitted" as const,
       lastName: String(fd.get("lastName") ?? ""),
       firstName: String(fd.get("firstName") ?? ""),
@@ -106,14 +107,23 @@ export function EntryForm({ resultId }: { resultId: string }) {
     }
 
     try {
-      await fetch(GAS_ENDPOINT, {
-        method: "POST",
-        mode: "no-cors",
-        // Content-Type: text/plain で CORS preflight を回避
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload),
-      });
-      // no-cors なので response は opaque (読み取れない)。
+      // GAS スプシ + Slack 通知 (リード捕捉) を並行送信。
+      // どちらも best-effort で、Slack 失敗は遷移を妨げない。
+      await Promise.allSettled([
+        fetch(GAS_ENDPOINT, {
+          method: "POST",
+          mode: "no-cors",
+          // Content-Type: text/plain で CORS preflight を回避
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload),
+        }),
+        fetch("/api/lead-notify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }),
+      ]);
+      // no-cors なので GAS の response は opaque (読み取れない)。
       // ネットワークエラーが出なければ送信成功とみなして遷移する。
       router.push("/lp01/schedule");
     } catch {
