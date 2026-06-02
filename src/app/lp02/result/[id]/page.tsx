@@ -70,15 +70,38 @@ export default async function ResultPage({
         <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-primary/60 to-transparent" />
       </header>
 
-      {/* LP02 限定: preview → ここに辿り着いた直後の解放アナウンス */}
-      <section className="px-4 pt-4 pb-2 bg-white">
-        <div className="relative rounded-2xl border-2 border-brand-primary bg-gradient-to-br from-brand-primary-light/50 via-white to-brand-primary-light/30 px-4 py-4 text-center shadow-[0_6px_20px_rgba(255,107,0,0.12)]">
-          <p className="inline-flex items-center justify-center gap-2 text-[15px] font-black text-brand-primary leading-tight">
-            <span aria-hidden>🔓</span>
-            <span>詳しい結果が解放されました！</span>
-          </p>
-          <p className="mt-1.5 text-[12.5px] text-text-secondary">
-            じっくりとご覧ください
+      {/* LP02 限定: preview → ここに辿り着いた直後の解放アナウンス
+          緑系 + offset shadow で立体感 + 両端にパルスドットでライブ感 */}
+      <section className="px-4 pt-5 pb-3 bg-white">
+        <div
+          className="relative rounded-2xl border-2 border-[#22C55E] bg-gradient-to-b from-[#F0FDF4] via-white to-[#ECFDF3] px-5 py-6 text-center"
+          style={{
+            boxShadow:
+              "0 4px 0 0 #16A34A, 0 12px 28px rgba(34, 197, 94, 0.22)",
+          }}
+        >
+          {/* パルスドット (左上) */}
+          <span
+            className="absolute top-2.5 left-2.5 inline-flex items-center justify-center w-3 h-3"
+            aria-hidden
+          >
+            <span className="absolute inline-flex w-full h-full rounded-full bg-[#22C55E] opacity-75 animate-ping" />
+            <span className="relative inline-flex w-2 h-2 rounded-full bg-[#16A34A]" />
+          </span>
+          {/* パルスドット (右上) */}
+          <span
+            className="absolute top-2.5 right-2.5 inline-flex items-center justify-center w-3 h-3"
+            aria-hidden
+          >
+            <span className="absolute inline-flex w-full h-full rounded-full bg-[#22C55E] opacity-75 animate-ping" />
+            <span className="relative inline-flex w-2 h-2 rounded-full bg-[#16A34A]" />
+          </span>
+
+          <p
+            className="text-[22px] font-black leading-tight"
+            style={{ color: "#15803D" }}
+          >
+            詳しい診断結果が解放されました！
           </p>
         </div>
       </section>
