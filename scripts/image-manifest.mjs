@@ -10,6 +10,217 @@
 //     透過が必要なら別途画像処理 (例: rembg) で抜くか、白背景前提でデザインする。
 
 // -----------------------------------------------------------------------------
+// LP02 専用 緑色版 CTA バナー (Y2 確定版)。
+// メイン訴求: VibesCareer の個別キャリア面談 (「適職×適正年収を実現する」)
+// 補足: VibesRadar 無料チケットも特典付与
+// 色味は LP01 (radarBonusPrompt) と揃えて mint green 系。
+// VibesCareer の公式ロゴを画像内に焼き込み (references で公式画像を渡す)。
+// -----------------------------------------------------------------------------
+function lp02BonusGreenPrompt() {
+  return [
+    "You are given ONE reference image:",
+    "  image[0] = logo-vibescareer.png — the OFFICIAL VibesCareer brand logo. Place it as-is in the banner (do NOT redraw, restyle, or re-typeset the logo; keep its exact letterforms and colors).",
+    "",
+    "Produce a single vertical 2:3 image (1024x1536) — a REFINED, ELEGANT promotional banner for the VibesCareer career-support service. Think 'editorial premium service card', NOT 'busy retail flyer'. Generous whitespace and modern Japanese editorial sensibility.",
+    "",
+    "============================================================",
+    "STYLE — refined editorial, premium feel:",
+    "============================================================",
+    "- Clean 2D vector look. Crisp Japanese typography (Noto Sans JP / Hiragino).",
+    "- Mint green base palette aligned with LP01 (matches the existing radar-bonus banner).",
+    "- Generous whitespace, calm hierarchy, NO cluttered layout.",
+    "- Flat color fills with very light cel-shading on small objects only.",
+    "- AVOID: 3D, photorealism, anime, watercolor, drop-shadow heavy 'web ad' look.",
+    "",
+    "============================================================",
+    "OVERALL CANVAS (1024x1536):",
+    "============================================================",
+    "- Background: very soft mint cream gradient — top #FFFFFF fading downward to #ECFDF3. Almost off-white at the top.",
+    "- Outer ~60 px margin: empty whitespace around all sides.",
+    "- Two faint warm-orange ✦ sparkles for elegance (top-right area, middle-left area). NO other ornaments.",
+    "",
+    "============================================================",
+    "LAYOUT (top to bottom, breathing room between sections):",
+    "============================================================",
+    "",
+    "1) TOP — PILL RIBBON (centered, ~96 px tall, ~92% of canvas width):",
+    "   - Pill-shaped band with soft green gradient (#22C55E to #16A34A).",
+    "   - White Japanese text centered, BOLD, ~38 px: 「15秒診断を受けた方限定！」",
+    "   - Two large white slashes 「＼」 「／」 at each end of the text, matching text height.",
+    "   - CRITICAL — INSIDE the ribbon, render ONLY the exact string 「15秒診断を受けた方限定！」. DO NOT add any leading digit, number, or extra character (NO 「1」「！」 or stray glyph before/after). NO drop shadow, NO heavy border.",
+    "",
+    "2) UPPER-MIDDLE — JP HEADLINE + LOGO (centered, compact):",
+    "   - Two stacked Japanese lines come FIRST (above the logo), centered, dark charcoal #1A1A1A:",
+    "     Line 1 (16 px, regular weight): 「プロのキャリア面談で、年収アップの現実的なゴールを描く」",
+    "     Line 2 (28 px, ultra bold): 「適職×適正年収を実現する」",
+    "   - Below those two lines, place the OFFICIAL VibesCareer logo from image[0] centered, about 60% of canvas width.",
+    "   - CRITICAL — LOGO MUST BE A PIXEL-FAITHFUL REPRODUCTION OF image[0]:",
+    "     • Treat image[0] as an immutable brand asset. DO NOT redraw, restyle, or re-typeset the wordmark.",
+    "     • Preserve the exact typeface, letter shapes, weights, kerning, baseline, and capitalization (V-i-b-e-s-C-a-r-e-e-r).",
+    "     • Preserve the icon (mountain / chart-bar style triangular shape) and color split (charcoal 'Vibes' + warm-orange 'Career') exactly as in image[0].",
+    "     • No frame, no border, no shadow around the logo.",
+    "",
+    "2.5) PRODUCT VISUAL — 1ON1 HERO (centered, ~36% canvas height):",
+    "   - A clean editorial 2D vector composition: ONE professional career advisor (mid-30s Japanese woman in a soft beige blazer) facing ONE young applicant (24-year-old Japanese man in a casual navy shirt) across a stylized video-call window on a silver-grey laptop (3/4 angle, screen facing viewer). Left tile = advisor smiling kindly with a slight forward lean, right tile = applicant listening with attentive expression. Both faces simplified vector portraits with warm skin tones, friendly expressions.",
+    "   - A small clock indicator 「60:00」 in the top-right of the video UI.",
+    "   - BESIDE the laptop on the LEFT, a small editorial bar chart on a card: two warm-orange bars labeled in tiny Japanese 「現在」(shorter, ~60% height) → 「適正年収」(taller, ~100% height) with a small upward arrow 「↑」. This signals the salary-up promise. Clean and minimal.",
+    "   - A small notepad and a warm-orange coffee mug as subtle editorial props (tiny, low-key).",
+    "   - Drop a very soft shadow under the laptop. KEEP IT CLEAN — no busy desk clutter.",
+    "",
+    "2.7) GIFT NOTE — 2 行 (centered, just below the visual):",
+    "   - Two Japanese lines centered, dark charcoal #1A1A1A:",
+    "     Line 1 (16 px, medium weight): 「さらに！2026年最新の適正検査」",
+    "     Line 2 (16 px, medium weight): 「『VibesRadar』の無料チケットもプレゼント！」",
+    "   - The phrase 「無料チケット」 in line 2 has a soft warm-orange highlight bar behind it (transparent yellow #FFE680 ~ 40% opacity) like a marker pen.",
+    "   - Comfortable vertical spacing (~20 px) above and below.",
+    "",
+    "3) MIDDLE-LOWER — PRICE CALLOUT (¥0 を主役にした横長カード):",
+    "   - White rounded-rectangle card centered, ~92% of canvas width.",
+    "   - 1.5 px dashed soft-green border (#22C55E), padding inside ~28 px vertical / ~32 px horizontal.",
+    "   - Inside the card, a single horizontal row with left / center / right zones:",
+    "     LEFT (~25%): tiny grey eyebrow 「通常価格」 (~14 px) stacked above 「¥3,300」 (~30 px, medium weight, muted grey #6B7280) with a clean diagonal RED strikethrough across the digits.",
+    "     CENTER (~10%): a slim charcoal arrow 「→」 (~28 px) vertically centered.",
+    "     RIGHT (~50%): the digits 「¥0」 rendered ENORMOUSLY (~120-140 px tall, ultra-bold, warm-orange gradient #FF8533 → #FF6B00), filling the right zone. A small ✦ sparkle (yellow #FFD700) at the top-right of ¥0. Below ¥0, a small charcoal line (~14 px) 「あなたへプレゼント」 centered.",
+    "   - NO 「今だけ」 badge. Calm, premium, ¥0 dominates.",
+    "",
+    "4) BOTTOM — THREE FEATURE CARDS IN A HORIZONTAL ROW:",
+    "   - Three EQUAL-WIDTH cards arranged SIDE BY SIDE in a single row, separated by ~10 px gaps. Each card: white panel, 1 px soft-green hairline border, rounded 12 px corners, ~14 px inner padding.",
+    "   - Inside each card (vertically stacked): icon at TOP center (~40 px), title text BELOW the icon (centered, BOLD charcoal, ~16-18 px, wrap to 2 lines if needed). Only icon + title.",
+    "",
+    "   Card 1 (LEFT):",
+    "     - Icon: a small donut chart with 8 pastel slices (mint, peach, lavender, lemon, sky, rose, cream, sage). No center logo.",
+    "     - Title: 「8つのポテンシャルタイプを可視化」",
+    "",
+    "   Card 2 (CENTER):",
+    "     - Icon: a charcoal magnifying glass over a small lightbulb (insight discovery).",
+    "     - Title: 「あなたの強みを言語化」",
+    "",
+    "   Card 3 (RIGHT):",
+    "     - Icon: a charcoal compass with a warm-orange needle pointing up-right (direction-finding).",
+    "     - Title: 「年収UPの道筋を提案」",
+    "",
+    "============================================================",
+    "STRICT REQUIREMENTS:",
+    "============================================================",
+    "- The VibesCareer logo MUST appear EXACTLY like image[0]. Treat the logo as a sacred brand asset.",
+    "- All Japanese text MUST be character-for-character correct (15秒診断 / VibesCareer / VibesRadar / 適職 / 適正年収 / 適正検査 / プロ / キャリア面談 / 道筋 / 言語化 / ポテンシャルタイプ / 通常価格 / プレゼント / 無料チケット).",
+    "- LEAVE THE BOTTOM ~140 px OF THE CANVAS AS CLEAN EMPTY MINT-CREAM SPACE — the HTML CTA button is overlaid externally. NO illustration, NO text in that bottom band.",
+    "- KEEP THE COMPOSITION CALM AND PREMIUM. NO clutter, NO retail-ad vibe, NO heavy black borders, NO pink hairlines.",
+    "- Colors allowed: white, soft mint cream gradient background, soft green #22C55E (ribbon/borders), warm orange #FF6B00 (price/accents), red #DC2626 only for the strikethrough line, charcoal #1A1A1A for primary text, muted grey for secondary, soft beige/navy for the human illustrations.",
+  ].join("\n");
+}
+
+// -----------------------------------------------------------------------------
+// LP02 専用 CTA バナー (VibesCareer サービス本体訴求 + VibesRadar 特典付き)。
+// 共通枠は B 案 (meetingBonusPrompt) と同じ縦長 2:3、peach cream / warm orange
+// 系。違いは:
+//   - リボン文言: 「15秒診断を受けた方限定！」固定 (A 案リボンに揃える)
+//   - メイン見出し / サブ / 中央ビジュアル / 3 特徴 を案ごとに差替
+//   - 補足カードは「VibesCareer 本体 (左) + VibesRadar 受検チケット (右)」
+//     の 2 列固定、合計 ¥3,300 → ¥0 表現は維持
+// caseConfig:
+//   headlineLine1   メイン見出し 1 行目 (16px reg)
+//   headlineLine2   メイン見出し 2 行目 (28px ultra bold)
+//   eyebrow         見出し直下の小グレーチップ (オンライン/60分 等)
+//   mainVisual      中央 36% ビジュアルの英語指示 (laptop / 5-step / 3 portraits 等)
+//   giftLine        ビジュアル直下の太字 1 行 (キャリア面談を無料で〜)
+//   leftColumnTitle 並列カード左列のタイトル (VibesCareer 本体側)
+//   leftColumnSub   並列カード左列のサブ (60 分・オンライン 等)
+//   leftColumnIcon  並列カード左列のアイコン指示
+//   features        3 つの特徴カードタイトル (icon 指示込み)
+// -----------------------------------------------------------------------------
+function lp02BonusPrompt(c) {
+  return [
+    "Produce a single vertical 2:3 image (1024x1536) — a REFINED, ELEGANT promotional banner for the VibesCareer career-support service for Japanese 20-something second-career job seekers. Think 'editorial premium service card', NOT 'busy retail flyer'. Generous whitespace and modern Japanese editorial sensibility.",
+    "",
+    "============================================================",
+    "STYLE — refined editorial, premium feel:",
+    "============================================================",
+    "- Clean 2D vector look. Crisp Japanese typography (Noto Sans JP / Hiragino style).",
+    "- Generous whitespace, calm hierarchy, NO cluttered layout.",
+    "- Flat color fills with very light cel-shading on small objects only.",
+    "- AVOID: 3D, photorealism, anime, watercolor, drop-shadow heavy 'web ad' look.",
+    "",
+    "============================================================",
+    "OVERALL CANVAS (1024x1536):",
+    "============================================================",
+    "- Background: very soft peach cream gradient — top #FFFFFF fading downward to #FFF7ED. Almost off-white at the top.",
+    "- Outer ~60 px margin: empty whitespace around all sides.",
+    "- Two faint warm-orange ✦ sparkles for elegance (top-right area, middle-left area). NO other ornaments.",
+    "",
+    "============================================================",
+    "LAYOUT (top to bottom, breathing room between sections):",
+    "============================================================",
+    "",
+    "1) TOP — PILL RIBBON (centered, ~96 px tall, ~92% of canvas width):",
+    "   - Pill-shaped band with soft warm-orange gradient (#FF8533 to #FF6B00).",
+    "   - White Japanese text centered, BOLD, ~38 px: 「15秒診断を受けた方限定！」",
+    "   - Two large white slashes 「＼」 「／」 at each end of the text, matching text height.",
+    "   - NO heavy black border, NO drop shadow.",
+    "",
+    "2) UPPER-MIDDLE — JP HEADLINE (centered, compact):",
+    "   - Two stacked Japanese lines centered, dark charcoal #1A1A1A:",
+    `     Line 1 (16 px, regular weight): 「${c.headlineLine1}」`,
+    `     Line 2 (28 px, ultra bold): 「${c.headlineLine2}」`,
+    `   - Below the headline, a small grey eyebrow line (14 px regular): 「${c.eyebrow}」`,
+    "",
+    "2.5) PRODUCT VISUAL — MAIN HERO (centered, ~36% canvas height):",
+    ...c.mainVisual.map((line) => `   ${line}`),
+    "   - Drop a very soft shadow under the main object group for editorial depth. KEEP IT CLEAN — no busy desk clutter.",
+    "",
+    "2.7) HEADLINE BAND — gift announcement (centered, just below the visual):",
+    "   - A single bold Japanese line, centered, dark charcoal #1A1A1A, ~22 px:",
+    `       「${c.giftLine}」`,
+    "   - The phrase 「無料」 has a soft warm-orange highlight bar behind it (transparent yellow #FFE680 ~ 40% opacity) like a marker pen.",
+    "   - Comfortable vertical spacing (~24 px) above and below.",
+    "",
+    "3) MIDDLE-LOWER — PRICE CALLOUT (¥0 を主役にした横長カード):",
+    "   - White rounded-rectangle card centered, ~92% of canvas width.",
+    "   - 1.5 px dashed soft warm-orange border, padding inside ~28 px vertical / ~32 px horizontal.",
+    "   - Inside the card, a single horizontal row with left / center / right zones:",
+    "     LEFT (~25%): tiny grey eyebrow 「通常価格」 (~14 px) stacked above 「¥3,300」 (~30 px, medium weight, muted grey #6B7280) with a clean diagonal RED strikethrough across the digits.",
+    "     CENTER (~10%): a slim charcoal arrow 「→」 (~28 px) vertically centered.",
+    "     RIGHT (~50%): the digits 「¥0」 rendered ENORMOUSLY (~120-140 px tall, ultra-bold, warm-orange gradient #FF8533 → #FF6B00), filling the right zone. A small ✦ sparkle (yellow #FFD700) at the top-right of ¥0. Below ¥0, a small charcoal line (~14 px) 「あなたへプレゼント」 centered under the digits.",
+    "   - NO 「今だけ」 badge. Calm, premium, ¥0 dominates the eye.",
+    "",
+    "4) MIDDLE-LOWER — TWO-COLUMN BENEFIT CARD (「無料で受け取れる 2 つ」を並列で訴求):",
+    "   - White rounded-rectangle card centered, ~92% of canvas width, dashed soft warm-orange 1.5 px border, padding ~22 px.",
+    "   - Tiny grey eyebrow at the top center: 「無料で受け取れる特典」 (~14 px).",
+    "   - Below it, TWO equal-width columns side-by-side, separated by a thin vertical hairline:",
+    "     LEFT column (VibesCareer 本体):",
+    `       - Small icon at top: ${c.leftColumnIcon}`,
+    `       - Title (centered, BOLD charcoal, ~18 px): 「${c.leftColumnTitle}」`,
+    `       - Subtitle (centered, 12 px, muted grey): 「${c.leftColumnSub}」`,
+    "       - NO price chip on this column.",
+    "     RIGHT column (VibesRadar 受検チケット 固定):",
+    "       - Small icon at top: a tiny radar/spider chart with 8 axes, warm orange outline.",
+    "       - Title (centered, BOLD charcoal, ~18 px): 「VibesRadar 受検チケット」",
+    "       - Subtitle (centered, 12 px, muted grey): 「次世代型パーソナルWeb診断」",
+    "       - NO price chip on this column.",
+    "   - DO NOT render any small per-column 「¥3,300 → 無料」 price chips.",
+    "   - Below the two columns, a small charcoal line centered (~14 px, bold): 「2 つセットで通常 ¥3,300 → 無料でご案内」",
+    "",
+    "5) BOTTOM — THREE FEATURE CARDS IN A HORIZONTAL ROW:",
+    "   - Three EQUAL-WIDTH cards arranged SIDE BY SIDE in a single row, separated by ~10 px gaps. Each card: white panel, 1 px soft warm-orange hairline border, rounded 12 px corners, ~14 px inner padding.",
+    "   - Inside each card (vertically stacked): icon at TOP center (~40 px), title text BELOW the icon (centered, BOLD charcoal, ~18-20 px, wrap to 2 lines if needed). Only icon + title.",
+    "",
+    ...c.features.flatMap((f, i) => [
+      `   Card ${i + 1}:`,
+      `     - Icon: ${f.icon}`,
+      `     - Title: 「${f.title}」`,
+      "",
+    ]),
+    "============================================================",
+    "STRICT REQUIREMENTS:",
+    "============================================================",
+    "- All Japanese text MUST be character-for-character correct (15秒診断 / VibesCareer / VibesRadar / 個別キャリア面談 / 受検チケット / 適正年収 / 通常価格 / プレゼント / 無料).",
+    "- LEAVE THE BOTTOM ~140 px OF THE CANVAS AS CLEAN EMPTY PEACH-CREAM SPACE — the HTML CTA button is overlaid externally. NO illustration, NO text in that bottom band.",
+    "- KEEP THE COMPOSITION CALM AND PREMIUM. NO clutter, NO retail-ad vibe, NO heavy black borders, NO pink hairlines.",
+    "- Colors allowed: white, soft peach cream gradient background, warm orange #FF6B00 (ribbon/borders/price), red #DC2626 only for the strikethrough line, charcoal #1A1A1A for primary text, muted grey for secondary, soft beige/navy for the human illustrations.",
+  ].join("\n");
+}
+
+// -----------------------------------------------------------------------------
 // B 版 CTA バナー (個別キャリア面談 特典 + VibesRadar セット訴求)。
 // A 版 (radarBonusPrompt: VibesRadar 無料チケット単体訴求) と同じ縦長 2:3 骨格を保ち、
 // テーマカラーをミントグリーンからウォームオレンジ系に変えて「個別面談」訴求に。
@@ -1016,7 +1227,7 @@ export const IMAGES = [
     //   style ref (section3) にした単純な style transfer で実行したところ、
     //   サブコピー保持と section3 風人物トンマナの両立に成功した。
     //
-    //   詳細は HANDOFF-fv-inpaint.md 参照。
+    //   詳細は docs/archive/HANDOFF-fv-inpaint.md 参照。
     //
     // 入力:
     //   image[0] = section3-full.png   — STYLE TARGET (人物トンマナの参照)
@@ -1362,7 +1573,7 @@ export const IMAGES = [
   // 注: 下部のトラストライン「診断後、嬉しいプレゼントをご用意しています！」は
   //     生成後に PowerShell でクロップで切り取り、HTML 側で再表示する運用。
   //     再生成の必要が出た場合はクロップを手動で適用すること
-  //     (詳細は HANDOFF-fv-inpaint.md 参照)。
+  //     (詳細は docs/archive/HANDOFF-fv-inpaint.md 参照)。
   // -------------------------------------------------------------------------
   {
     file: "section2-full.png",
@@ -2161,6 +2372,62 @@ export const IMAGES = [
     size: "1024x1024",
     quality: "high",
     prompt: exitPopupPrompt({ variant: "b" }),
+  },
+
+  // -------------------------------------------------------------------------
+  // LP02 専用 CTA バナー (Section 5/9/15 共通) を A/B 候補で 2 種類用意。
+  // A 案 (LP01 系) や B 案 (個別面談 + VibesRadar parallel) と命名衝突しない
+  // よう lp02-bonus-y2-... / lp02-bonus-y3-... というプレフィックスにする。
+  //   Y2: 適性年収 UP × 個別キャリア面談 (ハイブリッド)
+  //   Y3: 内定獲得まで完全無料伴走 (フルサポート)
+  // どちらも VibesCareer 本体を主役にしつつ、補足カード右列で VibesRadar
+  // 受検チケットも無料セットを明示する 2 列構成。
+  // -------------------------------------------------------------------------
+  {
+    file: "lp02-bonus-y2-salary.png",
+    size: "1024x1536",
+    quality: "high",
+    references: ["logo-vibescareer.png"],
+    prompt: lp02BonusGreenPrompt(),
+  },
+  {
+    file: "lp02-bonus-y3-fullsupport.png",
+    size: "1024x1536",
+    quality: "high",
+    prompt: lp02BonusPrompt({
+      headlineLine1: "キャリア面談 → 求人紹介 → 履歴書 → 面接 → 内定 まで一気通貫",
+      headlineLine2: "内定獲得まで完全無料伴走",
+      eyebrow: "オンライン・専属アドバイザーが横で伴走",
+      mainVisual: [
+        "- A clean editorial 2D vector composition showing a 5-STEP ROADMAP arranged horizontally. Five circular nodes connected by a single thin warm-orange line that gently arcs upward from left to right (suggesting career ascent). Each node has:",
+        "  Node 1 (left, lowest): chat-bubble icon, label below in tiny charcoal text 「面談」",
+        "  Node 2: document/list icon, label 「求人紹介」",
+        "  Node 3: pencil-and-paper icon, label 「履歴書」",
+        "  Node 4: microphone icon, label 「面接」",
+        "  Node 5 (right, highest): trophy / star icon in warm orange, label 「内定」",
+        "- ABOVE the roadmap line, ONE Japanese career advisor (mid-30s woman in beige blazer, walking pose) is shown walking along beside the path with the applicant (24-year-old man in navy shirt). Both rendered as simplified vector silhouettes facing right, signaling 'we walk together to the goal'.",
+        "- The 5 nodes use a soft, calm palette: each node is a white circle with a thin warm-orange border and a small charcoal icon inside. Only Node 5 (内定) has a filled warm-orange background to emphasize the goal.",
+        "- KEEP IT MINIMAL: only the roadmap, the two walking figures, and tiny labels. NO busy desk props, NO extra icons.",
+      ],
+      giftLine: "内定までのフルサポートを、無料でご招待！",
+      leftColumnTitle: "個別キャリア面談",
+      leftColumnSub: "求人紹介・書類添削・面接対策まで",
+      leftColumnIcon: "a charcoal handshake icon (sustained support), warm orange highlight.",
+      features: [
+        {
+          icon: "a charcoal document list with checkmarks (job recommendations).",
+          title: "あなた専用の求人紹介",
+        },
+        {
+          icon: "a charcoal pencil over a resume document (resume polishing).",
+          title: "履歴書・職務経歴書の添削",
+        },
+        {
+          icon: "a charcoal microphone with a soft warm-orange highlight (interview prep).",
+          title: "面接対策・想定問答",
+        },
+      ],
+    }),
   },
 
   // -------------------------------------------------------------------------

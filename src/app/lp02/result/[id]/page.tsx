@@ -17,7 +17,7 @@ import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { DetailsForm } from "@/components/lp02/DetailsForm";
 import { OtherJobsList } from "@/components/OtherJobsList";
 import { RoadmapScrollProgress } from "@/components/RoadmapScrollProgress";
-import { RadarBonusSection } from "@/components/RadarBonusSection";
+import { Lp02BonusSection } from "@/components/lp02/Lp02BonusSection";
 import { ExitIntentPopup } from "@/components/ExitIntentPopup";
 import {
   RESULT_DATA,
@@ -112,13 +112,13 @@ export default async function ResultPage({
 
       {/* === 固定ブロック前半 (Section 5-9) === */}
       <Suspense fallback={null}>
-        <RadarBonusSection variant="primary" />
+        <Lp02BonusSection />
       </Suspense>
       <AdvisorsSection />
       <SuccessCasesSection />
       <PartnersSection />
       <Suspense fallback={null}>
-        <RadarBonusSection variant="secondary" />
+        <Lp02BonusSection />
       </Suspense>
 
       {/* === 固定ブロック後半 (Section 10-18) === */}
@@ -126,7 +126,7 @@ export default async function ResultPage({
       <CausesSection />
       <ServiceIntroSection />
       <Suspense fallback={null}>
-        <RadarBonusSection variant="tertiary" />
+        <Lp02BonusSection />
       </Suspense>
       <FaqSection />
       <LastMessageSection />
