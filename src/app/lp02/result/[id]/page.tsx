@@ -70,6 +70,19 @@ export default async function ResultPage({
         <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-primary/60 to-transparent" />
       </header>
 
+      {/* LP02 限定: preview → ここに辿り着いた直後の解放アナウンス */}
+      <section className="px-4 pt-4 pb-2 bg-white">
+        <div className="relative rounded-2xl border-2 border-brand-primary bg-gradient-to-br from-brand-primary-light/50 via-white to-brand-primary-light/30 px-4 py-4 text-center shadow-[0_6px_20px_rgba(255,107,0,0.12)]">
+          <p className="inline-flex items-center justify-center gap-2 text-[15px] font-black text-brand-primary leading-tight">
+            <span aria-hidden>🔓</span>
+            <span>詳しい結果が解放されました！</span>
+          </p>
+          <p className="mt-1.5 text-[12.5px] text-text-secondary">
+            じっくりとご覧ください
+          </p>
+        </div>
+      </section>
+
       {/* === 可変ブロック (Section 1-4) === */}
       <ResultHeader data={data} />
       <InsightSection data={data} />

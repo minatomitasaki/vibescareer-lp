@@ -242,20 +242,19 @@ export function EntryForm({ resultId }: { resultId: string }) {
         />
       </Field>
 
-      <label className="flex items-start gap-2 text-[12px] text-text-secondary leading-[1.6]">
-        <input type="checkbox" className="mt-0.5" required />
-        <span>
-          <a
-            href="/privacy"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-brand-primary underline"
-          >
-            個人情報取扱方針
-          </a>
-          に同意する
-        </span>
-      </label>
+      {/* 同意チェックボックスは廃止し、ボタンクリック = 同意 として扱う。
+          リーガル説明文をボタン上に小さく明示。 */}
+      <p className="text-[11px] text-text-muted text-center leading-[1.6]">
+        <a
+          href="/privacy"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-brand-primary underline"
+        >
+          個人情報取扱方針
+        </a>
+        に同意にして、次へ進む
+      </p>
 
       <button
         type="submit"
