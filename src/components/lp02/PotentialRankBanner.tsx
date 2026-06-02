@@ -48,8 +48,10 @@ export function PotentialRankBanner() {
         </span>
 
         <div className="px-6 py-7 text-center">
-          {/* 「おめでとうございます！」をメインの大見出しに */}
-          <p className="inline-flex items-center justify-center gap-2 text-[26px] font-black text-brand-primary leading-tight">
+          {/* 「おめでとうございます！」をメインの大見出しに。
+              SP で 2 行に折り返らないよう whitespace-nowrap と
+              モバイル用のサイズダウンを併用。 */}
+          <p className="inline-flex items-center justify-center gap-2 text-[22px] sm:text-[26px] font-black text-brand-primary leading-tight whitespace-nowrap">
             <span aria-hidden>🎉</span>
             <span>おめでとうございます！</span>
             <span aria-hidden>🎉</span>
