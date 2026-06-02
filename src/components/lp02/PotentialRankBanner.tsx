@@ -53,7 +53,7 @@ export function PotentialRankBanner() {
               モバイル用のサイズダウンを併用。 */}
           <p className="inline-flex items-center justify-center gap-2 text-[22px] sm:text-[26px] font-black text-brand-primary leading-tight whitespace-nowrap">
             <span aria-hidden>🎉</span>
-            <span>おめでとうございます！</span>
+            <span>おめでとうございます</span>
             <span aria-hidden>🎉</span>
           </p>
 
