@@ -71,7 +71,7 @@ export default async function PreviewPage({
       <PotentialRankBanner />
 
       {/* === 解放 CTA + リードフォーム === */}
-      <section className="px-4 py-10 bg-bg-form">
+      <section id="preview-form" className="px-4 py-10 bg-bg-form scroll-mt-4">
         <div className="bg-white rounded-3xl p-5 shadow-md">
           <div className="text-center">
             <p className="text-[15px] font-bold text-text-secondary leading-[1.85]">
@@ -104,6 +104,9 @@ export default async function PreviewPage({
 // =============================================================================
 // 「🔒 フォーム入力で表示」のオーバーレイバッジ
 // 親要素を relative にしてからこの要素を absolute で重ねる。
+// 全面クリッカブルにして、クリックでフォームセクション (#preview-form) に
+// スムーズスクロール。スクロール自体は globals.css の
+// html { scroll-behavior: smooth } で実現。
 // =============================================================================
 function UnlockBadge({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
   const cls =
@@ -113,14 +116,18 @@ function UnlockBadge({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
         ? "px-3 py-1.5 text-[12px]"
         : "px-3.5 py-1.5 text-[13.5px]";
   return (
-    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+    <a
+      href="#preview-form"
+      aria-label="フォームへ移動"
+      className="group/badge absolute inset-0 flex items-center justify-center cursor-pointer"
+    >
       <span
-        className={`bg-white/90 backdrop-blur-sm rounded-full font-black text-brand-primary border border-brand-primary/45 shadow-md inline-flex items-center gap-1 ${cls}`}
+        className={`bg-white/90 backdrop-blur-sm rounded-full font-black text-brand-primary border border-brand-primary/45 shadow-md inline-flex items-center gap-1 transition-transform group-hover/badge:scale-105 group-active/badge:scale-95 ${cls}`}
       >
         <span aria-hidden>🔒</span>
         フォーム入力で表示
       </span>
-    </div>
+    </a>
   );
 }
 

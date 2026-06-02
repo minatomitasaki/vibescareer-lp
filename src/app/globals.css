@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* アンカーリンク (#xxx) クリック時のスムーズスクロールを全ページで有効化。
+   LP02 preview の鍵バッジ → フォーム、LP01 の #form CTA など、
+   全ての内部アンカーリンクで滑らかに移動する。 */
+html {
+  scroll-behavior: smooth;
+}
+
 /* デザイントークン定義（Tailwind v4 の @theme 形式） */
 @theme inline {
   /* フォント */
