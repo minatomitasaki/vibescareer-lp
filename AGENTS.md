@@ -101,14 +101,18 @@ npx --prefix "C:/Users/minato_mitasaki/Documents/claude-projects/vibescareer-lp"
 
 ## 関連ドキュメント (タスクごとに参照する)
 
+アクティブな引継ぎ・ガイドは `docs/`、古い参考資料は `docs/archive/` に集約済み。
+
 | ファイル | 内容 |
 |---|---|
-| `SESSION-HANDOFF.md` | 現在のセッションの実装状況サマリ (全体把握用) |
-| `IMAGE-PROMPT-GUIDE.md` | 画像生成プロンプト設計ガイド (社員シェア用、汎用) |
-| `IMAGE-GEN-HANDOFF.md` | 別タブで画像生成タスクをやる時の引継ぎ |
-| `THANKS-PAGE-HANDOFF.md` | `/thanks` ページのデザイン調整用引継ぎ |
-| `CALENDAR-OWNER-SWITCH.md` | Google Calendar 主催者の切り替え手順 |
-| `HANDOFF-2026-05.md` | 初期 Calendar 連携時の引継ぎ (古い、参考用) |
+| `docs/SESSION-HANDOFF.md` | 現在のセッションの実装状況サマリ (全体把握用) |
+| `docs/IMAGE-PROMPT-GUIDE.md` | 画像生成プロンプト設計ガイド (社員シェア用、汎用) |
+| `docs/IMAGE-GEN-HANDOFF.md` | 別タブで画像生成タスクをやる時の引継ぎ |
+| `docs/THANKS-PAGE-HANDOFF.md` | `/thanks` ページのデザイン調整用引継ぎ |
+| `docs/CALENDAR-OWNER-SWITCH.md` | Google Calendar 主催者の切り替え手順 |
+| `docs/VIBESRADAR-AUTOMATION.md` | LP 予約 → VibesRadar 自動登録の運用ドキュメント |
+| `docs/BRIEF.md` | 当初プロジェクトブリーフ |
+| `docs/archive/HANDOFF*.md` / `CLOUDFLARE-PAGES-MIGRATION.md` | 過去の引継ぎ・移行記録 (参考用) |
 
 ## Calendar / 予約 / Slack 連携
 
@@ -121,7 +125,7 @@ npx --prefix "C:/Users/minato_mitasaki/Documents/claude-projects/vibescareer-lp"
 
 ## 画像生成 (gpt-image-2)
 
-詳細は `IMAGE-PROMPT-GUIDE.md`。要点:
+詳細は `docs/IMAGE-PROMPT-GUIDE.md`。要点:
 - 実行: `npm --prefix "..." run gen:images -- [filename.png]`、強制再生成は `-- --force`
 - サポートサイズ: `1024x1024` / `1024x1536` / `1536x1024` のみ
 - 生成後は **必ず Read で画像を視覚的に確認** (日本語崩れ・指の本数・構図・ロゴ混入をチェック)
@@ -144,6 +148,37 @@ npx --prefix "C:/Users/minato_mitasaki/Documents/claude-projects/vibescareer-lp"
 - 編集前: `git pull origin main`
 - push 前: `git pull --rebase origin main`
 - メインタブと同じファイルを触る場合は、互いに作業セクションを確認
+
+### 新規フォーム作成チェックリスト
+LP01 `EntryForm` / LP02 `PreviewForm` / `DetailsForm` のような GAS + Slack に連携するフォームを新規に作るとき、下記が **すべて payload に入っているか必ず確認する**。1 つでも漏れると、本番で気づくまでサイレントにデータがロストする (実例: 2026-06 に LP02 PreviewForm で UTM を含め忘れ、Meta 経由のリードがすべて「直接 / 自然検索」扱いになった事故)。
+
+```
+payload = {
+  // ── 必須メタ ──────────────────────────────
+  resultId,
+  lpVersion: "lp01" | "lp02",   // ← LP の識別。Slack 見出しと GAS タブ振り分けに使う
+  stage: "preview_unlocked" | "form_submitted" | "booking_confirmed",
+  // ── 個人情報 (フォームから取得) ─────────────
+  lastName, firstName, email, phone, birthdate, ...,
+  // ── 診断メタ (buildResultMetaForSheet 由来) ─
+  workplaceLabel, jobLabel, combinedLabel,
+  subJobLabel1, subJobLabel2, salaryRange,
+  // ── 広告流入元 (getStoredUtm() で localStorage から取得) ──
+  utm_source, utm_medium, utm_campaign,
+  utm_term, utm_content, utm_placement,
+}
+```
+
+送信処理は **必ず GAS と Slack の両方に並行 POST** する:
+
+```ts
+await Promise.allSettled([
+  fetch(GAS_ENDPOINT, { method: "POST", mode: "no-cors", ... }),
+  fetch("/api/lead-notify", { method: "POST", ... }),
+]);
+```
+
+最後に **遷移先 router.push のパスが LP01/LP02 で正しいか** を必ず確認 (`/lp01/...` と `/lp02/...` を取り違えると動線が壊れる)。
 
 ## やらないこと
 
@@ -170,5 +205,5 @@ CLAUDE.md (→ AGENTS.md) は自動で読まれるので、追加で渡すべき
 例:
 ```
 AGENTS.md を踏まえて、/thanks ページの完了見出しをよりリッチにしたい。
-THANKS-PAGE-HANDOFF.md も参照して進めて。
+docs/THANKS-PAGE-HANDOFF.md も参照して進めて。
 ```
