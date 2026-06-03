@@ -13,6 +13,7 @@
 
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
+import { getStoredUtm } from "@/lib/utm";
 
 const GAS_ENDPOINT =
   "https://script.google.com/macros/s/AKfycbxdh39Lxmv0mQ55xzBU41OpZWykbVgq7pUouU83ieXMv9SzXQNWhBOxBiZ8kqeRqlZP/exec";
@@ -68,6 +69,18 @@ export function DetailsForm({ resultId }: { resultId: string }) {
       if (raw) previewPayload = JSON.parse(raw) as PreviewPayload;
     } catch {
       /* fallback */
+    }
+
+    // UTM 保険: preview が utm を持っていない (= preview を経由していない、
+    // sessionStorage が壊れた、preview 旧バージョンが utm 未対応など) ケース
+    // でも localStorage から拾ってフォローする。
+    const previewWithUtm = previewPayload as Record<string, unknown>;
+    if (!previewWithUtm.utm_source) {
+      const utm = getStoredUtm();
+      previewPayload = {
+        ...previewPayload,
+        ...utm,
+      } as PreviewPayload;
     }
 
     const fd = new FormData(event.currentTarget);

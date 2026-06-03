@@ -16,6 +16,7 @@ import {
   isValidResultId,
   type StoredDiagnosis,
 } from "@/lib/result-meta";
+import { getStoredUtm } from "@/lib/utm";
 
 const GAS_ENDPOINT =
   "https://script.google.com/macros/s/AKfycbxdh39Lxmv0mQ55xzBU41OpZWykbVgq7pUouU83ieXMv9SzXQNWhBOxBiZ8kqeRqlZP/exec";
@@ -56,6 +57,10 @@ export function PreviewForm({ resultId }: { resultId: string }) {
 
     const fd = new FormData(event.currentTarget);
     const sheetMeta = buildSheetMeta(resultId);
+    // 広告流入元 (UtmCapture が localStorage に保存した値)。
+    // ここで取得して payload に含めないと、preview から後段の DetailsForm /
+    // book/route.ts / GAS / Slack まで全部「流入元: 直接」になってしまう。
+    const utm = getStoredUtm();
 
     const payload = {
       resultId,
@@ -80,6 +85,13 @@ export function PreviewForm({ resultId }: { resultId: string }) {
       subJobLabel1: sheetMeta?.subJobLabel1 ?? "",
       subJobLabel2: sheetMeta?.subJobLabel2 ?? "",
       salaryRange: sheetMeta?.salaryRange ?? "",
+      // 広告流入元 (UTM パラメータ) — Slack 通知 / GAS シート両方で使う
+      utm_source: utm.utm_source ?? "",
+      utm_medium: utm.utm_medium ?? "",
+      utm_campaign: utm.utm_campaign ?? "",
+      utm_term: utm.utm_term ?? "",
+      utm_content: utm.utm_content ?? "",
+      utm_placement: utm.utm_placement ?? "",
     };
 
     // /lp02/result/[id] と最下部 DetailsForm が再利用するため保存
