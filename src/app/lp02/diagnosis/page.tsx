@@ -56,6 +56,11 @@ const easeInOutCubic = (t: number): number =>
 
 // 指定 Y 座標までブラウザの scrollTo を rAF で滑らかに繋いで実行する。
 // 標準の behavior:"smooth" は距離に応じて速度が変動するため、手応えを揃えるには自前で書く必要がある。
+//
+// 重要: globals.css で html { scroll-behavior: smooth } を効かせているため、
+// 何も指定せず scrollTo(0, y) を呼ぶと、各フレームの scrollTo が CSS の smooth
+// アニメーションを毎回開始してしまい、rAF イージングと衝突してガタつく。
+// 毎フレーム明示的に behavior: "auto" を渡して即時反映させる。
 const smoothScrollTo = (targetY: number, duration: number): void => {
   const startY = window.scrollY;
   const distance = targetY - startY;
@@ -65,7 +70,11 @@ const smoothScrollTo = (targetY: number, duration: number): void => {
     const elapsed = now - startTime;
     const t = Math.min(elapsed / duration, 1);
     const eased = easeInOutCubic(t);
-    window.scrollTo(0, startY + distance * eased);
+    window.scrollTo({
+      top: startY + distance * eased,
+      left: 0,
+      behavior: "auto",
+    });
     if (t < 1) requestAnimationFrame(step);
   };
   requestAnimationFrame(step);
