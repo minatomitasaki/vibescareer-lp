@@ -58,24 +58,31 @@ const easeInOutCubic = (t: number): number =>
 // 標準の behavior:"smooth" は距離に応じて速度が変動するため、手応えを揃えるには自前で書く必要がある。
 //
 // 重要: globals.css で html { scroll-behavior: smooth } を効かせているため、
-// 何も指定せず scrollTo(0, y) を呼ぶと、各フレームの scrollTo が CSS の smooth
-// アニメーションを毎回開始してしまい、rAF イージングと衝突してガタつく。
-// 毎フレーム明示的に behavior: "auto" を渡して即時反映させる。
+// 何もしないと各フレームの scrollTo が CSS の smooth アニメを毎回開始して
+// rAF イージングと衝突しガタつく。仕様上 scrollTo の behavior:"auto" は
+// CSS 設定に従う扱いなので効かない (実害確認済み)。
+// 解決策: スクロール中だけ document.documentElement の inline style で
+// scrollBehavior を強制 "auto" に上書きし、完了したら元の値に戻す。
 const smoothScrollTo = (targetY: number, duration: number): void => {
   const startY = window.scrollY;
   const distance = targetY - startY;
   if (Math.abs(distance) < 1) return;
+
+  const htmlEl = document.documentElement;
+  const originalScrollBehavior = htmlEl.style.scrollBehavior;
+  htmlEl.style.scrollBehavior = "auto";
+
   const startTime = performance.now();
   const step = (now: number) => {
     const elapsed = now - startTime;
     const t = Math.min(elapsed / duration, 1);
     const eased = easeInOutCubic(t);
-    window.scrollTo({
-      top: startY + distance * eased,
-      left: 0,
-      behavior: "auto",
-    });
-    if (t < 1) requestAnimationFrame(step);
+    window.scrollTo(0, startY + distance * eased);
+    if (t < 1) {
+      requestAnimationFrame(step);
+    } else {
+      htmlEl.style.scrollBehavior = originalScrollBehavior;
+    }
   };
   requestAnimationFrame(step);
 };
