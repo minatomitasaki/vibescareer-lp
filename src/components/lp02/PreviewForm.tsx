@@ -26,9 +26,18 @@ const DIAGNOSIS_STORAGE_KEY = "vc:diagnosis:answers";
 const INPUT_CLS =
   "w-full border-2 border-border-default rounded-lg px-3 py-2.5 text-[14px] focus:border-brand-primary focus:outline-none bg-white";
 
-// 第二新卒 (23〜26歳) の中央値 = 24 歳の生年に合わせる。
-// 月日は 1/1 固定で「これはデフォルト」と分かりやすく。
-const DEFAULT_BIRTHDATE = `${new Date().getFullYear() - 24}-01-01`;
+// 年齢レンジの選択肢 (LP02 第1段リードフォーム用)。
+// 第二新卒 (20代前半〜半ば) を中心としつつ、上下のレンジも収集対象に含める。
+// シート / Slack には文字列として送られる (例: "23〜25歳")。
+const AGE_OPTIONS = [
+  "19歳以下",
+  "20〜22歳",
+  "23〜25歳",
+  "26〜27歳",
+  "28〜29歳",
+  "30〜35歳",
+  "36歳以上",
+] as const;
 
 function buildSheetMeta(resultId: string) {
   if (!isValidResultId(resultId)) return null;
@@ -70,7 +79,10 @@ export function PreviewForm({ resultId }: { resultId: string }) {
       firstName: String(fd.get("firstName") ?? ""),
       email: String(fd.get("email") ?? ""),
       phone: String(fd.get("phone") ?? ""),
-      birthdate: String(fd.get("birthdate") ?? ""),
+      // LP02 では生年月日を廃止し、年齢レンジに変更 (任意)。
+      // 既存スプシ列との互換のため birthdate キーは空文字で送信。
+      age: String(fd.get("age") ?? ""),
+      birthdate: "",
       // 詳細結果ページの DetailsForm で埋める想定 (preview 時点では空)
       location: "",
       timing: "",
@@ -171,13 +183,22 @@ export function PreviewForm({ resultId }: { resultId: string }) {
         />
       </Field>
 
-      <Field label="生年月日" hint="任意・年代別の参考データ表示に使用">
-        <input
-          type="date"
-          name="birthdate"
-          defaultValue={DEFAULT_BIRTHDATE}
-          className={`${INPUT_CLS} appearance-none min-w-0`}
-        />
+      <Field label="年齢" required>
+        <select
+          name="age"
+          className={INPUT_CLS}
+          required
+          defaultValue=""
+        >
+          <option value="" disabled>
+            選択してください
+          </option>
+          {AGE_OPTIONS.map((opt) => (
+            <option key={opt} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
       </Field>
 
       {/* 同意チェックボックスは廃止し、ボタンクリック = 同意 として扱う。

@@ -159,7 +159,10 @@ payload = {
   lpVersion: "lp01" | "lp02",   // ← LP の識別。Slack 見出しと GAS タブ振り分けに使う
   stage: "preview_unlocked" | "form_submitted" | "booking_confirmed",
   // ── 個人情報 (フォームから取得) ─────────────
-  lastName, firstName, email, phone, birthdate, ...,
+  lastName, firstName, email, phone,
+  birthdate,   // ← LP01 のみ (date 文字列)、LP02 では "" 互換用
+  age,         // ← LP02 のみ (年齢レンジ文字列 "23〜25歳" 等)、LP01 では未送信
+  // (location / timing / education / school / major は段に応じて空 or 値)
   // ── 診断メタ (buildResultMetaForSheet 由来) ─
   workplaceLabel, jobLabel, combinedLabel,
   subJobLabel1, subJobLabel2, salaryRange,

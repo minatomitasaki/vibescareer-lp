@@ -102,13 +102,38 @@ export default async function PreviewPage({
 }
 
 // =============================================================================
-// 「🔒 フォーム入力で表示」のオーバーレイバッジ
+// 「🔒 ○○を見る →」のオーバーレイバッジ
 // 親要素を relative にしてからこの要素を absolute で重ねる。
 // 全面クリッカブルにして、クリックでフォームセクション (#preview-form) に
-// スムーズスクロール。スクロール自体は globals.css の
-// html { scroll-behavior: smooth } で実現。
+// スムーズスクロール。
 // =============================================================================
-function UnlockBadge({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
+function ArrowRightIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      className={className}
+    >
+      <line x1="5" y1="12" x2="19" y2="12" />
+      <polyline points="13 6 19 12 13 18" />
+    </svg>
+  );
+}
+
+function UnlockBadge({
+  size = "md",
+  label = "続きを見る",
+}: {
+  size?: "sm" | "md" | "lg";
+  label?: string;
+}) {
   const cls =
     size === "lg"
       ? "px-4 py-2 text-[15px]"
@@ -118,14 +143,15 @@ function UnlockBadge({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
   return (
     <a
       href="#preview-form"
-      aria-label="フォームへ移動"
+      aria-label={label}
       className="group/badge absolute inset-0 flex items-center justify-center cursor-pointer"
     >
       <span
-        className={`bg-white/90 backdrop-blur-sm rounded-full font-black text-brand-primary border border-brand-primary/45 shadow-md inline-flex items-center gap-1 transition-transform group-hover/badge:scale-105 group-active/badge:scale-95 ${cls}`}
+        className={`bg-white/90 backdrop-blur-sm rounded-full font-black text-brand-primary border border-brand-primary/45 shadow-md inline-flex items-center gap-1.5 transition-transform group-hover/badge:scale-105 group-active/badge:scale-95 ${cls}`}
       >
         <span aria-hidden>🔒</span>
-        フォーム入力で表示
+        {label}
+        <ArrowRightIcon className="transition-transform group-hover/badge:translate-x-0.5" />
       </span>
     </a>
   );
@@ -177,7 +203,7 @@ function PreviewResultHeader({ data }: { data: ResultData }) {
           >
             {data.salaryRange}
           </span>
-          <UnlockBadge size="lg" />
+          <UnlockBadge size="lg" label="適正年収を見る" />
         </div>
       </div>
     </section>
@@ -188,50 +214,41 @@ function PreviewResultHeader({ data }: { data: ResultData }) {
 // 持ち味 / アドバイス / その他の適職 (LP01 InsightSection 複製 + 実テキスト blur)
 // =============================================================================
 function PreviewInsightSection({ data }: { data: ResultData }) {
-  const rest = restAfterFirstSentence(data.strength);
+  const adviceRest = restAfterFirstSentence(data.advice);
 
   return (
     <section className="px-4 pt-6 pb-8">
       <div className="result-insight-block">
-        {/* あなたの持ち味: 1 文目表示、続きは blur + UnlockBadge */}
+        {/* あなたの持ち味: 全文表示 (モザイクなし) */}
         <div className="result-insight-item">
           <h3 className="result-insight-heading">
             <span className="result-insight-en">YOUR STRENGTHS</span>
             <span className="result-insight-ja">あなたの持ち味</span>
           </h3>
-          <p className="result-insight-text">{firstSentence(data.strength)}</p>
-          {rest && (
+          <p className="result-insight-text">{data.strength}</p>
+        </div>
+
+        <div className="result-insight-divider" aria-hidden />
+
+        {/* プロからのアドバイス: 1 文目だけ表示、続きは blur + UnlockBadge */}
+        <div className="result-insight-item">
+          <h3 className="result-insight-heading">
+            <span className="result-insight-en">PROFESSIONAL ADVICE</span>
+            <span className="result-insight-ja">プロからのアドバイス</span>
+          </h3>
+          <p className="result-insight-text">{firstSentence(data.advice)}</p>
+          {adviceRest && (
             <div className="relative mt-2">
               <p
                 className="result-insight-text select-none"
                 aria-hidden
                 style={{ filter: "blur(4.5px)" }}
               >
-                {rest}
+                {adviceRest}
               </p>
-              <UnlockBadge />
+              <UnlockBadge label="続きを見る" />
             </div>
           )}
-        </div>
-
-        <div className="result-insight-divider" aria-hidden />
-
-        {/* プロからのアドバイス: 本文全体 blur + UnlockBadge */}
-        <div className="result-insight-item">
-          <h3 className="result-insight-heading">
-            <span className="result-insight-en">PROFESSIONAL ADVICE</span>
-            <span className="result-insight-ja">プロからのアドバイス</span>
-          </h3>
-          <div className="relative mt-1">
-            <p
-              className="result-insight-text select-none"
-              aria-hidden
-              style={{ filter: "blur(4.5px)" }}
-            >
-              {data.advice}
-            </p>
-            <UnlockBadge />
-          </div>
         </div>
 
         <div className="result-insight-divider" aria-hidden />
@@ -253,7 +270,7 @@ function PreviewInsightSection({ data }: { data: ResultData }) {
                 body="市場とユーザーを読み解き、数字と感覚の両方を行き来しながら、商品やサービスの届け方を設計する職種。"
               />
             </div>
-            <UnlockBadge />
+            <UnlockBadge label="続きを見る" />
           </div>
         </div>
       </div>

@@ -36,7 +36,10 @@ type EntryFormPayload = {
   phone?: string;
   location?: string;
   timing?: string;
+  // LP01: 生年月日 (date 文字列)、LP02: 互換用に空
   birthdate?: string;
+  // LP02 のみ: 年齢レンジ文字列 (例 "23〜25歳")
+  age?: string;
   education?: string;
   school?: string;
   major?: string;
@@ -130,7 +133,11 @@ export async function POST(request: Request) {
         formData.phone ? `電話: ${formData.phone}` : "",
         formData.location ? `希望勤務地: ${formData.location}` : "",
         formData.timing ? `希望転職時期: ${formData.timing}` : "",
-        formData.birthdate ? `生年月日: ${formData.birthdate}` : "",
+        formData.age
+          ? `年齢: ${formData.age}`
+          : formData.birthdate
+            ? `生年月日: ${formData.birthdate}`
+            : "",
         formData.education ? `最終学歴: ${formData.education}` : "",
         formData.school ? `学校名: ${formData.school}` : "",
         formData.major ? `専攻学科: ${formData.major}` : "",
@@ -189,6 +196,7 @@ export async function POST(request: Request) {
     location: formData.location ?? "",
     timing: formData.timing ?? "",
     birthdate: formData.birthdate ?? "",
+    age: formData.age,
     education: formData.education ?? "",
     school: formData.school ?? "",
     major: formData.major ?? "",

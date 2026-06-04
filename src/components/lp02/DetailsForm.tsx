@@ -28,6 +28,8 @@ type PreviewPayload = {
   firstName?: string;
   email?: string;
   phone?: string;
+  // LP02 では age (年齢レンジ文字列) を収集、birthdate は互換用に空のまま
+  age?: string;
   birthdate?: string;
   workplaceLabel?: string;
   jobLabel?: string;

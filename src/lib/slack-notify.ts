@@ -52,6 +52,8 @@ export type BookingNotifyPayload = {
   location: string;
   timing: string;
   birthdate: string;
+  /** LP02 のみ: 年齢レンジ文字列 (例 "23〜25歳")。LP01 は未使用 */
+  age?: string;
   education: string;
   school: string;
   major: string;
@@ -114,7 +116,10 @@ export async function notifyBookingToSlack(
     `*電話:* ${p.phone || "(未入力)"}`,
     `*希望地域:* ${p.location || "(未入力)"}`,
     `*希望時期:* ${p.timing || "(未入力)"}`,
-    `*生年月日:* ${p.birthdate || "(未入力)"}`,
+    // LP02 は年齢レンジ、LP01 は生年月日 を表示 (片方しか値がない想定)
+    p.age
+      ? `*年齢:* ${p.age}`
+      : `*生年月日:* ${p.birthdate || "(未入力)"}`,
     `*最終学歴:* ${p.education || "(未入力)"}`,
     `*学校名:* ${p.school || "(未入力)"}`,
     `*専攻学科:* ${p.major || "(未入力)"}`,
@@ -154,6 +159,8 @@ export type LeadNotifyPayload = {
   email: string;
   phone?: string;
   birthdate?: string;
+  /** LP02 のみ: 年齢レンジ文字列 (例 "23〜25歳") */
+  age?: string;
   location?: string;
   timing?: string;
   education?: string;
@@ -199,7 +206,12 @@ export async function notifyLeadToSlack(p: LeadNotifyPayload): Promise<void> {
     `*お客様:* ${p.lastName} ${p.firstName} 様`,
     `*メール:* ${p.email}`,
     p.phone ? `*電話:* ${p.phone}` : null,
-    p.birthdate ? `*生年月日:* ${p.birthdate}` : null,
+    // LP02: 年齢レンジ / LP01: 生年月日。片方しか入っていない想定
+    p.age
+      ? `*年齢:* ${p.age}`
+      : p.birthdate
+        ? `*生年月日:* ${p.birthdate}`
+        : null,
     `*流入元:* ${utmLine}${placementLine}`,
     p.combinedLabel ? `*適性:* ${p.combinedLabel}` : null,
     p.salaryRange ? `*年収レンジ:* ${p.salaryRange}` : null,
