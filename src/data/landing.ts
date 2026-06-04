@@ -2,7 +2,7 @@
 // (Section 5-18 で使用される)
 // 仕様: design/SPEC.md セクション 4 を参照
 //
-// 注: 本番テキスト・素材は要差し替え (HANDOFF.md 残課題参照)
+// 注: 本番テキスト・素材は要差し替え (docs/archive/HANDOFF.md 残課題参照)
 
 // -----------------------------------------------------------------------------
 // VibesRadar 特典カードの特徴 3 つ (Section 5/9/15 共通)
@@ -118,7 +118,7 @@ export const SUCCESS_CASES: SuccessCase[] = [
     id: "case1",
     name: "Yさん",
     age: 25,
-    photo: "/images/success-case-1.png",
+    photo: "/images/success-case-1-v2.png",
     salaryInfographic: "/images/success-case-1-salary.png",
     title: "内定3社! 電力会社から広告代理店プランナーへ",
     beforeCompany: "電力会社",
@@ -134,7 +134,7 @@ export const SUCCESS_CASES: SuccessCase[] = [
     id: "case2",
     name: "Dさん",
     age: 24,
-    photo: "/images/success-case-2.png",
+    photo: "/images/success-case-2-v2.png",
     salaryInfographic: "/images/success-case-2-salary.png",
     title: "内定4社! 市役所公務員から Web マーケターへ未経験挑戦",
     beforeCompany: "市役所公務員",
@@ -150,7 +150,7 @@ export const SUCCESS_CASES: SuccessCase[] = [
     id: "case3",
     name: "Nさん",
     age: 24,
-    photo: "/images/success-case-3.png",
+    photo: "/images/success-case-3-v2.png",
     salaryInfographic: "/images/success-case-3-salary.png",
     title: "内定3社! 新聞記者からセールスライターへ転身",
     beforeCompany: "新聞記者",
@@ -166,7 +166,7 @@ export const SUCCESS_CASES: SuccessCase[] = [
     id: "case4",
     name: "Eさん",
     age: 26,
-    photo: "/images/success-case-4.png",
+    photo: "/images/success-case-4-v2.png",
     salaryInfographic: "/images/success-case-4-salary.png",
     title: "内定3社! 免税店スタッフから新規事業開発へ",
     beforeCompany: "空港免税店",
