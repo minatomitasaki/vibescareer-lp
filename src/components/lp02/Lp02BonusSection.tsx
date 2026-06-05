@@ -23,7 +23,10 @@ export function Lp02BonusSection() {
           className="w-full h-auto max-w-[480px] block"
         />
       </div>
-      <div className="mt-2 flex justify-center px-2">
+      <div className="mt-2 flex flex-col items-center px-2">
+        <div className="mb-3">
+          <span className="cta-bubble-tip">相談だけでもOK</span>
+        </div>
         <Link
           href="#form"
           className="btn-cta-radar group w-full max-w-[420px]"

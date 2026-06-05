@@ -1150,6 +1150,50 @@ body {
 }
 
 /* =============================================================
+   CTA 吹き出し「相談だけでもOK」 — LP02 Bonus セクション CTA 上に表示。
+   .btn-cta-radar と同じ cta-radar-pulse (1.4s) を流用して scale 同期させ、
+   CTA とまとまった一塊として認識させる。
+   transform-origin: center bottom で下端を固定し、CTA との距離を保つ。
+   ============================================================= */
+.cta-bubble-tip {
+  position: relative;
+  display: inline-block;
+  background: #FFFAF2;
+  border: 2px solid var(--color-brand-primary);
+  color: var(--color-brand-primary);
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 1;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 10px rgba(255, 107, 0, 0.15);
+  animation: cta-radar-pulse 1.4s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+/* 下向き三角 tail (枠線色 + 地色の 2 層で枠線つきに見せる) */
+.cta-bubble-tip::before,
+.cta-bubble-tip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+}
+.cta-bubble-tip::before {
+  bottom: -10px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid var(--color-brand-primary);
+}
+.cta-bubble-tip::after {
+  bottom: -7px;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid #FFFAF2;
+}
+
+/* =============================================================
    入口LP CTA スタック — 「いますぐ無料で」ピル + メインCTAを
    ひとつの塊として scale させる wrapper。
    ピル下の三角がボタンに連結しているため、個別アニメだとスケール中心の
