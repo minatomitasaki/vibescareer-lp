@@ -45,11 +45,6 @@ function buildSheetMeta(resultId: string) {
 const INPUT_CLS =
   "w-full border-2 border-border-default rounded-lg px-3 py-2.5 text-[14px] focus:border-brand-primary focus:outline-none bg-white";
 
-// 生年月日入力のデフォルト値。第二新卒 (23〜26歳) の中央値である 24 歳の
-// 生年に合わせる。月日は 1/1 固定にすることで「デフォルト値」と一目で
-// わかるようにし、ユーザーが必ず自分の誕生日に書き換えるよう促す。
-const DEFAULT_BIRTHDATE = `${new Date().getFullYear() - 24}-01-01`;
-
 export function EntryForm({ resultId }: { resultId: string }) {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
@@ -69,6 +64,9 @@ export function EntryForm({ resultId }: { resultId: string }) {
     // stage: GAS 側で「フォーム送信のみで離脱」と「予約完了」を区別するためのフラグ。
     // - "form_submitted": ここで送信される (このフォームを送信した時点)
     // - "booking_confirmed": /api/calendar/book で送信される (予約成立時)
+    // 2026-06-08 簡素化: フォームの入力項目を 3 種類 (名前 / メール / 電話) に絞った。
+    // 削除した項目は GAS シート互換維持のため空文字列で payload を埋める
+    // (CLAUDE.md の「新規フォーム作成チェックリスト」に従い、payload 構造は固定)。
     const payload = {
       resultId,
       lpVersion: "lp01" as const,
@@ -77,12 +75,12 @@ export function EntryForm({ resultId }: { resultId: string }) {
       firstName: String(fd.get("firstName") ?? ""),
       email: String(fd.get("email") ?? ""),
       phone: String(fd.get("phone") ?? ""),
-      location: String(fd.get("location") ?? ""),
-      timing: String(fd.get("timing") ?? ""),
-      birthdate: String(fd.get("birthdate") ?? ""),
-      education: String(fd.get("education") ?? ""),
-      school: String(fd.get("school") ?? ""),
-      major: String(fd.get("major") ?? ""),
+      location: "",
+      timing: "",
+      birthdate: "",
+      education: "",
+      school: "",
+      major: "",
       // シート C 列〜向け: 日本語化済みラベル
       workplaceLabel: sheetMeta?.workplaceLabel ?? "",
       jobLabel: sheetMeta?.jobLabel ?? "",
@@ -163,7 +161,7 @@ export function EntryForm({ resultId }: { resultId: string }) {
       <Field
         label="メールアドレス"
         required
-        hint="VibesRadarのご案内時に使用します"
+        hint="カウンセリングのご案内時に使用します"
       >
         <input type="email" name="email" className={INPUT_CLS} required />
       </Field>
@@ -171,85 +169,9 @@ export function EntryForm({ resultId }: { resultId: string }) {
       <Field
         label="電話番号"
         required
-        hint="VibesRadarのご案内時に使用します"
+        hint="カウンセリングのご案内時に使用します"
       >
         <input type="tel" name="phone" className={INPUT_CLS} required />
-      </Field>
-
-      <Field label="希望勤務地" required>
-        <select name="location" className={INPUT_CLS} required defaultValue="">
-          <option value="" disabled>
-            選択してください
-          </option>
-          <option>全国どこでも</option>
-          <option>関東(東京・神奈川・千葉・埼玉)</option>
-          <option>関西(大阪・京都・兵庫・奈良)</option>
-          <option>中部・東海(愛知・静岡・岐阜)</option>
-          <option>北海道・東北</option>
-          <option>中国・四国</option>
-          <option>九州・沖縄</option>
-          <option>海外</option>
-          <option>未定・相談したい</option>
-        </select>
-      </Field>
-
-      <Field label="希望転職時期" required>
-        <select name="timing" className={INPUT_CLS} required defaultValue="">
-          <option value="" disabled>
-            選択してください
-          </option>
-          <option>すぐにでも転職したい</option>
-          <option>3ヶ月以内</option>
-          <option>半年以内</option>
-          <option>1年以内</option>
-          <option>まだ決めていない</option>
-        </select>
-      </Field>
-
-      <Field label="生年月日" required>
-        {/* iOS Safari の input[type=date] は -webkit-appearance の最小コンテンツ幅で
-            親をはみ出すため、appearance-none と min-w-0 で width:100% を効かせる */}
-        <input
-          type="date"
-          name="birthdate"
-          defaultValue={DEFAULT_BIRTHDATE}
-          className={`${INPUT_CLS} appearance-none min-w-0`}
-          required
-        />
-      </Field>
-
-      <Field label="最終学歴" required>
-        <select name="education" className={INPUT_CLS} required defaultValue="">
-          <option value="" disabled>
-            選択してください
-          </option>
-          <option value="高卒">高卒</option>
-          <option value="短大卒">短大卒</option>
-          <option value="専門学校卒">専門学校卒</option>
-          <option value="大学卒">大学卒</option>
-          <option value="大学院卒">大学院卒</option>
-          <option value="その他">その他</option>
-        </select>
-      </Field>
-
-      <Field label="学校名" required>
-        <input
-          type="text"
-          name="school"
-          placeholder="例:○○大学"
-          className={INPUT_CLS}
-          required
-        />
-      </Field>
-
-      <Field label="専攻学科" required>
-        <input
-          type="text"
-          name="major"
-          placeholder="例:経済学部 経営学科"
-          className={INPUT_CLS}
-          required
-        />
       </Field>
 
       {/* 同意チェックボックスは廃止し、ボタンクリック = 同意 として扱う。

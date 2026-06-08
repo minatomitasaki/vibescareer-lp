@@ -76,13 +76,13 @@ export default async function ResultPage({
 
       {/* === 固定ブロック前半 (Section 5-9) === */}
       <Suspense fallback={null}>
-        <RadarBonusSection variant="primary" />
+        <RadarBonusSection />
       </Suspense>
       <AdvisorsSection />
       <SuccessCasesSection />
       <PartnersSection />
       <Suspense fallback={null}>
-        <RadarBonusSection variant="secondary" />
+        <RadarBonusSection />
       </Suspense>
 
       {/* === 固定ブロック後半 (Section 10-18) === */}
@@ -90,7 +90,7 @@ export default async function ResultPage({
       <CausesSection />
       <ServiceIntroSection />
       <Suspense fallback={null}>
-        <RadarBonusSection variant="tertiary" />
+        <RadarBonusSection />
       </Suspense>
       <FaqSection />
       <LastMessageSection />
@@ -871,18 +871,18 @@ function FormSection({ resultId }: { resultId: string }) {
       <div className="bg-white rounded-3xl p-5 shadow-md">
         <div className="text-center py-1">
           <p className="text-[15px] font-bold text-text-secondary leading-[1.85]">
-            カンタン申し込み＆カウンセリング予約で
+            カンタン申し込みで
           </p>
           <p className="mt-2.5 text-[22px] font-black leading-[1.45] text-text-primary">
-            <span className="text-brand-primary">VibesRadar</span>の
+            <span className="text-brand-primary">VibesCareer</span>の
             <span className="relative inline-block">
               <span aria-hidden className="absolute inset-x-0 bottom-[1px] h-[9px] bg-brand-primary/15 rounded-[1px]" />
-              <span className="relative">無料チケット</span>
+              <span className="relative">無料カウンセリング</span>
             </span>
             を
           </p>
           <p className="mt-1 text-[24px] font-black text-brand-primary tracking-wide">
-            プレゼント！
+            受けてみる
           </p>
         </div>
 
@@ -937,7 +937,7 @@ function FormSection({ resultId }: { resultId: string }) {
             },
             {
               step: 3,
-              text: "VibesRadarの受検チケットをGET",
+              text: "カウンセリング当日\n全国どこでも参加可能",
               icon: (
                 <svg
                   width={28}
@@ -968,7 +968,7 @@ function FormSection({ resultId }: { resultId: string }) {
               <span className="mt-3 w-[58px] h-[58px] rounded-[14px] bg-gradient-to-br from-brand-primary to-[#FF9A4D] shadow-[0_4px_10px_-2px_rgba(255,107,0,0.35)] flex items-center justify-center text-white">
                 {s.icon}
               </span>
-              <p className="mt-3 text-[13px] font-bold text-text-primary leading-[1.55]">
+              <p className="mt-3 text-[13px] font-bold text-text-primary leading-[1.55] whitespace-pre-line">
                 {s.text}
               </p>
             </li>
