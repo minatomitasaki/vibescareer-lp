@@ -66,7 +66,12 @@ export function EntryForm({ resultId }: { resultId: string }) {
     // - "booking_confirmed": /api/calendar/book で送信される (予約成立時)
     // 2026-06-08 簡素化: フォームの入力項目を 3 種類 (名前 / メール / 電話) に絞った。
     // 削除した項目は GAS シート互換維持のため空文字列で payload を埋める
-    // (CLAUDE.md の「新規フォーム作成チェックリスト」に従い、payload 構造は固定)。
+    // (AGENTS.md の「新規フォーム作成チェックリスト」に従い、payload 構造は固定)。
+    //
+    // 重要: キー順は LP02 (PreviewForm / DetailsForm) と完全一致させる必要がある。
+    // GAS 側はスプシのヘッダー列順に対応した形で書き込むため、age / birthdate /
+    // location / timing / education / school / major の並びがズレるとヘッダーと
+    // データ行の対応が崩れる (2026-06-08 のズレ事故の原因)。
     const payload = {
       resultId,
       lpVersion: "lp01" as const,
@@ -75,9 +80,11 @@ export function EntryForm({ resultId }: { resultId: string }) {
       firstName: String(fd.get("firstName") ?? ""),
       email: String(fd.get("email") ?? ""),
       phone: String(fd.get("phone") ?? ""),
+      // LP01 では age (年齢レンジ) は収集しないが、LP02 とキー順を揃えるため空送信。
+      age: "",
+      birthdate: "",
       location: "",
       timing: "",
-      birthdate: "",
       education: "",
       school: "",
       major: "",
