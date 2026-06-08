@@ -55,9 +55,9 @@ export default function AnalyzingPage() {
       // JSON 破損などは無視
     }
 
-    // resultId が無ければ診断やり直しに戻す
+    // resultId が無ければ診断やり直しに戻す (2026-06-08 統合で診断は /lp01 内に移動)
     if (!resultId) {
-      router.replace("/lp01/diagnosis");
+      router.replace("/lp01#lp01-diagnosis-questions");
       return;
     }
 

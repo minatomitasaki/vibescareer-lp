@@ -118,7 +118,7 @@ function CtaButtonCurrent({
       </div>
       <div className={withPulse ? "cta-pulse-ring" : undefined}>
         <Link
-          href="/lp01/diagnosis"
+          href="/lp01#lp01-diagnosis-questions"
           className="btn-3d-orange group relative w-[300px] text-center text-[22px] py-5 inline-flex items-center justify-center gap-2"
         >
           <span className="relative z-10">診断START！</span>

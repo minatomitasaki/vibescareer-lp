@@ -38,7 +38,7 @@ export function CtaButtonLarge({
       {/* 超大型ボタン: 上段 (メインCTA) / 仕切り線 / 下段 (サブベネフィット) */}
       <div className={withPulse ? "cta-pulse-ring" : undefined}>
         <Link
-          href="/lp01/diagnosis"
+          href="/lp01#lp01-diagnosis-questions"
           className="btn-3d-orange group relative w-[330px] inline-flex flex-col items-center justify-center py-4 px-6"
         >
           {/* 上段: メインCTA */}

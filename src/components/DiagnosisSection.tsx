@@ -5,14 +5,17 @@ import { useRouter } from "next/navigation";
 import { computeDiagnosis } from "@/lib/diagnosis-scoring";
 
 // =====================================================
-// 診断ページ (/diagnosis) — モダン・ミニマル版
-// 仕様: design/SPEC.md セクション 2
+// 診断セクション (入口LP `/lp01` に埋め込み)
+// 元: src/app/lp01/diagnosis/page.tsx (2026-06-08 統合に伴いコンポーネント化)
 // 仕掛け:
 //   - オフホワイト + 薄オレンジドットテクスチャ背景 (.diagnosis-bg)
 //   - PROGRESS バーを sticky で常時表示 (半透明 + backdrop-blur)
 //   - ステップドット型プログレス (8 個)
 //   - 初回回答時に次の質問へカスタムイージングで滑らかにスクロール
 //   - リッカート円のサイズ差 (両端大・中央小)
+// アンカー:
+//   - section 全体: #lp01-diagnosis (debug / 解析用)
+//   - 質問リスト先頭: #lp01-diagnosis-questions (入口LPの CTA からの飛び先)
 // =====================================================
 
 type Axis = "job" | "workplace";
@@ -87,7 +90,7 @@ const smoothScrollTo = (targetY: number, duration: number): void => {
   requestAnimationFrame(step);
 };
 
-export default function DiagnosisPage() {
+export function DiagnosisSection() {
   const router = useRouter();
   const [answers, setAnswers] = useState<Record<number, number>>({});
   // 各質問 li への参照（自動スクロール用）
@@ -138,21 +141,24 @@ export default function DiagnosisPage() {
   };
 
   return (
-    <main className="lp-container diagnosis-bg min-h-screen pb-12 relative">
+    <section
+      id="lp01-diagnosis"
+      className="diagnosis-bg pb-12 relative scroll-mt-24"
+    >
       {/* === ヘッダー (モダン・ミニマル / 画像なし・テキスト主役) === */}
       <header className="px-6 pt-14 pb-6 text-center relative">
         <p className="text-[10px] tracking-[0.32em] text-text-muted font-semibold mb-2">
           DIAGNOSIS
         </p>
-        <h1 className="text-text-primary text-[20px] font-semibold tracking-wider">
+        <h2 className="text-text-primary text-[20px] font-semibold tracking-wider">
           適職<span className="text-brand-primary mx-1 font-bold">×</span>適正年収診断
-        </h1>
+        </h2>
         {/* 中央寄せの細いオレンジ下線 */}
         <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-10 h-px bg-brand-primary/50" />
       </header>
 
       {/* === ステップドット型プログレス (sticky top で常時表示) === */}
-      <section className="sticky top-0 z-40 px-6 pt-3 pb-3 bg-white/75 backdrop-blur-md border-b border-border-default/60">
+      <div className="sticky top-0 z-40 px-6 pt-3 pb-3 bg-white/75 backdrop-blur-md border-b border-border-default/60">
         <div className="flex items-center justify-between text-[10px] tracking-[0.22em] text-text-muted font-semibold mb-2">
           <span>PROGRESS</span>
           <span className="tabular-nums text-text-secondary">
@@ -195,11 +201,14 @@ export default function DiagnosisPage() {
             );
           })}
         </ol>
-      </section>
+      </div>
 
       {/* === 質問リスト === */}
-      {/* sticky PROGRESS の高さぶん scroll-mt で確保（auto-scroll 時の被り防止） */}
-      <ol className="px-5 pt-8 space-y-4">
+      {/* CTA からの飛び先アンカー。scroll-mt-24 で sticky プログレスバーの高さぶんオフセット */}
+      <ol
+        id="lp01-diagnosis-questions"
+        className="px-5 pt-8 space-y-4 scroll-mt-24"
+      >
         {QUESTIONS.map((q, i) => (
           <li
             key={q.id}
@@ -248,7 +257,7 @@ export default function DiagnosisPage() {
           </p>
         )}
       </div>
-    </main>
+    </section>
   );
 }
 
@@ -280,9 +289,9 @@ function QuestionCard({
       </div>
 
       {/* 質問文 */}
-      <h2 className="text-text-primary text-[15px] font-semibold text-center mb-6 leading-relaxed">
+      <h3 className="text-text-primary text-[15px] font-semibold text-center mb-6 leading-relaxed">
         {question.text}
-      </h2>
+      </h3>
 
       {/* 両端の極性ラベル */}
       <div className="flex justify-between text-[10px] text-text-muted mb-2 px-1">

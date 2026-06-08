@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
+import { DiagnosisSection } from "@/components/DiagnosisSection";
 
 // 入口LP
 // 仕様: design/SPEC.md セクション1
@@ -50,6 +50,11 @@ export default function Home() {
         ctaTrustLine="転職を成功させた第２新卒が最初に受けています！"
         ctaWithPulse
       />
+
+      {/* === Section 4: 8 問の診断 (旧 /lp01/diagnosis を統合) ===
+          2026-06-08 統合: 入口LPと診断ページを 1 つに合体。
+          CTA ボタンはすべて #lp01-diagnosis-questions (Q.01 の頭) へスクロール。 */}
+      <DiagnosisSection />
 
       {/* フッター: VibesCareer ロゴを中央配置
           本番リリース時には下記の法的情報のリンク追加が必要：
@@ -151,16 +156,18 @@ function CtaButton({
           {/* 下向き三角の小さな矢印 (ピルからボタンへ繋がる印象) */}
           <span className="absolute -bottom-[7px] left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-r-2 border-b-2 border-brand-primary rotate-45" />
         </div>
-        {/* メインCTAボタン (btn-cta-radar と同構造、色はブランドオレンジ) */}
-        <Link
-          href="/lp01/diagnosis"
+        {/* メインCTAボタン (btn-cta-radar と同構造、色はブランドオレンジ)
+            合体後は同一ページ内の診断セクション (Q.01 の頭) へスクロール。
+            ネイティブの hash 遷移なので globals.css の html { scroll-behavior: smooth } が効く。 */}
+        <a
+          href="#lp01-diagnosis-questions"
           className="btn-cta-radar-orange group w-full text-center"
         >
           <span className="relative z-10">診断START！</span>
           <span className="relative z-10 inline-block transition-transform group-hover:translate-x-1">
             ▶
           </span>
-        </Link>
+        </a>
       </div>
       {/* 補助テキスト（丸い立体オレンジバッジ + アイコン + ダークテキスト） */}
       <div className="flex items-center justify-center gap-x-3.5 gap-y-2 mt-5 flex-wrap px-2">

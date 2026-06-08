@@ -35,7 +35,7 @@ export function CtaButtonTicket({
         <span className="cta-ticket-ribbon">今だけ特典付</span>
 
         <Link
-          href="/lp01/diagnosis"
+          href="/lp01#lp01-diagnosis-questions"
           className="cta-ticket group relative w-[330px] flex items-stretch overflow-hidden"
         >
           {/* メイン部: CTA */}
