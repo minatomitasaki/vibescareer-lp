@@ -97,11 +97,13 @@ export async function notifyBookingToSlack(
   // LP02 経由の予約はオファー内容が違う (個別カウンセリング主役) ため、
   // 受信側で運用を分けやすいよう見出しで明示する。
   const lpLabel =
-    p.lpVersion === "lp02"
-      ? "LP02 (個別カウンセリング)"
-      : p.lpVersion === "lp01"
-        ? "LP01 (VibesRadar 受検チケット)"
-        : "LP不明";
+    p.lpVersion === "lp03"
+      ? "LP03 (漫画記事流入)"
+      : p.lpVersion === "lp02"
+        ? "LP02 (個別カウンセリング)"
+        : p.lpVersion === "lp01"
+          ? "LP01 (VibesRadar 受検チケット)"
+          : "LP不明";
 
   const lines = [
     `🎉 *新規予約が入りました* — ${lpLabel}`,
@@ -183,16 +185,23 @@ export async function notifyLeadToSlack(p: LeadNotifyPayload): Promise<void> {
   if (!url) return;
 
   const lpLabel =
-    p.lpVersion === "lp02"
-      ? "LP02 (個別カウンセリング)"
-      : p.lpVersion === "lp01"
-        ? "LP01 (VibesRadar 受検チケット)"
-        : "LP不明";
+    p.lpVersion === "lp03"
+      ? "LP03 (漫画記事流入)"
+      : p.lpVersion === "lp02"
+        ? "LP02 (個別カウンセリング)"
+        : p.lpVersion === "lp01"
+          ? "LP01 (VibesRadar 受検チケット)"
+          : "LP不明";
 
+  // ステージ見出し:
+  //   preview_unlocked: LP02 だけが使う (第1段フォーム)
+  //   form_submitted:  LP01/LP02/LP03 共通 (予約直前)
   const stageLabel =
     p.stage === "preview_unlocked"
       ? "📝 *リード入力 (LP02 第1段フォーム)*"
-      : "📋 *詳細フォーム入力 (予約直前)*";
+      : p.lpVersion === "lp03"
+        ? "📋 *リード入力 (LP03 1段フォーム / 予約直前)*"
+        : "📋 *詳細フォーム入力 (予約直前)*";
 
   const utmParts = [p.utm_source, p.utm_campaign, p.utm_content].filter(Boolean);
   const utmLine = utmParts.length > 0 ? utmParts.join(" / ") : "(直接 / 自然検索)";
