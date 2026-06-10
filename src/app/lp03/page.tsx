@@ -13,6 +13,7 @@ import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { Lp03Form } from "@/components/lp03/Lp03Form";
 import { RoadmapScrollProgress } from "@/components/RoadmapScrollProgress";
 import { Lp03BonusSection } from "@/components/lp03/Lp03BonusSection";
+import { Lp03ScrollReset } from "@/components/lp03/Lp03ScrollReset";
 import { ExitIntentPopup } from "@/components/ExitIntentPopup";
 import {
   ADVISORS,
@@ -31,6 +32,9 @@ export const metadata: Metadata = {
 export default function Lp03Page() {
   return (
     <main className="lp-container bg-white">
+      {/* article からの遷移時にスムーズスクロールがアニメーション化するのを防ぐ */}
+      <Lp03ScrollReset />
+
       {/* ヘッダー: 入口LPと統一 */}
       <header className="relative px-4 py-3 flex items-center justify-start bg-white">
         <Logo width={160} height={44} priority />
