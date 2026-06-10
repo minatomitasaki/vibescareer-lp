@@ -4,6 +4,8 @@
 // 遷移先だけ /lp02/thanks に差し替えた fork。
 // formData に lpVersion="lp02" が含まれていれば GAS 側でそのまま伝わる
 // (DetailsForm が sessionStorage("vc:entry") に lpVersion を保存)。
+//
+// redirectPath で予約完了後の遷移先を上書き可能 (LP03 が再利用するため)。
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -48,7 +50,11 @@ function buildDateTabs() {
   return out;
 }
 
-export function Lp02SchedulePicker() {
+export function Lp02SchedulePicker({
+  redirectPath = "/lp02/thanks",
+}: {
+  redirectPath?: string;
+} = {}) {
   const router = useRouter();
   const dates = useMemo(buildDateTabs, []);
   const [formData, setFormData] = useState<EntryFormPayload | null>(null);
@@ -128,7 +134,7 @@ export function Lp02SchedulePicker() {
       } catch {
         /* ignore */
       }
-      router.push("/lp02/thanks");
+      router.push(redirectPath);
     } catch {
       setSubmitError("通信エラーが発生しました。電波の良い場所で再度お試しください。");
       setSubmitting(false);
