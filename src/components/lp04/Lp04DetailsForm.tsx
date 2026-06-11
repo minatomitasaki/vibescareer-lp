@@ -2,8 +2,10 @@
 
 // LP04 詳細フォーム (result ページの最下部に置く)。
 // LP02 と違って preview 段で個人情報を取らない (LINE 登録のみ) ため、
-// result ページで氏名・電話・メール・年齢 + 希望勤務地 + 希望転職時期 +
-// 最終学歴 + 学校名 を 1 段で全部入力させる。
+// result ページで最小限の項目だけ収集する。
+// 2026-06 改訂: 入力ハードルを最小化するため 8 項目 → 3 項目 (氏名/年齢/メール)
+// に絞り込み。電話・希望勤務地・希望転職時期・学歴・学校名 は廃止し、
+// 必要な追加情報は LINE / カウンセリング当日のヒアリングで補完する運用。
 //
 // 送信:
 //   - GAS Web App に stage="form_submitted" / lpVersion="lp04" で POST
@@ -50,13 +52,13 @@ export function Lp04DetailsForm({ resultId }: { resultId: string }) {
       lastName: String(fd.get("lastName") ?? "").trim(),
       firstName: String(fd.get("firstName") ?? "").trim(),
       email: String(fd.get("email") ?? "").trim(),
-      phone: String(fd.get("phone") ?? "").trim(),
+      phone: "",
       age: String(fd.get("age") ?? ""),
       birthdate: "",
-      location: String(fd.get("location") ?? ""),
-      timing: String(fd.get("timing") ?? ""),
-      education: String(fd.get("education") ?? ""),
-      school: String(fd.get("school") ?? "").trim(),
+      location: "",
+      timing: "",
+      education: "",
+      school: "",
       major: "",
       workplaceLabel: "",
       jobLabel: "",
@@ -122,33 +124,6 @@ export function Lp04DetailsForm({ resultId }: { resultId: string }) {
         </div>
       </Field>
 
-      <Field label="電話番号" required>
-        <input
-          type="tel"
-          name="phone"
-          className={INPUT_CLS}
-          required
-          autoComplete="tel"
-          inputMode="tel"
-          data-clarity-mask="true"
-        />
-      </Field>
-
-      <Field
-        label="メールアドレス"
-        required
-        hint="カウンセリングのご案内に使用します"
-      >
-        <input
-          type="email"
-          name="email"
-          className={INPUT_CLS}
-          required
-          autoComplete="email"
-          data-clarity-mask="true"
-        />
-      </Field>
-
       <Field label="年齢" required>
         <select name="age" className={INPUT_CLS} required defaultValue="">
           <option value="" disabled>
@@ -162,57 +137,17 @@ export function Lp04DetailsForm({ resultId }: { resultId: string }) {
         </select>
       </Field>
 
-      <Field label="希望勤務地" required>
-        <select name="location" className={INPUT_CLS} required defaultValue="">
-          <option value="" disabled>
-            選択してください
-          </option>
-          <option>全国どこでも</option>
-          <option>関東(東京・神奈川・千葉・埼玉)</option>
-          <option>関西(大阪・京都・兵庫・奈良)</option>
-          <option>中部・東海(愛知・静岡・岐阜)</option>
-          <option>北海道・東北</option>
-          <option>中国・四国</option>
-          <option>九州・沖縄</option>
-          <option>海外</option>
-          <option>未定・相談したい</option>
-        </select>
-      </Field>
-
-      <Field label="希望転職時期" required>
-        <select name="timing" className={INPUT_CLS} required defaultValue="">
-          <option value="" disabled>
-            選択してください
-          </option>
-          <option>すぐにでも転職したい</option>
-          <option>3ヶ月以内</option>
-          <option>半年以内</option>
-          <option>1年以内</option>
-          <option>まだ決めていない</option>
-        </select>
-      </Field>
-
-      <Field label="最終学歴" required>
-        <select name="education" className={INPUT_CLS} required defaultValue="">
-          <option value="" disabled>
-            選択してください
-          </option>
-          <option value="高卒">高卒</option>
-          <option value="短大卒">短大卒</option>
-          <option value="専門学校卒">専門学校卒</option>
-          <option value="大学卒">大学卒</option>
-          <option value="大学院卒">大学院卒</option>
-          <option value="その他">その他</option>
-        </select>
-      </Field>
-
-      <Field label="学校名" required>
+      <Field
+        label="メールアドレス"
+        required
+        hint="カウンセリングのご案内に使用します"
+      >
         <input
-          type="text"
-          name="school"
-          placeholder="例:○○大学"
+          type="email"
+          name="email"
           className={INPUT_CLS}
           required
+          autoComplete="email"
           data-clarity-mask="true"
         />
       </Field>

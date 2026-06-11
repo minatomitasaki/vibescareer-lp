@@ -94,7 +94,7 @@ export default async function ResultPage({
           </span>
 
           <p
-            className="text-[22px] font-black leading-tight"
+            className="text-[17px] sm:text-[20px] font-black leading-tight whitespace-nowrap"
             style={{ color: "#15803D" }}
           >
             詳しい診断結果が解放されました！

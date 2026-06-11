@@ -1094,10 +1094,13 @@ body {
   gap: 10px;
   background: linear-gradient(135deg, #22c55e 0%, #14b8a6 55%, #06b6d4 100%);
   color: #fff;
-  font-size: 20px;
+  /* SP では小さめに、横幅 360px 程度でも「無料カウンセリングを申し込む ▶」が
+     1 行に収まるよう調整 (旧 20px → 17px に縮小 + 横 padding も縮小) */
+  font-size: 17px;
   font-weight: 900;
   letter-spacing: 0.02em;
-  padding: 22px 28px;
+  padding: 20px 18px;
+  white-space: nowrap;
   border-radius: 9999px;
   text-decoration: none;
   /* 平面寄り + 軽い落下影 */
@@ -1105,6 +1108,12 @@ body {
   transition: filter 0.2s ease, box-shadow 0.2s ease;
   animation: cta-radar-pulse 1.4s ease-in-out infinite;
   will-change: transform;
+}
+@media (min-width: 480px) {
+  .btn-cta-radar {
+    font-size: 20px;
+    padding: 22px 28px;
+  }
 }
 @keyframes cta-radar-pulse {
   0%, 100% { transform: scale(1); }
