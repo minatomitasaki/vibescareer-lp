@@ -5089,9 +5089,11 @@ export const IMAGES = [
 
   // =========================================================================
   // LP04 LINE 自動応答用カード画像 (3 種)
-  //   エルメから LINE で配信する「あなたは XX 職に向いています」カード。
-  //   LP04 preview ページのヒーローと同じトンマナ (warm orange + cream)。
-  //   3 ファイルの差分は サブラベル/メインラベル のテキストのみ:
+  //   エルメから LINE で配信する診断結果ヒーローカード。
+  //   LP04 preview ページのヒーロー (人物イラスト 2 人 + 青枠ボックス) を
+  //   そのまま 1024x1536 縦長カード化して、LINE トーク画面に「ぱっと見で
+  //   結果が分かる」リッチメッセージにする。
+  //   3 ファイルの差分は メインラベル + 背景イラストの職種要素 のみ:
   //     sales-stable     → セールス職
   //     marketing-stable → マーケティング職
   //     planning-stable  → 経営企画職
@@ -5101,70 +5103,83 @@ export const IMAGES = [
       variant === "sales-stable" ? "セールス職"
       : variant === "marketing-stable" ? "マーケティング職"
       : "経営企画職";
-    const subLabel = `大手企業 × ${jobLabel}`;
+    // 背景イラストの職種別オブジェクト (LP02 result-hero-* と同じ世界観)
+    const jobBackgroundProps =
+      variant === "sales-stable"
+        ? "background props: small line chart with upward arrow, briefcase silhouette, handshake outline, small phone/laptop icon — all in thin warm orange line strokes"
+        : variant === "marketing-stable"
+        ? "background props: simple bar chart growing rightward, small target/bullseye icon, small megaphone outline, a few small floating speech bubbles — all in thin warm orange line strokes"
+        : "background props: small organization tree chart (3-level org hierarchy), simple growth arrow, small target/dart icon, a small notepad with checklist — all in thin warm orange line strokes";
+    // variant → LP04 preview ヒーローの該当画像名 (細線フラットベクターのお手本)
+    const heroRef =
+      variant === "sales-stable" ? "result-hero-sales.png"
+      : variant === "marketing-stable" ? "result-hero-marketing.png"
+      : "result-hero-planning.png";
     return {
       file: `lp04-line-result-${variant}.png`,
-      size: "1024x1024",
+      size: "1024x1536",
       quality: "high",
+      // LP04 preview ページのヒーローと同じトンマナ (フラットベクター、
+      // 細い均一な黒線、シンプルな顔、warm orange + cream のミニマル) を
+      // 完全再現するため、対応する result-hero-XXX.png を style reference に渡す。
+      references: [heroRef],
       prompt: [
-        `Japanese LINE rich-message card image for VibesCareer career diagnosis service.`,
-        `Square 1024x1024 portrait card design, editorial premium feel, NOT a generic web ad style.`,
+        `Japanese vertical 1024x1536 (2:3) LINE rich-message card for VibesCareer career diagnosis.`,
+        `Recreate the LP04/LP02 preview page hero — a "result reveal" card with a 2D vector illustration of two Japanese characters and a soft blue framed result box.`,
         ``,
-        `STYLE & COLOR (strict):`,
-        `- Primary warm orange: #FF6B00, #FF8533`,
-        `- Light warm cream background: #FFFAF2`,
-        `- Soft warm orange decorative dots/circles in background (small, scattered, gentle).`,
-        `- NG colors (must NOT appear as decorative accents): blue, green, cyan, purple/violet.`,
-        `- Typography: Noto Sans JP, clean modern, bold weights for emphasis.`,
-        `- Use only warm orange + cream + soft black (#1F1F1F) for text. No gradients in unwanted colors.`,
+        `STYLE & COLOR (matches LP04 preview page hero):`,
+        `- Primary warm orange #FF6B00, #FF8533 — used for "診断結果" big title, salary badge, CTA button.`,
+        `- Soft pastel BLUE accent (#BFDBFE / #1E73FF) — ONLY for the result-box border and sub-label tint (matches LP02/LP04 preview design).`,
+        `- Cream background #FFFAF2 / #FFFEFB.`,
+        `- 2D vector flat color illustration style for the two characters (細ペン線 + フラットカラー、no shading), same world as the LP03 manga panels.`,
+        `- Soft warm orange decorative dots/circles in corners.`,
+        `- NG colors: green, cyan, purple, photographic textures.`,
         ``,
-        `LAYOUT (top to bottom, vertically centered, generous padding):`,
+        `LAYOUT (top to bottom, full bleed cream background):`,
         ``,
-        `1) EYEBROW (top, 12% from top, centered):`,
-        `   - Decorative star "✦" warm orange + small label "診断結果" + decorative star "✦"`,
-        `   - All small (~24px), warm orange color #FF6B00.`,
+        `1) TITLE (top 15%):`,
+        `   - Huge bold "診断結果" in WARM ORANGE (#FF6B00), ~110-130px, character-for-character correct Japanese.`,
+        `   - Decorative star "✦" sparkles on both sides (warm orange + soft gold), ~30-40px each.`,
         ``,
-        `2) LEAD TEXT (small, centered, dark grey):`,
-        `   - Japanese: "あなたは"`,
-        `   - Around 20-22px, light weight.`,
+        `2) LEAD "あなたは" (small, dark gray, ~32px), centered.`,
         ``,
-        `3) RESULT BOX (rounded rectangle, light cream interior, warm orange 2-3px border, drop shadow soft):`,
-        `   - Width ~70% of card.`,
-        `   - Inside, top: small sub-label (warm orange, ~18-20px, character-for-character correct Japanese): "${subLabel}"`,
-        `   - Inside, bottom: large bold main label (dark black, ~52-60px, character-for-character correct Japanese): "${jobLabel}"`,
-        ``,
-        `4) LEAD TEXT (small, centered, dark grey):`,
-        `   - Japanese: "に向いています。"`,
-        `   - Around 20-22px, light weight.`,
-        ``,
-        `5) SALARY CARD (rounded rectangle, full warm orange gradient background #FF8533 to #FF6B00, white text inside, drop shadow):`,
-        `   - Width ~75% of card.`,
-        `   - Top label (white, ~22px): "適正年収"`,
-        `   - Below: a large MOSAIC / BLURRED pinkish bar (mosaic pixelation effect, soft pink #F5C6D9 to soft pastel orange gradient, the value is UNREADABLE on purpose). Width about 80% of the salary card.`,
-        ``,
-        `6) CTA BUTTON (rounded rectangle, warm orange gradient #FF8533 to #FF6B00, white bold text, large drop shadow, bottom of card):`,
+        `3) RESULT BOX (rounded rectangle, white interior, SOFT BLUE 2px border #BFDBFE, soft drop shadow):`,
         `   - Width ~80% of card.`,
-        `   - Text large bold white (~38-44px): "診断結果を見る"`,
-        `   - To the LEFT of the text: small cursor/finger-tap icon (white/light cream, 👆 style)`,
-        `   - To the RIGHT of the text: white arrow "▶"`,
+        `   - Inside, top: small sub-label in soft blue (~26-30px): "安定感◎！じっくり腰を据える職場の"`,
+        `   - Inside, bottom: large bold main label in BLACK (~68-80px Japanese): "${jobLabel}"`,
         ``,
-        `BACKGROUND DECORATION:`,
-        `- Light cream background #FFFAF2 across the entire image.`,
-        `- Scatter ~6-8 small warm-orange-tinted circles/dots (varied sizes 10-40px) around edges and corners.`,
-        `- One or two warm-orange star sparkles "✦" near top corners.`,
-        `- Keep generous breathing space; don't crowd.`,
+        `4) "に向いています。" (small, dark gray, ~32px), centered.`,
         ``,
-        `JAPANESE TYPOGRAPHY: character-for-character correct, no garbled kanji or katakana.`,
-        `Render the following Japanese strings EXACTLY:`,
+        `5) ILLUSTRATION (40% of card height, centered):`,
+        `   - Two Japanese characters facing the viewer.`,
+        `   - **ABSOLUTE CRITICAL CHARACTER STYLE — MUST MATCH image[0] (${heroRef})**:`,
+        `     Use the EXACT same illustration style as image[0]: clean THIN UNIFORM black line drawing (細い均一な黒線), FLAT solid color fills (NO gradients, NO shading, NO highlights), MINIMAL face details (eyes are simple dots or short lines, mouth is a short line, no rendered iris, no eyelashes detail, no facial shading), HAIR is a single flat color block with simple outline, NO photographic textures, NO anime/manga large-eye style, NO 3D rendering.`,
+        `     This is a MINIMAL FLAT VECTOR BUSINESS ILLUSTRATION style (think modern editorial illustration), NOT anime, NOT manga, NOT photorealistic.`,
+        `     * LEFT: young Japanese businessman in his mid-20s, business suit, warm subtle smile, holding a small pen or making a presentation gesture. Face = minimal flat vector style of image[0].`,
+        `     * RIGHT: young Japanese businesswoman in business jacket, warm smile, holding a tablet/clipboard with simple data visualization. Face = minimal flat vector style of image[0], same line weight as the man.`,
+        `   - Color palette for clothing: matching image[0] — gray/navy suit, cream/beige jacket, orange tie accent (matches the brand).`,
+        `   - Behind them: simple background props for ${jobLabel}: ${jobBackgroundProps}. Use the same thin warm orange outline style as image[0]'s background props.`,
+        `   - Soft scattered warm-orange dots/sparkles around them (matches image[0]).`,
+        `   - Cream/white wall background, no detailed scenery.`,
+        `   - Hands must have 5 fingers each, no extra limbs.`,
+        `   - DO NOT replicate the specific objects in image[0] (briefcase, business card etc.) — only replicate the LINE WEIGHT + FLAT COLOR + MINIMAL FACE style. The setting and props should be relevant to ${jobLabel}.`,
+        ``,
+        `6) CTA BUTTON (rounded pill, warm orange gradient #FF8533 to #FF6B00, large drop shadow, near bottom):`,
+        `   - Width ~85% of card.`,
+        `   - Text in white bold (~52-60px): "🔒 適正年収を見る  →"`,
+        `   - Lock emoji on the left, right arrow on the right.`,
+        ``,
+        `JAPANESE TYPOGRAPHY: Noto Sans JP, character-for-character correct, no garbled kanji or katakana.`,
+        `Render these strings EXACTLY:`,
         `- 診断結果`,
         `- あなたは`,
-        `- ${subLabel}`,
+        `- 安定感◎！じっくり腰を据える職場の`,
         `- ${jobLabel}`,
         `- に向いています。`,
-        `- 適正年収`,
-        `- 診断結果を見る`,
+        `- 適正年収を見る`,
+        `(DO NOT include the standalone string "適正年収" anywhere else — only inside the CTA "適正年収を見る". No separate "適正年収" badge.)`,
         ``,
-        `Avoid: heavy shading, photographic textures, illustrations of people, mascots, busy backgrounds.`,
+        `Composition: vertical card, generous padding, editorial premium, NOT busy ad style. Inspired by LP04 preview hero on career.vibesradar.ai.`,
       ].join("\n"),
     };
   }),
