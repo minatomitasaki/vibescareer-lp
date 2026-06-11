@@ -73,7 +73,7 @@ export function Lp04LineCta({ resultId }: { resultId: string }) {
         target="_blank"
         rel="noopener noreferrer"
         onClick={onClick}
-        className="group flex items-center justify-center gap-2 w-full px-6 py-4 rounded-2xl bg-[#06C755] hover:bg-[#05B14B] text-white font-black text-[17px] leading-none shadow-[0_4px_12px_rgba(6,199,85,0.3)] transition-all"
+        className="group flex items-center justify-center gap-1.5 sm:gap-2 w-full px-3 sm:px-6 py-4 rounded-2xl bg-[#06C755] hover:bg-[#05B14B] text-white font-black text-[14px] sm:text-[17px] leading-none whitespace-nowrap shadow-[0_4px_12px_rgba(6,199,85,0.3)] transition-all"
       >
         <svg
           viewBox="0 0 24 24"
