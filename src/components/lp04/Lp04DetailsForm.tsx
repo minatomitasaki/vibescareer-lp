@@ -137,11 +137,7 @@ export function Lp04DetailsForm({ resultId }: { resultId: string }) {
         </select>
       </Field>
 
-      <Field
-        label="メールアドレス"
-        required
-        hint="カウンセリングのご案内に使用します"
-      >
+      <Field label="メールアドレス" required>
         <input
           type="email"
           name="email"
