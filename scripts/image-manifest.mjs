@@ -963,6 +963,125 @@ export const IMAGES = [
   },
 
   // -------------------------------------------------------------------------
+  // LINE 公式アカウント用アイコン (LP04 友だち追加で鍵解放)
+  // モチーフ = logo-vibescareer-new.jpg の「上昇する3本バー + 一番高いバーが
+  // 上向き矢印」のグロースチャート。現行ロゴの横並びを縦積みに「ずらす」。
+  // LINE はアイコンを円形クロップするため、要素を中央セーフゾーンに収める。
+  // 生成は 1024x1024、本番アップは別途 640x640 に縮小して使う。
+  // -------------------------------------------------------------------------
+  {
+    file: "line-icon.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: [
+      "Design a clean, modern app-style ICON for a Japanese career-tech service named \"VibesCareer\". This icon will be used as a LINE Official Account profile picture, so it WILL BE CROPPED INTO A CIRCLE by the platform.",
+      "",
+      "============================================================",
+      "CRITICAL — CIRCULAR SAFE ZONE:",
+      "============================================================",
+      "- The platform crops the square into a CIRCLE. Keep ALL meaningful content (symbol + wordmark) well inside the central circle — roughly the center 78% diameter.",
+      "- The four corners MUST be empty background only (they get cropped off).",
+      "- Nothing important (no part of the symbol, no letters) should touch or cross the circular crop edge.",
+      "",
+      "============================================================",
+      "OVERALL CANVAS (1024x1024):",
+      "============================================================",
+      "- Background: a soft warm cream solid, very subtle vertical gradient from #FFFFFF (top) to #FFFAF2 (bottom). Almost off-white. NO patterns, NO illustration, NO scene.",
+      "- A vertically STACKED lockup, centered: SYMBOL on top, wordmark directly BELOW it.",
+      "- Comfortable breathing room between the symbol and the wordmark.",
+      "",
+      "============================================================",
+      "SYMBOL (top, the MAIN hero element) — ASCENDING GROWTH BARS WITH ARROW:",
+      "============================================================",
+      "- Three vertical rounded bars standing side by side on a common baseline, ASCENDING in height left-to-right: left bar shortest (~55%), middle bar taller (~75%), right bar tallest (~100%).",
+      "- The TOP of the tallest (right) bar is shaped into an upward-pointing ARROWHEAD (a triangular tip pointing straight up), so the tallest bar reads as a rising arrow.",
+      "- All three bars filled with a warm orange linear gradient (#FF8533 top → #FF6B00 bottom).",
+      "- Gaps of clean cream background between the bars. Slightly rounded bar corners.",
+      "- The symbol is LARGE and dominant — it should be the clear focal point of the icon (roughly 40% of the canvas height).",
+      "- Flat 2D vector. No drop shadow, no 3D, no glow, no outline beyond the silhouette.",
+      "",
+      "============================================================",
+      "WORDMARK (directly below the symbol) — SMALL:",
+      "============================================================",
+      "- Render exactly the text \"VibesCareer\" as ONE word (no space, no hyphen), on a SINGLE line, centered under the symbol.",
+      "- Noticeably SMALLER than the symbol (the symbol is the hero; the wordmark is a small caption beneath it).",
+      "- Modern bold geometric sans-serif (similar to Inter Bold / Manrope ExtraBold). Tight letter spacing.",
+      "- \"Vibes\" in dark charcoal #1A1A1A, \"Career\" in warm orange #FF6B00.",
+      "",
+      "============================================================",
+      "STRICT REQUIREMENTS:",
+      "============================================================",
+      "- Warm cream/white background only. No borders, no frames, no circle drawn on the image (the crop is applied later).",
+      "- No tagline, no Japanese characters, no URL, no other text besides \"VibesCareer\".",
+      "- Render the wordmark character-for-character, no typos. Spell-check: V-I-B-E-S C-A-R-E-E-R (TWO Es in 'Career').",
+      "- The symbol is EXACTLY 3 ascending bars, the tallest ending in ONE upward arrowhead.",
+      "- Colors: warm orange / cream / charcoal ONLY. ABSOLUTELY NO blue, green, cyan, purple, or teal anywhere.",
+      "- No drop shadow, no glow, no gloss, no 3D, no gradient on the wordmark text.",
+    ].join("\n"),
+  },
+
+  // -------------------------------------------------------------------------
+  // LINE 公式アカウント ホーム背景 (ヘッダー) 画像 — LP04
+  // コピー「20代・第2新卒特化型転職支援サービス」を上、その下に公式ロゴ。
+  // 生成 1536x1024 → 本番 1080x878 にトリミング。
+  // ⚠ 下部中央は LINE のアイコン+アカウント名が重なるため必ず空ける。
+  // -------------------------------------------------------------------------
+  {
+    file: "line-header.png",
+    size: "1536x1024",
+    quality: "high",
+    references: ["logo-vibescareer.png"],
+    prompt: [
+      "You are given ONE reference image:",
+      "  image[0] = logo-vibescareer.png — the OFFICIAL VibesCareer brand logo (an ascending 3-bar growth chart whose tallest bar ends in an upward arrow, next to the wordmark 'VibesCareer'). Reproduce it as-is; do NOT redraw, restyle, or re-typeset it.",
+      "",
+      "Produce a single horizontal image (1536x1024): a REFINED, ELEGANT cover/header banner for a Japanese career-support service's LINE Official Account home. Think 'premium editorial brand header', NOT a busy retail flyer. Calm, warm, lots of whitespace.",
+      "",
+      "============================================================",
+      "STYLE:",
+      "============================================================",
+      "- Clean 2D vector, modern Japanese editorial sensibility (Noto Sans JP / Hiragino feel).",
+      "- Warm palette only: warm orange (#FF6B00 / #FF8533), cream (#FFFAF2), charcoal (#1A1A1A), white.",
+      "- Flat color, generous whitespace, soft and trustworthy mood.",
+      "- AVOID: 3D, photorealism, anime, heavy drop-shadows, clutter.",
+      "",
+      "============================================================",
+      "BACKGROUND:",
+      "============================================================",
+      "- Predominantly soft cream / off-white (#FFFFFF top fading to #FFFAF2). Light and airy.",
+      "- A gentle warm-orange soft gradient glow along the TOP edge only.",
+      "- Two small warm-orange ✦ sparkles for elegance (one upper-left, one upper-right). NO other ornaments.",
+      "- IMPORTANT — keep all key content within the CENTER 70% horizontally (the left/right edges may be cropped). Generous side margins.",
+      "",
+      "============================================================",
+      "LAYOUT (top → bottom):",
+      "============================================================",
+      "1) UPPER AREA — JP COPY (centered):",
+      "   - Render this EXACT Japanese string on ONE centered line (or wrap to two centered lines if needed), BOLD, charcoal #1A1A1A:",
+      "       「20代・第2新卒特化型転職支援サービス」",
+      "   - CRITICAL: render it CHARACTER-FOR-CHARACTER exactly. Note '第2' uses the Arabic numeral '2' (NOT the kanji 二). '20代' uses Arabic '20'. No typos, no missing or extra characters, no random kana.",
+      "   - Clean, confident, premium. You MAY tint the segment 「20代・第2新卒」 slightly warmer/bolder for emphasis, but keep every character correct.",
+      "",
+      "2) MIDDLE AREA — LOGO (centered, directly BELOW the copy):",
+      "   - Place the OFFICIAL VibesCareer logo from image[0], centered, about 42% of canvas width.",
+      "   - PIXEL-FAITHFUL REPRODUCTION of image[0]: preserve the exact bars+upward-arrow icon, the wordmark letterforms (V-i-b-e-s-C-a-r-e-e-r, TWO Es in 'Career'), the color split (charcoal 'Vibes' + warm-orange 'Career'), kerning and baseline. No frame, no border, no shadow.",
+      "",
+      "3) BOTTOM ~28% OF THE CANVAS — COMPLETELY EMPTY:",
+      "   - The entire lower ~28% band must be PURE EMPTY cream background. Absolutely no text, no logo, no sparkles, no objects there.",
+      "   - (This space is reserved because the LINE profile icon and account name will be overlaid on top of it.)",
+      "",
+      "============================================================",
+      "STRICT REQUIREMENTS:",
+      "============================================================",
+      "- ONLY two pieces of content: the Japanese copy line and the logo. Nothing else written.",
+      "- The ONLY Japanese text is 「20代・第2新卒特化型転職支援サービス」. The ONLY Latin text is the 'VibesCareer' wordmark inside the logo.",
+      "- Colors: warm orange / cream / charcoal / white ONLY. ABSOLUTELY NO blue, green, cyan, purple, or teal anywhere.",
+      "- No borders, no frames, no URL, no tagline beyond the specified copy.",
+      "- Bottom ~28% strictly empty.",
+    ].join("\n"),
+  },
+
+  // -------------------------------------------------------------------------
   // ロゴ案 G: ターゲット (同心円 + 矢印)
   // シンボルを「ターゲット (同心円) + 中心に矢印」 に置換。
   // 「自分にピッタリの職を射抜く」 適職診断のメタファー。
@@ -4968,4 +5087,85 @@ export const IMAGES = [
     ].join("\n"),
   },
 
+  // =========================================================================
+  // LP04 LINE 自動応答用カード画像 (3 種)
+  //   エルメから LINE で配信する「あなたは XX 職に向いています」カード。
+  //   LP04 preview ページのヒーローと同じトンマナ (warm orange + cream)。
+  //   3 ファイルの差分は サブラベル/メインラベル のテキストのみ:
+  //     sales-stable     → セールス職
+  //     marketing-stable → マーケティング職
+  //     planning-stable  → 経営企画職
+  // =========================================================================
+  ...["sales-stable", "marketing-stable", "planning-stable"].map((variant) => {
+    const jobLabel =
+      variant === "sales-stable" ? "セールス職"
+      : variant === "marketing-stable" ? "マーケティング職"
+      : "経営企画職";
+    const subLabel = `大手企業 × ${jobLabel}`;
+    return {
+      file: `lp04-line-result-${variant}.png`,
+      size: "1024x1024",
+      quality: "high",
+      prompt: [
+        `Japanese LINE rich-message card image for VibesCareer career diagnosis service.`,
+        `Square 1024x1024 portrait card design, editorial premium feel, NOT a generic web ad style.`,
+        ``,
+        `STYLE & COLOR (strict):`,
+        `- Primary warm orange: #FF6B00, #FF8533`,
+        `- Light warm cream background: #FFFAF2`,
+        `- Soft warm orange decorative dots/circles in background (small, scattered, gentle).`,
+        `- NG colors (must NOT appear as decorative accents): blue, green, cyan, purple/violet.`,
+        `- Typography: Noto Sans JP, clean modern, bold weights for emphasis.`,
+        `- Use only warm orange + cream + soft black (#1F1F1F) for text. No gradients in unwanted colors.`,
+        ``,
+        `LAYOUT (top to bottom, vertically centered, generous padding):`,
+        ``,
+        `1) EYEBROW (top, 12% from top, centered):`,
+        `   - Decorative star "✦" warm orange + small label "診断結果" + decorative star "✦"`,
+        `   - All small (~24px), warm orange color #FF6B00.`,
+        ``,
+        `2) LEAD TEXT (small, centered, dark grey):`,
+        `   - Japanese: "あなたは"`,
+        `   - Around 20-22px, light weight.`,
+        ``,
+        `3) RESULT BOX (rounded rectangle, light cream interior, warm orange 2-3px border, drop shadow soft):`,
+        `   - Width ~70% of card.`,
+        `   - Inside, top: small sub-label (warm orange, ~18-20px, character-for-character correct Japanese): "${subLabel}"`,
+        `   - Inside, bottom: large bold main label (dark black, ~52-60px, character-for-character correct Japanese): "${jobLabel}"`,
+        ``,
+        `4) LEAD TEXT (small, centered, dark grey):`,
+        `   - Japanese: "に向いています。"`,
+        `   - Around 20-22px, light weight.`,
+        ``,
+        `5) SALARY CARD (rounded rectangle, full warm orange gradient background #FF8533 to #FF6B00, white text inside, drop shadow):`,
+        `   - Width ~75% of card.`,
+        `   - Top label (white, ~22px): "適正年収"`,
+        `   - Below: a large MOSAIC / BLURRED pinkish bar (mosaic pixelation effect, soft pink #F5C6D9 to soft pastel orange gradient, the value is UNREADABLE on purpose). Width about 80% of the salary card.`,
+        ``,
+        `6) CTA BUTTON (rounded rectangle, warm orange gradient #FF8533 to #FF6B00, white bold text, large drop shadow, bottom of card):`,
+        `   - Width ~80% of card.`,
+        `   - Text large bold white (~38-44px): "診断結果を見る"`,
+        `   - To the LEFT of the text: small cursor/finger-tap icon (white/light cream, 👆 style)`,
+        `   - To the RIGHT of the text: white arrow "▶"`,
+        ``,
+        `BACKGROUND DECORATION:`,
+        `- Light cream background #FFFAF2 across the entire image.`,
+        `- Scatter ~6-8 small warm-orange-tinted circles/dots (varied sizes 10-40px) around edges and corners.`,
+        `- One or two warm-orange star sparkles "✦" near top corners.`,
+        `- Keep generous breathing space; don't crowd.`,
+        ``,
+        `JAPANESE TYPOGRAPHY: character-for-character correct, no garbled kanji or katakana.`,
+        `Render the following Japanese strings EXACTLY:`,
+        `- 診断結果`,
+        `- あなたは`,
+        `- ${subLabel}`,
+        `- ${jobLabel}`,
+        `- に向いています。`,
+        `- 適正年収`,
+        `- 診断結果を見る`,
+        ``,
+        `Avoid: heavy shading, photographic textures, illustrations of people, mascots, busy backgrounds.`,
+      ].join("\n"),
+    };
+  }),
 ];
