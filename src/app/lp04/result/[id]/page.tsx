@@ -19,12 +19,8 @@ import { OtherJobsList } from "@/components/OtherJobsList";
 import { RoadmapScrollProgress } from "@/components/RoadmapScrollProgress";
 import { Lp02BonusSection } from "@/components/lp02/Lp02BonusSection";
 import { ExitIntentPopup } from "@/components/ExitIntentPopup";
-import {
-  RESULT_DATA,
-  allResultIds,
-  isResultId,
-  type ResultData,
-} from "@/data/results";
+import { RESULT_DATA, type ResultData } from "@/data/results";
+import { LP04_RESULT_IDS, isLp04ResultId } from "@/lib/lp04-diagnosis-mapper";
 import {
   ADVISORS,
   PARTNER_LOGOS,
@@ -34,10 +30,10 @@ import {
 } from "@/data/landing";
 
 // -----------------------------------------------------------------------------
-// 静的生成: 12 パターン全部を build 時に生成
+// 静的生成: LP04 は 3 パターンのみ (sales-stable / marketing-stable / planning-stable)
 // -----------------------------------------------------------------------------
 export function generateStaticParams() {
-  return allResultIds().map((id) => ({ id }));
+  return LP04_RESULT_IDS.map((id) => ({ id }));
 }
 
 export async function generateMetadata({
@@ -46,7 +42,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  if (!isResultId(id)) return { title: "診断結果 | VibesCareer" };
+  if (!isLp04ResultId(id)) return { title: "診断結果 | VibesCareer" };
   const data = RESULT_DATA[id];
   return {
     title: `あなたは${data.jobLabel}に向いています | VibesCareer 診断結果`,
@@ -59,7 +55,7 @@ export default async function ResultPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  if (!isResultId(id)) notFound();
+  if (!isLp04ResultId(id)) notFound();
   const data = RESULT_DATA[id];
 
   return (

@@ -26,10 +26,12 @@ import { Logo } from "@/components/Logo";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { Lp04LineCta } from "@/components/lp04/Lp04LineCta";
 import { PotentialRankBanner } from "@/components/lp02/PotentialRankBanner";
-import { RESULT_DATA, allResultIds, isResultId, type ResultData } from "@/data/results";
+import { RESULT_DATA, type ResultData } from "@/data/results";
+import { LP04_RESULT_IDS, isLp04ResultId } from "@/lib/lp04-diagnosis-mapper";
 
 export function generateStaticParams() {
-  return allResultIds().map((id) => ({ id }));
+  // LP04 は 3 パターンのみ
+  return LP04_RESULT_IDS.map((id) => ({ id }));
 }
 
 /** 「。」までを最初の 1 文として取り出す。句点がなければ先頭 60 字。 */
@@ -50,7 +52,7 @@ export default async function PreviewPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  if (!isResultId(id)) notFound();
+  if (!isLp04ResultId(id)) notFound();
   const data = RESULT_DATA[id];
 
   return (

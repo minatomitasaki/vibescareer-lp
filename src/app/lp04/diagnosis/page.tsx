@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { computeDiagnosis } from "@/lib/diagnosis-scoring";
+import { mapJobToLp04ResultId } from "@/lib/lp04-diagnosis-mapper";
 
 // =====================================================
 // 診断ページ (/diagnosis) — モダン・ミニマル版
@@ -115,17 +116,24 @@ export default function DiagnosisPage() {
 
   const handleSubmit = () => {
     if (!allAnswered) return;
-    // 診断ロジック (src/lib/diagnosis-scoring.ts) で 12 パターンの resultId を導出
+    // 診断ロジック (src/lib/diagnosis-scoring.ts) で 12 パターンの resultId を導出してから、
+    // LP04 用に 3 パターン (sales-stable / marketing-stable / planning-stable) へ集約。
+    // エルメ フリープランの QRコードアクション枠 (3 つ) に合わせるため。
     const diagnosis = computeDiagnosis(answers);
+    const lp04ResultId = mapJobToLp04ResultId(diagnosis.job);
+    const lp04Job = lp04ResultId.split("-")[0] as "sales" | "marketing" | "planning";
     const payload = {
       answers,
-      resultId: diagnosis.resultId,
-      job: diagnosis.job,
-      workplace: diagnosis.workplace,
+      resultId: lp04ResultId,
+      job: lp04Job,
+      workplace: "stable" as const,
       // デバッグ用: 各職種への距離と stable 合計も残す
       debug: {
         jobDistances: diagnosis.jobDistances,
         stableSum: diagnosis.stableSum,
+        originalResultId: diagnosis.resultId,
+        originalJob: diagnosis.job,
+        originalWorkplace: diagnosis.workplace,
       },
       answeredAt: new Date().toISOString(),
     };

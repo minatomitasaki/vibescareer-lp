@@ -16,35 +16,31 @@
 import { useEffect } from "react";
 import type { ResultId } from "@/data/results";
 
-// 12 シナリオ別 友だち追加 URL (エルメ管理画面で発行 → ここに貼り付け)
-// プレースホルダーのうちは FALLBACK_URL に強制フォールバック。
-const LINE_URLS_BY_RESULT: Record<ResultId, string> = {
-  "creative-speed":  "PLACEHOLDER_creative-speed",
-  "creative-stable": "PLACEHOLDER_creative-stable",
-  "support-speed":   "PLACEHOLDER_support-speed",
-  "support-stable":  "PLACEHOLDER_support-stable",
-  "marketing-speed": "PLACEHOLDER_marketing-speed",
-  "marketing-stable":"PLACEHOLDER_marketing-stable",
-  "planning-speed":  "PLACEHOLDER_planning-speed",
-  "planning-stable": "PLACEHOLDER_planning-stable",
-  "engineer-speed":  "PLACEHOLDER_engineer-speed",
-  "engineer-stable": "PLACEHOLDER_engineer-stable",
-  "sales-speed":     "PLACEHOLDER_sales-speed",
-  "sales-stable":    "PLACEHOLDER_sales-stable",
+// エルメの QRコードアクション (流入経路URL) で発行したシナリオ別 友だち追加 URL。
+// フリープラン (3 枠) のため、現状は大手企業向けの 3 パターンのみ運用。
+// 残り 9 パターンは LINE_URLS_BY_RESULT に存在しない = preview ページ側で
+// 検知して LP02 PreviewForm (フォーム鍵解放) にフォールバックする (Lp04 ページ側で分岐)。
+const LINE_URLS_BY_RESULT: Partial<Record<ResultId, string>> = {
+  "sales-stable":     "https://s.lmes.jp/landing-qr/2010364513-3w96R23n?uLand=OpkRhB",
+  "marketing-stable": "https://s.lmes.jp/landing-qr/2010364513-3w96R23n?uLand=pMtIpU",
+  "planning-stable":  "https://s.lmes.jp/landing-qr/2010364513-3w96R23n?uLand=pa0PrB",
 };
 
-// プレースホルダー段階や未登録 resultId 用のフォールバック
-// (公式 LINE のメインアカウント追加 URL に飛ばす想定)。
-const FALLBACK_URL = "https://line.me/R/ti/p/@vibescareer";
+/** preview ページから「この resultId は LINE シナリオを持っているか」を判定するため公開 */
+export function hasLineScenarioFor(resultId: string): boolean {
+  return resultId in LINE_URLS_BY_RESULT;
+}
 
-function resolveUrl(resultId: string): string {
-  const url = LINE_URLS_BY_RESULT[resultId as ResultId];
-  if (!url || url.startsWith("PLACEHOLDER")) return FALLBACK_URL;
-  return url;
+function resolveUrl(resultId: string): string | null {
+  return LINE_URLS_BY_RESULT[resultId as ResultId] ?? null;
 }
 
 export function Lp04LineCta({ resultId }: { resultId: string }) {
   const url = resolveUrl(resultId);
+  // LINE シナリオが登録されていない resultId の場合は本コンポーネントを描画しない。
+  // (Lp04 preview ページ側で hasLineScenarioFor で事前に分岐するため、ここに来る想定はないが
+  //  万一通った場合の安全装置として null を返す)
+  if (!url) return null;
 
   // 計測用 dataLayer push (GTM「LINE登録ボタンクリック」トリガーで使う)
   useEffect(() => {
