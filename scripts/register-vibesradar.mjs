@@ -108,7 +108,12 @@ async function main() {
       .or(page.locator('a:has-text("受検者管理"), button:has-text("受検者管理")'))
       .first()
       .click();
-    await page.waitForLoadState("networkidle");
+    // VibesRadar SPA はバックグラウンドで継続的に通信 (WebSocket/ポーリング等) しており
+    // networkidle が永続的に満たされないため、networkidle ではなく load を待つ。
+    // load も拾えない場合は次の「個別登録」ボタン出現を直接待つので問題ない。
+    await page
+      .waitForLoadState("load", { timeout: 15_000 })
+      .catch(() => undefined);
 
     // ── 3. 個別登録モーダル / 画面を開く ──────────────────
     console.log("[step 3] 「+個別登録」をクリック");
