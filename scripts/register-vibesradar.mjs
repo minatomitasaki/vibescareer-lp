@@ -124,6 +124,11 @@ async function main() {
       .or(page.locator(':is(button, a):has-text("個別登録")'))
       .first()
       .click();
+    // クリック直後の画面状態を artifact に残す (モーダルなのか別ページ遷移なのか確認用)
+    await page
+      .waitForLoadState("load", { timeout: 10_000 })
+      .catch(() => undefined);
+    await dumpScreenshot("after-step3-individual-click");
 
     // 登録モーダル/ダイアログの出現を待つ。
     // 一覧画面の検索フィルター (id="candidates-email-filter" 等) と混ざらないよう、
@@ -164,13 +169,27 @@ async function main() {
       .or(scope.locator('input[placeholder*="メール"]:not([id*="filter"]):not([id*="search"])'))
       .first();
     await emailInput.fill(email);
+    // フィールド入力後の状態を artifact に残す (ボタンが disabled なのか名前が違うのか確認用)
+    await dumpScreenshot("after-step4-fields-filled");
 
     // ── 5. 登録ボタン ─────────────────────────────────────
     console.log("[step 5] 「登録して案内を送信」をクリック");
-    // ダイアログ scope 内で探す (ダイアログ外の同名ボタンが存在する場合の誤クリックを防ぐ)
+    // VibesRadar UI 更新でボタンテキストが変わっている可能性があるため、
+    // 候補を順次試す。検索/フィルター系の submit ボタンは除外する。
+    //   1. 旧テキスト「登録して案内を送信」(完全一致)
+    //   2. 正規表現マッチ /登録.*送信|案内.*送信/
+    //   3. 単純「登録」「案内を送信」「招待」など
+    //   4. 最後の砦: ダイアログ/ページ内の type=submit ボタン
     const submitButton = scope
       .getByRole("button", { name: "登録して案内を送信" })
       .or(scope.locator('button:has-text("登録して案内を送信")'))
+      .or(scope.getByRole("button", { name: /登録.*送信|案内.*送信/ }))
+      .or(scope.getByRole("button", { name: /^(登録する|招待する|案内を送信|送信する)$/ }))
+      .or(
+        scope.locator(
+          'button[type="submit"]:not([id*="filter"]):not([id*="search"])',
+        ),
+      )
       .first();
 
     // クリック前の状態を記録 (遷移検知に使う)
