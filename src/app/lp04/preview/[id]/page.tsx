@@ -1,30 +1,21 @@
 // LP04 結果プレビューページ (/lp04/preview/[id])
 //
-// LP01 の結果LPの Section 1 (診断結果ヒーロー) と Section 2 (持ち味 / アドバイス
-// / その他の適職) と同じデザインをそのまま再現しつつ、以下だけをモザイクで隠す:
+// 2026-06-15: A/B テストの variant B デザインを本番 (A) に反映した。
+//   旧 A デザインのバックアップ: docs/backups/lp04-preview-A.original.2026-06-15.tsx.bak
+//   (戻したい場合はこの .bak を本ファイルに上書きで復元)
 //
-//   ▼ 見せる
-//     - 「診断結果」「あなたは」+ 職場サブラベル + 職種ラベル + 「に向いています」
-//     - 「適正年収」見出し
-//     - 「あなたの持ち味」見出し + 1 文目だけ
-//     - 「プロからのアドバイス」見出し
-//     - 「その他の適職」見出し
+// デザイン仕様 (旧 variant B):
+//   1. CTA は「下部固定バー (Lp04bStickyCta)」で常時表示。
+//      オレンジ丸「10秒で完了！」+ 緑 LINE ボタン。
+//   2. 「あなたの持ち味」「プロからのアドバイス」の本文を "全文モザイク" にする。
+//   3. モザイク部分に「🔒 ○○を見る」バッジを重ね、クリックで LINE 友だち追加 URL に飛ばす。
 //
-//   ▼ モザイク (実テキストを CSS filter blur で隠した上に「🔒 フォーム入力で表示」
-//     のピル型バッジをオーバーレイ。完全に潰すのではなく「文字が書いてあること」が
-//     うっすら分かるレベルにして、続きが気になる体験にする)
-//     - 適正年収の金額
-//     - 持ち味の 2 文目以降
-//     - プロからのアドバイス本文
-//     - その他の適職カードの中身 (タイトル含む)
-//
-// 診断セクションとフォーム CTA の間に、PotentialRankBanner (おめでとう！上位
-// 17-23% のポテンシャルあります) を挟んで心理ブースト。
+// LINE 誘導先 URL は resultId ごとの既存シナリオ (resolveLp04LineUrl) を流用。
 
 import { notFound } from "next/navigation";
 import { Logo } from "@/components/Logo";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
-import { Lp04LineCta } from "@/components/lp04/Lp04LineCta";
+import { Lp04bUnlockBadge, Lp04bStickyCta } from "@/components/lp04/Lp04bCta";
 import { PotentialRankBanner } from "@/components/lp02/PotentialRankBanner";
 import { RESULT_DATA, type ResultData } from "@/data/results";
 import { LP04_RESULT_IDS, isLp04ResultId } from "@/lib/lp04-diagnosis-mapper";
@@ -32,18 +23,6 @@ import { LP04_RESULT_IDS, isLp04ResultId } from "@/lib/lp04-diagnosis-mapper";
 export function generateStaticParams() {
   // LP04 は 3 パターンのみ
   return LP04_RESULT_IDS.map((id) => ({ id }));
-}
-
-/** 「。」までを最初の 1 文として取り出す。句点がなければ先頭 60 字。 */
-function firstSentence(text: string): string {
-  const m = text.match(/^[^。]*。/);
-  return m ? m[0] : text.slice(0, 60);
-}
-
-/** 「。」までを除いた残りのテキスト (モザイクで隠すぶん) を返す */
-function restAfterFirstSentence(text: string): string {
-  const first = firstSentence(text);
-  return text.slice(first.length).trim();
 }
 
 export default async function PreviewPage({
@@ -56,111 +35,31 @@ export default async function PreviewPage({
   const data = RESULT_DATA[id];
 
   return (
-    <main className="lp-container bg-white">
+    // 下部固定 CTA バーに隠れないよう、本文末尾に十分な余白 (pb-32) を確保。
+    <main className="lp-container bg-white pb-32">
       {/* ヘッダー */}
       <header className="relative px-4 py-3 flex items-center justify-start bg-white">
         <Logo width={160} height={44} priority />
         <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-primary/60 to-transparent" />
       </header>
 
-      {/* === Section 1: 診断結果ヒーロー (LP01 と同じ) ただし適正年収はモザイク === */}
+      {/* === Section 1: 診断結果ヒーロー (適正年収はモザイク) === */}
       <PreviewResultHeader data={data} />
 
-      {/* === Section 2: 持ち味 / アドバイス / その他の適職 (LP01 と同じデザイン、テキスト一部モザイク) === */}
+      {/* === Section 2: 持ち味 / アドバイス / その他の適職 (本文すべてモザイク) === */}
       <PreviewInsightSection data={data} />
 
       {/* === 心理ブースター: 上位 N% のポテンシャル === */}
       <PotentialRankBanner />
 
-      {/* === 解放 CTA: LINE 登録で鍵を解放 === */}
-      <section id="preview-form" className="px-4 py-10 bg-bg-form scroll-mt-4">
-        <div className="bg-white rounded-3xl p-5 shadow-md">
-          <div className="text-center">
-            <p className="text-[15px] font-bold text-text-secondary leading-[1.85]">
-              LINE で受け取るだけで
-            </p>
-            <p className="mt-2 text-[22px] font-black leading-[1.45] text-text-primary">
-              <span className="relative inline-block">
-                <span
-                  aria-hidden
-                  className="absolute inset-x-0 bottom-[1px] h-[9px] bg-brand-primary/15 rounded-[1px]"
-                />
-                <span className="relative">詳細な診断結果</span>
-              </span>
-              が見れます！
-            </p>
-            <p className="mt-1 text-[12px] text-text-muted">
-              所要時間およそ 10 秒・完全無料
-            </p>
-          </div>
-
-          <div className="mt-6">
-            <Lp04LineCta resultId={data.id} />
-          </div>
-        </div>
-      </section>
+      {/* === 下部固定 CTA: LINE 登録で鍵を解放 (常時表示) === */}
+      <Lp04bStickyCta resultId={data.id} />
     </main>
   );
 }
 
 // =============================================================================
-// 「🔒 ○○を見る →」のオーバーレイバッジ
-// 親要素を relative にしてからこの要素を absolute で重ねる。
-// 全面クリッカブルにして、クリックでフォームセクション (#preview-form) に
-// スムーズスクロール。
-// =============================================================================
-function ArrowRightIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="3"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-      className={className}
-    >
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="13 6 19 12 13 18" />
-    </svg>
-  );
-}
-
-function UnlockBadge({
-  size = "md",
-  label = "続きを見る",
-}: {
-  size?: "sm" | "md" | "lg";
-  label?: string;
-}) {
-  const cls =
-    size === "lg"
-      ? "px-4 py-2 text-[15px]"
-      : size === "sm"
-        ? "px-3 py-1.5 text-[12px]"
-        : "px-3.5 py-1.5 text-[13.5px]";
-  return (
-    <a
-      href="#preview-form"
-      aria-label={label}
-      className="group/badge absolute inset-0 flex items-center justify-center cursor-pointer"
-    >
-      <span
-        className={`bg-white/90 backdrop-blur-sm rounded-full font-black text-brand-primary border border-brand-primary/45 shadow-md inline-flex items-center gap-1.5 transition-transform group-hover/badge:scale-105 group-active/badge:scale-95 ${cls}`}
-      >
-        <span aria-hidden>🔒</span>
-        {label}
-        <ArrowRightIcon className="transition-transform group-hover/badge:translate-x-0.5" />
-      </span>
-    </a>
-  );
-}
-
-// =============================================================================
-// 診断結果ヒーロー (LP01 ResultHeader の複製 + 適正年収モザイク)
+// 診断結果ヒーロー (適正年収の金額だけモザイク + 大きめ UnlockBadge)
 // =============================================================================
 function PreviewResultHeader({ data }: { data: ResultData }) {
   return (
@@ -205,7 +104,7 @@ function PreviewResultHeader({ data }: { data: ResultData }) {
           >
             {data.salaryRange}
           </span>
-          <UnlockBadge size="lg" label="適正年収を見る" />
+          <Lp04bUnlockBadge resultId={data.id} size="lg" label="適正年収を見る" />
         </div>
       </div>
     </section>
@@ -213,44 +112,48 @@ function PreviewResultHeader({ data }: { data: ResultData }) {
 }
 
 // =============================================================================
-// 持ち味 / アドバイス / その他の適職 (LP01 InsightSection 複製 + 実テキスト blur)
+// 持ち味 / アドバイス / その他の適職 (本文をすべて blur で隠す)
 // =============================================================================
 function PreviewInsightSection({ data }: { data: ResultData }) {
-  const adviceRest = restAfterFirstSentence(data.advice);
-
   return (
     <section className="px-4 pt-6 pb-8">
       <div className="result-insight-block">
-        {/* あなたの持ち味: 全文表示 (モザイクなし) */}
+        {/* あなたの持ち味: 見出しのみ表示、本文は全文 blur + UnlockBadge */}
         <div className="result-insight-item">
           <h3 className="result-insight-heading">
             <span className="result-insight-en">YOUR STRENGTHS</span>
             <span className="result-insight-ja">あなたの持ち味</span>
           </h3>
-          <p className="result-insight-text">{data.strength}</p>
+          <div className="relative mt-1">
+            <p
+              className="result-insight-text select-none"
+              aria-hidden
+              style={{ filter: "blur(4.5px)" }}
+            >
+              {data.strength}
+            </p>
+            <Lp04bUnlockBadge resultId={data.id} label="持ち味を見る" />
+          </div>
         </div>
 
         <div className="result-insight-divider" aria-hidden />
 
-        {/* プロからのアドバイス: 1 文目だけ表示、続きは blur + UnlockBadge */}
+        {/* プロからのアドバイス: 見出しのみ表示、本文は全文 blur + UnlockBadge */}
         <div className="result-insight-item">
           <h3 className="result-insight-heading">
             <span className="result-insight-en">PROFESSIONAL ADVICE</span>
             <span className="result-insight-ja">プロからのアドバイス</span>
           </h3>
-          <p className="result-insight-text">{firstSentence(data.advice)}</p>
-          {adviceRest && (
-            <div className="relative mt-2">
-              <p
-                className="result-insight-text select-none"
-                aria-hidden
-                style={{ filter: "blur(4.5px)" }}
-              >
-                {adviceRest}
-              </p>
-              <UnlockBadge label="続きを見る" />
-            </div>
-          )}
+          <div className="relative mt-1">
+            <p
+              className="result-insight-text select-none"
+              aria-hidden
+              style={{ filter: "blur(4.5px)" }}
+            >
+              {data.advice}
+            </p>
+            <Lp04bUnlockBadge resultId={data.id} label="続きを見る" />
+          </div>
         </div>
 
         <div className="result-insight-divider" aria-hidden />
@@ -272,7 +175,7 @@ function PreviewInsightSection({ data }: { data: ResultData }) {
                 body="市場とユーザーを読み解き、数字と感覚の両方を行き来しながら、商品やサービスの届け方を設計する職種。"
               />
             </div>
-            <UnlockBadge label="続きを見る" />
+            <Lp04bUnlockBadge resultId={data.id} label="続きを見る" />
           </div>
         </div>
       </div>
@@ -288,10 +191,7 @@ function MosaicOtherJobCard({ title, body }: { title: string; body: string }) {
       className="relative bg-[#F0FDF4] border border-[#86EFAC] rounded-2xl px-4 py-3 overflow-hidden select-none"
       aria-hidden
     >
-      <div
-        className="text-center mb-2"
-        style={{ filter: "blur(4.5px)" }}
-      >
+      <div className="text-center mb-2" style={{ filter: "blur(4.5px)" }}>
         <span className="inline-block text-[14px] font-black text-text-primary">
           ★ {title}
         </span>
