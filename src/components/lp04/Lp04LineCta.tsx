@@ -31,12 +31,14 @@ export function hasLineScenarioFor(resultId: string): boolean {
   return resultId in LINE_URLS_BY_RESULT;
 }
 
-function resolveUrl(resultId: string): string | null {
+/** resultId に対応する LINE 友だち追加 URL を返す (未登録なら null)。
+ *  LP04 variant B (/lp04-b/preview/) のバッジ / 下部固定 CTA からも参照するため公開。 */
+export function resolveLp04LineUrl(resultId: string): string | null {
   return LINE_URLS_BY_RESULT[resultId as ResultId] ?? null;
 }
 
 export function Lp04LineCta({ resultId }: { resultId: string }) {
-  const url = resolveUrl(resultId);
+  const url = resolveLp04LineUrl(resultId);
   // LINE シナリオが登録されていない resultId の場合は本コンポーネントを描画しない。
   // (Lp04 preview ページ側で hasLineScenarioFor で事前に分岐するため、ここに来る想定はないが
   //  万一通った場合の安全装置として null を返す)

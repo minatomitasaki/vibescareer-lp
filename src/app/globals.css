@@ -1159,6 +1159,58 @@ body {
 }
 
 /* =============================================================
+   LP04-b 下部固定 LINE CTA — LINE 緑 + 立体 (下端ソリッド影) + パルス。
+   下端の濃い緑ソリッド影で「浮いたボタン」に見せ、:active で影を縮めて
+   押し込み感を出す。常時 scale パルスで視線を誘導 (動き)。
+   ============================================================= */
+.lp04b-line-cta {
+  position: relative;
+  background: #06c755;
+  color: #fff;
+  border-radius: 9999px;
+  box-shadow: 0 5px 0 0 #04a345, 0 9px 18px rgba(6, 199, 85, 0.35);
+  transition: box-shadow 0.15s ease, background 0.2s ease, filter 0.2s ease;
+}
+/* 内側上端の光沢 (gloss) で立体感を補強 */
+.lp04b-line-cta::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 18px;
+  right: 18px;
+  height: 34%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  border-radius: 9999px;
+  pointer-events: none;
+}
+/* 波動リング (入口LP cta-pulse-ring と同じ仕組み・色は LINE 緑)。
+   ふわふわ scale ではなく、外側へ広がる波で注目誘導する。 */
+.lp04b-line-cta::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 9999px;
+  border: 2px solid rgba(6, 199, 85, 0.5);
+  animation: pulse-ring 1.8s ease-out infinite;
+  pointer-events: none;
+}
+.lp04b-line-cta:hover {
+  background: #05b14b;
+  filter: brightness(1.04);
+}
+.lp04b-line-cta:active {
+  /* 下端ソリッド影を縮めて押し込み感 */
+  box-shadow: 0 1px 0 0 #04a345, 0 3px 8px rgba(6, 199, 85, 0.3);
+}
+@media (prefers-reduced-motion: reduce) {
+  .lp04b-line-cta::after { animation: none; }
+}
+
+/* =============================================================
    CTA 吹き出し「相談だけでもOK」 — LP02 Bonus セクション CTA 上に表示。
    .btn-cta-radar と同じ cta-radar-pulse (1.4s) を流用して scale 同期させ、
    CTA とまとまった一塊として認識させる。
