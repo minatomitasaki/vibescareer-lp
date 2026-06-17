@@ -53,7 +53,7 @@ function ArrowRightIcon({ className = "" }: { className?: string }) {
 export function Lp04bUnlockBadge({
   resultId,
   size = "md",
-  label = "続きを見る",
+  label = "LINEで結果を見る",
 }: {
   resultId: string;
   size?: "sm" | "md" | "lg";
@@ -79,7 +79,7 @@ export function Lp04bUnlockBadge({
       className="group/badge absolute inset-0 flex items-center justify-center cursor-pointer"
     >
       <span
-        className={`bg-white/90 backdrop-blur-sm rounded-full font-black text-brand-primary border border-brand-primary/45 shadow-md inline-flex items-center gap-1.5 transition-transform group-hover/badge:scale-105 group-active/badge:scale-95 ${cls}`}
+        className={`bg-[#06C755] rounded-full font-black text-white border border-[#05b34c] shadow-md inline-flex items-center gap-1.5 transition-transform group-hover/badge:scale-105 group-active/badge:scale-95 ${cls}`}
       >
         <span aria-hidden>🔒</span>
         {label}

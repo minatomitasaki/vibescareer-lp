@@ -49,9 +49,6 @@ export default async function PreviewPage({
       {/* === Section 2: 持ち味 / アドバイス / その他の適職 (本文すべてモザイク) === */}
       <PreviewInsightSection data={data} />
 
-      {/* === 心理ブースター: 上位 N% のポテンシャル === */}
-      <PotentialRankBanner />
-
       {/* === 下部固定 CTA: LINE 登録で鍵を解放 (常時表示) === */}
       <Lp04bStickyCta resultId={data.id} />
     </main>
@@ -93,9 +90,14 @@ function PreviewResultHeader({ data }: { data: ResultData }) {
             <p className="result-lead-copy">に向いています。</p>
           </div>
         </div>
+      </div>
 
-        {/* 適正年収カード: 見出しは見せて金額は blur + 大きめ UnlockBadge */}
-        <div className="mt-8 w-full max-w-[320px] result-salary-card relative">
+      {/* おめでとう / 同世代の上位 N% — 適正年収カードの「上」に配置 */}
+      <PotentialRankBanner />
+
+      {/* 適正年収カード: 見出しは見せて金額は blur + 大きめ UnlockBadge */}
+      <div className="px-4 pb-2 flex justify-center">
+        <div className="w-full max-w-[320px] result-salary-card relative">
           <span className="label">適正年収</span>
           <span
             className="value select-none"
@@ -104,7 +106,7 @@ function PreviewResultHeader({ data }: { data: ResultData }) {
           >
             {data.salaryRange}
           </span>
-          <Lp04bUnlockBadge resultId={data.id} size="lg" label="適正年収を見る" />
+          <Lp04bUnlockBadge resultId={data.id} size="lg" />
         </div>
       </div>
     </section>
@@ -132,7 +134,7 @@ function PreviewInsightSection({ data }: { data: ResultData }) {
             >
               {data.strength}
             </p>
-            <Lp04bUnlockBadge resultId={data.id} label="持ち味を見る" />
+            <Lp04bUnlockBadge resultId={data.id} />
           </div>
         </div>
 
@@ -152,7 +154,7 @@ function PreviewInsightSection({ data }: { data: ResultData }) {
             >
               {data.advice}
             </p>
-            <Lp04bUnlockBadge resultId={data.id} label="続きを見る" />
+            <Lp04bUnlockBadge resultId={data.id} />
           </div>
         </div>
 
@@ -175,7 +177,7 @@ function PreviewInsightSection({ data }: { data: ResultData }) {
                 body="市場とユーザーを読み解き、数字と感覚の両方を行き来しながら、商品やサービスの届け方を設計する職種。"
               />
             </div>
-            <Lp04bUnlockBadge resultId={data.id} label="続きを見る" />
+            <Lp04bUnlockBadge resultId={data.id} />
           </div>
         </div>
       </div>

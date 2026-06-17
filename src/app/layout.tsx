@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_JP, Inter, Zen_Kaku_Gothic_Antique, Klee_One } from "next/font/google";
+import localFont from "next/font/local";
 import Script from "next/script";
 import { UtmCapture } from "@/components/UtmCapture";
 import "./globals.css";
@@ -12,34 +12,50 @@ const GTM_ID = "GTM-NLBK2344";
 // 計測データに開発時アクセスが混ざらないようにする。
 const enableGtm = process.env.NODE_ENV === "production";
 
-const notoSansJP = Noto_Sans_JP({
+// =====================================================
+// フォントはセルフホスト (next/font/local)。
+// 以前は next/font/google を使っていたが、ビルド時に Google Fonts へ
+// 取得しに行く設計のため、ネットワークが不安定だと Turbopack が
+// 壊れたバンドルを生成し本番が全ページ 500 になる事故が発生した。
+// woff2 (latin サブセット) を src/app/fonts/ に同梱し、ビルドを
+// ネット非依存・決定的にしている。subsets は従来通り latin のみ
+// (日本語グリフはフォールスバックフォントで表示)。
+// =====================================================
+
+// 本文用 (latin サブセットの可変フォント。1ファイルで全ウェイトをカバー)
+const notoSansJP = localFont({
+  src: "./fonts/noto-sans-jp-latin.woff2",
   variable: "--font-noto-sans-jp",
-  subsets: ["latin"],
-  weight: ["400", "500", "700", "900"],
+  weight: "400 900",
   display: "swap",
 });
 
-// 英字用のスタイリッシュなジオメトリックサンセリフ
-const inter = Inter({
+// 英字用のスタイリッシュなジオメトリックサンセリフ (可変フォント)
+const inter = localFont({
+  src: "./fonts/inter-latin.woff2",
   variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+  weight: "500 800",
   display: "swap",
 });
 
 // アドバイザーキャッチコピー用 (角に少し丸みがある柔らかいゴシック)
-const zenKakuGothicAntique = Zen_Kaku_Gothic_Antique({
+const zenKakuGothicAntique = localFont({
+  src: [
+    { path: "./fonts/zen-kaku-500.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/zen-kaku-700.woff2", weight: "700", style: "normal" },
+    { path: "./fonts/zen-kaku-900.woff2", weight: "900", style: "normal" },
+  ],
   variable: "--font-zen-kaku",
-  subsets: ["latin"],
-  weight: ["500", "700", "900"],
   display: "swap",
 });
 
 // ラストメッセージ用 (上品な手書き風日本語フォント、ペン書き感)
-const kleeOne = Klee_One({
+const kleeOne = localFont({
+  src: [
+    { path: "./fonts/klee-one-400.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/klee-one-600.woff2", weight: "600", style: "normal" },
+  ],
   variable: "--font-handwritten",
-  subsets: ["latin"],
-  weight: ["400", "600"],
   display: "swap",
 });
 
