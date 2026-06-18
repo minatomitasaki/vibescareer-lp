@@ -6,7 +6,7 @@
 //
 // デザイン仕様 (旧 variant B):
 //   1. CTA は「下部固定バー (Lp04bStickyCta)」で常時表示。
-//      オレンジ丸「10秒で完了！」+ 緑 LINE ボタン。
+//      オレンジ丸「5秒で完了！」+ 緑 LINE ボタン。
 //   2. 「あなたの持ち味」「プロからのアドバイス」の本文を "全文モザイク" にする。
 //   3. モザイク部分に「🔒 ○○を見る」バッジを重ね、クリックで LINE 友だち追加 URL に飛ばす。
 //
@@ -61,6 +61,9 @@ export default async function PreviewPage({
 function PreviewResultHeader({ data }: { data: ResultData }) {
   return (
     <section className="result-hero">
+      {/* おめでとう / 同世代の上位 N% — セクション最上部に配置 */}
+      <PotentialRankBanner />
+
       <div className="relative pt-4 pb-2 flex flex-col items-center">
         <div className="relative w-full max-w-[360px] bg-[#FFFAF5] border-2 border-brand-primary/25 rounded-3xl shadow-[0_8px_24px_rgba(255,107,0,0.08)] overflow-hidden">
           {data.jobType === "sales" && (
@@ -91,9 +94,6 @@ function PreviewResultHeader({ data }: { data: ResultData }) {
           </div>
         </div>
       </div>
-
-      {/* おめでとう / 同世代の上位 N% — 適正年収カードの「上」に配置 */}
-      <PotentialRankBanner />
 
       {/* 適正年収カード: 見出しは見せて金額は blur + 大きめ UnlockBadge */}
       <div className="px-4 pb-2 flex justify-center">

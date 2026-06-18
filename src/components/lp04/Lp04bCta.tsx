@@ -4,7 +4,7 @@
 //
 // (1) Lp04bUnlockBadge: モザイク部分に重ねる「🔒 ○○を見る」バッジ。
 //     クリックで resultId に対応する LINE 友だち追加 URL (別タブ) を開く。
-// (2) Lp04bStickyCta: 下部固定 CTA。オレンジ丸「10秒で完了！」+ 緑 LINE ボタン
+// (2) Lp04bStickyCta: 下部固定 CTA。オレンジ丸「5秒で完了！」+ 緑 LINE ボタン
 //     (立体感 + 入口LP と同じ波動リングで視線誘導。.lp04b-line-cta クラス)。
 //
 // LINE URL 解決は variant A と共有 (Lp04LineCta の resolveLp04LineUrl)。
@@ -135,9 +135,9 @@ export function Lp04bStickyCta({ resultId }: { resultId: string }) {
           <span>LINEで詳しい結果を見る</span>
         </a>
 
-        {/* オレンジ丸「10秒で完了！」: ボタン左上にかぶせる */}
+        {/* オレンジ丸「5秒で完了！」: ボタン左上にかぶせる */}
         <div className="absolute -top-5 -left-1 z-10 flex h-[46px] w-[46px] flex-col items-center justify-center rounded-full bg-brand-primary text-white shadow-md leading-none border-2 border-white">
-          <span className="text-[13px] font-black">10秒</span>
+          <span className="text-[13px] font-black">5秒</span>
           <span className="mt-[1px] text-[8.5px] font-bold">で完了！</span>
         </div>
       </div>
