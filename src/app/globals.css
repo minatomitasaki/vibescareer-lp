@@ -1332,6 +1332,76 @@ body {
 }
 
 /* =============================================================
+   LP05 特典 LINE CTA — btn-cta-radar-orange と同じ構造 (光沢 + 波動リング
+   + ピル連動パルス) で、カラーを LINE グリーンにした版。
+   入口LP の CTA ボタンと同じ見た目を LINE 緑で再現する。
+   ============================================================= */
+.cta-radar-stack .btn-cta-radar-line {
+  animation: none;
+}
+.btn-cta-radar-line {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background: linear-gradient(135deg, #3ccb8e 0%, #06c755 55%, #05a648 100%);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  padding: 18px 20px;
+  border-radius: 9999px;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(5, 166, 72, 0.22);
+  transition: filter 0.2s ease, box-shadow 0.2s ease;
+  animation: cta-radar-pulse 1.4s ease-in-out infinite;
+  will-change: transform;
+}
+@media (min-width: 480px) {
+  .btn-cta-radar-line {
+    font-size: 18px;
+    padding: 20px 26px;
+  }
+}
+/* 内側上端の控えめな光沢 (gloss) */
+.btn-cta-radar-line::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 22px;
+  right: 22px;
+  height: 30%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.34) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  border-radius: 9999px;
+  pointer-events: none;
+}
+/* 波動リング (LINE グリーン) */
+.btn-cta-radar-line::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  border: 2px solid rgba(6, 199, 85, 0.55);
+  animation: cta-radar-ring 1.8s ease-out infinite;
+  pointer-events: none;
+}
+.btn-cta-radar-line:hover {
+  filter: brightness(1.06);
+  box-shadow: 0 6px 16px rgba(5, 166, 72, 0.3);
+}
+.btn-cta-radar-line:active {
+  box-shadow: 0 2px 6px rgba(5, 166, 72, 0.24);
+}
+
+/* =============================================================
    VibesRadar 特典カード (Section 5 / 9 / 15) — 上品リデザイン版
    ============================================================= */
 .radar-bonus-card {

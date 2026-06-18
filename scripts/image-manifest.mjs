@@ -111,6 +111,56 @@ function lp02BonusGreenPrompt() {
 }
 
 // -----------------------------------------------------------------------------
+// LP05 結果ページ 2.5: 特典プレゼント・ビジュアル (画像部分のみ)。
+// 「そんなあなたへ！」見出しと CTA ボタンは HTML 側に切り出したので、この画像は
+// 「7月30日までの特別なご案内 〜 特別プレゼント！」までを描く。配色はグリーン基調。
+// 書影は添付 PDF 表紙『採用のプロが明かす 20代転職の本音』に寄せて再現する。
+// -----------------------------------------------------------------------------
+function lp05GuidePresentPrompt() {
+  return [
+    "Produce a single SQUARE image (1024x1024) — an ELEGANT promotional gift panel for a Japanese career-support service. It announces a FREE downloadable guide booklet for people who just finished a career diagnosis. Editorial premium feel, modern Japanese sensibility, NOT a busy retail flyer.",
+    "",
+    "============================================================",
+    "STYLE:",
+    "============================================================",
+    "- Clean 2D vector look. Crisp Japanese typography (Noto Sans JP / Hiragino).",
+    "- Calm GREEN palette as the accent (fresh, trustworthy green — NOT blue, NOT teal-blue).",
+    "- Generous whitespace, calm hierarchy, NO cluttered layout.",
+    "- AVOID: 3D, photorealism, anime, watercolor, heavy drop-shadow 'web ad' look.",
+    "- IMPORTANT: do NOT draw a big top headline like 「そんなあなたへ」, and do NOT draw any green CTA button at the bottom — those live OUTSIDE this image. This panel starts at the slash announce line and ends at 「特別プレゼント！」.",
+    "",
+    "============================================================",
+    "OVERALL CANVAS (1024x1024):",
+    "============================================================",
+    "- Background: very soft light-GREEN gradient — top #F3FDF6 fading downward to #DCFCE7.",
+    "- Outer ~48 px margin of clean empty whitespace on all sides.",
+    "",
+    "============================================================",
+    "LAYOUT (top to bottom, generous breathing room):",
+    "============================================================",
+    "",
+    "1) SLASH ANNOUNCE (centered, ~24 px, bold): green slashes 「＼」 ... 「／」 wrapping the line 「7月30日までの特別なご案内」. The 「7月30日」 portion is warm-orange #FF6B00 bold; the rest deep green #15803D.",
+    "",
+    "2) PILL HEADING (centered): a WHITE rounded-pill (capsule) with a 3 px green border (#22C55E) and soft shadow, containing 「15秒診断を受けた方限定」 in ultra-bold deep green #15803D (~40 px).",
+    "",
+    "3) SUBLINE (centered, ~24 px, bold charcoal #1A1A1A): 「あなたらしいキャリアを叶えるための」",
+    "",
+    "4) GIFT CARD (centered, ~90% of canvas width): a rounded-rectangle card (~24 px corner radius) filled with a GREEN gradient (#22C55E to #16A34A), soft shadow. Inside it, a horizontal split (match the reference layout: text on the left, the booklet prominently on the right with several pages clearly fanned behind it):",
+    "   LEFT zone (~52%): white text, left-aligned — ultra-bold 「採用のプロが明かす」 then larger 「20代転職ガイド」 (white, wraps to 2-3 lines) and below it smaller white 「“採用する側”がこっそり教える受かり方・選び方」 (~16 px).",
+    "   RIGHT zone (~48%): a realistic flat-vector BOOK / eBook cover mockup reproduced from this exact design: a CREAM / off-white cover with a soft warm-orange wavy shape in the TOP-LEFT corner and faint thin gold curved lines at the bottom-left; a thin dark-brown top line 「エージェントは教えてくれない。」 under a tiny ✦ and hairline rule; a LARGE bold dark-brown serif (Mincho) title on two lines 「採用のプロが明かす」 / 「20代転職ガイド」; a smaller dark-brown subtitle 「“採用する側”が、こっそり教える」 / 「受かり方・選び方」; a solid warm-orange ribbon banner with white text 「20代を年間10,000名以上見てきた“採る側”の本音。」; a friendly young Japanese man in his mid-20s wearing a BEIGE / tan blazer over a white tee and tan trousers, hands in pockets, standing on the right side of the cover; and a small dark-brown serif wordmark 「VibesCareer」 with a tiny orange ✦ at the bottom-left. Several thin page sheets fan out behind the cover to suggest a multi-page PDF (like the reference). The book tilts slightly with a soft shadow.",
+    "",
+    "5) GIFT LINE (centered near the bottom, ~34 px): 「を」 in charcoal #1A1A1A immediately followed by 「特別プレゼント！」 in ultra-bold warm-orange #FF6B00. This is the LAST element — nothing below it.",
+    "",
+    "============================================================",
+    "STRICT REQUIREMENTS:",
+    "============================================================",
+    "- All Japanese text MUST be character-for-character correct: 7月30日までの特別なご案内 / 15秒診断を受けた方限定 / あなたらしいキャリアを叶えるための / 採用のプロが明かす / 20代転職ガイド / 受かり方・選び方 / 特別プレゼント / エージェントは教えてくれない / VibesCareer. NO extra stray digits or glyphs before/after any string.",
+    "- Keep the composition CALM and PREMIUM. NO heavy black borders, NO pink hairlines, NO clutter.",
+    "- Colors allowed: white, soft light-green background, green (#22C55E / #16A34A / #15803D) for the card/pill/accents, warm orange #FF6B00 ONLY for 「7月30日」 and 「特別プレゼント！」 and the book's ribbon/wave, cream + dark-brown for the book cover, charcoal #1A1A1A for body text.",
+  ].join("\n");
+}
+
+// -----------------------------------------------------------------------------
 // LP02 専用 CTA バナー (VibesCareer サービス本体訴求 + VibesRadar 特典付き)。
 // 共通枠は B 案 (meetingBonusPrompt) と同じ縦長 2:3、peach cream / warm orange
 // 系。違いは:
@@ -790,6 +840,18 @@ function lp03MangaHeaderPrompt() {
 }
 
 export const IMAGES = [
+  // -------------------------------------------------------------------------
+  // LP05 結果ページ 2.5: 特典プレゼント・ビジュアル (画像部分のみ・グリーン基調)
+  // 「そんなあなたへ！」見出しと CTA ボタンは HTML 側。書影は『採用のプロが明かす
+  // 20代転職の本音』PDF 表紙に寄せて再現。
+  // -------------------------------------------------------------------------
+  {
+    file: "lp05-guide-present.png",
+    size: "1024x1024",
+    quality: "high",
+    prompt: lp05GuidePresentPrompt(),
+  },
+
   // -------------------------------------------------------------------------
   // LP03 漫画記事 最上部の広告型ヘッダー (競合「凄すぎる!!」型 → warm orange 版)
   // -------------------------------------------------------------------------
