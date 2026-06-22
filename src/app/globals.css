@@ -2935,3 +2935,118 @@ body {
 .lp03-time-dot:nth-child(2) { animation-delay: 0.2s; }
 .lp03-time-dot:nth-child(3) { animation-delay: 0.4s; }
 
+/* =============================================================
+   LP06 CTA — オシャレ＋動きのある申込セクション (黒金 + LINE緑)
+   ============================================================= */
+
+/* お知らせカードの金枠グロー脈動 */
+@keyframes lp06-card-glow {
+  0%, 100% { box-shadow: 0 0 24px rgba(212,175,55,0.14), inset 0 0 0 1px rgba(212,175,55,0.30); }
+  50%      { box-shadow: 0 0 48px rgba(212,175,55,0.36), inset 0 0 0 1px rgba(212,175,55,0.60); }
+}
+.lp06-notice-card { animation: lp06-card-glow 3.2s ease-in-out infinite; }
+
+/* ライブ感パルスドット */
+@keyframes lp06-ping {
+  0%        { transform: scale(1);   opacity: 0.85; }
+  75%, 100% { transform: scale(2.4); opacity: 0; }
+}
+.lp06-dot-ping { animation: lp06-ping 1.8s cubic-bezier(0,0,0.2,1) infinite; }
+
+/* 「3名様限定」バッジの呼吸 */
+@keyframes lp06-badge-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.05); }
+}
+.lp06-limited-badge { animation: lp06-badge-pulse 2.2s ease-in-out infinite; }
+
+/* CTAボタン: 上下フロート */
+@keyframes lp06-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+.lp06-cta-float { animation: lp06-float 2.6s ease-in-out infinite; }
+
+/* CTAボタン: 光沢スイープ */
+@keyframes lp06-shine {
+  0%        { transform: translateX(-130%) skewX(-20deg); }
+  60%, 100% { transform: translateX(280%)  skewX(-20deg); }
+}
+.lp06-cta-shine::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 45%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.55), transparent);
+  transform: translateX(-130%) skewX(-20deg);
+  animation: lp06-shine 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* CTAボタン周囲のパルスリング (2 重・連続で波打たせて視線誘導) */
+@keyframes lp06-ring {
+  0%        { transform: scale(1);    opacity: 0.7; }
+  70%, 100% { transform: scale(1.38); opacity: 0; }
+}
+.lp06-cta-ring::before,
+.lp06-cta-ring::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 9999px;
+  border: 2.5px solid rgba(6,199,85,0.75);
+  animation: lp06-ring 2s ease-out infinite;
+  pointer-events: none;
+}
+/* 2 本目は半周期ずらして、途切れない連続パルスにする */
+.lp06-cta-ring::after {
+  animation-delay: 1s;
+}
+
+/* 矢印の左右ヒント */
+@keyframes lp06-arrow {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(5px); }
+}
+.lp06-cta-arrow { animation: lp06-arrow 1.1s ease-in-out infinite; }
+
+/* スラッシュ煽りの明滅 */
+@keyframes lp06-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.5; }
+}
+.lp06-blink { animation: lp06-blink 1.6s ease-in-out infinite; }
+
+/* 概要セクション背景: ブランド名 横スライド (薄金) */
+.lp06-bg-marquee-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden;
+  pointer-events: none;
+}
+.lp06-bg-marquee {
+  display: flex;
+  gap: 0.35em;
+  white-space: nowrap;
+  font-size: 72px;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  color: rgba(212, 175, 55, 0.08);
+  animation: lp06-bg-marquee-move 24s linear infinite;
+}
+@keyframes lp06-bg-marquee-move {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp06-notice-card, .lp06-dot-ping, .lp06-limited-badge, .lp06-cta-float,
+  .lp06-cta-shine::after, .lp06-cta-ring::before, .lp06-cta-ring::after, .lp06-cta-arrow, .lp06-blink,
+  .lp06-bg-marquee {
+    animation: none;
+  }
+}
+
