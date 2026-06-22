@@ -209,7 +209,9 @@ function Lp06CtaButton({ label = "LINEで申し込む" }: { label?: string }) {
       {/* パルスリング + 上下フロート のラッパー */}
       <div className="lp06-cta-ring lp06-cta-float relative w-full max-w-[340px] rounded-full">
         <a
-          href="#" /* TODO: LINE公式アカウントの友だち追加URLに差し替え */
+          href="https://s.lmes.jp/landing-qr/2010430660-JaImwgX3?uLand=xJhGY8"
+          target="_blank"
+          rel="noopener noreferrer"
           className="lp06-cta-shine group relative flex w-full items-center justify-center gap-2.5 overflow-hidden rounded-full bg-gradient-to-b from-[#27D873] to-[#06C755] px-6 py-4 text-center text-[18px] font-black text-white shadow-[0_8px_26px_rgba(6,199,85,0.5)] transition-transform active:scale-[0.97]"
         >
           <LineIcon />
