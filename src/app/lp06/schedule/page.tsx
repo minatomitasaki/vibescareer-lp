@@ -40,7 +40,7 @@ export default function Lp06SchedulePage() {
 
       <div className="lp-container">
         <section className="px-4 pb-10">
-          <Lp02SchedulePicker redirectPath="/lp04/thanks" />
+          <Lp02SchedulePicker redirectPath="/lp06/thanks" />
           <p className="mt-4 text-center text-[11px] leading-[1.7] text-text-muted">
             ※ 予約完了後、ご登録のメールアドレス宛に VibesRadar 受検 URL と
             <br />
