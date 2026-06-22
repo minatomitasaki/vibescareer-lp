@@ -17,7 +17,8 @@ import { useEffect } from "react";
 // LP05 は結果パターン (12 種) に依らず単一の LINE 友だち追加 URL を使う。
 // エルメのシナリオ別 URL ではなく 1 本に統一しているため、結果ページを 12 パターン
 // 全てに展開できる。正式な LP05 用 URL に変わったら、ここだけ差し替える。
-const LP05_LINE_URL = "https://line.me/R/ti/p/%40328atbsd";
+const LP05_LINE_URL =
+  "https://s.lmes.jp/landing-qr/2010430660-JaImwgX3?uLand=YPbrlT";
 
 /** GTM 連携用 dataLayer push (LP05 のクリックを LP04 と区別して計測) */
 function pushLineClick(resultId: string, source: "inline" | "sticky" | "guide") {
