@@ -7,11 +7,12 @@
 // 計測は LP05 と区別するため dataLayer イベントを `lp07_line_cta_click` にする
 // (Meta カスタムコンバージョン「LP07_LINE登録」用)。
 //
-// LINE URL は結果パターンに依らず単一 (LP05 と同じ友だち追加 URL)。
+// LINE URL は結果パターンに依らず単一 (LP07 専用エルメ シナリオ)。
 
 import { useEffect } from "react";
 
-const LP07_LINE_URL = "https://line.me/R/ti/p/%40328atbsd";
+const LP07_LINE_URL =
+  "https://s.lmes.jp/landing-qr/2010430660-JaImwgX3?uLand=czV1YJ";
 
 /** GTM 連携用 dataLayer push (LP07 のクリックを LP05 等と区別して計測) */
 function pushLineClick(source: "fv" | "guide" | "sticky") {
