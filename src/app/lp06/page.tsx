@@ -12,10 +12,25 @@ import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import {
   SUCCESS_CASES,
   type SuccessCase,
-  PARTNER_LOGOS,
   ADVISORS,
   type Advisor,
 } from "@/data/landing";
+
+// LP06 専用のパートナー企業ロゴ一覧。
+// 共通の PARTNER_LOGOS をベースに、Leverages・DYM を外し WA・SECOM を追加したもの
+// (他LPへ波及させないため lp06 ローカルで定義)。上下2行(各5社)で流すため全10社。
+const LP06_PARTNER_LOGOS = [
+  { name: "BizReach", file: "/images/partner-logo-bizreach.svg" },
+  { name: "Speee", file: "/images/partner-logo-speee.png" },
+  { name: "Sansan", file: "/images/partner-logo-sansan.svg" },
+  { name: "SECOM", file: "/images/partner-logo-secom.png" },
+  { name: "WA", file: "/images/partner-logo-wa.png" },
+  { name: "FLUX", file: "/images/partner-logo-flux.svg" },
+  { name: "kaonavi", file: "/images/partner-logo-kaonavi.svg" },
+  { name: "UPSIDER", file: "/images/partner-logo-upsider.svg" },
+  { name: "ASSIGN", file: "/images/partner-logo-assign.svg" },
+  { name: "Nahato", file: "/images/partner-logo-nahato.png" },
+];
 
 export const metadata: Metadata = {
   title: "日本一ズル賢い エスカレーター式・転職成功術 | VibesCareer",
@@ -351,7 +366,7 @@ function PartnersSection() {
       <div className="partners-marquee-wrap mt-6">
         <div className="partners-marquee-row">
           <div className="partners-marquee-track partners-marquee-left">
-            {[...PARTNER_LOGOS.slice(0, 5), ...PARTNER_LOGOS.slice(0, 5)].map(
+            {[...LP06_PARTNER_LOGOS.slice(0, 5), ...LP06_PARTNER_LOGOS.slice(0, 5)].map(
               (logo, i) => (
                 <div key={`r1-${i}`} className="partners-marquee-cell">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -368,7 +383,7 @@ function PartnersSection() {
         </div>
         <div className="partners-marquee-row">
           <div className="partners-marquee-track partners-marquee-right">
-            {[...PARTNER_LOGOS.slice(5), ...PARTNER_LOGOS.slice(5)].map(
+            {[...LP06_PARTNER_LOGOS.slice(5), ...LP06_PARTNER_LOGOS.slice(5)].map(
               (logo, i) => (
                 <div key={`r2-${i}`} className="partners-marquee-cell">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
