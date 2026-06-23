@@ -87,31 +87,20 @@ export default function Lp07Page() {
 // =============================================================================
 function FvSection() {
   return (
-    <section className="bg-gradient-to-b from-[#FFF7ED] to-white px-4 pt-8 pb-9 text-center">
-      <p className="text-[13px] font-black text-brand-primary tracking-[0.08em] mb-3">
-        エージェントは教えてくれない。
-      </p>
-      <h1 className="text-[27px] font-black text-text-primary leading-[1.45]">
-        採用のプロが明かす
-        <br />
-        <span className="text-brand-primary text-[32px]">「20代転職ガイド」</span>
-      </h1>
-      <p className="mt-4 text-[15px] font-bold text-text-secondary leading-[1.85]">
-        “採用する側”がこっそり教える受かり方・選び方を、
-        <br />
-        <span className="relative inline-block">
-          <span
-            aria-hidden
-            className="absolute inset-x-0 bottom-[1px] h-[9px] bg-brand-primary/20 rounded-[1px]"
-          />
-          <span className="relative font-black text-text-primary">
-            LINE登録で無料プレゼント
-          </span>
-        </span>
-      </p>
+    <section className="bg-white pb-9">
+      {/* FV メインビジュアル (コピーは画像に焼き込み済み・文字主役) */}
+      <ImagePlaceholder
+        src="/images/lp07-fv-v2.png"
+        label="エージェントは教えてくれない。採用のプロが明かす「20代転職ガイド」をLINE登録で無料プレゼント"
+        alt="エージェントは教えてくれない。採用のプロが明かす「20代転職ガイド」。“採用する側”がこっそり教える受かり方・選び方を、LINE登録で無料プレゼント。"
+        width={1024}
+        height={1536}
+        priority
+        className="w-full h-auto block"
+      />
 
       {/* 1st CTA */}
-      <div className="cta-radar-stack max-w-[330px] mx-auto mt-7">
+      <div className="cta-radar-stack max-w-[330px] mx-auto mt-6 px-4">
         <div className="relative bg-white border-2 border-[#06C755] rounded-full px-5 py-1.5 text-[12px] font-black text-[#06A648] mb-[-14px] z-10 shadow-md">
           LINE登録者限定
           <span className="absolute -bottom-[7px] left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-r-2 border-b-2 border-[#06C755] rotate-45" />
@@ -213,9 +202,9 @@ function GuideBonusSection({
       {/* (b) 特典ビジュアル (画像: 〜特別プレゼント！まで) */}
       <div className="flex justify-center">
         <ImagePlaceholder
-          src="/images/lp05-guide-present.png"
-          label="15秒診断を受けた方限定 / 採用のプロが明かす20代転職ガイド 特別プレゼント"
-          alt="15秒診断を受けた方限定。あなたらしいキャリアを叶えるための『採用のプロが明かす 20代転職ガイド』を特別プレゼント。"
+          src="/images/lp07-guide-present.png"
+          label="採用のプロが明かす20代転職ガイド 特別プレゼント"
+          alt="あなたらしいキャリアを叶えるための『採用のプロが明かす 20代転職ガイド』を特別プレゼント。"
           width={1024}
           height={1024}
           className="w-full h-auto max-w-[440px] block"
