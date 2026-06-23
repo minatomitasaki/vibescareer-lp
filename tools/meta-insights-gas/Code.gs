@@ -206,23 +206,23 @@ const METRIC_ROWS_SIMPLE = [
 ];
 
 /**
- * LP04 用の指標テンプレート。
- * LINE_CTAクリック (鍵ページ CTA クリック = Meta カスタムCV「LP04_LINE登録」) を独立指標で持つ。
- * リード数・予約数は手入力 (drawBlock の isLp04 分岐で差し替え)。
- *   ファネル: 到達(コンテンツビュー) → LINE_CTAクリック → リード(手入力) → 予約(手入力)
- * ※ LINE_CTAクリックは「CTAボタンのクリック数(Meta帰属分)」で、実際の友だち追加数とは一致しない。
+ * LP04/LP05/LP06 用の指標テンプレート (LINE 登録型)。
+ * 「LINE登録」は Meta の自動計測 (LINE_CTAクリック) が実態と合わないため手入力にする。
+ * リード数・予約数も手入力 (drawBlock の isLp04 分岐で差し替え)。
+ *   ファネル: 到達(コンテンツビュー) → LINE登録(手入力) → リード(手入力) → 予約(手入力)
+ * ※ 単価・率は手入力値から formula で再計算する。
  */
 const METRIC_ROWS_LP04 = [
   { label: '広告費(税抜)',       type: 'yen', calc: function (a) { return a.spend; } },
   { label: 'コンテンツビュー',   type: 'int', calc: function (a) { return a.cv; } },
   { label: '　CV単価',           type: 'yen', calc: function (a) { return safeDiv_(a.spend, a.cv); } },
   { label: '　CV率',             type: 'pct', calc: function (a) { return safeDiv_(a.cv, a.clicks); } },
-  { label: 'LINE_CTAクリック',   type: 'int', calc: function (a) { return a.ctaClick; } },
-  { label: '　CTA単価',          type: 'yen', calc: function (a) { return safeDiv_(a.spend, a.ctaClick); } },
-  { label: '　CTA率',            type: 'pct', calc: function (a) { return safeDiv_(a.ctaClick, a.cv); } },
+  { label: 'LINE登録',           type: 'int', calc: function () { return null; } }, // 手入力
+  { label: '　登録単価',          type: 'yen', calc: function () { return null; } }, // 手入力値から再計算
+  { label: '　登録率',            type: 'pct', calc: function () { return null; } }, // 手入力値から再計算
   { label: 'リード数',           type: 'int', calc: function (a) { return a.leads; } },
   { label: '　リード単価',       type: 'yen', calc: function (a) { return safeDiv_(a.spend, a.leads); } },
-  { label: '　リード率',         type: 'pct', calc: function (a) { return safeDiv_(a.leads, a.ctaClick); } },
+  { label: '　リード率',         type: 'pct', calc: function (a) { return safeDiv_(a.leads, a.leads); } },
   { bookingMarker: true },
   { label: 'imp数',             type: 'int', calc: function (a) { return a.imp; } },
   { label: 'リンククリック数',   type: 'int', calc: function (a) { return a.clicks; } },
@@ -234,6 +234,7 @@ const METRIC_ROWS_LP04 = [
 const BOLD_LABELS = [
   '　到達単価', '　到達率',
   '　第1リード単価', '　第1リード率',
+  '　登録単価', '　登録率',
   '　リード単価', '　リード率',
   '　CTA単価', '　CTA率',
   '　予約単価(CPA)', '　予約率',
@@ -346,7 +347,7 @@ function buildMonthlyTab_(ym, rowsOfMonth, lpKey) {
   const isLp04 = (lpKey === 'lp04' || lpKey === 'lp05' || lpKey === 'lp06');
 
   // 手入力行 (電話で予約 / LP04 のリード数・予約数) を「ラベル||campaign||date」で退避→復元する。
-  const savedManual = readExistingManualRows_(sheet, ym, ['電話で予約', 'リード数', '予約数']);
+  const savedManual = readExistingManualRows_(sheet, ym, ['電話で予約', 'LINE登録', 'リード数', '予約数']);
   const savedMemo = readExistingMemo_(sheet);
 
   const y = Number(ym.slice(0, 4));
@@ -368,9 +369,9 @@ function buildMonthlyTab_(ym, rowsOfMonth, lpKey) {
   const campaignPhoneRows = [];
   const memoRows = [];
   const pausedRanges = [];
-  // LP04 手入力対応: 全体合計のリード数/予約数を各CPの手入力合計 (formula) にするため行番号を控える。
-  let totalLeadRow = 0, totalBookingRow = 0;
-  const campaignLeadRows = [], campaignBookingRows = [];
+  // LP04 手入力対応: 全体合計のLINE登録/リード数/予約数を各CPの手入力合計 (formula) にするため行番号を控える。
+  let totalLeadRow = 0, totalBookingRow = 0, totalRegisterRow = 0;
+  const campaignLeadRows = [], campaignBookingRows = [], campaignRegisterRows = [];
 
   function push(arr, fmtArr) {
     while (arr.length < nCols) arr.push('');
@@ -435,10 +436,24 @@ function buildMonthlyTab_(ym, rowsOfMonth, lpKey) {
       return rn;
     }
 
+    // LP04/LP05/LP06 の LINE登録(手入力) / 登録単価 / 登録率。単価・率は手入力値から再計算。
+    function drawLineRegisterTrio() {
+      const adRow = rowOf['広告費(税抜)'];
+      const denomRow = rowOf['コンテンツビュー']; // 登録率の母数
+      const regRow = drawManualMetricRow('LINE登録', 'LINE登録');
+      if (isTotal) totalRegisterRow = regRow; else campaignRegisterRows.push(regRow);
+      drawFormulaRow('　登録単価', 'yen', function (L) {
+        return '=IF(' + L + regRow + '=0,"",' + L + adRow + '/' + L + regRow + ')';
+      });
+      drawFormulaRow('　登録率', 'pct', function (L) {
+        return '=IF(' + L + denomRow + '=0,"",' + L + regRow + '/' + L + denomRow + ')';
+      });
+    }
+
     // LP04 の リード数(手入力) / リード単価 / リード率。単価・率は手入力リード数から再計算。
     function drawLp04LeadTrio() {
       const adRow = rowOf['広告費(税抜)'];
-      const denomRow = rowOf['LINE_CTAクリック'] || rowOf['コンテンツビュー']; // リード率の母数
+      const denomRow = rowOf['LINE登録'] || rowOf['コンテンツビュー']; // リード率の母数
       const leadRow = drawManualMetricRow('リード数', 'リード数');
       if (isTotal) totalLeadRow = leadRow; else campaignLeadRows.push(leadRow);
       drawFormulaRow('　リード単価', 'yen', function (L) {
@@ -534,6 +549,9 @@ function buildMonthlyTab_(ym, rowsOfMonth, lpKey) {
         else drawBookingSegment();
         return;
       }
+      // LP04/LP05/LP06: LINE登録を手入力にし、登録単価・率もその手入力値から再計算する。
+      if (isLp04 && m.label === 'LINE登録') { drawLineRegisterTrio(); return; }
+      if (isLp04 && (m.label === '　登録単価' || m.label === '　登録率')) return; // drawLineRegisterTrio で描画済み
       // LP04: リード数を手入力にし、リード単価・率もその手入力値から再計算する。
       if (isLp04 && m.label === 'リード数') { drawLp04LeadTrio(); return; }
       if (isLp04 && (m.label === '　リード単価' || m.label === '　リード率')) return; // drawLp04LeadTrio で描画済み
@@ -581,7 +599,8 @@ function buildMonthlyTab_(ym, rowsOfMonth, lpKey) {
 
   // LP04: 全体合計の「リード数」「予約数」を各キャンペーンの手入力セルの合計 (formula) にする。
   // (全体ブロックを先に積むため、各CPの行番号が確定したこのタイミングで流し込む)
-  [[totalLeadRow, campaignLeadRows], [totalBookingRow, campaignBookingRows]].forEach(function (pair) {
+  [[totalLeadRow, campaignLeadRows], [totalBookingRow, campaignBookingRows],
+   [totalRegisterRow, campaignRegisterRows]].forEach(function (pair) {
     const totalRow = pair[0], cpRows = pair[1];
     if (!totalRow) return;
     if (cpRows.length) {
@@ -651,7 +670,7 @@ function buildMonthlyTab_(ym, rowsOfMonth, lpKey) {
 /**
  * 既存タブから、各キャンペーン別ブロックの手入力行を
  * {'<ラベル>||<キャンペーン名>||yyyy-MM-dd': 件数} で読み出す (再生成後に復元するため)。
- * 対象ラベル: 電話で予約 (LP01/02/03) / リード数・予約数 (LP04 手入力)。
+ * 対象ラベル: 電話で予約 (LP01/02/03) / LINE登録・リード数・予約数 (LP04/05/06 手入力)。
  * 全体合計ブロックは formula なので退避対象外 ('■' 配下のみ拾う)。
  * 非LP04 タブの「リード数」は自動集計値だが拾われても、復元時に参照するのは LP04 タブだけ
  * (buildMonthlyTab_ の isLp04 判定) なので無害。
